@@ -14,3 +14,7 @@ Android Studio 生成javadoc时，在＂Tools->Gerenate JavaDoc"面板中
 
 
 2.开发者选项中从右到左
+
+
+3.统计git某个分支下的commit数量
+git log | grep malin.myemail@163.com | wc -l
