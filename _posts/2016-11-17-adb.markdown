@@ -1,38 +1,40 @@
 ---
 layout: post
-title:  "Linux环境变量"
+title:  "Linux,Unix下环境变量"
 date:   2016-11-17 20:14 +0800
 categories: Ma Lin update
 ---
 
-1.编辑配置文件。
-命令如下
-cd   //回车 <br/>
-vim ~/.bashrc //回车 <br/>
+这里配置到当前的用户下<br/>
 
-2.进入后，再英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以adb为例。 <br/>
+1.编辑配置文件<br/>
+命令如下<br/>
+cd   //回车<br/>
+vim ~/.bashrc //回车<br/>
+
+2.进入后，再英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以adb为例<br/>
 
 #SDK
-export ANDROID_HOME=/home/malin/sdk <br/>
-export PATH=$PATH:$ANDROID_HOME/platform-tools <br/>
-export PATH=$PATH:$ANDROID_HOME/tools <br/>
+export ANDROID_HOME=/home/malin/sdk<br/>
+export PATH=$PATH:$ANDROID_HOME/platform-tools<br/>
+export PATH=$PATH:$ANDROID_HOME/tools<br/>
 #SDK
 
-这里/home/malin/sdk 是我电脑上Android SDK的路径。请替换为你自己的SDK路径。 <br/>
-便捷的方法是，使用cd命令切换到sdk的文件夹下。例如：cd /home/malin/sdk。然后使用pwd命令查看当前的路径。 <br/>
+这里/home/malin/sdk 是我电脑上Android SDK的路径。请替换为你自己的SDK路径。<br/>
+便捷的方法是，使用cd命令切换到sdk的文件夹下。例如：cd /home/malin/sdk。然后使用pwd命令查看当前的路径<br/>
 
 
-插入如上的文本后，就是保存了。 <br/>
-a.按 Esc键（键盘的左上角） <br/>
-b.英文输入法下输入 :wq <br/>
-c.输入回车 <br/>
-这样紫就保存了。 <br/>
+插入如上的文本后，就是保存了。<br/>
+a.按 Esc键（键盘的左上角）<br/>
+b.英文输入法下输入 :wq<br/>
+c.输入回车<br/>
+这样紫就保存了<br/>
 
 
 
-3.使配置文件生效 <br/>
-使用如下的命令 <br/>
-source ~/.bashrc //回车 <br/>
+3.使配置文件生效<br/>
+使用如下的命令<br/>
+source ~/.bashrc //回车<br/>
 
-4.测试是否生效 <br/>
-adb version <br/>
+4.测试是否生效<br/>
+adb version<br/>
