@@ -12,7 +12,7 @@ categories: Ma Lin update
 cd   //回车<br/>
 vim ~/.bashrc //回车<br/>
 
-2.进入后，再英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以adb为例<br/>
+2.进入后，在英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以adb为例<br/>
 
 
 export ANDROID_HOME=/home/malin/sdk<br/>
