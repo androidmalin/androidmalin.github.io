@@ -14,8 +14,8 @@ gradle --version
 1.刷新Gradle缓存<br/>
 [force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)
 
-gradle --refresh-dependencies<br/>
-英文模式下--<br/>
+`gradle --refresh-dependencies`
+
 
 
 <br/>
