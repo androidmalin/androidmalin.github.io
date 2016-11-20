@@ -41,7 +41,7 @@ compile 'com.squareup.okhttp3:okhttp:3.4.1'
 debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'  
 
 查看okhttp，在各个库的依赖中最后依赖的版本<br/>
-gradle -q app:dependencyInsight --dependency okhttp --configuration compile<br/>
+`gradle -q app:dependencyInsight --dependency okhttp --configuration compile`
 
 ![okhttp](http://ogxkun013.bkt.clouddn.com/okhttp.png)
 <br/>
@@ -49,52 +49,52 @@ gradle -q app:dependencyInsight --dependency okhttp --configuration compile<br/>
 
 
 查看support-annotations，在各个库的依赖中最后依赖的版本<br/>
-gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile<br/>
+`gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile`
 
 ![annotations](http://ogxkun013.bkt.clouddn.com/annotations.png)
 
 查看Android相关库的依赖关系<br/>
-gradle androidDependencies<br/>
+`gradle androidDependencies`
 
 查看app的module相关库的依赖关系<br/>
-gradle -q dependencies app:dependencie<br/>
+`gradle -q dependencies app:dependencie`
 
 查看某个Task的相关库的依赖关系<br/>
-gradle -q dependencies app:dependencies --configuration _xiaomiReleaseCompile
+`gradle -q dependencies app:dependencies --configuration _xiaomiReleaseCompile`
 
 
 
 依赖报告<br/>
-gradle projectReport<br/>
+`gradle projectReport`
 file:///home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app.html<br/>
 
 禁止lint Task<br/>
-gradle build -x lint<br/>
+`gradle build -x lint`
 
 Task 编译耗时检测<br/>
-gradle build --profile<br/>
+`gradle build --profile`
 file:///home/malin/gitlab/bilibili/build/reports/profile/<br/>
 
 生成Gradle脚本<br/>
-gradle init wrapper<br/>
+`gradle init wrapper`
 
 lint<br/>
-gradle lint<br/>
+`gradle lint`
 file:///home/malin/gitlab/bilibili/app/build/outputs/<br/>
 
 项目结构<br/>
-gradle project<br/>
+`gradle project`
 
 显示依赖包的存储路径<br/>
-gradle showMeCache<br/>
+`gradle showMeCache`
 
 
 clean<br/>
-gradle clean<br/>
+`gradle clean`
 
 打包
-gradle assembleDebug --debug<br/>
-gradle assembleRelease --info<br/>
+`gradle assembleDebug --debug`
+`gradle assembleRelease --info`
 
 //打包并安装
 //gradle installXiaomiDebug<br/>
@@ -255,25 +255,3 @@ gradle assembleRelease --info<br/>
 //    def buildDir = file(new File("build"))
 //    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
 //}
-
-
-//点亮屏幕：
-//adb shell input keyevent 224
-//
-//熄灭屏幕：
-//adb shell input keyevent 223
-
-//adb shell screenrecord  /sdcard/screenshot.mp4
-
-//home 键盘
-// adb shell input keyevent 3
-// adb shell pm clear com.malin.application & adb shell am start com.malin.application/.MainActivity & adb shell input tap 200 200 & adb shell input text 15510600873 & adb shell input tap 200 900 & adb shell input text abcdefgh & adb shell input tap 900 1200 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4
-
-//adb shell input keyevent 3 & adb shell am start com.malin.application/.MainActivity & adb shell input tap 200 200 & adb shell input text 15510600873 & adb shell input tap 200 900 & adb shell input text abcdefgh & adb shell input tap 900 1200 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4
-
-
-//解锁手机，点亮屏幕，输入密码，确定
-//adb shell input keyevent 223 & adb shell input keyevent 224 & adb shell input swipe 700 1300 700 200 & adb shell input text q123 & adb shell input tap 1400 2300
-
-
-//adb shell input keyevent 223 & adb shell input keyevent 224 & adb shell input swipe 700 1300 700 200 & adb shell input text q123 & adb shell input tap 1400 2300 & adb shell input keyevent 3 & adb shell am start com.malin.application/.MainActivity & adb shell input tap 200 200 & adb shell input text 15510600873 & adb shell input tap 200 900 & adb shell input text abcd & adb shell input tap 900 1200 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4 & adb shell input keyevent 4
