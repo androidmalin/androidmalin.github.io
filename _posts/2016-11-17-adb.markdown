@@ -19,6 +19,7 @@ export ANDROID_HOME=/home/malin/sdk<br/>
 export PATH=$PATH:$ANDROID_HOME/platform-tools<br/>
 export PATH=$PATH:$ANDROID_HOME/tools<br/>
 
+![environment](http://ogxkun013.bkt.clouddn.com/huanjing.png)
 
 这里/home/malin/sdk 是我电脑上Android SDK的路径。请替换为你自己的SDK路径。<br/>
 便捷的方法是，使用cd命令切换到sdk的文件夹下。例如：cd /home/malin/sdk。然后使用pwd命令查看当前的路径<br/>
