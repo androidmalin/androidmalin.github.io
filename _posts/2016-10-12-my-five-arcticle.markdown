@@ -12,10 +12,13 @@ gradle --version
 
 
 1.刷新Gradle缓存<br/>
->[force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)
+[force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)
 
-gradle --refresh-dependencies
+gradle --refresh-dependencies<br/>
+英文模式下--<br/>
 
+
+<br/>
 2.查看依赖关系
 比如项目引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。<br/>
 那么最后，这些库到底依赖或者说使用了那个版本的okhttp呢？这个问题，在一些情况下，显得很重要。<br/>
