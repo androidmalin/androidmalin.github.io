@@ -11,12 +11,14 @@ categories: Ma Lin update
 gradle --version
 
 
+1.刷新Gradle缓存<br/>
+>[force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)
 
-1.刷新Gradle缓存
 gradle --refresh-dependencies
 
 2.查看依赖关系
-比如想看引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。那么最后，这些库到底依赖或者说使用了那个版本的okhttp呢？这个问题，在一些情况下，显得很重要。
+比如项目引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。<br/>
+那么最后，这些库到底依赖或者说使用了那个版本的okhttp呢？这个问题，在一些情况下，显得很重要。<br/>
 
 比如我在项目中使用了如下的库
 
@@ -35,54 +37,65 @@ compile 'com.squareup.okhttp3:okhttp:3.4.1'
 >logging-interceptor  
 debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'  
 
+查看okhttp，在各个库的依赖中最后依赖的版本<br/>
+gradle -q app:dependencyInsight --dependency okhttp --configuration compile<br/>
+
+![okhttp](http://ogxkun013.bkt.clouddn.com/okhttp.png)
+<br/>
+<br/>
+
+
+查看support-annotations，在各个库的依赖中最后依赖的版本<br/>
+gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile<br/>
+
+![annotations](http://ogxkun013.bkt.clouddn.com/annotations.png)
+
+查看Android相关库的依赖关系<br/>
+gradle androidDependencies<br/>
+
+查看app的module相关库的依赖关系<br/>
+gradle -q dependencies app:dependencie<br/>
+
+查看某个Task的相关库的依赖关系<br/>
+gradle -q dependencies app:dependencies --configuration _xiaomiReleaseCompile
 
 
 
-//gradle -q app:dependencyInsight --dependency okhttp --configuration compile
-//gradle androidDependencies
+依赖报告<br/>
+gradle projectReport<br/>
+file:///home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app.html<br/>
 
-//gradle -q dependencies app:dependencie
-//gradle -q dependencies app:dependencies --configuration _xiaomiReleaseCompile
+禁止lint Task<br/>
+gradle build -x lint<br/>
 
+Task 编译耗时检测<br/>
+gradle build --profile<br/>
+file:///home/malin/gitlab/bilibili/build/reports/profile/<br/>
 
+生成Gradle脚本<br/>
+gradle init wrapper<br/>
 
-//依赖报告
-//gradle projectReport
-//file:///home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app.html
+lint<br/>
+gradle lint<br/>
+file:///home/malin/gitlab/bilibili/app/build/outputs/<br/>
 
-//禁止lint Task
-//gradle build -x lint
+项目结构<br/>
+gradle project<br/>
 
-//Task 编译耗时检测
-//gradle build --profile
-// file:///home/malin/gitlab/bilibili/build/reports/profile/
-
-//生成Gradle脚本
-//gradle init wrapper
-
-//lint
-//gradle lint
-//file:///home/malin/gitlab/bilibili/app/build/outputs/
-
-//项目结构
-//gradle project
-
-//显示依赖包的存储路径
-//gradle showMeCache
+显示依赖包的存储路径<br/>
+gradle showMeCache<br/>
 
 
-//clean
-//gradle clean
+clean<br/>
+gradle clean<br/>
 
-//打包
-//gradle task
-//gradle assembleDebug --debug
-//gradle assembleRelease --info
+打包
+gradle assembleDebug --debug<br/>
+gradle assembleRelease --info<br/>
 
 //打包并安装
-//gradle task
-//gradle installXiaomiDebug - Installs the DebugXiaomi build.
-//gradle installXiaomiRelease - Installs the ReleaseXiaomi build.
+//gradle installXiaomiDebug<br/>
+//gradle installXiaomiRelease<br/>
 
 //包名
 // /home/malin/sdk/build-tools/24.0.3/aapt
