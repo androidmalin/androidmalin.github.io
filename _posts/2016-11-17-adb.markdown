@@ -30,7 +30,7 @@ a.按 Esc键（键盘的左上角）<br/>
 b.英文输入法下输入 :wq<br/>
 c.输入回车<br/>
 这样紫就保存了<br/>
-
+![environment2](http://ogxkun013.bkt.clouddn.com/e2.png)
 
 
 3.使配置文件生效<br/>
