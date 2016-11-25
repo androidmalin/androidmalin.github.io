@@ -7,13 +7,14 @@ categories: Ma Lin update
 ### 说明
 本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。
 
-0.查看Gradle版本
-gradle --version
+0.查看Gradle版本<br/>
+`gradle --version`
 
 
 1.刷新Gradle缓存<br/>
-[force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)
+[force gradle to redownload dependencies](http://stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)<br/>
 
+用于解决一些奇怪的依赖问题<br/>
 `gradle --refresh-dependencies`
 
 
@@ -21,7 +22,7 @@ gradle --version
 <br/>
 2.查看依赖关系
 比如项目引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。<br/>
-那么最后，这些库到底依赖或者说使用了那个版本的okhttp呢？这个问题，在一些情况下，显得很重要。<br/>
+那么最后，这些库到底依赖或者说使用了哪个版本的okhttp呢？这个问题，在某些情况下，显得十分重要。<br/>
 
 比如我在项目中使用了如下的库
 
@@ -48,6 +49,9 @@ debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 <br/>
 
 
+查看rxjava，在各个库的依赖中最后依赖的版本<br/>
+`gradle -q app:dependencyInsight --dependency rxjava --configuration compile`
+
 查看support-annotations，在各个库的依赖中最后依赖的版本<br/>
 `gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile`
 
@@ -56,17 +60,34 @@ debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 查看Android相关库的依赖关系<br/>
 `gradle androidDependencies`
 
-查看app的module相关库的依赖关系<br/>
+
+显示 task 使用细节执行<br/>
+`gradle -q help --task assemble`
+
+可以获取到 task 的详细信息， 或者多项目构建中相同 task 名称的所有 task 的信息<br/>
+
+
+查看module相关库的依赖关系<br/>
 `gradle -q dependencies app:dependencie`
 
 查看某个Task的相关库的依赖关系<br/>
-`gradle -q dependencies app:dependencies --configuration _xiaomiReleaseCompile`
+`gradle -q dependencies app:dependencies --configuration compile`
 
 
 
 依赖报告<br/>
 `gradle projectReport`
 file:///home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app.html<br/>
+
+在浏览器中打开可以看到如下的网页，十分简介清楚。
+
+![denpendencies1](http://ogxkun013.bkt.clouddn.com/dependencies_one.png)
+![denpendencies2](http://ogxkun013.bkt.clouddn.com/dependencies_two.png)
+
+>说明:这里需要在module中的buil.gradle中添加如下声明:<br/>
+`apply plugin: 'project-report'`
+
+
 
 禁止lint Task<br/>
 `gradle build -x lint`
