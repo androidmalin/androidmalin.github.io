@@ -44,7 +44,7 @@ debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 查看okhttp，在各个库的依赖中最后依赖的版本<br/>
 `gradle -q app:dependencyInsight --dependency okhttp --configuration compile`
 
-![okhttp](http:ogxkun013.bkt.clouddn.com/okhttp.png)
+![okhttp](http://ogxkun013.bkt.clouddn.com/okhttp.png)
 <br/>
 <br/>
 
@@ -55,7 +55,7 @@ debugCompile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 查看support-annotations，在各个库的依赖中最后依赖的版本<br/>
 `gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile`
 
-![annotations](http:ogxkun013.bkt.clouddn.com/annotations.png)
+![annotations](http://ogxkun013.bkt.clouddn.com/annotations.png)
 
 查看Android相关库的依赖关系<br/>
 `gradle androidDependencies`
@@ -81,8 +81,8 @@ file:/home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app
 
 在浏览器中打开可以看到如下的网页，十分简介清楚。
 
-![denpendencies1](http:ogxkun013.bkt.clouddn.com/dependencies_one.png)
-![denpendencies2](http:ogxkun013.bkt.clouddn.com/dependencies_two.png)
+![denpendencies1](http://ogxkun013.bkt.clouddn.com/dependencies_one.png)
+![denpendencies2](http://ogxkun013.bkt.clouddn.com/dependencies_two.png)
 
 >说明:这里需要在module中的buil.gradle中添加如下声明:<br/>
 `apply plugin: 'project-report'`
