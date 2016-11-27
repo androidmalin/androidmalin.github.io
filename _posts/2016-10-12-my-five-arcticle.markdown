@@ -11,10 +11,10 @@ categories: Ma Lin update
 `gradle --version`
 
 com.android.tools.build:gradle版本网址查看地址<br/>
-https://bintray.com/android/android-tools/com.android.tools.build.gradle<br/>
+[https://bintray.com/android/android-tools/com.android.tools.build.gradle](https://bintray.com/android/android-tools/com.android.tools.build.gradle)<br/>
 
 其他的一些android tool版本分布查看网址
-https://bintray.com/android/android-tools/<br/>
+[https://bintray.com/android/android-tools/](https://bintray.com/android/android-tools/)<br/>
 
 1.刷新Gradle缓存<br/>
 [force gradle to redownload dependencies](http:stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#)<br/>
