@@ -5,52 +5,63 @@ date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
 
-1.DownLoad
+1.DownLoad<br/>
 `git clone git@github.com:Tencent/tinker.git`
 
-2.cd sample project
+2.cd sample project<br/>
 `cd tinker/tinker-sample-android`
 
-3.DownLoad dependencies
+3.DownLoad dependencies<br/>
 `gradle clean`
 
-4.build debug apk
+4.build debug apk<br/>
 `gradle assembleDebug`
 
-5.cd directory of base debug apk
-`cd tinker/tinker-sample-android/app/build/bakApk`
+5.install debug base apk<br/>
+`adb install app/build/bakApk/*.apk`
 
-6.install debug base apk
-`adb install app-debug-1129-11-29-42.apk`
-
-7.start debug base apk
+6.start debug base apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-8.change some codes and change the config of build.gradle
-`cd tinker/tinker-sample-android/app/`
-`cat build.gradle | grep tinkerOldApkPath`
-`vim tinker/tinker-sample-android/app/buid.gradle`
+7.get base debug apk fileName<br/>
+`ls app/build/bakApk/ | awk '{print $0}'`
+
+8.change some codes and change the config of build.gradle<br/>
+
+`change some codes for fix bug`
+
+`cat app/build.gradle | grep tinkerOldApkPath`
+
+use number 7 apk filename replace the tinkerOldApkPath apk fileName<br/>
+
+`vim app/buid.gradle`
 
 
-9.build patch apk
+9.build patch apk<br/>
 `gradle tinkerPatchDebug`
 
-10.cd directory of patch apk
-`cd tinker/tinker-sample-android/app/build/outputs/tinkerPatch/debug`
+10.cd directory of patch apk<br/>
+`cd app/build/outputs/tinkerPatch/debug`
 
-11.push patch apk into phone
+11.push patch apk into phone<br/>
 `adb push patch_signed_7zip.apk /storage/sdcard0/`
 
-12.kill the running apk or restart the running apk
+12.kill the running apk or restart the running apk<br/>
 `adb shell am force-stop tinker.sample.android`
 
-or
+or<br/>
 
+./kill.sh<br/>
+
+the content of kill.sh<br/>
 `PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``
 `adb shell kill -9 $PROID`
 
-13.start apk
+`vim kill.sh && chmod 777 ./kill.sh`<br/>
+input content of kill.sh<br/>
+
+13.start apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-14.test patch success or not
-`pidcat.py tinker.sample.android -t Tinker.MainActivity`
+14.test patch success or not<br/>
+`adb logcat | grep tinker.sample.android`
