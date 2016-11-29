@@ -40,11 +40,12 @@ use number 7 apk filename replace the tinkerOldApkPath apk fileName<br/>
 9.build patch apk<br/>
 `gradle tinkerPatchDebug`
 
-10.cd directory of patch apk<br/>
-`cd app/build/outputs/tinkerPatch/debug`
 
-11.push patch apk into phone<br/>
-`adb push patch_signed_7zip.apk /storage/sdcard0/`
+10.push patch apk into phone<br/>
+`adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /storage/sdcard0/`
+
+11.click loadPath
+
 
 12.kill the running apk or restart the running apk<br/>
 `adb shell am force-stop tinker.sample.android`
@@ -63,5 +64,9 @@ input content of kill.sh<br/>
 13.start apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-14.test patch success or not<br/>
+14.click showinfo in order to test patch success or not
+
+15.test patch success or not<br/>
 `adb logcat | grep tinker.sample.android`
+
+16.change some codes in order to hot fix from number 9
