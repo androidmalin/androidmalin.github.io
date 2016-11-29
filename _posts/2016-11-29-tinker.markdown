@@ -4,6 +4,7 @@ title:  "Tinker"
 date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
+0.check your version of gradle,if version>=2.14.1
 
 1.DownLoad<br/>
 `git clone git@github.com:Tencent/tinker.git`
@@ -55,7 +56,8 @@ or<br/>
 ./kill.sh<br/>
 
 the content of kill.sh<br/>
->`PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``<br/>
+
+>`PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``
 
 >`adb shell kill -9 $PROID`
 
