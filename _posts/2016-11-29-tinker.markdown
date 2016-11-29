@@ -55,11 +55,13 @@ or<br/>
 ./kill.sh<br/>
 
 the content of kill.sh<br/>
-`PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``
-`adb shell kill -9 $PROID`
+>`PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``<br/>
 
-`vim kill.sh && chmod 777 ./kill.sh`<br/>
-input content of kill.sh<br/>
+>`adb shell kill -9 $PROID`
+
+a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
+b.input content of kill.sh<br/>
+c.then `./kill.sh`
 
 13.start apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
