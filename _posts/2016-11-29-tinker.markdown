@@ -35,7 +35,7 @@ categories: Ma Lin update
 
 use number 7 apk filename replace the tinkerOldApkPath apk fileName<br/>
 
-`vim app/buid.gradle`
+`vim app/build.gradle`
 
 
 9.build patch apk<br/>
@@ -43,9 +43,11 @@ use number 7 apk filename replace the tinkerOldApkPath apk fileName<br/>
 
 
 10.push patch apk into phone<br/>
-`adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /storage/sdcard0/`
+You can user android Genymotion,BlueStacks,or else.<br/>
+Your phone maybe need root<br/>
+`adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
-11.click loadPath
+11.click LOADPATH Button on the Sample App
 
 
 12.kill the running apk or restart the running apk<br/>
@@ -57,9 +59,8 @@ or<br/>
 
 the content of kill.sh<br/>
 
->`PROID=`adb shell ps | grep tinker.sample.android | awk '{print $2}' | head -n 1``
+![kill.sh](http://ogxkun013.bkt.clouddn.com/kill2.png)
 
->`adb shell kill -9 $PROID`
 
 a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
 b.input content of kill.sh<br/>
