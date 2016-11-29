@@ -39,7 +39,7 @@ categories: Ma Lin update
 将改行替换为新的字符串（147行）<br/>
 
 
-遇到/字符，就在前面加上转译字符\<br/>
+遇到/字符，就在前面加上转译字符\ <br/>
 `sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/number7-get-apkname.apk"/' app/build.gradle`
 
 
