@@ -5,7 +5,8 @@ date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
 0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br/>
-> e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
+
+>e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
 You can download the gradle from this website<br/>
 [https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
 <br/>
@@ -46,9 +47,10 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 `grep -n "tinkerOldApkPath" app/build.gradle | head -n 1 | cut -d  ":" -f 1`
 
 10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br/>
-> Replace the line numbers which from number7 and apkName which from number8 <br/>
 
-`sed -i 'number8-get-row-numbers/.*/tinkerOldApkPath="${bakPath}/number7-get-apkname"/' app/build.gradle`
+>Replace the line numbers which from number7 and apkName which from number8
+
+`sed -i 'number9-get-row-numbers/.*/tinkerOldApkPath="${bakPath}/number8-get-apkname"/' app/build.gradle`
 
 e.g. <br/>
 ![tinker10](http://ogxkun013.bkt.clouddn.com/tinker10.png)
@@ -92,6 +94,7 @@ c.then `./kill.sh`
 
 16.Click showinfo in order to confirm the patch load successfully or not.
 
-17.Change some codes in order to hot fix bugs from number 8
+17.Change some codes in order to hot fix bugs from number 8<br/>
+
 >TODO:// Coding in order to fix bug1<br/>
 >TODO:// Coding in order to fix bug2<br/>
