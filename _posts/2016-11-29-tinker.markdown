@@ -5,7 +5,7 @@ date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
 0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br/>
->e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
+> e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
 You can download the gradle from this website<br/>
 [https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
 <br/>
