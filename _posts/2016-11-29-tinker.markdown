@@ -6,63 +6,53 @@ categories: Ma Lin update
 ---
 0.check your version of gradle,if version>=2.14.1
 
-1.DownLoad<br/>
+1.DownLoad the source code of [tinker](https://github.com/Tencent/tinker) from github <br/>
 `git clone git@github.com:Tencent/tinker.git`
 
-2.cd sample project<br/>
+2.Open the Sample project<br/>
 `cd tinker/tinker-sample-android`
 
-3.DownLoad dependencies<br/>
+3.DownLoad the dependencies of sample,It may take a long time,you can drink a cup of coffee.<br/>
 `gradle clean`
 
-4.build debug apk<br/>
+4.Buid debug apk<br/>
 `gradle assembleDebug`
 
-5.install debug base apk<br/>
+5.Install the debug base apk into your phone or emulator(e.g. [Genymotion](https://www.genymotion.com/),[Bluestacks](http://www.bluestacks.cn/bdsem_anmnq.html))<br/>
 `adb install app/build/bakApk/*.apk`
 
-6.start debug base apk<br/>
+6.Start the debug base apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-7.get base debug apk fileName<br/>
-`ls app/build/bakApk/ | awk '{print $0}'`
+7.Change some codes in order to fix bugs<br/>
 
-8.change some codes and change the config of build.gradle<br/>
-
-`change some codes for fix bug`
-
-`cat app/build.gradle | grep tinkerOldApkPath`
-
-获取tinkerOldApkPath第一次出现的行数<br/>
-`grep -n "tinkerOldApkPath" app/build.gradle | head -1 | cut -d  ":" -f 1`
-
-将改行替换为新的字符串（147行）<br/>
+>TODO:// Coding in order to fix bug1<br/>
+>TODO:// Coding in order to fix bug2<br/>
 
 
-遇到/字符，就在前面加上转译字符\ <br/>
-`sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/number7-get-apkname.apk"/' app/build.gradle`
+8.Get the base debug apk fileName<br/>
+`find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk '{print $9}' | cut -d  "/" -f 4`
 
+9.Get "tinkerOldApkPath" first occurrence of rows <br/>
+`grep -n "tinkerOldApkPath" app/build.gradle | head -n 1 | cut -d  ":" -f 1`
 
-or<br/>
+10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br/>
+>Replace the line numbers which from number7 and apkName which from number8 <br/>
 
-use number 7 apk filename replace the tinkerOldApkPath apk fileName<br/>
+`sed -i 'number8-get-row-numbers/.*/tinkerOldApkPath="number7-get-apkname"/' app/build.gradle`
 
-`vim app/build.gradle`
-
-
-9.build patch apk<br/>
+11.build patch apk<br/>
 `gradle tinkerPatchDebug`
 
-
-10.push patch apk into phone<br/>
+12.push patch apk into phone<br/>
 You can user android Genymotion,BlueStacks,or else.<br/>
 Your phone maybe need root<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
-11.click LOADPATH Button on the Sample App
+13.click LOADPATH Button on the Sample App
 
 
-12.kill the running apk or restart the running apk<br/>
+14.kill the running apk or restart the running apk<br/>
 `adb shell am force-stop tinker.sample.android`
 
 or<br/>
@@ -78,12 +68,12 @@ a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
 b.input content of kill.sh<br/>
 c.then `./kill.sh`
 
-13.start apk<br/>
+15.start apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-14.click showinfo in order to test patch success or not
+16.click showinfo in order to test patch success or not
 
-15.test patch success or not<br/>
+17.test patch success or not<br/>
 `adb logcat | grep tinker.sample.android`
 
-16.change some codes in order to hot fix from number 9
+18.change some codes in order to hot fix from number 8
