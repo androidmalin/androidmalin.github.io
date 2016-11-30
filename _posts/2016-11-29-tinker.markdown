@@ -50,8 +50,6 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 
 >Replace the line numbers which from number7 and apkName which from number8
 
-`sed -i 'number9-get-row-numbers/.*/tinkerOldApkPath="${bakPath}/number8-get-apkname"/' app/build.gradle`
-
 e.g. <br/>
 ![tinker10](http://ogxkun013.bkt.clouddn.com/tinker10.png)
 
@@ -59,7 +57,11 @@ number8 app-debug-1130-12-54-43.apk<br/>
 number9 147<br/>
 
 thus,you can get the command.<br/>
-`sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`
+
+x:number9 show content<br/>
+y:number8 show content<br/>
+`sed -i 'xs/.*/tinkerOldApkPath="${bakPath}\/y"/' app/build.gradle`<br/>
+
 
 
 11.Build in order to the patch apk<br/>
