@@ -80,6 +80,7 @@ If PATH load success,the you can see the Toast which is Path is load success.
 
 or<br/>
 
+If you phone is root,you can use adb shell kill -9 pid<br/>
 ./kill.sh<br/>
 
 the content of kill.sh<br/>
