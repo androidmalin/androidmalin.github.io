@@ -4,7 +4,16 @@ title:  "Tinker"
 date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
-0.check your version of gradle,if version>=2.14.1
+0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br/>
+>e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
+You can download the gradle from this website<br/>
+[https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
+<br/>
+add `adb` ,`gradle` on your path<br/>
+<br/>
+You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
+[https://github.com/Tencent/tinker/wiki](https://github.com/Tencent/tinker/wiki)<br/>
+
 
 1.DownLoad the source code of [tinker](https://github.com/Tencent/tinker) from github <br/>
 `git clone git@github.com:Tencent/tinker.git`
@@ -33,23 +42,33 @@ categories: Ma Lin update
 8.Get the base debug apk fileName<br/>
 `find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk '{print $9}' | cut -d  "/" -f 4`
 
-9.Get "tinkerOldApkPath" first occurrence of rows <br/>
+9.Get "tinkerOldApkPath" first occurrence of rows which from tinker-sample-android/app/build.gradle<br/>
 `grep -n "tinkerOldApkPath" app/build.gradle | head -n 1 | cut -d  ":" -f 1`
 
 10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br/>
->Replace the line numbers which from number7 and apkName which from number8 <br/>
+> Replace the line numbers which from number7 and apkName which from number8 <br/>
 
-`sed -i 'number8-get-row-numbers/.*/tinkerOldApkPath="number7-get-apkname"/' app/build.gradle`
+`sed -i 'number8-get-row-numbers/.*/tinkerOldApkPath="${bakPath}/number7-get-apkname"/' app/build.gradle`
 
-11.build patch apk<br/>
+e.g. <br/>
+![tinker10](http://ogxkun013.bkt.clouddn.com/tinker10.png)
+
+number8 app-debug-1130-12-54-43.apk<br/>
+number9 147<br/>
+
+thus,you can get the command.<br/>
+`sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`
+
+
+11.Build in order to the patch apk<br/>
 `gradle tinkerPatchDebug`
 
-12.push patch apk into phone<br/>
-You can user android Genymotion,BlueStacks,or else.<br/>
-Your phone maybe need root<br/>
+12.Push patch apk into phone<br/>
+You can user phone,android emulator e.g. Genymotion,BlueStacks,etc.<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
-13.click LOADPATH Button on the Sample App
+13.Click LOADPATH Button on the Sample App
+If PATH load success,the you can see the Toast which is Path is load success.
 
 
 14.kill the running apk or restart the running apk<br/>
@@ -68,12 +87,11 @@ a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
 b.input content of kill.sh<br/>
 c.then `./kill.sh`
 
-15.start apk<br/>
+15.Start the apk again<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-16.click showinfo in order to test patch success or not
+16.Click showinfo in order to confirm the patch load successfully or not.
 
-17.test patch success or not<br/>
-`adb logcat | grep tinker.sample.android`
-
-18.change some codes in order to hot fix from number 8
+17.Change some codes in order to hot fix bugs from number 8
+>TODO:// Coding in order to fix bug1<br/>
+>TODO:// Coding in order to fix bug2<br/>
