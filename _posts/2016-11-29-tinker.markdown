@@ -92,8 +92,8 @@ e.g.<br/>
 13.Push patch apk into phone or emulator<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
-14.Click LOADPATH Button on the Sample App
-If PATH load success,the you can see the Toast which is `patch success,please restart process`.
+14.Click LOADPATH Button on the Sample App<br/>
+If PATH load success,the you can see the Toast which is `patch success,please restart process`.<br/>
 
 
 15.kill the running apk or restart the running apk<br/>
@@ -118,7 +118,9 @@ c.then `./kill.sh`
 
 17.Click showinfo in order to confirm the patch load successfully or not.
 
-adb logcat | grep TestTinker
+`adb logcat | grep TestTinker`<br/>
+
+If you see log which tag is "TestTinker",Congratulate to you!<br/>
 
 18.Change some codes in order to hot fix bugs from number 8<br/>
 
