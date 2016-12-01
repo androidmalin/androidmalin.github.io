@@ -24,7 +24,7 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 2.Open the Sample project<br/>
 `cd tinker/tinker-sample-android`
 
-3.DownLoad the dependencies of sample,It may take a long time,you can drink a cup of coffee.<br/>
+3.DownLoad the dependencies of sample,It may take a long time when you run firstly,you can drink a cup of coffee.<br/>
 `gradle clean`
 
 4.Buid debug apk<br/>
