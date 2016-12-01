@@ -11,6 +11,8 @@ You can download the gradle from this website<br/>
 [https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
 <br/>
 add `adb` ,`gradle` on your path<br/>
+You can see this article [How to `add` into your path](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)
+<br/>
 <br/>
 You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 [https://github.com/Tencent/tinker/wiki](https://github.com/Tencent/tinker/wiki)<br/>
@@ -48,7 +50,7 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 
 10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br/>
 
->Replace the line numbers which from number7 and apkName which from number8
+>Replace the line numbers which from number9 and apkName which from number8
 
 e.g. <br/>
 ![tinker10](http://ogxkun013.bkt.clouddn.com/tinker10.png)
@@ -58,24 +60,28 @@ number9 147<br/>
 
 thus,you can get the command.<br/>
 
-x:number9 show content<br/>
-y:number8 show content<br/>
-`sed -i 'xs/.*/tinkerOldApkPath="${bakPath}\/y"/' app/build.gradle`<br/>
+> sed -i 'number8s/.*/tinkerOldApkPath="${bakPath}\/number9"/' app/build.gradle<br/>
 
-
+e.g.<br/>
+`sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`<br/>
 
 11.Build in order to the patch apk<br/>
 `gradle tinkerPatchDebug`
 
-12.Push patch apk into phone<br/>
-You can user phone,android emulator e.g. Genymotion,BlueStacks,etc.<br/>
+12.confirm the number11 do successfully
+>grep -n "number8" app/build.gradle<br/>
+
+e.g.<br/>
+`grep -n "app-debug-1130-12-54-43.apk" app/build.gradle`
+
+13.Push patch apk into phone or emulator<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
-13.Click LOADPATH Button on the Sample App
-If PATH load success,the you can see the Toast which is Path is load success.
+14.Click LOADPATH Button on the Sample App
+If PATH load success,the you can see the Toast which is `patch success,please restart process`.
 
 
-14.kill the running apk or restart the running apk<br/>
+15.kill the running apk or restart the running apk<br/>
 `adb shell am force-stop tinker.sample.android`
 
 or<br/>
@@ -92,12 +98,12 @@ a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
 b.input content of kill.sh<br/>
 c.then `./kill.sh`
 
-15.Start the apk again<br/>
+16.Start the apk again<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
-16.Click showinfo in order to confirm the patch load successfully or not.
+17.Click showinfo in order to confirm the patch load successfully or not.
 
-17.Change some codes in order to hot fix bugs from number 8<br/>
+18.Change some codes in order to hot fix bugs from number 8<br/>
 
 >TODO:// Coding in order to fix bug1<br/>
 >TODO:// Coding in order to fix bug2<br/>
