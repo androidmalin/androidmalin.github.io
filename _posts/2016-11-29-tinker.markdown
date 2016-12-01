@@ -11,7 +11,7 @@ You can download the gradle from this website<br/>
 [https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
 <br/>
 add `adb` ,`gradle` on your path<br/>
-You can see this article [How to `add` into your path](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)
+You can see this article [How to adb into your path](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)
 <br/>
 <br/>
 You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
