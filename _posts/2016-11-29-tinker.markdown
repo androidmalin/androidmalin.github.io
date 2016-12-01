@@ -31,6 +31,7 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 `gradle assembleDebug`
 
 5.Install the debug base apk into your phone or emulator(e.g. [Genymotion](https://www.genymotion.com/),[Bluestacks](http://www.bluestacks.cn/bdsem_anmnq.html))<br/>
+`adb uninstall tinker.sample.android`
 `adb install app/build/bakApk/*.apk`
 
 6.Start the debug base apk<br/>
@@ -65,14 +66,18 @@ thus,you can get the command.<br/>
 e.g.<br/>
 `sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`<br/>
 
-11.Build in order to the patch apk<br/>
-`gradle tinkerPatchDebug`
 
-12.confirm the number11 do successfully
+
+11.confirm the number11 do successfully
 >grep -n "number8" app/build.gradle<br/>
 
 e.g.<br/>
 `grep -n "app-debug-1130-12-54-43.apk" app/build.gradle`
+
+
+12.Build in order to the patch apk<br/>
+`gradle tinkerPatchDebug`
+
 
 13.Push patch apk into phone or emulator<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
