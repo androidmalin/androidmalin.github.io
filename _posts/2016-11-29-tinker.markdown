@@ -31,8 +31,7 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 `gradle assembleDebug`
 
 5.Install the debug base apk into your phone or emulator(e.g. [Genymotion](https://www.genymotion.com/),[Bluestacks](http://www.bluestacks.cn/bdsem_anmnq.html))<br/>
-`adb uninstall tinker.sample.android`
-`adb install app/build/bakApk/*.apk`
+`adb uninstall tinker.sample.android && adb install app/build/bakApk/*.apk`
 
 6.Start the debug base apk<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
@@ -41,6 +40,17 @@ You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
 
 >TODO:// Coding in order to fix bug1<br/>
 >TODO:// Coding in order to fix bug2<br/>
+
+e.g.Change the Log TAG of MainActivity<br/>
+
+one: get row of TAG<br/>
+`grep -n "TAG" app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d ":" -f 1`
+
+two: Replace the TAG to your tag eg:TestTinker<br/>
+`sed -i '42s/.*/private static final String TAG = "TestTinker";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
+
+three: confirm the change successfully<br/>
+`grep -n "TestTinker" app/src/main/java/tinker/sample/android/app/MainActivity.java`
 
 
 8.Get the base debug apk fileName<br/>
@@ -107,6 +117,8 @@ c.then `./kill.sh`
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
 17.Click showinfo in order to confirm the patch load successfully or not.
+
+adb logcat | grep TestTinker
 
 18.Change some codes in order to hot fix bugs from number 8<br/>
 
