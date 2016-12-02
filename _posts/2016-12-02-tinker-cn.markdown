@@ -39,21 +39,15 @@ gradle可以从这个网站下载<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
 7.修改代码，这里演示修改MainActivity中的TAG,来验证热修复<br/>
-
->TODO:// Coding in order to fix bug1<br/>
->TODO:// Coding in order to fix bug2<br/>
-
-e.g.Change the Log TAG of MainActivity<br/>
-
 one: 得到MainActivity中TAG变量的行数<br/>
 `grep -n "TAG" app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d ":" -f 1`
 
-two: 将TAG替换为新的值例如:TestTinker<br/>
-  注意：下一行中的`42`为上一条命令中获取的`MainActivity中TAG变量的行数`，`TestTinker`为我们要替换后的TAG值。<br/>
-`sed -i '42s/.*/private static final String TAG = "TestTinker";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
+two: 将TAG替换为新的值例如:IwantToTestHotFix<br/>
+  注意：下一行中的`42`为上一条命令中获取的`MainActivity中TAG变量的行数`，`IwantToTestHotFix`为我们要替换后的TAG值。<br/>
+`sed -i '42s/.*/private static final String TAG = "IwantToTestHotFix";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
 
 three: 确认一下替换是否成功，查询替换后TAG的值和所在的行数<br/>
-`grep -n "TestTinker" app/src/main/java/tinker/sample/android/app/MainActivity.java`
+`grep -n "IwantToTestHotFix" app/src/main/java/tinker/sample/android/app/MainActivity.java`
 
 
 8.获取编译生成的apk的名字<br/>
@@ -101,9 +95,9 @@ e.g.<br/>
 
 
 16.点击应用上的 showinfo按钮确认补丁是否加载成功，如果成功你讲可以看到.<br/>
-弹出的Dialog上显示[path is loaded]
+弹出的Dialog的第一行显示[path is loaded]
 
 同时，你可以查看自己修改的TAG是否生效。使用如下的命令过滤Log的TAG即可。<br/>
 这里的TAG就是第7部修改的TAG。<br/>
-`adb logcat | grep TestTinker`<br/>
-如果执行上个命令看到了TAG为`TestTinker`的Log，祝贺你热修复成功了<br/>
+`adb logcat | grep IwantToTestHotFix`<br/>
+如果执行上个命令看到了TAG为`IwantToTestHotFix`的Log，祝贺你热修复成功了<br/>
