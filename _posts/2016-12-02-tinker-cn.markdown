@@ -11,13 +11,15 @@ categories: Ma Lin update
 可以使用这个命令查看gradle版本号<br/>
 `gradle --version`<br/>
 
-gradle可以从这个网站下载<br/>
+Gradle可以从这个网站下载<br/>
 [https://services.gradle.org/distributions](https://services.gradle.org/distributions)
 
-确保你配置了`adb`环境变量。如果没有配置，可以参考这篇文章[Linux,Unix下环境变量的配置](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)
+确保你配置了`adb`环境变量。如果没有配置，可以参考这篇文章[Linux,Unix下环境变量的配置](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)<br/>
+可以使用`adb --version`查看是否配置了`adb`环境变量。
 
+本文所有命令均在Ubuntu上调试的，Mac OS上应该都有，Windows上开发的同学可以自行转换为相应的命令<br/>
 本文参考Tinker的官方wiki来写的。<br/>
-[https://github.com/Tencent/tinker/wiki](https://github.com/Tencent/tinker/wiki)<br/>
+[https://github.com/Tencent/tinker/wiki](https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97)<br/>
 
 
 1.从github上下载[tinker](https://github.com/Tencent/tinker)的源码<br/>
@@ -26,10 +28,10 @@ gradle可以从这个网站下载<br/>
 2.切换到tinker-sample-android目录下<br/>
 `cd tinker/tinker-sample-android`
 
-3.下载依赖，第一次运行可能需要很长时间.<br/>
+3.下载依赖，第一次运行可能需要很长时间，因为需要下载一些依赖库.<br/>
 `gradle clean`
 
-4.编译生成debug版本的baseApk<br/>
+4.编译生成Debug版本的Apk<br/>
 `gradle assembleDebug`
 
 5.将编译生成的apk安装到手机或者模拟器中([Genymotion](https://www.genymotion.com/),[Bluestacks](http://www.bluestacks.cn/bdsem_anmnq.html))<br/>
@@ -39,35 +41,36 @@ gradle可以从这个网站下载<br/>
 `adb shell am start tinker.sample.android/.app.MainActivity`
 
 7.修改代码，这里演示修改MainActivity中的TAG,来验证热修复<br/>
-one: 得到MainActivity中TAG变量的行数<br/>
+7.1: 得到MainActivity中TAG变量的行数<br/>
 `grep -n "TAG" app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d ":" -f 1`
 
-two: 将TAG替换为新的值例如:IwantToTestHotFix<br/>
-  注意：下一行中的`42`为上一条命令中获取的`MainActivity中TAG变量的行数`，`IwantToTestHotFix`为我们要替换后的TAG值。<br/>
-`sed -i '42s/.*/private static final String TAG = "IwantToTestHotFix";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
+7.2: 将TAG替换为新的值例如:IWantToTestHotFix<br/>
+  注意：下一行中的`42`为上一条命令中获取的`MainActivity中TAG变量的行数`，`IWantToTestHotFix`为我们要替换后的TAG值。<br/>
+`sed -i '42s/.*/private static final String TAG = "IWantToTestHotFix";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
 
-three: 确认一下替换是否成功，查询替换后TAG的值和所在的行数<br/>
-`grep -n "IwantToTestHotFix" app/src/main/java/tinker/sample/android/app/MainActivity.java`
+7.3: 确认一下替换是否成功，可以通过查询替换后TAG的值和所在的行数<br/>
+`grep -n "IWantToTestHotFix" app/src/main/java/tinker/sample/android/app/MainActivity.java`
 
 
-8.获取编译生成的apk的名字<br/>
+8.获取编译生成的Debug版本APK的名字<br/>
 `find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk '{print $9}' | cut -d  "/" -f 4`
 
-9.获取“tinkerOldApkPath”字符串在tinker-sample-android/app/build.gradle文件中的行数<br/>
+9.获取"tinkerOldApkPath"字符串在tinker-sample-android/app/build.gradle文件中的行数<br/>
 `grep -n "tinkerOldApkPath" app/build.gradle | head -n 1 | cut -d  ":" -f 1`
 
-10.用地8部获得的名字，更新app/build.gradle中tinkerOldApkPath的值<br/>
+10.用第8步获得的APK的名字，替换到app/build.gradle中tinkerOldApkPath的值<br/>
 
 例如. <br/>
-第8部得到的值为: app-debug-1130-12-54-43.apk<br/>
-第9部得到的值为: 147<br/>
+第8步得到的值为: `app-debug-1130-12-54-43.apk`<br/>
+第9步得到的值为: `147`<br/>
 
-那么使用如下的命令直接在app/build.gradle文件中第`147`行将tinkerOldApkPath替换为`app-debug-1130-12-54-43.apk`.<br/>
+那么使用如下的命令直接在app/build.gradle文件中，将第`147`行将tinkerOldApkPath替换为`app-debug-1130-12-54-43.apk`.<br/>
 
 e.g.<br/>
 `sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`<br/>
 
-实际使用时，你要做的就是将下面命令中number8替换为第8部得到的值，将number9替换为第9部得到的值。<br/>然后执行这条命令即可完成替换工作。<br/>
+实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值，将number9替换为第9步得到的值。<br/>
+然后执行这条命令即可完成替换工作。<br/>
 `sed -i 'number8s/.*/tinkerOldApkPath="${bakPath}\/number9"/' app/build.gradle`<br/>
 
 
@@ -75,22 +78,22 @@ e.g.<br/>
 例如.<br/>
 `grep -n "app-debug-1130-12-54-43.apk" app/build.gradle`
 
-实际使用时，你要做的就是将下面命令中number8替换为第8部得到的值。<br/>
-然后执行这条命令即，如何替换成功你将看到替换的字符串的名字和所在的行数。
->grep -n "number8" app/build.gradle<br/>
+实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值。<br/>
+然后执行这条命令即，如果替换成功你将看到替换的字符串的名字和所在的行数。<br/>
+`grep -n "number8" app/build.gradle`<br/>
 
 12.编译生成补丁包<br/>
 `gradle tinkerPatchDebug`
 
 
-13.将补丁包APK文件推送到手机的sdcard根目录<br/>
+13.将补丁包APK文件推送到手机的sdcard根目录中<br/>
 `adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
 
 14.点击LOADPATH Button，加载补丁，需要等上3到4秒，<br/>
 如果加载成功，你将可以看到一个Toast `patch success,please restart process`.<br/>
 
 
-15.重启apk,或者杀死该应用进程，你可以点击KILL SELF或者使用如下的命令<br/>
+15.然后，就可以重启apk,锁屏或者杀死该应用进程，你可以点击KILL SELF或者使用如下的命令<br/>
 `adb shell am force-stop tinker.sample.android && adb shell am start tinker.sample.android/.app.MainActivity`
 
 
@@ -98,6 +101,6 @@ e.g.<br/>
 弹出的Dialog的第一行显示[path is loaded]
 
 同时，你可以查看自己修改的TAG是否生效。使用如下的命令过滤Log的TAG即可。<br/>
-这里的TAG就是第7部修改的TAG。<br/>
-`adb logcat | grep IwantToTestHotFix`<br/>
-如果执行上个命令看到了TAG为`IwantToTestHotFix`的Log，祝贺你热修复成功了<br/>
+这里的TAG就是第7步修改的TAG。<br/>
+`adb logcat | grep IWantToTestHotFix`<br/>
+如果执行上个命令看到了TAG为`IWantToTestHotFix`的Log，祝贺你热修复成功了<br/>
