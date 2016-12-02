@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Tinker"
+title:  "终端下完成Tinker Sample的调试"
 date:   2016-11-29 12:55 +0800
 categories: Ma Lin update
 ---
