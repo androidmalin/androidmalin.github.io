@@ -51,29 +51,24 @@ sudo tcpdump -i enp3s0<br/>
 
 可以用到的命令<br/>
 实时打印当前http请求的url(包括域名)<br/>
-tshark -s 512 -i enp3s0 -n -f 'tcp dst port 80' -Y 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -l | tr -d '\t'
+`tshark -s 512 -i enp3s0 -n -f 'tcp dst port 80' -Y 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -l | tr -d '\t'`
 下面介绍参数含义：
 
 -s 512 :只抓取前512个字节数据<br/>
-
 -i enp3s0 :捕获enp3s0网卡(可以通过ifconfig获取，或者 `sudo lshw -class network | grep "logical name"`）<br/>
-
 -n :禁止网络对象名称解析<br/>
-
 -f 'tcp dst port 80' :只捕捉协议为tcp,目的端口为80的数据包<br/>
-
 -Y 'http.host and http.request.uri' :过滤出http.host和http.request.uri<br/>
-
 -T fields -e http.host -e http.request.uri :打印http.host和http.request.uri<br/>
-
 -l ：输出到标准输出<br/>
 
 对数据进行过滤<br/>
-tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.46 || ip src 10.31.4.39 && tcp port 46869 || tcp port 8888'<br/>
+`tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.46 || ip src 10.31.4.39 && tcp port 46869 || tcp port 8888'`<br/>
 
-ip.src == 10.31.4.46 && ip.dst == 10.31.4.39 && tcp.port eq 46027  ||  tcp.port eq 46030 && http
-tcp && tcp.port eq 1084 && ip.src == 10.110.18.48
+`ip.src == 10.31.4.46 && ip.dst == 10.31.4.39 && tcp.port eq 46027  ||  tcp.port eq 46030 && http`<br/>
 
-过滤登录接口
-/home/malin/malinoo/bili.pcapng  位置196
-ip.src == 10.31.4.46 || ip.src == 10.31.4.39&& tcp.port eq 46869 || tcp.port eq 8888
+`tcp && tcp.port eq 1084 && ip.src == 10.110.18.48`<br/>
+
+过滤登录接口<br/>
+/home/malin/malinoo/bili.pcapng  位置196<br/>
+`ip.src == 10.31.4.46 || ip.src == 10.31.4.39&& tcp.port eq 46869 || tcp.port eq 8888`
