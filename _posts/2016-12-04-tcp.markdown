@@ -43,11 +43,12 @@ categories: Ma Lin update
 [Wireshark和TcpDump抓包分析心得](http://blog.csdn.net/zrzlj/article/details/6076219/)<br/>
 [Linux命令行抓包及包解析工具tshark(wireshark)使用实例解析](https://www.centos.bz/2014/07/linux-commandline-capture-packets-tshark-wireshark/)<br/>
 [网卡](https://wiki.ubuntu.com.cn/%E7%BD%91%E5%8D%A1)<br/>
+[wireshark的使用（filter的用法](http://blog.csdn.net/hanyuxinting/article/details/5558095)
 
 ifconfig<br/>
 enp3s0<br/>
 
-sudo tcpdump -i enp3s0<br/>
+`sudo tcpdump -i enp3s0`<br/>
 
 可以用到的命令<br/>
 实时打印当前http请求的url(包括域名)<br/>
@@ -72,3 +73,68 @@ sudo tcpdump -i enp3s0<br/>
 过滤登录接口<br/>
 /home/malin/malinoo/bili.pcapng  位置196<br/>
 `ip.src == 10.31.4.46 || ip.src == 10.31.4.39&& tcp.port eq 46869 || tcp.port eq 8888`
+
+点击想要查看的地址，右键-->追踪流-->TCP流。可以查看相关的网络信息。<br/>
+这个功能我比较喜欢，可以查看此次http，client端请求和server端返回的数据<br/>
+
+`sudo tcpdump -i enp3s0 -AAl src 10.31.4.46 or dst 10.31.4.39`<br/>
+
+过滤URL<br/>
+`ip.src == 10.31.4.46 && http contains "panda" && http`<br/>
+`ip.src == 10.31.4.46 && http contains "panda" && http && http.request.method == "GET" || http.request.method=="POST" && http.request.uri  contains "panda"`<br/>
+
+contains”操作符允许一个过滤器搜索一串字符，其形式为字符串，或者字节，或者字节组。例如在搜索一个HTTP URL地址，可以使用下面的过滤器：<br/>
+http contains “http://www.wireshark.org”； <br/>
+“contains”操作符不能被用于原子型的字段，比如数字和ip地址。<br/>
+
+
+
+
+http.host==6san.com<br/>
+http.host contains 6san.com<br/>
+//过滤经过指定域名的http数据包，这里的host值不一定是请求中的域名<br/>
+
+http.response.code==302<br/>
+//过滤http响应状态码为302的数据包<br/>
+
+http.response==1<br/>
+//过滤所有的http响应包<br/>
+http.request==1<br/>
+//过滤所有的http请求，貌似也可以使用http.request<br/>
+
+http.request.method==POST<br/>
+//wireshark过滤所有请求方式为POST的http请求包，注意POST为大写<br/>
+
+http.cookie contains guid<br/>
+//过滤含有指定cookie的http数据包<br/>
+
+http.request.uri==”/online/setpoint”<br/>
+//过滤请求的uri，取值是域名后的部分<br/>
+
+http.request.full_uri==” http://task.browser.360.cn/online/setpoint”<br/>
+//过滤含域名的整个url则需要使用http.request.full_uri<br/>
+
+http.server contains “nginx”<br/>
+//过滤http头中server字段含有nginx字符的数据包<br/>
+
+http.content_type == “text/html”<br/>
+//过滤content_type是text/html的http响应、post包，即根据文件类型过滤http数据包<br/>
+
+http.content_encoding == “gzip”<br/>
+//过滤content_encoding是gzip的http包<br/>
+
+http.transfer_encoding == “chunked”<br/>
+//根据transfer_encoding过滤<br/>
+
+http.content_length == 279<br/>
+http.content_length_header == “279”<br/>
+//根据content_length的数值过滤<br/>
+
+http.server<br/>
+//过滤所有含有http头中含有server字段的数据包<br/>
+
+http.request.version == “HTTP/1.1”<br/>
+//过滤HTTP/1.1版本的http包，包括请求和响应<br/>
+
+http.response.phrase == “OK”<br/>
+//过滤http响应中的phrase<br/>
