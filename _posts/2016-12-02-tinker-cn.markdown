@@ -93,11 +93,12 @@ e.g.<br/>
 如果加载成功，你将可以看到一个Toast `patch success,please restart process`.<br/>
 
 
-15.然后，就可以重启apk,锁屏或者杀死该应用进程，你可以点击KILL SELF或者使用如下的命令<br/>
+15.然后，就可以锁屏或者杀死该应用进程，你可以点击KILL SELF。<br/>
+可以使用如下的命令完成<br/>
 `adb shell am force-stop tinker.sample.android && adb shell am start tinker.sample.android/.app.MainActivity`
 
 
-16.点击应用上的 showinfo按钮确认补丁是否加载成功，如果成功你讲可以看到.<br/>
+16.点击应用上的`SHOW INFO`按钮确认补丁是否加载成功，如果成功,可以看到.<br/>
 弹出的Dialog的第一行显示[path is loaded]
 
 同时，你可以查看自己修改的TAG是否生效。使用如下的命令过滤Log的TAG即可。<br/>
