@@ -1,27 +1,23 @@
 ---
 layout: post
-title:  "Ubuntu修改Host不生效的问题"
+title:  "Ubuntu Http 请求"
 date:   2016-12-04 17:24 +0800
 categories: Ma Lin update
 ---
 
-1.编辑`/etc/hosts`文件<br/>
-`sudo vim /etc/hosts`<br/>
+1.httpie<br/>
 
-添加host，或者注释掉host<br/>
+`http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC`<br/>
 
-2.重启网络<br/>
-`sudo /etc/init.d/networking restart`<br/>
+`http get https://api.weibo.com/2/trends/hourly.json "access_token"=="2.004YppQEmwhOvBb3fbef84beEkKntC"`<br/>
 
-或者<br/>
+`http post https://api.weibo.com/2/statuses/upload_url_text.json "status"=="hello world" "url"=="http://www.baidu.com"`<br/>
 
 
-3.使用ping xxxxx测试修改后是否生效。<br/>
+[使用httpie进行接口测试](http://www.jianshu.com/p/0736d508be44)<br/>
 
-4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br/>
-使用如下的命令查找hosts.swp文件。<br/>
-`locate update `<br/>
-`locate *.swp`<br/>
+2.httpstat<br/>
 
-5.找到后删除这个文件
-`sudo rm -rf /xx/xx/hosts.swp`
+[httpstat：一个检查网站性能的 curl 统计分析工具](https://mp.weixin.qq.com/s?__biz=MjM5NjQ4MjYwMQ==&mid=2664608594&idx=1&sn=410f48527e4910f1d44f5965ea628d74&chksm=bdce88148ab901020d130d32fc5bb4ad4bd72c1ec767560b893d681009cfaef16ca9902a88d9&mpshare=1&scene=1&srcid=1218XPDF0n0YNmWHlvrbuDx4&pass_ticket=o7BDekJR2QaDbACYuZJJpI8dCs9%2BnyzdFKx%2B2qtah3ktUrKscsWvC6tJGZQFZ6r%2F#rd)<br/>
+
+[httpstat GitHub主页](https://github.com/reorx/httpstat)<br/>
