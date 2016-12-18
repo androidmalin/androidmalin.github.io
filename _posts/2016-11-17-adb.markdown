@@ -41,3 +41,58 @@ c.输入回车<br/>
 
 4.测试是否生效<br/>
 `adb version`
+
+5.获取手机IP地址：
+
+adb devices && adb tcpip 5555
+
+adb shell ifconfig | grep "inet addr:10" | cut -d ":" -f 2 | cut -d " " -f 1
+
+
+
+#!/bin/bash
+ip=`adb shell ifconfig | grep "inet addr:10" | cut -d ":" -f 2 | cut -d " " -f 1`
+adb connect $pid
+
+
+
+
+将 Android 设备与要运行 adb 的电脑连接到同一个局域网，比如连到同一个 WiFi。
+
+将设备与电脑通过 USB 线连接。
+
+应确保连接成功（可运行 adb devices 看是否能列出该设备）。
+
+让设备在 5555 端口监听 TCP/IP 连接：
+
+adb tcpip 5555
+断开 USB 连接。
+
+找到设备的 IP 地址。
+
+一般能在「设置」-「关于手机」-「状态信息」-「IP地址」找到。
+
+通过 IP 地址连接设备。
+
+adb connect <device-ip-address>
+这里的 <device-ip-address> 就是上一步中找到的设备 IP 地址。
+
+确认连接状态。
+
+adb devices
+
+
+
+#!/bin/bash
+adb devices
+adb tcpip 5555
+ip=`adb shell ifconfig | grep "inet addr:10" | cut -d ":" -f 2 | cut -d " " -f 1`
+
+$ips=${ip}":5555"
+adb connect $ips
+
+total=“${ip}${email}${other}”
+
+$value1=home
+
+$value2=${value1}"="

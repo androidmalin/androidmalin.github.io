@@ -1,0 +1,180 @@
+---
+layout: post
+title:  "android使用tcpdump抓包"
+date:   2016-12-04 17:24 +0800
+categories: Ma Lin update
+---
+0.如果是手机的话，请先root了，再执行如下的命令<br/>
+
+1.adb shell<br/>
+
+2.su<br/>
+
+3.给手机`/data/local/`目录授权<br/>
+`chmod 777 /data/local/`
+
+4.下载tcpdump[点击下载](http://www.strazzere.com/android/tcpdump)
+
+5.将`tcpdump`推送到手机的`/data/local/`目录下<br/>
+`adb push tcpdump /data/local/tcpdump`
+
+6.给tcpdump设置相关执行权限。<br/>
+`chmod 6755 /data/local/tcpdump`
+
+7.启动tcpdump开始抓取<br/>
+`/data/local/tcpdump -p -vv -s 0 -w /sdcard/capture.pcap`
+
+-p 将网络接口设置成非混杂模式<br/>
+-vv 输出详细的报文信息<br/>
+-s 设置捕获数据包的长度，从每个分组中读取最开始的snaplen个字节，而不是默认的68个字节，这里使用0，表示获取全部数据包。<br/>
+-w 将监听到的数据包写入指定文件，不分析和打印数据包。<br/>
+
+8.从手机中将数据包拉到电脑目录中<br/>
+`adb pull /sdcard/capture.pcap /home/malin/nn`<br/>
+
+参考资料<br/>
+[android使用tcpdump抓包](http://codingnow.cn/android/1633.html)<br/>
+[Wireshark基本介绍和学习TCP三次握手](http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html)<br/>
+[详解使用tcpdump、wireshark对Android应用程序进行抓包并分析](http://www.myhack58.com/Article/48/67/2013/39798.htm)<br/>
+[IOS,Android网络抓包教程之tcpdump](http://mrpeak.cn/blog/tutorial-tcpdump/)<br/>
+[Android抓包方法(二)之Tcpdump命令+Wireshark](http://www.cnblogs.com/findyou/p/3491035.html)<br/>
+[0x16进制](http://baike.baidu.com/link?url=oxGJFuDFnX4vkKbKadGsBz-Ysu4rb5Zk_XHQywUF_FUwqTGhg0lT-Lb1PBg3yxhZJhc9bZ73Mc2eB1L2gK4b_D31pmrY8uGUg1yCrDqQtJO)<br/>
+[not-able-to-run-executable-file-from-adb-shell](http://stackoverflow.com/questions/12722157/not-able-to-run-executable-file-from-adb-shell)<br/>
+[Wireshark和TcpDump抓包分析心得](http://blog.csdn.net/zrzlj/article/details/6076219/)<br/>
+[Linux命令行抓包及包解析工具tshark(wireshark)使用实例解析](https://www.centos.bz/2014/07/linux-commandline-capture-packets-tshark-wireshark/)<br/>
+[网卡](https://wiki.ubuntu.com.cn/%E7%BD%91%E5%8D%A1)<br/>
+[wireshark的使用（filter的用法](http://blog.csdn.net/hanyuxinting/article/details/5558095)
+
+ifconfig<br/>
+enp3s0<br/>
+
+`sudo tcpdump -i enp3s0`<br/>
+
+可以用到的命令<br/>
+实时打印当前http请求的url(包括域名)<br/>
+`tshark -s 512 -i enp3s0 -n -f 'tcp dst port 80' -Y 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -l | tr -d '\t'`
+下面介绍参数含义：
+
+-s 512 :只抓取前512个字节数据<br/>
+-i enp3s0 :捕获enp3s0网卡(可以通过ifconfig获取，或者 `sudo lshw -class network | grep "logical name"`）<br/>
+-n :禁止网络对象名称解析<br/>
+-f 'tcp dst port 80' :只捕捉协议为tcp,目的端口为80的数据包<br/>
+-Y 'http.host and http.request.uri' :过滤出http.host和http.request.uri<br/>
+-T fields -e http.host -e http.request.uri :打印http.host和http.request.uri<br/>
+-l ：输出到标准输出<br/>
+
+对数据进行过滤<br/>
+`tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.46 || ip src 10.31.4.39 && tcp port 46869 || tcp port 8888'`<br/>
+
+`ip.src == 10.31.4.46 && ip.dst == 10.31.4.39 && tcp.port eq 46027  ||  tcp.port eq 46030 && http`<br/>
+
+`tcp && tcp.port eq 1084 && ip.src == 10.110.18.48`<br/>
+
+过滤登录接口<br/>
+/home/malin/malinoo/bili.pcapng  位置196<br/>
+`ip.src == 10.31.4.46 || ip.src == 10.31.4.39&& tcp.port eq 46869 || tcp.port eq 8888`
+
+点击想要查看的地址，右键-->追踪流-->TCP流。可以查看相关的网络信息。<br/>
+这个功能我比较喜欢，可以查看此次http，client端请求和server端返回的数据<br/>
+
+`sudo tcpdump -i enp3s0 -AAl src 10.31.4.46 or dst 10.31.4.39`<br/>
+
+过滤URL<br/>
+`ip.src == 10.31.4.46 && http contains "panda" && http`<br/>
+`ip.src == 10.31.4.46 && http contains "panda" && http && http.request.method == "GET" || http.request.method=="POST" && http.request.uri  contains "panda"`<br/>
+
+contains”操作符允许一个过滤器搜索一串字符，其形式为字符串，或者字节，或者字节组。例如在搜索一个HTTP URL地址，可以使用下面的过滤器：<br/>
+http contains “http://www.wireshark.org”； <br/>
+“contains”操作符不能被用于原子型的字段，比如数字和ip地址。<br/>
+
+
+
+
+http.host==6san.com<br/>
+http.host contains 6san.com<br/>
+//过滤经过指定域名的http数据包，这里的host值不一定是请求中的域名<br/>
+
+http.response.code==302<br/>
+//过滤http响应状态码为302的数据包<br/>
+
+http.response==1<br/>
+//过滤所有的http响应包<br/>
+http.request==1<br/>
+//过滤所有的http请求，貌似也可以使用http.request<br/>
+
+http.request.method==POST<br/>
+//wireshark过滤所有请求方式为POST的http请求包，注意POST为大写<br/>
+
+http.cookie contains guid<br/>
+//过滤含有指定cookie的http数据包<br/>
+
+http.request.uri==”/online/setpoint”<br/>
+//过滤请求的uri，取值是域名后的部分<br/>
+
+http.request.full_uri==” http://task.browser.360.cn/online/setpoint”<br/>
+//过滤含域名的整个url则需要使用http.request.full_uri<br/>
+
+http.server contains “nginx”<br/>
+//过滤http头中server字段含有nginx字符的数据包<br/>
+
+http.content_type == “text/html”<br/>
+//过滤content_type是text/html的http响应、post包，即根据文件类型过滤http数据包<br/>
+
+http.content_encoding == “gzip”<br/>
+//过滤content_encoding是gzip的http包<br/>
+
+http.transfer_encoding == “chunked”<br/>
+//根据transfer_encoding过滤<br/>
+
+http.content_length == 279<br/>
+http.content_length_header == “279”<br/>
+//根据content_length的数值过滤<br/>
+
+http.server<br/>
+//过滤所有含有http头中含有server字段的数据包<br/>
+
+http.request.version == “HTTP/1.1”<br/>
+//过滤HTTP/1.1版本的http包，包括请求和响应<br/>
+
+http.response.phrase == “OK”<br/>
+//过滤http响应中的phrase<br/>
+
+sslkeylog
+
+ip.src == 10.31.4.62 && ip.dst == 10.31.4.90
+
+ip.src == 10.31.4.116 && http contains "panda" && http && http.request.method == "GET" || http.request.method=="POST" && http.request.uri  contains "panda"
+ip.src == 10.31.4.116 && http && http.request.method == "GET" || http.request.method=="POST" && http.request.uri  contains "getFollowLiveCount"
+
+
+sudo tar zxvf jdk-8u112-linux-x64.tar.gz -C /usr/lib/jvm
+
+tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.116 && ip src 10.31.4.90 && tcp port 46869 || tcp port 8888'
+
+
+`tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.116 && ip dst 10.31.4.90' -Y 'http.request.uri contains "panda"' -T fields -e http.request.uri -l | tr -d '\t'`
+
+实时打印当前http请求的url(包括域名)<br/>
+`tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.4.116 && ip dst 10.31.4.90' -Y 'http.host and http.request.uri' -T fields -e http.host -e http.request.uri -l | tr -d '\t'`
+
+
+git status
+
+耗费了 2.92 秒以枚举未跟踪的文件。'status -uno' 也许能提高速度，
+但您需要小心不要忘了添加新文件（参见 'git help status'）。
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+git status -uno
+
+
+
+
+ip.src == 10.31.146.12 && ip.dst == 10.31.4.116
+
+tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.146.12 && ip dst 10.31.4.116'
+===============
+
+ip.src == 10.31.146.12 && ip.dst == 10.31.4.116 && tcp.flags.syn == 0x02
+
+ip.src == 101.201.233.158 && ip.dst == 10.31.4.116 && tcp
+
+ip.dst == 10.31.4.116
