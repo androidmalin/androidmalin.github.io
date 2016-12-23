@@ -37,10 +37,7 @@ d.给脚本授权可执行的权限。<br/>
 
 f.可以将该脚本加入环境变量中。<br/>
 
-`vim ~/.bashrc`<br/>
-`export HUAWEI_HOME=/home/malin/huaweip9`<br/>
-`export PATH=$PATH:$HUAWEI_HOM`<br/>
-`source ~/.bashrc`
+这里可以参考这篇文章 [Linux,Unix下环境变量的配置](http://www.malin.xyz/ma/lin/update/2016/11/17/adb.html)<br/>
 
 g.执行试试看。<br/>
 
