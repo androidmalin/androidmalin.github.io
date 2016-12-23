@@ -48,3 +48,7 @@ g.执行试试看。<br/>
 i.如果应用已经被安装了可以使用如下的脚本<br/>
 
 ![](http://ogxkun013.bkt.clouddn.com/runapp.png)
+
+
+参考文章列表<br/>
+1.[find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web](http://stackoverflow.com/questions/2789462/find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web)
