@@ -9,16 +9,18 @@ categories: Ma Lin update
 
 a.首先需要得到APK的包名<br/>
 `aapt dump badging app.apk | grep package | awk '{print $2}' | sed s/name=//g | sed s/\'//g`<br/>
+
 例如得到如下的结果<br/>
 com.malin.world<br/>
 
 b.得到APK的启动Activity类名<br/>
-`aapt dump badging app.apk | grep activity | awk '{print $2}' | sed s/name=//g | sed s/\'//g`
+`aapt dump badging app.apk | grep activity | awk '{print $2}' | sed s/name=//g | sed s/\'//g`<br/>
+
 例如得到如下的结果<br/>
 com.malin.world.activity.MainActivity<br/>
 
 c.使用adb命令安装APK到设备<br/>
-`adb install app.apk`
+`adb install -r app.apk`
 
 d.使用adb命令启动<br/>
 `adb shell am start -n package/launchable-activity`<br/>
