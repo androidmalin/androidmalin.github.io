@@ -167,14 +167,18 @@ git status -uno
 
 
 
+ip.src == 10.31.4.62 && ip.dst == 10.31.146.12
 
 ip.src == 10.31.146.12 && ip.dst == 10.31.4.116
 
 tshark -s 512 -i enp3s0 -n -f 'ip src 10.31.146.12 && ip dst 10.31.4.116'
-===============
 
 ip.src == 10.31.146.12 && ip.dst == 10.31.4.116 && tcp.flags.syn == 0x02
 
 ip.src == 101.201.233.158 && ip.dst == 10.31.4.116 && tcp
 
 ip.dst == 10.31.4.116
+
+
+
+sed -i '42s/.*/private static final String TAG = "IWantToTestHotFix";/' app/src/main/java/tinker/sample/android/app/MainActivity.java

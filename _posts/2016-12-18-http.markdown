@@ -25,3 +25,7 @@ categories: Ma Lin update
 
 5.找到后删除这个文件
 `sudo rm -rf /xx/xx/hosts.swp`
+
+
+
+sed 's/\"//g'

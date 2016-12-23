@@ -1,0 +1,51 @@
+---
+layout: post
+title:  "使用脚本安装并启动一个APK"
+date:   2016-12-04 17:24 +0800
+categories: Ma Lin update
+---
+
+1.安装并启动一个的APK（例如app.apk这个文件）<br/>
+
+a.首先需要得到APK的包名<br/>
+`aapt dump badging app.apk | grep package | awk '{print $2}' | sed s/name=//g | sed s/\'//g`<br/>
+例如得到如下的结果<br/>
+com.malin.world<br/>
+
+b.得到APK的启动Activity类名<br/>
+`aapt dump badging app.apk | grep activity | awk '{print $2}' | sed s/name=//g | sed s/\'//g`
+例如得到如下的结果<br/>
+com.malin.world.activity.MainActivity<br/>
+
+c.使用adb命令安装APK到设备<br/>
+`adb install app.apk`
+
+d.使用adb命令启动<br/>
+`adb shell am start -n package/launchable-activity`<br/>
+
+例如：<br/>
+`adb shell am start com.malin.world/com.malin.world.activity.MainActivity`
+
+e.将上面的四个命令写成shell脚本(例如命令为runapp.sh)<br/>
+
+![](http://ogxkun013.bkt.clouddn.com/runApp.png)
+
+d.给脚本授权可执行的权限。<br/>
+`chmod +x runapp.sh`<br/>
+
+f.可以将该脚本加入环境变量中。<br/>
+
+`vim ~/.bashrc`<br/>
+`export HUAWEI_HOME=/home/malin/huaweip9`<br/>
+`export PATH=$PATH:$HUAWEI_HOM`<br/>
+`source ~/.bashrc`
+
+g.执行试试看。<br/>
+
+![](http://ogxkun013.bkt.clouddn.com/installRun.png)
+
+该APK被安装到了手机上并启动了。<br/>
+
+i.如果应用已经被安装了可以使用如下的脚本<br/>
+
+![](http://ogxkun013.bkt.clouddn.com/runapp.png)
