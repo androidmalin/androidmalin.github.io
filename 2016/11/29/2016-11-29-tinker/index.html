@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Tinker | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1
+
+e.g. 2.14.1 3.1 3.2 3.2.1You can download the gradle from this websitehttps://services.gradle.org/distributionsadd adb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tinker">
+<meta property="og:url" content="http://www.malin.xyz/2016/11/29/2016-11-29-tinker/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1
+
+e.g. 2.14.1 3.1 3.2 3.2.1You can download the gradle from this websitehttps://services.gradle.org/distributionsadd adb">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/tinker10.png">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/kill2.png">
+<meta property="og:updated_time" content="2016-12-25T07:36:01.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tinker">
+<meta name="twitter:description" content="0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1
+
+e.g. 2.14.1 3.1 3.2 3.2.1You can download the gradle from this websitehttps://services.gradle.org/distributionsadd adb">
+<meta name="twitter:image" content="http://ogxkun013.bkt.clouddn.com/tinker10.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.malin.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-11-29-tinker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/29/2016-11-29-tinker/" class="article-date">
+  <time datetime="2016-11-29T04:55:00.000Z" itemprop="datePublished">2016-11-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tinker
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br></p>
+<blockquote>
+<p>e.g. <code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br><br>You can download the gradle from this website<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="external">https://services.gradle.org/distributions</a><br><br><br><br>add <code>adb</code> ,<code>gradle</code> on your path<br><br>You can see this article <a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="external">How to adb into your path</a><br><br><br><br><br>You can see the <a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="external">Tinker wiki</a>.<br><br><a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="external">https://github.com/Tencent/tinker/wiki</a><br></p>
+</blockquote>
+<p>1.DownLoad the source code of <a href="https://github.com/Tencent/tinker" target="_blank" rel="external">tinker</a> from github <br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
+<p>2.Open the Sample project<br><br><code>cd tinker/tinker-sample-android</code></p>
+<p>3.DownLoad the dependencies of sample,It may take a long time when you run firstly,you can drink a cup of coffee.<br><br><code>gradle clean</code></p>
+<p>4.Buid debug apk<br><br><code>gradle assembleDebug</code></p>
+<p>5.Install the debug base apk into your phone or emulator(e.g. <a href="https://www.genymotion.com/" target="_blank" rel="external">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="external">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
+<p>6.Start the debug base apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
+<p>7.Change some codes in order to fix bugs<br></p>
+<blockquote>
+<p>TODO:// Coding in order to fix bug1<br><br>TODO:// Coding in order to fix bug2<br></p>
+</blockquote>
+<p>e.g.Change the Log TAG of MainActivity<br></p>
+<p>one: get row of TAG<br><br><code>grep -n &quot;TAG&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d &quot;:&quot; -f 1</code></p>
+<p>two: Replace the TAG to your tag eg:TestTinker<br><br><code>sed -i &#39;42s/.*/private static final String TAG = &quot;TestTinker&quot;;/&#39; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
+<p>three: confirm the change successfully<br><br><code>grep -n &quot;TestTinker&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
+<p>8.Get the base debug apk fileName<br><br><code>find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk &#39;{print $9}&#39; | cut -d  &quot;/&quot; -f 4</code></p>
+<p>9.Get “tinkerOldApkPath” first occurrence of rows which from tinker-sample-android/app/build.gradle<br><br><code>grep -n &quot;tinkerOldApkPath&quot; app/build.gradle | head -n 1 | cut -d  &quot;:&quot; -f 1</code></p>
+<p>10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br></p>
+<blockquote>
+<p>Replace the line numbers which from number9 and apkName which from number8</p>
+</blockquote>
+<p>e.g. <br><br><img src="http://ogxkun013.bkt.clouddn.com/tinker10.png" alt="tinker10"></p>
+<p>number8 app-debug-1130-12-54-43.apk<br><br>number9 147<br></p>
+<p>thus,you can get the command.<br></p>
+<blockquote>
+<p>sed -i ‘number8s/.*/tinkerOldApkPath=”${bakPath}\/number9”/‘ app/build.gradle<br></p>
+</blockquote>
+<p>e.g.<br><br><code>sed -i &#39;147s/.*/tinkerOldApkPath=&quot;${bakPath}\/app-debug-1130-12-54-43.apk&quot;/&#39; app/build.gradle</code><br></p>
+<p>11.confirm the number11 do successfully</p>
+<blockquote>
+<p>grep -n “number8” app/build.gradle<br></p>
+</blockquote>
+<p>e.g.<br><br><code>grep -n &quot;app-debug-1130-12-54-43.apk&quot; app/build.gradle</code></p>
+<p>12.Build in order to the patch apk<br><br><code>gradle tinkerPatchDebug</code></p>
+<p>13.Push patch apk into phone or emulator<br><br><code>adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/</code></p>
+<p>14.Click LOADPATH Button on the Sample App<br><br>If PATH load success,the you can see the Toast which is <code>patch success,please restart process</code>.<br></p>
+<p>15.kill the running apk or restart the running apk<br><br><code>adb shell am force-stop tinker.sample.android</code></p>
+<p>or<br></p>
+<p>If you phone is root,you can use adb shell kill -9 pid<br><br>./kill.sh<br></p>
+<p>the content of kill.sh<br></p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/kill2.png" alt="kill.sh"></p>
+<p>a.<code>vim kill.sh &amp;&amp; chmod 777 ./kill.sh</code><br><br>b.input content of kill.sh<br><br>c.then <code>./kill.sh</code></p>
+<p>16.Start the apk again<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
+<p>17.Click showinfo in order to confirm the patch load successfully or not.</p>
+<p><code>adb logcat | grep TestTinker</code><br></p>
+<p>If you see log which tag is “TestTinker”,Congratulate to you!<br></p>
+<p>18.Change some codes in order to hot fix bugs from number 8<br></p>
+<blockquote>
+<p>TODO:// Coding in order to fix bug1<br><br>TODO:// Coding in order to fix bug2<br></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.malin.xyz/2016/11/29/2016-11-29-tinker/" data-id="cix4i6ydo0006d5fuwqf8ij42" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/04/2016-12-04-tcp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu下解压乱码的问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/29/2016-12-02-tinker-cn/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">终端下完成Tinker Sample的调试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ma-Lin-update/">Ma Lin update</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/22/2016-12-22-shell/">使用脚本安装并启动一个APK</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/18/2016-12-18-http/">Ubuntu修改Host不生效的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/14/2016-12-14-host/">Ubuntu Http 请求</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/06/2016-12-06-unzip/">android使用tcpdump抓包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AndroidMaLin<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>编写易于删除，而不是易于扩展的代码 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="感谢代码家的校对，感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。
+
+原文链接：http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to
+编写易于删除，而不是易于扩展的代码
+“毫无目的地去编码，将会导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写易于删除，而不是易于扩展的代码">
+<meta property="og:url" content="http://www.malin.xyz/2016/03/09/2016-03-09-my-two-article/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="感谢代码家的校对，感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。
+
+原文链接：http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to
+编写易于删除，而不是易于扩展的代码
+“毫无目的地去编码，将会导">
+<meta property="og:updated_time" content="2016-12-25T07:34:04.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编写易于删除，而不是易于扩展的代码">
+<meta name="twitter:description" content="感谢代码家的校对，感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。
+
+原文链接：http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to
+编写易于删除，而不是易于扩展的代码
+“毫无目的地去编码，将会导">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.malin.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-03-09-my-two-article" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/09/2016-03-09-my-two-article/" class="article-date">
+  <time datetime="2016-03-09T14:22:00.000Z" itemprop="datePublished">2016-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编写易于删除，而不是易于扩展的代码
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>感谢代码家的校对，感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。</p>
+</blockquote>
+<p>原文链接：<a href="http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to" target="_blank" rel="external">http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to</a></p>
+<h2 id="编写易于删除，而不是易于扩展的代码"><a href="#编写易于删除，而不是易于扩展的代码" class="headerlink" title="编写易于删除，而不是易于扩展的代码"></a>编写易于删除，而不是易于扩展的代码</h2><blockquote>
+<p>“毫无目的地去编码，将会导致无法维护和删除” —— Jean-Paul Sartre《Programming in ANSI C》</p>
+</blockquote>
+<p>我们编写的每一行代码都应该是可维护的。为了避免写出大量的代码，我们应该构建一个可复用的软件。代码可复用的问题将在未来潜移默化地改变你的编程思想。</p>
+<p>如果你越多地依赖一个API，那么当它变化时，你将不得不为它引入更多的变化。在一个大型系统中，各个模块之间代码如何配合以及如何管理它们之间的相互依赖关系是一个很重要的难题，而且这个难题会随着工程地逐渐膨大而变得愈加困难。</p>
+<blockquote>
+<p>对于代码行数，目前我的观点是，不应该把它们当作“写出了多少行代码”，而是“付出了多少行代码” EWD 1036</p>
+</blockquote>
+<p>如果我们把’代码的行数’看做是‘花费的行数’，那么当我们删除代码时，这相当于降低我们的维护成本。我们应该尝试建立一次性使用的软件，而不是花大力气构建可复用的软件。</p>
+<p>告诉你个小秘密：删代码比写代码更有趣：)。</p>
+<p>编写易删除的代码：要不断地提醒自己避免创建依赖关系，而不是去管理它们。对代码进行分层：要创建易于使用的API，而不是易于实现但使用繁琐的API。分割你的代码：将逻辑复杂难于实现的代码，以及易发生改变的代码，与其他的代码隔离开来。尽量不要硬编码，应该允许代码在运行期可以发生改变。不要试图一次就做完所有事情，首先不要写大量的代码。</p>
+<h3 id="首先：不要急着开始写代码"><a href="#首先：不要急着开始写代码" class="headerlink" title="首先：不要急着开始写代码"></a>首先：不要急着开始写代码</h3><p>代码行数除了能告诉我们代码的数量级(如50行、500行、5000行、10000行、25000行…)外，并不能告诉我们更多的信息。替换一百万代码明显要比替换一万行代码要花费更多的时间、金钱和精力，而且会让人感到痛不欲生。</p>
+<p>代码越多越难去除，节省一行代码也几乎不会产生任何作用。</p>
+<p>既然如此，首先删除那些你可以避免写的代码。</p>
+<h3 id="步骤1-复制粘贴代码"><a href="#步骤1-复制粘贴代码" class="headerlink" title="步骤1:复制粘贴代码"></a>步骤1:复制粘贴代码</h3><p>在基于已有代码的基础上构建可重用的代码，远比凭空构建容易许多。再说，你很可能已经通过文件系统复用了大量的代码。何必担心这么多呢？有一点冗余是没有关系的。</p>
+<p>拷贝粘贴代码，比“创建一个库函数，然后在使用时获取它的句柄”的方式更节省时间。事实上，一旦你发布了一个公共API,那么你将很难再改变它。</p>
+<p>某个程序员的代码一旦调用了你写的函数，那么它将不得不依赖这个函数中所有的有意或无意的实现。到时，他将不再信任你的文档说明，而只相信他自己所观察到的结果。删除一个函数内部的代码要比删除函数更简单。</p>
+<h3 id="步骤2：不要复制粘贴代码"><a href="#步骤2：不要复制粘贴代码" class="headerlink" title="步骤2：不要复制粘贴代码"></a>步骤2：不要复制粘贴代码</h3><p>当你已经复制粘贴了很多次某段代码了，这时也许是时候把它们提炼成一个函数了。这是东西“从我的标准库拯救我”了：“打开一个配置文件，并给我一个哈希表”，“删除这个目录。”像这种没有任何状态的函数,或者只包含一些全局常量比如环境变量的函数。最终将写在一个命名为“util”的文件中。</p>
+<p>旁白：做一个util目录，并让不同的文件拥有不同的功能。</p>
+<p>一个单独的工具文件会一直增长，直到它太大了而难以分开。使用一个单独的工具文件是不合理的。你的应用或者工程中特定的代码越少，它们越容易被复用，而改变或删除的可能性越小。库代码如日志输出，或第三方的API，文件处理，或进程管理。其他一些好的示例代码你不打算删除，它们是哈希表，和其他collections。不是因为它们通常具有非常简单的接口,而是因为他们在一定的时间范围内不会增长。</p>
+<p>不是说，把任何代码都写的易于删除，而是我们应该尽力将难以删除的部分和容易删除的部分分隔开。</p>
+<h3 id="步骤3：编写更多的样板代码"><a href="#步骤3：编写更多的样板代码" class="headerlink" title="步骤3：编写更多的样板代码"></a>步骤3：编写更多的样板代码</h3><p>尽管写一些库可以避免复制粘贴,通常我们最终还是为了使用它们而复制粘贴了大量的代码,但我们称呼它们为样板代码。样板代码很像复制粘贴,但你每次在不同的场合都会修改其中的一些代码,而不是一遍又一遍去修改一些很细微的地方。</p>
+<p>像复制粘贴,通常我们复制部分代码,是为了避免引入依赖,获得灵活性,在冗长中并使用它。那些需要样板代码的库，通常是一些像网络协议,线格式,或解析包，它们在行为(一个程序应该做什么)和协议(程序可以做什么)上没有交集，没有限制的选项。</p>
+<p>这段代码很难删除:它是必需的用于和另一台计算机进行交互或处理不同的文件,这时候我们要做的是在业务逻辑内将它丢掉。</p>
+<p>在代码复用中这并不是一个运用:我们尽量使经常变化的部分远离那些相对静止的部分。即使我们需要写样板去使用它，我们还是有必要将库中代码之间的依赖关系或责任最小化。</p>
+<p>你将写很多行代码,但请在容易删除的部分中写你的代码。</p>
+<h3 id="第4步：不要写样板代码"><a href="#第4步：不要写样板代码" class="headerlink" title="第4步：不要写样板代码"></a>第4步：不要写样板代码</h3><p>如果库想要迎合所有口味，那么样板代码的效果最好。但有时，实在太多重复。现在是时候封装你的具有良好扩展性的库，让这个库带有行为,流程和状态这些项。构建简单易用的api是把你的样板代码变成一个库。</p>
+<p>你可能认为这个并不常见:事实上，最受欢迎的和拥护的python http客户端,请求就是一个成功的例子。它提供了一个简单的界面,它的底层由一个功能强大的urllib3库支持着。使用http请求时迎合常见的工作流,隐藏了许多来自用户的实际细节。同时,urllib3管道,连接管理,不隐藏任何来自用户的东西。</p>
+<p>与其说我们隐藏了细节当我们在一个库的基础上包装另一个库,倒不如说我们分离关注:关于流行的http请求,urllib3将给你提供一个工具来选择自己的行为。</p>
+<p>我不主张你去创建一个/协议/,/行为/目录,但你想尝试和保持你的util目录自由的业务逻辑,并建立更易于使用的库上容易实现的。你不需要写完一个库然后在另一个库之上再写。</p>
+<p>通常包装第三方库也是一个好方法,即使它们不是协议型。你可以建立一个适用于你编写代码的库,而不是将目光锁定在整个项目的层次上。建立一个使用方便的API和构建一个可扩展的API往往相互矛盾。</p>
+<p>关注这个问题使我们能够让一些用户高兴，同时不会对其他带来不便。当你开始使用一个设计良好的API时，分层是容易,但是在一个不好的基础上想写出一个设计良好的API的确不是一个令人愉快的经历。好的Api在设计的时候会考虑到使用它的程序员,同时在分层设计的时候应该意识到我们不能取悦所有人。</p>
+<p>分层可以减少那些之后可以删除的代码的编写，但是删除代码后使用起来不会令人感到愉快(在业务逻辑的范畴内没有造成破坏)。</p>
+<h3 id="第五步-编写一大堆代码"><a href="#第五步-编写一大堆代码" class="headerlink" title="第五步:编写一大堆代码"></a>第五步:编写一大堆代码</h3><p>你已经完成了复制粘贴,重构,分层,组合,但是在一天结束的时候还有一些事情需要做。有时候放弃是一种很好的选择，在每天最高效的时间写代码中最重要的部分。</p>
+<p>业务逻辑代码的特点是一系列永无止境的边界情况和快速迭代和一些棘手的bug。这很好。对这些事情我能够从容应对。其他的如‘游戏代码’,或 ‘基础代码’ 是一样的:偷工减料节省大量的时间。</p>
+<p>这么做的原因是什么呢？通常修复一个大的bug比修复18个相互交叉的小bug要容易的多。大多数编程都是在探索,经常很快就会多次出错,很难一次性编写正确。</p>
+<p>这是一个充满了乐趣和创造性的过程。如果你打算写自己第一个游戏程序的话:不要写一个引擎。同样,不要写一个web框架在编写应用程序之前。第一次去写一堆烂代码。除非你真的不知道如何分解。</p>
+<p>Monorepos类似的权衡:你不知道如何去分解你的代码,坦白说解决一个大的错误比解决20紧密耦合错误容易很多。<br>当你知道代码将很快废弃,删除,或被替换,你可以避免进入一些窘境。特别是如果你编写一次性客户网站,网页。<br>我不是建议你写毫无价值的代码10次以上,掩饰自己的错误。引用玻璃市语录:“除了第一次，一切都应该自上而下地建立”。</p>
+<p>你应该试着每次犯新的错误,冒新的风险,并通过迭代慢慢地解决错误。成为一个专业的软件开发人员是靠大量遗憾和错误积累造就的。</p>
+<p>你从成功中什么都学不到。这并不是说你知道好的代码是什么样子,烂代码的伤疤可以刷新你的认知。</p>
+<p>最终项目失败或成为遗留代码。失败的出现总是多于成功。很容易写一大堆烂代码而且这些烂代码将会让你很难堪，比收拾一堆狗屎还难堪。</p>
+<p>删除所有的代码比分段删除更加容易。</p>
+<h3 id="步骤6-将你的代码分解成碎片"><a href="#步骤6-将你的代码分解成碎片" class="headerlink" title="步骤6:将你的代码分解成碎片"></a>步骤6:将你的代码分解成碎片</h3><p>一大堆代码是最容易构建但维护起来将付出巨大的代价。修改代码时有一种牵一发而动全身的感觉。删除全部的代码是容易的，但是不能这样做，最后只能删除代码片段。</p>
+<p>我们对代码根据单一责任模式进行分层，从特定的平台到特定的领域，我们需要找到一种方法去梳理逻辑。</p>
+<blockquote>
+<p>开始的时候有很多困难的设计决策，这种情况是很有可能解决的，如果每个模块在设计的时候将这些决策隐藏。D. Parnas</p>
+</blockquote>
+<p>我们隔离最令人沮丧的部分，将它们彼此隔离，然后编写,维护,或删除代码。</p>
+<p>我们不是为了能够复用模块代码而到处构建它们，而是为了可以更好的维护它们。</p>
+<p>不幸的是,有些问题总是交织在一起,很难将它们彼此分开。</p>
+<p>尽管单一责任模式建议,“每个模块应该只处理一个难题”,更重要的是‘每一个困难的问题是只由一个模块处理’。当一个模块做两件事情时,常常因为一个部分的改变需要改变另一个部分。常常容易有一个可怕的组件包含一个简单的接口,而不是两个组件良好的配合。</p>
+<blockquote>
+<p>我不会为了迎合“松耦合”的概念而到处定义一些东西。而是理解它的思想，当我看到它时，相关的代码就会变得好很多。</p>
+</blockquote>
+<p>在一个系统中你可以删除一个部分而不用重写其他部分通常被称为松散耦合,比起如何去做解释起来的确很容易。</p>
+<p>即使硬编码一个变量一旦可以松散耦合,或许使用一个命令行就可以标记一个变量。松耦合是能够改变你的思想但并不会改变太多的代码。</p>
+<p>例如,Microsoft Windows为了达到松耦合有内部和外部api。外部API和桌面程序的生命周期相关,而内部API处理底层内核相关。隐藏这些api提高了Windows系统的灵活性同时在软件的开发过程中并没有产生很多破坏。</p>
+<p>HTTP也是一个松耦合的例子:将缓存放到HTTP服务端。将你的图片移动到CDN中,只是改变链接。并没有对浏览器造成影响。</p>
+<p>HTTP错误代码也是松耦合的一个例子:与web服务器交互的特定响应状态码。当你得到一个400的错误码时（你访问的页面域名不存在或者请求错误）,再次请求一遍会还会得到同样的结果。而一个500的错误码再次请求可能会发生变化。因此,HTTP客户端可以替程序开发者处理许多错误。</p>
+<p>你的软件在如何处理错误的问题上,必须考虑分解成小的模块来处理。说起来容易做起来难。</p>
+<blockquote>
+<p>我已经决定,不再使用乳胶。而是制定可靠的分布式系统来处理软件错误。阿姆斯特朗,2003</p>
+</blockquote>
+<p>Erlang / OTP在它选择如何处理错误时有一个相对独特的东西被称之为:监督树。概况地讲,每个Erlang系统中的进程都由一个监督者来启动和管理。当一个进程遇到一个问题,它退出。当进程退出时,它由监管者重新启动。</p>
+<p>(这些监管者被引导程序启动,当它遇到错误时,它将被引导程序重新启动)</p>
+<p>这个核心的理念是对失败的迅速响应和重启而不是对错误的处理。这样的错误处理似乎是反直觉的，当错误发生时通过放弃来获得可靠性,但又能够抑制瞬态故障而把事情断断续续完成。</p>
+<p>错误处理和恢复最好放在你代码库的外层来完成。这就是所谓的端对端原则。端对端原则认为,在连接的断点处理问题比在中间处理要简单很多。如果你在内部处理任何事情,最后你还得在顶层检查一遍。如果每个层上都必须处理错误,那么为什么要这么麻烦地在它们内部进行处理呢?</p>
+<p>有很多方式会将一个系统紧密地绑定在一起，对错误的处理就是其中的一个。紧密耦合的例子有很多,但是这对一个被称为糟糕的设计的IMAP协议来说是不公平。</p>
+<p>在IMAP中几乎每个操作都像雪花一样,具有独特的选项和处理方式。错误处理是痛苦的:错误可能出现在另一个操作的过程中。</p>
+<p>不是uuid,IMAP可以生成唯一的标记来识别每个消息。但是这些标示可能在一个操作进行的最后发生改变。许多操作不具有原子性。它花费了超过25年才使得一个电子邮件从一个文件夹移动到另一个可以可靠地完成。有一个特殊的编码utf-7,还有一个独特的base64编码。</p>
+<p>我从来都没有使用过它们。</p>
+<p>相比之下,用两个文件系统和数据库来进行远程存储是一个更好的例子。在一个文件系统中,你有一组固定的操作,但是众多的对象都可以操作它。</p>
+<p>虽然SQL比文件系统在接口方面使用的更加广泛,它遵循了同样的模式。一些操作集,和大量对行的操作。虽然你不能总是把一个数据库更换为另一个,但在查询的领域看，SQL比任何其他语言都容易。</p>
+<p>松耦合的例子比如一个带有中间件，过滤器和管道的系统。例如,Twitter的Finagle 在服务中使用通用的API,这允许超时处理,重试机制,客户端和服务器代可以毫不费力进行身份验证检查。</p>
+<p>（我敢肯定如果这里我没有提到UNIX管道有人将会抱怨我）</p>
+<p>首先我们将我们的代码进行分层,但是总有一些层共享一个接口:一组通用的行为和操作的实现。好的松耦合的例子通常有统一的接口。</p>
+<p>一个好的代码底层不需要完全模块化。模块化地编程使编码充满了乐趣,就像是乐高积木之所以很有趣,是因为可以组合它们。</p>
+<p>一个好的代码底层有一些冗长，一些空间，和足够的距离在移动代码块的时候。不至于让你在编码的过程中深陷其中。</p>
+<p>松耦合的代码不一定是容易删除的,但它更容易替换,也更容易改变。</p>
+<h3 id="第七步-保持持续的编码"><a href="#第七步-保持持续的编码" class="headerlink" title="第七步:保持持续的编码"></a>第七步:保持持续的编码</h3><p>编写全新的代码比使用老代码更容易实现一个新的想法。不是说你应该去写微服务和一些零碎的东西，而是当你进行编程时能够确保你的系统能够支撑一个或者两个实验。</p>
+<p>功能标示是改变你的想法的一种方式。虽然功能标志被看做是一种带有实现性质的方法,它们允许代码在更改后无需重新部署软件。</p>
+<p>Google Chrome就是一个很好的例子,它从这种方法中受益良多。他们发现,最难的部分是保持定期的发布周期,在一个周期内需要合并大量的功能分支。</p>
+<p>能够逐渐地加入新代码,无需重新编译、较大的变化可以分解成小的合并，而不会影响现有的代码。早些时候新的特性出现在同一个代码库中，运行新特性的代码将会影响到其他部分的代码，随着时间的推移这种影响会变得越来越明显。</p>
+<p>功能标志不仅仅是一个命令行开关,这是将新特性从合并分支版本中解耦,从部署版本中解耦的一种方法。当花费几个小时,几天,甚至几周推出了一个新软件，能够在运行中改变你的想法变得越来越重要。问任何的一个运维工程师:任何可以在晚上唤醒你去工作的系统是一个值得你去控制的系统。它不需要让你迭代很多次,而是需要你有一个循环反馈。</p>
+<p>它与其说是你为了复用而构建模块,倒不如说是为了改变而隔离组件。处理变化不仅仅是开发新特性同时也是摆脱旧的东西。花费三个月的时间去编写可扩展性代码,你将会感到一切都是值得的。</p>
+<p>我谈论的策略,分层，隔离,通用的接口,组成——主要思想不是说为了写一个好的软件,而是如何去构建一个可以随时改变的软件。</p>
+<blockquote>
+<p>因此,管理的问题不是要去构建一个试验系统,而是把它扔掉。你会这样做。不管怎样，你将会因此扔掉一个。弗雷德布鲁克斯</p>
+</blockquote>
+<p>你不需要扔掉一切而是你需要删除一些。好的代码并不是一开始就能够写出来。好的代码只是遗留下来的代码而不是获取的代码。</p>
+<p>好的代码容易删除。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.malin.xyz/2016/03/09/2016-03-09-my-two-article/" data-id="cix4i6ydf0002d5fu7s7slzn6" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/04/2016-10-04-my-third-article/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Android开发中相见恨晚的网站
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ma-Lin-update/">Ma Lin update</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/22/2016-12-22-shell/">使用脚本安装并启动一个APK</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/18/2016-12-18-http/">Ubuntu修改Host不生效的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/14/2016-12-14-host/">Ubuntu Http 请求</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/06/2016-12-06-unzip/">android使用tcpdump抓包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AndroidMaLin<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

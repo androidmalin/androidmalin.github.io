@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android中常用的Gradle命令 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="说明本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。
+0.查看Gradle版本gradle --version
+com.android.tools.build:gradle版本网址查看地址https://bintray.com/android/android-tools/com.android.tools.build.gradle
+其他的一些android tool版本分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中常用的Gradle命令">
+<meta property="og:url" content="http://www.malin.xyz/2016/10/12/2016-10-12-my-five-arcticle/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="说明本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。
+0.查看Gradle版本gradle --version
+com.android.tools.build:gradle版本网址查看地址https://bintray.com/android/android-tools/com.android.tools.build.gradle
+其他的一些android tool版本分">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/okhttp.png">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/annotations.png">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/dependencies_one.png">
+<meta property="og:image" content="http://ogxkun013.bkt.clouddn.com/dependencies_two.png">
+<meta property="og:updated_time" content="2016-12-25T07:35:15.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中常用的Gradle命令">
+<meta name="twitter:description" content="说明本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。
+0.查看Gradle版本gradle --version
+com.android.tools.build:gradle版本网址查看地址https://bintray.com/android/android-tools/com.android.tools.build.gradle
+其他的一些android tool版本分">
+<meta name="twitter:image" content="http://ogxkun013.bkt.clouddn.com/okhttp.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.malin.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-10-12-my-five-arcticle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/12/2016-10-12-my-five-arcticle/" class="article-date">
+  <time datetime="2016-10-12T03:39:00.000Z" itemprop="datePublished">2016-10-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android中常用的Gradle命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。</p>
+<p>0.查看Gradle版本<br><br><code>gradle --version</code></p>
+<p>com.android.tools.build:gradle版本网址查看地址<br><br><a href="https://bintray.com/android/android-tools/com.android.tools.build.gradle" target="_blank" rel="external">https://bintray.com/android/android-tools/com.android.tools.build.gradle</a><br></p>
+<p>其他的一些android tool版本分布查看网址<br><a href="https://bintray.com/android/android-tools/" target="_blank" rel="external">https://bintray.com/android/android-tools/</a><br></p>
+<p>1.刷新Gradle缓存<br><br><a href="http:stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#" target="_blank" rel="external">force gradle to redownload dependencies</a><br></p>
+<p>用于解决一些奇怪的依赖问题<br><br><code>gradle --refresh-dependencies</code></p>
+<p><br><br>2.查看依赖关系<br>比如项目引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。<br><br>那么最后，这些库到底依赖或者说使用了哪个版本的okhttp呢？这个问题，在某些情况下，显得十分重要。<br></p>
+<p>比如我在项目中使用了如下的库</p>
+<blockquote>
+<p>RxJava<br>compile ‘io.reactivex:rxandroid:1.2.1’<br>compile ‘io.reactivex:rxjava:1.1.10’  </p>
+<p>Retrofit2<br>compile ‘com.squareup.retrofit2:retrofit:2.1.0’<br>compile ‘com.squareup.retrofit2:converter-gson:2.1.0’<br>compile ‘com.squareup.retrofit2:adapter-rxjava:2.1.0’  </p>
+<p>OkHttp<br>compile ‘com.squareup.okhttp3:okhttp:3.4.1’  </p>
+<p>logging-interceptor<br>debugCompile ‘com.squareup.okhttp3:logging-interceptor:3.4.1’  </p>
+</blockquote>
+<p>查看okhttp，在各个库的依赖中最后依赖的版本<br><br><code>gradle -q app:dependencyInsight --dependency okhttp --configuration compile</code></p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/okhttp.png" alt="okhttp"><br><br><br><br></p>
+<p>查看rxjava，在各个库的依赖中最后依赖的版本<br><br><code>gradle -q app:dependencyInsight --dependency rxjava --configuration compile</code></p>
+<p>查看support-annotations，在各个库的依赖中最后依赖的版本<br><br><code>gradle -q app:dependencyInsight --dependency com.android.support:support-annotations --configuration compile</code></p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/annotations.png" alt="annotations"></p>
+<p>查看Android相关库的依赖关系<br><br><code>gradle androidDependencies</code></p>
+<p>显示 task 使用细节执行<br><br><code>gradle -q help --task assemble</code></p>
+<p>可以获取到 task 的详细信息， 或者多项目构建中相同 task 名称的所有 task 的信息<br></p>
+<p>查看module相关库的依赖关系<br><br><code>gradle -q dependencies app:dependencie</code></p>
+<p>查看某个Task的相关库的依赖关系<br><br><code>gradle -q dependencies app:dependencies --configuration compile</code></p>
+<p>依赖报告<br><br><code>gradle projectReport</code><br>file:/home/malin/gitlab/bilibili/app/build/reports/project/dependencies/root.app.html<br></p>
+<p>在浏览器中打开可以看到如下的网页，十分简介清楚。</p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/dependencies_one.png" alt="denpendencies1"><br><img src="http://ogxkun013.bkt.clouddn.com/dependencies_two.png" alt="denpendencies2"></p>
+<blockquote>
+<p>说明:这里需要在module中的buil.gradle中添加如下声明:<br><br><code>apply plugin: &#39;project-report&#39;</code></p>
+</blockquote>
+<p>禁止lint Task<br><br><code>gradle build -x lint</code></p>
+<p>Task 编译耗时检测<br><br><code>gradle build --profile</code><br>file:/home/malin/gitlab/bilibili/build/reports/profile/<br></p>
+<p>生成Gradle脚本<br><br><code>gradle init wrapper</code></p>
+<p>lint<br><br><code>gradle lint</code><br>file:/home/malin/gitlab/bilibili/app/build/outputs/<br></p>
+<p>项目结构<br><br><code>gradle project</code></p>
+<p>显示依赖包的存储路径<br><br><code>gradle showMeCache</code></p>
+<p>clean<br><br><code>gradle clean</code></p>
+<p>打包<br><br><code>gradle assembleDebug --debug</code><br><code>gradle assembleRelease --info</code></p>
+<p>打包并安装<br><br><code>gradle installDebug</code><br><br><code>gradle installRelease</code><br></p>
+<p>获取APK包名<br><br>将<code>/sdk/build-tools/24.0.3/aapt</code>配置到环境变量中<br><br><code>aapt dump badging app.apk</code><br></p>
+<p>grep过滤<br><br><code>aapt dump badging app.apk | grep package</code><br><br><code>aapt dump badging app.apk | grep uses-permission</code><br></p>
+<p>查看权限<br><br><code>aapt dump permissions app.apk</code><br></p>
+<p>查看资源列表<br><br><code>aapt dump resources app.apk</code><br></p>
+<p>一般都会输出很多的信息，如要全部查看，请用下面这两句：<br><br><code>aapt dump resources app-xiaomi-debug.apk &gt; /home/malin/xxx/xxx.txt</code><br><br>这样会把所有的信息通过重定向符”&gt;”输出到sodino.txt文件中，然后再打开该文件即可查看。<br></p>
+<p>查看apk配置信息<br><br>aapt dump configurations app.apk<br></p>
+<p>查看指定apk的指定xml文件。<br><br><code>aapt dump xmltree app.apk res/layout/progress_dialog_layout.xml</code><br><br><code>aapt dump xmltree app.apk AndroidManifest.xml</code><br></p>
+<p>应用的启动时间：<br><br><code>adb shell am start -W com.malin.animation/.mvp.MActivity</code><br></p>
+<p>内存<br><br><code>adb shell dumpsys meminfo com.malin.animation</code><br></p>
+<p>gradle编译工具的版本信息<br><br><code>gradle buildEnvironment</code><br></p>
+<p>签名信息<br><br><code>gradle signingReport</code><br></p>
+<p>Gradle GUI<br><br><code>gradle -gui</code><br></p>
+<p>查看栈顶的Activity(包名)<br><br><code>adb shell dumpsys activity top | grep ACTIVITY</code><br><br><code>adb shell dumpsys activity | grep mFocusedActivity</code><br></p>
+<p>查看安装应用的信息<br><br><code>adb shell dumpsys package com.malin.animation</code><br></p>
+<p>查看安装应用的权限<br><br><code>adb shell dumpsys package com.malin.animation | grep permission</code><br></p>
+<p>查看手机的屏幕信息<br><br><code>adb shell dumpsys display</code><br></p>
+<p>查看手机分辨率<br><br><code>adb shell dumpsys display | grep DisplayInfo | grep app | grep width | grep height | grep real | grep mOverrideDisplayInfo</code><br></p>
+<p>查看当前Activity的状态<br><br><code>adb shell dumpsys activity top</code><br></p>
+<p>列出所有安装的应用的包名<br><br><code>adb shell pm list packages</code><br></p>
+<p><code>adb shell screencap /sdcard/screen.png</code><br></p>
+<p><code>adb shell am start -a android.intent.action.VIEW</code><br></p>
+<p>启动一个Activity<br><br><code>adb shell am start -n com.malin.animation/.mvp.MActivity</code><br></p>
+<p><code>adb shell am force-stop com.malin.animation</code><br></p>
+<p>http:stormzhang.com/2016/09/08/common-adb-commands/<br></p>
+<p>adb 命令大全<br><br>https:github.com/androidmalin/awesome-adb<br>http:adbshell.com/<br>https:developer.android.com/studio/command-line/shell.html</p>
+<p><code>adb shell monkey -p com.malin.animation -v 100</code><br></p>
+<p>屏幕分辨率<br><br><code>adb shell wm size</code><br></p>
+<p>屏幕密度<br><br><code>adb shell wm density</code><br></p>
+<p>屏幕分辨率和密度，虚拟按键的高度<br><br><code>adb shell dumpsys window displays | grep init</code><br></p>
+<p><code>adb shell am start -W -S -R 9 -n com.malin.animation/.mvp.MActivity</code><br></p>
+<p><code>adb shell am start -n com.malin.animation/.mvp.MActivity</code><br></p>
+<p><code>adb shell screenrecord --bugreport /sdcard/a.mp4</code><br><br><code>adb shell screenrecord /sdcard/a.mp4</code><br><br><code>adb pull /sdcard/a.mp4 /home/malin/aaaa</code><br></p>
+<p>monkey<br><br><code>adb shell monkey -p com.malin.animation -v 10000</code><br><br><code>adb shell monkey -p com.malin.animation -v -v -v --ignore-crashes --ignore-timeouts --monitor-native-crashes 100 &gt; d:\aaaa\a.txt</code><br></p>
+<p>–ignore-crashes crash后继续<br><br> –ignore-timeouts ANR后继续<br><br> –monitor-native-crashes<br><br>–ignore-security-exceptions 权限问题后，继续<br></p>
+<p>gradle文档<br><br>https:dongchuan.gitbooks.io/gradle-user-guide-/content/<br></p>
+<p>即可看到所有依赖的对应路径，<br><br>Note : 因为 gradle 文件顺序执行的特点，这个任务应该定义在dependencies节点之下。<br><br><code>gradle showMeCache</code><br></p>
+<p>离线模式编译<br><br><code>gradlew.bat build --offline -x lint</code><br></p>
+<p>多命令顺序执行<br><br><code>gradlew.bat clean &amp; gradlew.bat showMeCache &amp; gradlew.bat build --offline -x lint</code></p>
+<p>点击坐标点x=50  y=250的位置<br><br><code>adb shell input tap 50 250</code></p>
+<blockquote>
+<p>task showMeCache &lt;&lt; {<br>    configurations.compile.each { println it }<br>}</p>
+</blockquote>
+<p>自动化<br><br>光标切换到输入用户名<br><br><code>adb shell input tap 200 800</code><br></p>
+<p>输入用户名<br><br><code>adb shell input text 15510600873</code><br></p>
+<p>光标切换到输入密码<br><br><code>adb shell input tap 200 900</code><br></p>
+<p>输入密码 abcd<br><br><code>adb shell input text abcdefgh</code><br></p>
+<p>点击登陆<br><br><code>adb shell input tap 900 1200</code><br></p>
+<p>点击返回键<br><br><code>adb shell input keyevent 4</code><br></p>
+<p>自动化<br></p>
+<blockquote>
+<p>just for windows<br>task cleanall(type: Exec) {<br>    ext.lockhunter = ‘\”D:\LockHunter\LockHunter.exe\”‘<br>    def buildDir = file(new File(“build”))<br>    commandLine ‘cmd’, “$lockhunter”, ‘/delete’, ‘/silent’, buildDir<br>}</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.malin.xyz/2016/10/12/2016-10-12-my-five-arcticle/" data-id="cix4i6ydl0004d5fugegidcy3" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/17/2016-11-17-adb/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Linux,Unix下环境变量的配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/05/2016-10-05-my-four-arcticle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Android中遇到的一些问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ma-Lin-update/">Ma Lin update</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/22/2016-12-22-shell/">使用脚本安装并启动一个APK</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/18/2016-12-18-http/">Ubuntu修改Host不生效的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/14/2016-12-14-host/">Ubuntu Http 请求</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/06/2016-12-06-unzip/">android使用tcpdump抓包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AndroidMaLin<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

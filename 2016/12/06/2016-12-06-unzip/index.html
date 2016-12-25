@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android使用tcpdump抓包 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0.如果是手机的话，请先root了，再执行如下的命令
+1.adb shell
+2.su
+3.给手机/data/local/目录授权chmod 777 /data/local/
+4.下载tcpdump点击下载
+5.将tcpdump推送到手机的/data/local/目录下adb push tcpdump /data/local/tcpdump
+6.给tcpdump设置相关执行权限。chmod 675">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android使用tcpdump抓包">
+<meta property="og:url" content="http://www.malin.xyz/2016/12/06/2016-12-06-unzip/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="0.如果是手机的话，请先root了，再执行如下的命令
+1.adb shell
+2.su
+3.给手机/data/local/目录授权chmod 777 /data/local/
+4.下载tcpdump点击下载
+5.将tcpdump推送到手机的/data/local/目录下adb push tcpdump /data/local/tcpdump
+6.给tcpdump设置相关执行权限。chmod 675">
+<meta property="og:updated_time" content="2016-12-25T07:38:50.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android使用tcpdump抓包">
+<meta name="twitter:description" content="0.如果是手机的话，请先root了，再执行如下的命令
+1.adb shell
+2.su
+3.给手机/data/local/目录授权chmod 777 /data/local/
+4.下载tcpdump点击下载
+5.将tcpdump推送到手机的/data/local/目录下adb push tcpdump /data/local/tcpdump
+6.给tcpdump设置相关执行权限。chmod 675">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.malin.xyz"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-12-06-unzip" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/06/2016-12-06-unzip/" class="article-date">
+  <time datetime="2016-12-06T09:24:00.000Z" itemprop="datePublished">2016-12-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android使用tcpdump抓包
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>0.如果是手机的话，请先root了，再执行如下的命令<br></p>
+<p>1.adb shell<br></p>
+<p>2.su<br></p>
+<p>3.给手机<code>/data/local/</code>目录授权<br><br><code>chmod 777 /data/local/</code></p>
+<p>4.下载tcpdump<a href="http://www.strazzere.com/android/tcpdump" target="_blank" rel="external">点击下载</a></p>
+<p>5.将<code>tcpdump</code>推送到手机的<code>/data/local/</code>目录下<br><br><code>adb push tcpdump /data/local/tcpdump</code></p>
+<p>6.给tcpdump设置相关执行权限。<br><br><code>chmod 6755 /data/local/tcpdump</code></p>
+<p>7.启动tcpdump开始抓取<br><br><code>/data/local/tcpdump -p -vv -s 0 -w /sdcard/capture.pcap</code></p>
+<p>-p 将网络接口设置成非混杂模式<br><br>-vv 输出详细的报文信息<br><br>-s 设置捕获数据包的长度，从每个分组中读取最开始的snaplen个字节，而不是默认的68个字节，这里使用0，表示获取全部数据包。<br><br>-w 将监听到的数据包写入指定文件，不分析和打印数据包。<br></p>
+<p>8.从手机中将数据包拉到电脑目录中<br><br><code>adb pull /sdcard/capture.pcap /home/malin/nn</code><br></p>
+<p>参考资料<br><br><a href="http://codingnow.cn/android/1633.html" target="_blank" rel="external">android使用tcpdump抓包</a><br><br><a href="http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html" target="_blank" rel="external">Wireshark基本介绍和学习TCP三次握手</a><br><br><a href="http://www.myhack58.com/Article/48/67/2013/39798.htm" target="_blank" rel="external">详解使用tcpdump、wireshark对Android应用程序进行抓包并分析</a><br><br><a href="http://mrpeak.cn/blog/tutorial-tcpdump/" target="_blank" rel="external">IOS,Android网络抓包教程之tcpdump</a><br><br><a href="http://www.cnblogs.com/findyou/p/3491035.html" target="_blank" rel="external">Android抓包方法(二)之Tcpdump命令+Wireshark</a><br><br><a href="http://baike.baidu.com/link?url=oxGJFuDFnX4vkKbKadGsBz-Ysu4rb5Zk_XHQywUF_FUwqTGhg0lT-Lb1PBg3yxhZJhc9bZ73Mc2eB1L2gK4b_D31pmrY8uGUg1yCrDqQtJO" target="_blank" rel="external">0x16进制</a><br><br><a href="http://stackoverflow.com/questions/12722157/not-able-to-run-executable-file-from-adb-shell" target="_blank" rel="external">not-able-to-run-executable-file-from-adb-shell</a><br><br><a href="http://blog.csdn.net/zrzlj/article/details/6076219/" target="_blank" rel="external">Wireshark和TcpDump抓包分析心得</a><br><br><a href="https://www.centos.bz/2014/07/linux-commandline-capture-packets-tshark-wireshark/" target="_blank" rel="external">Linux命令行抓包及包解析工具tshark(wireshark)使用实例解析</a><br><br><a href="https://wiki.ubuntu.com.cn/%E7%BD%91%E5%8D%A1" target="_blank" rel="external">网卡</a><br><br><a href="http://blog.csdn.net/hanyuxinting/article/details/5558095" target="_blank" rel="external">wireshark的使用（filter的用法</a></p>
+<p>ifconfig<br><br>enp3s0<br></p>
+<p><code>sudo tcpdump -i enp3s0</code><br></p>
+<p>可以用到的命令<br><br>实时打印当前http请求的url(包括域名)<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;tcp dst port 80&#39; -Y &#39;http.host and http.request.uri&#39; -T fields -e http.host -e http.request.uri -l | tr -d &#39;\t&#39;</code><br>下面介绍参数含义：</p>
+<p>-s 512 :只抓取前512个字节数据<br><br>-i enp3s0 :捕获enp3s0网卡(可以通过ifconfig获取，或者 <code>sudo lshw -class network | grep &quot;logical name&quot;</code>）<br><br>-n :禁止网络对象名称解析<br><br>-f ‘tcp dst port 80’ :只捕捉协议为tcp,目的端口为80的数据包<br><br>-Y ‘http.host and http.request.uri’ :过滤出http.host和http.request.uri<br><br>-T fields -e http.host -e http.request.uri :打印http.host和http.request.uri<br><br>-l ：输出到标准输出<br></p>
+<p>对数据进行过滤<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.46 || ip src 10.31.4.39 &amp;&amp; tcp port 46869 || tcp port 8888&#39;</code><br></p>
+<p><code>ip.src == 10.31.4.46 &amp;&amp; ip.dst == 10.31.4.39 &amp;&amp; tcp.port eq 46027  ||  tcp.port eq 46030 &amp;&amp; http</code><br></p>
+<p><code>tcp &amp;&amp; tcp.port eq 1084 &amp;&amp; ip.src == 10.110.18.48</code><br></p>
+<p>过滤登录接口<br><br>/home/malin/malinoo/bili.pcapng  位置196<br><br><code>ip.src == 10.31.4.46 || ip.src == 10.31.4.39&amp;&amp; tcp.port eq 46869 || tcp.port eq 8888</code></p>
+<p>点击想要查看的地址，右键–&gt;追踪流–&gt;TCP流。可以查看相关的网络信息。<br><br>这个功能我比较喜欢，可以查看此次http，client端请求和server端返回的数据<br></p>
+<p><code>sudo tcpdump -i enp3s0 -AAl src 10.31.4.46 or dst 10.31.4.39</code><br></p>
+<p>过滤URL<br><br><code>ip.src == 10.31.4.46 &amp;&amp; http contains &quot;panda&quot; &amp;&amp; http</code><br><br><code>ip.src == 10.31.4.46 &amp;&amp; http contains &quot;panda&quot; &amp;&amp; http &amp;&amp; http.request.method == &quot;GET&quot; || http.request.method==&quot;POST&quot; &amp;&amp; http.request.uri  contains &quot;panda&quot;</code><br></p>
+<p>contains”操作符允许一个过滤器搜索一串字符，其形式为字符串，或者字节，或者字节组。例如在搜索一个HTTP URL地址，可以使用下面的过滤器：<br><br>http contains “<a href="http://www.wireshark.org”；" target="_blank" rel="external">http://www.wireshark.org”；</a> <br><br>“contains”操作符不能被用于原子型的字段，比如数字和ip地址。<br></p>
+<p>http.host==6san.com<br><br>http.host contains 6san.com<br><br>//过滤经过指定域名的http数据包，这里的host值不一定是请求中的域名<br></p>
+<p>http.response.code==302<br><br>//过滤http响应状态码为302的数据包<br></p>
+<p>http.response==1<br><br>//过滤所有的http响应包<br><br>http.request==1<br><br>//过滤所有的http请求，貌似也可以使用http.request<br></p>
+<p>http.request.method==POST<br><br>//wireshark过滤所有请求方式为POST的http请求包，注意POST为大写<br></p>
+<p>http.cookie contains guid<br><br>//过滤含有指定cookie的http数据包<br></p>
+<p>http.request.uri==”/online/setpoint”<br><br>//过滤请求的uri，取值是域名后的部分<br></p>
+<p>http.request.full_uri==” <a href="http://task.browser.360.cn/online/setpoint”" target="_blank" rel="external">http://task.browser.360.cn/online/setpoint”</a><br><br>//过滤含域名的整个url则需要使用http.request.full_uri<br></p>
+<p>http.server contains “nginx”<br><br>//过滤http头中server字段含有nginx字符的数据包<br></p>
+<p>http.content_type == “text/html”<br><br>//过滤content_type是text/html的http响应、post包，即根据文件类型过滤http数据包<br></p>
+<p>http.content_encoding == “gzip”<br><br>//过滤content_encoding是gzip的http包<br></p>
+<p>http.transfer_encoding == “chunked”<br><br>//根据transfer_encoding过滤<br></p>
+<p>http.content_length == 279<br><br>http.content_length_header == “279”<br><br>//根据content_length的数值过滤<br></p>
+<p>http.server<br><br>//过滤所有含有http头中含有server字段的数据包<br></p>
+<p>http.request.version == “HTTP/1.1”<br><br>//过滤HTTP/1.1版本的http包，包括请求和响应<br></p>
+<p>http.response.phrase == “OK”<br><br>//过滤http响应中的phrase<br></p>
+<p>sslkeylog</p>
+<p>ip.src == 10.31.4.62 &amp;&amp; ip.dst == 10.31.4.90</p>
+<p>ip.src == 10.31.4.116 &amp;&amp; http contains “panda” &amp;&amp; http &amp;&amp; http.request.method == “GET” || http.request.method==”POST” &amp;&amp; http.request.uri  contains “panda”<br>ip.src == 10.31.4.116 &amp;&amp; http &amp;&amp; http.request.method == “GET” || http.request.method==”POST” &amp;&amp; http.request.uri  contains “getFollowLiveCount”</p>
+<p>sudo tar zxvf jdk-8u112-linux-x64.tar.gz -C /usr/lib/jvm</p>
+<p>tshark -s 512 -i enp3s0 -n -f ‘ip src 10.31.4.116 &amp;&amp; ip src 10.31.4.90 &amp;&amp; tcp port 46869 || tcp port 8888’</p>
+<p><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.116 &amp;&amp; ip dst 10.31.4.90&#39; -Y &#39;http.request.uri contains &quot;panda&quot;&#39; -T fields -e http.request.uri -l | tr -d &#39;\t&#39;</code></p>
+<p>实时打印当前http请求的url(包括域名)<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.116 &amp;&amp; ip dst 10.31.4.90&#39; -Y &#39;http.host and http.request.uri&#39; -T fields -e http.host -e http.request.uri -l | tr -d &#39;\t&#39;</code></p>
+<p>git status</p>
+<p>耗费了 2.92 秒以枚举未跟踪的文件。’status -uno’ 也许能提高速度，<br>但您需要小心不要忘了添加新文件（参见 ‘git help status’）。<br>修改尚未加入提交（使用 “git add” 和/或 “git commit -a”）<br>git status -uno</p>
+<p>ip.src == 10.31.4.62 &amp;&amp; ip.dst == 10.31.146.12</p>
+<p>ip.src == 10.31.146.12 &amp;&amp; ip.dst == 10.31.4.116</p>
+<p>tshark -s 512 -i enp3s0 -n -f ‘ip src 10.31.146.12 &amp;&amp; ip dst 10.31.4.116’</p>
+<p>ip.src == 10.31.146.12 &amp;&amp; ip.dst == 10.31.4.116 &amp;&amp; tcp.flags.syn == 0x02</p>
+<p>ip.src == 101.201.233.158 &amp;&amp; ip.dst == 10.31.4.116 &amp;&amp; tcp</p>
+<p>ip.dst == 10.31.4.116</p>
+<p>sed -i ‘42s/.*/private static final String TAG = “IWantToTestHotFix”;/‘ app/src/main/java/tinker/sample/android/app/MainActivity.java</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.malin.xyz/2016/12/06/2016-12-06-unzip/" data-id="cix4i6yds000ad5fuvhf9t815" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/14/2016-12-14-host/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu Http 请求
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/04/2016-12-04-tcp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Ubuntu下解压乱码的问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ma-Lin-update/">Ma Lin update</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/22/2016-12-22-shell/">使用脚本安装并启动一个APK</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/18/2016-12-18-http/">Ubuntu修改Host不生效的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/14/2016-12-14-host/">Ubuntu Http 请求</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/06/2016-12-06-unzip/">android使用tcpdump抓包</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AndroidMaLin<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
