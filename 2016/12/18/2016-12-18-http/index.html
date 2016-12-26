@@ -61,7 +61,7 @@
         <span class="panel-cover__subtitle panel-subtitle">简单，美好，奋发</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">一个追风少年的进阶之路<br/>相信美好的事件即将发生</p>
+        <p class="panel-cover__description">少年的进阶之路<br/>相信美好的事件即将发生</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
 
         <div class="navigation-wrapper">
@@ -142,8 +142,7 @@
   </header>
 
   <section class="post">
-    <p>1.编辑<code>/etc/hosts</code>文件<br><br><code>sudo vim /etc/hosts</code><br><br>添加host，或者注释掉host<br><br>2.重启网络<br><br><code>sudo /etc/init.d/networking restart</code><br><br>或者<br><br>3.使用ping xxxxx测试修改后是否生效。<br><br>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br><br>使用如下的命令查找hosts.swp文件。<br><br><code>locate update</code><br><br><code>locate *.swp</code><br><br>5.找到后删除这个文件<br><code>sudo rm -rf /xx/xx/hosts.swp</code></p>
-<p>6.请不要删除这个目录<br><br>当你搜索出来的时候会发现hosts.swp在这个目录 <code>/tmp/hosts.swp</code>,但是请不要把<code>/tmp</code>这个文件夹删掉。<br><br>删掉的话，电脑将卡在登录的界面。如果真的删掉，请不要着急，重启电脑（可能需要重启多次），稍等1小时，然后，就可以登录进去。<br><br>登录进去后，请使用root用户，手动创建/tmp文件夹。<br><br><code>sudo mkdir /tmp</code></p>
+    <p>1.编辑<code>/etc/hosts</code>文件<br><code>sudo vim /etc/hosts</code><br><br>添加host，或者注释掉host<br>2.重启网络<br><code>sudo /etc/init.d/networking restart</code><br><br>或者<br>3.使用ping xxxxx测试修改后是否生效。<br>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br>使用如下的命令查找hosts.swp文件。<br><code>locate update</code><br><br><code>locate *.swp</code><br><br>5.找到后删除这个文件<br><code>rm -f /tmp/hosts.swp</code><br><br>6.请不要删除这个目录<br><br>当你搜索出来的时候会发现hosts.swp在这个目录 <code>/tmp/hosts.swp</code>,但是请不要把<code>/tmp</code>这个文件夹删掉。<br><br>删掉的话，电脑将卡在登录的界面。如果真的删掉，请不要着急，重启电脑（可能需要重启多次），稍等1小时，然后，就可以登录进去。<br><br>登录进去后，请使用root用户，手动创建/tmp文件夹。<br><br><code>sudo mkdir /tmp</code></p>
 
   </section>
 
