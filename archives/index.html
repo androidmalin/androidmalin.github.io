@@ -146,10 +146,24 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/12/22/2016-12-26-smali/" title="link to post.title">使用脚本安装并启动一个APK</a></h2>
+      <p class="excerpt">
+    
+      1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &amp;#39;{print $2}&amp;#39; | sed s/name=//g | sed s/\&amp;#39;//g例如得到如下的结果co
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2016-12-22T09:24:00.000Z" class="post-list__meta--date date">2016-12-22</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/22/2016-12-26-smali/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2016/12/18/2016-12-18-http/" title="link to post.title">Ubuntu修改Host不生效的问题</a></h2>
       <p class="excerpt">
     
-      1.编辑/etc/hosts文件sudo vim /etc/hosts添加host，或者注释掉host2.重启网络sudo /etc/init.d/networking restart3.使用ping xxxxx测试修改后是否生效。4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。使用如下的命令查找hosts.swp文件。locate updatelo
+      1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads
+例如下载smali-2.2b4.jarbaksmali-2.2b4.jarsmalibaksmali
+2.将smali-2.
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/18/2016-12-18-http/">继续阅读</a></div>
@@ -258,20 +272,6 @@ com.android.tools.build:gradle版本网址查看地址https://bintray.com/androi
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2016-10-12T03:39:00.000Z" class="post-list__meta--date date">2016-10-12</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/12/2016-10-12-my-five-arcticle/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/10/05/2016-10-05-my-four-arcticle/" title="link to post.title">Android中遇到的一些问题</a></h2>
-      <p class="excerpt">
-    
-      说明:1.Android Studio中自动生成的JavaDoc出现乱码
-Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板中＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。
-2.开
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-10-05T09:09:00.000Z" class="post-list__meta--date date">2016-10-05</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/05/2016-10-05-my-four-arcticle/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
