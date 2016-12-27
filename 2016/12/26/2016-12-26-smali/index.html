@@ -142,7 +142,7 @@
   </header>
 
   <section class="post">
-    <p>1.下载smali,smali.jar,baksmali,baksmali.jar<br><a href="https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads</a></p>
+    <p>1.下载smali,smali.jar,baksmali,baksmali.jar<br><a href="https://bitbucket.org/JesusFreke/smali/downloads" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloads</a></p>
 <p>例如下载<br>smali-2.2b4.jar<br>baksmali-2.2b4.jar<br>smali<br>baksmali</p>
 <p>2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为baksmail.jar<br><code>mv smali-2.2b4.jar smali.jar</code><br><code>mv baksmali-2.2b4.jar baksmali.jar</code><br><code>chmod +x ./smali ./baksmali</code></p>
 <p>3.将四个文件拷贝到<code>/usr/local/bin/</code>文件夹下<br><code>sudo cp ./baksmali ./smali ./baksmali.jar ./smali.jar /usr/local/bin/</code></p>
@@ -152,6 +152,11 @@
 <p>将smali文件编译成dex文件<br><code>smali assemble app -o classes.dex</code></p>
 <p><img src="http://ogxkun013.bkt.clouddn.com/smail2.png" alt="smali"></p>
 <p>5.试试反编译系统的app<br>a.从手机中将系统app拿出来<br><code>adb pull /system/app /home/malin/app/</code></p>
+<p>其他<br>apktool<br><a href="https://ibotpeaches.github.io/Apktool/" target="_blank" rel="external">官网</a></p>
+<p>dex2jar<br><a href="https://github.com/pxb1988/dex2jar" target="_blank" rel="external">官网</a></p>
+<p>JD-GUI<br><a href="http://jd.benow.ca/" target="_blank" rel="external">官网</a></p>
+<p>Apktool：解析apk包，获取资源文件和smail代码<br>dex2jar：将class.dex文件转换成为jar包<br>JD-GUI：查看jar包文件里的java代码</p>
+<p>参考文章：<br><a href="http://www.jianshu.com/p/7696c7e33eac" target="_blank" rel="external">Mac上简单的Android逆向</a></p>
 
   </section>
 
