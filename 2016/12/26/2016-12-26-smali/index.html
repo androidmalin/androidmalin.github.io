@@ -142,7 +142,16 @@
   </header>
 
   <section class="post">
-    <p>1.安装并启动一个的APK（例如app.apk这个文件）<br>首先需要将aapt配置到环境变量中，aapt的路径在<code>/sdk/build-tools/xxxxx/</code><br><br><img src="http://ogxkun013.bkt.clouddn.com/aapt2.png" alt=""><br><br>a.获取APK的包名<br><code>aapt dump badging app.apk | grep package | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world<br><br>b.得到APK的启动Activity类名<br><code>aapt dump badging app.apk | grep activity | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world.activity.MainActivity<br><br>c.将APK文件安装到设备<br><code>adb install -r app.apk</code><br><br>d.使用adb命令启动应用<br><code>adb shell am start -n package/launchable-activity</code><br><br>例如：<br><br><code>adb shell am start -n com.malin.world/com.malin.world.activity.MainActivity</code><br><br>如下所示<br><img src="http://ogxkun013.bkt.clouddn.com/aapt3.png" alt=""><br><br>e.将上面的四个命令写成shell脚本(例如命名为<code>runApp.sh</code>文件)<br><img src="http://ogxkun013.bkt.clouddn.com/aaptRunApp.png" alt=""><br><br>d.给脚本授权可执行的权限。<br><code>chmod +x runapp.sh</code><br><br>f.可以将该脚本加入环境变量中。<br>这里可以参考这篇文章 <a href="http://www.malin.xyz/ma/lin/update/2016/11/17/adb.html">Linux,Unix下环境变量的配置</a><br><br>g.执行试试看。<br><img src="http://ogxkun013.bkt.clouddn.com/installRun.png" alt=""><br><br>该APK被安装到了手机上并启动了<br><br>参考文章列表<br><a href="http://stackoverflow.com/questions/2789462/find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web" target="_blank" rel="external">find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web</a></p>
+    <p>1.下载smali,smali.jar,baksmali,baksmali.jar<br><a href="https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads</a></p>
+<p>例如下载<br>smali-2.2b4.jar<br>baksmali-2.2b4.jar<br>smali<br>baksmali</p>
+<p>2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为baksmail.jar<br><code>mv smali-2.2b4.jar smali.jar</code><br><code>mv baksmali-2.2b4.jar baksmali.jar</code><br><code>chmod +x ./smali ./baksmali</code></p>
+<p>3.将四个文件拷贝到<code>/usr/local/bin/</code>文件夹下<br><code>sudo cp ./baksmali ./smali ./baksmali.jar ./smali.jar /usr/local/bin/</code></p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/smail1.png" alt="smali"></p>
+<p>4.这里就可以使用smali,baksmali两个脚本了。<br><a href="https://github.com/JesusFreke/smali/wiki/SmaliBaksmali2.2" target="_blank" rel="external">SmaliBaksmali wiki</a></p>
+<p>将app.apk反编译为smali文件<br><code>baksmali disassemble app.apk -o app</code></p>
+<p>将smali文件编译成dex文件<br><code>smali assemble app -o classes.dex</code></p>
+<p><img src="http://ogxkun013.bkt.clouddn.com/smail2.png" alt="smali"></p>
+<p>5.试试反编译系统的app<br>a.从手机中将系统app拿出来<br><code>adb pull /system/app /home/malin/app/</code></p>
 
   </section>
 

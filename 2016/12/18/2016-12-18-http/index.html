@@ -142,16 +142,11 @@
   </header>
 
   <section class="post">
-    <p>1.下载smali,smali.jar,baksmali,baksmali.jar<br><a href="https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads" target="_blank" rel="external">https://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads</a></p>
-<p>例如下载<br>smali-2.2b4.jar<br>baksmali-2.2b4.jar<br>smali<br>baksmali</p>
-<p>2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为baksmail.jar<br><code>mv smali-2.2b4.jar smali.jar</code><br><code>mv baksmali-2.2b4.jar baksmali.jar</code><br><code>chmod +x ./smali ./baksmali</code></p>
-<p>3.将四个文件拷贝到<code>/usr/local/bin/</code>文件夹下<br><code>sudo cp ./baksmali ./smali ./baksmali.jar ./smali.jar /usr/local/bin/</code></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/smail1.png" alt="smali"></p>
-<p>4.这里就可以使用smali,baksmali两个脚本了。<br><a href="https://github.com/JesusFreke/smali/wiki/SmaliBaksmali2.2" target="_blank" rel="external">SmaliBaksmali wiki</a></p>
-<p>将app.apk反编译为smali文件<br><code>baksmali disassemble app.apk -o app</code></p>
-<p>将smali文件编译成dex文件<br><code>smali assemble app -o classes.dex</code></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/smail2.png" alt="smali"></p>
-<p>5.试试反编译系统的app<br>a.从手机中将系统app拿出来<br><code>adb pull /system/app /home/malin/app/</code></p>
+    <p>1.编辑<code>/etc/hosts</code>文件<br><code>sudo vim /etc/hosts</code><br></p>
+<p>添加host，或者注释掉host<br></p>
+<p>2.重启网络<br><code>sudo /etc/init.d/networking restart</code><br><br>3.使用ping xxxxx测试修改后是否生效。<br></p>
+<p>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br><br>使用如下的命令查找hosts.swp文件。<br><br><code>locate update</code><br><code>locate *.swp</code></p>
+<p>5.找到后删除这个文件<br><code>sudo rm -rf /xx/xx/hosts.swp</code></p>
 
   </section>
 

@@ -156,7 +156,8 @@
                 <h2 class="post-list__post-title post-title"><a href="/2016/12/26/2016-12-26-smali/" title="Smali,BakSmali">Smali,BakSmali</a></h2>
                 <p class="excerpt">
                 
-                1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &amp;#39;{print $2}&amp;
+                1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads
+例如下载smali-2.
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2016-12-26T12:19:00.000Z" class="post-list__meta--date date">2016-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/26/2016-12-26-smali/">继续阅读</a></div>
@@ -170,8 +171,10 @@
                 <h2 class="post-list__post-title post-title"><a href="/2016/12/18/2016-12-18-http/" title="Ubuntu修改Host不生效的问题">Ubuntu修改Host不生效的问题</a></h2>
                 <p class="excerpt">
                 
-                1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloadshttps://bitbucket.org/JesusFreke/smali/downloads
-例如下载smali-2.
+                1.编辑/etc/hosts文件sudo vim /etc/hosts
+添加host，或者注释掉host
+2.重启网络sudo /etc/init.d/networking restart3.使用ping xxxxx测试修改后是否生效。
+4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/18/2016-12-18-http/">继续阅读</a></div>
