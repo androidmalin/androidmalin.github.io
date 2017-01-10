@@ -147,6 +147,8 @@
 <p>2.重启网络<br><code>sudo /etc/init.d/networking restart</code><br><br>3.使用ping xxxxx测试修改后是否生效。<br></p>
 <p>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br><br>使用如下的命令查找hosts.swp文件。<br><br><code>locate update</code><br><code>locate *.swp</code></p>
 <p>5.找到后删除这个文件<br><code>sudo rm -rf /xx/xx/hosts.swp</code></p>
+<p>6.清除DNS缓存<br><code>/etc/init.d/dns-clean</code></p>
+<p>7.重启DNS<br><code>/etc/init.d/dnsmasq restart</code></p>
 
   </section>
 
@@ -218,7 +220,7 @@ http get https://api.weibo.com/2/trends/hou
         基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
     </span>
     <span class="footer__copyright">
-        &copy; 2016 - 本站由 <a href="/">@Monniya</a> 创建,
+        &copy; 2017 - 本站由 <a href="/">@Monniya</a> 创建,
         使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">hexo-theme-new-vno</a> 主题,
         修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
     </span>
