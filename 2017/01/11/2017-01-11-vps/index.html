@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>Ubuntu Http 请求 | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="Ubuntu Http 请求 | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="Ubuntu Http 请求 | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/01/11/2017-01-11-vps/"/>
 
     
       
@@ -128,89 +128,84 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-01-11T05:00:00.000Z" class="post-list__meta--date date">2017-01-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Ubuntu Http 请求</h1>
+  </header>
+
+  <section class="post">
+    <p>1.购买服务<br><a href="https://www.kvmla.com" target="_blank" rel="external">https://www.kvmla.com</a></p>
+<p>2.登录远程<br><code>ssh root@xx.xx.xx.xx</code></p>
+<p><code>xx.xx.xx.xx</code>为远程地址<br>kvmla中在如下位置可以找到配置清单。<br>客户中心 &gt; 我的客户中心 &gt; 我的产品与服务 &gt; 产品详细信息<br>（kvmla为主IP地址）</p>
+<p><code>Are you sure you want to continue connecting (yes/no)? yes</code></p>
+<p>3.查看python<br><code>python</code><br><code>python3</code></p>
+<p>4.安装pip<br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="external">安装说明</a></p>
+<p><code>cd /home/</code><br><code>wget https://bootstrap.pypa.io/get-pip.py</code><br><code>python get-pip.py</code></p>
+<p>查看是否安装成功<br><code>pip --version</code></p>
+<p>5.安装shadowsocks<br><code>pip install shadowsocks</code></p>
+<p>创建文件config.json,路径为<code>/etc/shadowsocks/config.json</code><br><code>cd /etc/</code><br><code>mkdir shadowsocks</code><br><code>vim config.json</code><br>添加如下内容<br>{<br>    “server”: “xx.xx.xx.xx”,<br>    “server_port”: xxxx,<br>    “local_port”: 1080,<br>    “password”: “xxx”,<br>    “timeout”: 60,<br>    “method”: “aes-256-cfb”<br>}</p>
+<p>6.启动shadowsocks<br><code>ssserver -c /etc/shadowsocks/config.json -d start</code></p>
+<p>如果想要停止<br><code>ssserver -d stop</code></p>
+<p>参考文章<br><a href="http://www.jianshu.com/p/28fd29e350b6" target="_blank" rel="external">搭建Shadowsocks服务器</a><br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="external">pip</a></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
     
-  <ol class="post-list">
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/12/26/2016-12-26-smali/" title="Smali,BakSmali">Smali,BakSmali</a></h2>
+                <p class="excerpt">
+                
+                1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloads
+例如下载smali-2.2b4.jarbaksmali-2.2b4.jarsmalibaksmali
+2.将smali-
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-12-26T12:19:00.000Z" class="post-list__meta--date date">2016-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/26/2016-12-26-smali/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/10/12/2016-10-12-my-five-arcticle/" title="link to post.title">Android中常用的Gradle命令</a></h2>
-      <p class="excerpt">
-    
-      说明本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。
-0.查看Gradle版本gradle --version
-com.android.tools.build:gradle版本网址查看地址https://bintray.com/android/android-tools/com.android.tools.build.gradle
-其他的一些android tool版本分
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-10-12T03:39:00.000Z" class="post-list__meta--date date">2016-10-12</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/12/2016-10-12-my-five-arcticle/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/10/05/2016-10-05-my-four-arcticle/" title="link to post.title">Android中遇到的一些问题</a></h2>
-      <p class="excerpt">
-    
-      说明:1.Android Studio中自动生成的JavaDoc出现乱码
-Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板中＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。
-2.开
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-10-05T09:09:00.000Z" class="post-list__meta--date date">2016-10-05</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/05/2016-10-05-my-four-arcticle/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/10/04/2016-10-04-my-third-article/" title="link to post.title">Android开发中相见恨晚的网站</a></h2>
-      <p class="excerpt">
-    
-      说明:摘抄自《Android群英转：神兵利器》
-1.Proguard自动生成https://proguard.herokuapp.com/
-2.Git中gitignore文件自动生成https://www.gitignore.io/
-3.在线MarkDownhttps://www.zybuluo.com/mdeditor
-3.思维导图软件全平台（Linux,Windows,Mac）http://w
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-10-04T14:22:00.000Z" class="post-list__meta--date date">2016-10-04</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/04/2016-10-04-my-third-article/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/03/09/2016-03-09-my-two-article/" title="link to post.title">编写易于删除，而不是易于扩展的代码</a></h2>
-      <p class="excerpt">
-    
-      
-感谢代码家的校对，感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。
-
-原文链接：http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to
-编写易于删除，而不是易于扩展的代码
-“毫无目的地去编码，将会导
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-03-09T14:22:00.000Z" class="post-list__meta--date date">2016-03-09</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/03/09/2016-03-09-my-two-article/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
-
-
-  <nav class="pagination" role="navigation">
-    
-      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/#blog">← 最近</a>
-    
-    <span class="pagination__page-number" > 2 / 2 </span>
-    
-  </nav>
-
-
-</div>
-
+</section>
 
             
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/01/11/2017-01-11-vps/" data-title="Ubuntu Http 请求" data-url="http://www.malin.xyz/2017/01/11/2017-01-11-vps/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
             <footer class="footer">
     <span class="footer__copyright">
         本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
