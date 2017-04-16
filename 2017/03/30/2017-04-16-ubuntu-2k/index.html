@@ -142,38 +142,20 @@
   </header>
 
   <section class="post">
-    <ol>
-<li>查看硬件信息<br><code>lspci -vnn | grep VGA -A 12</code></li>
-</ol>
+    <p>1.查看硬件信息<br><code>lspci -vnn | grep VGA -A 12</code></p>
 <p>看到如下信息<br>NVIDIA Corporation GM206 [GeForce GTX 960]</p>
-<ol>
-<li>官网下载匹配型号的驱动<br>官网地址<br><a href="http://www.geforce.cn/drivers" target="_blank" rel="external">http://www.geforce.cn/drivers</a></li>
-</ol>
+<p>2.官网下载匹配型号的驱动<br>官网地址<br><a href="http://www.geforce.cn/drivers" target="_blank" rel="external">http://www.geforce.cn/drivers</a></p>
 <p>选择GeForce<br>GeForce 960 Series<br>GeForce GTX 960<br>Linux 64-bit<br>Chinese<br>All</p>
 <p>搜索–同意–下载<br>得到<code>http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
-<ol>
-<li>下载驱动<br><code>cd &amp;&amp; wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></li>
-</ol>
-<ol>
-<li>编译依赖<br>sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-<code>uname -r</code></li>
-</ol>
-<ol>
-<li>屏蔽开源驱动nouveau<br><code>sudo vim /etc/modprobe.d/blacklist.conf</code></li>
-</ol>
+<p>3.下载驱动<br><code>cd &amp;&amp; wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
+<p>4.编译依赖<br>sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-<code>uname -r</code></p>
+<p>5.屏蔽开源驱动nouveau<br><code>sudo vim /etc/modprobe.d/blacklist.conf</code></p>
 <p>添加<br>blacklist vga16fb<br>blacklist nouveau<br>blacklist rivafb<br>blacklist nvidiafb<br>blacklist rivatv</p>
-<ol>
-<li><p>禁用 nouveau 内核模块<br><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf</code><br><code>sudo update-initramfs -u</code></p>
-</li>
-<li><p>重启<br><code>sudo reboot</code></p>
-</li>
-<li><p>按Ctrl + Alt +F1到第一控制台（+F7是退出）。</p>
-</li>
-<li><p>输入用户名和密码后，登录后执行：<br><code>sudo service lightdm stop</code><br>或者<br><code>sudo service gdm stop</code></p>
-</li>
-</ol>
-<ol>
-<li>进入驱动所在的文件夹，安装驱动，必须以root进行安装<br><code>sudo sh NVIDIA-Linux-x86_64-375.39.run</code><br>或者<br><code>sudo sh NVIDIA*.run</code></li>
-</ol>
+<p>6.禁用 nouveau 内核模块<br><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf</code><br><code>sudo update-initramfs -u</code></p>
+<p>7.重启<br><code>sudo reboot</code></p>
+<p>8.按Ctrl + Alt +F1到第一控制台（+F7是退出）。</p>
+<p>9.输入用户名和密码后，登录后执行：<br><code>sudo service lightdm stop</code><br>或者<br><code>sudo service gdm stop</code></p>
+<p>10.进入驱动所在的文件夹，安装驱动，必须以root进行安装<br><code>sudo sh NVIDIA-Linux-x86_64-375.39.run</code><br>或者<br><code>sudo sh NVIDIA*.run</code></p>
 <p>安装过程中全部选择YES；比如接受条约；自动配置错误，点击继续配；</p>
 <p>参考文章<br><a href="http://www.samsung.com/cn/support/downloadcenter/" target="_blank" rel="external">三星驱动</a><br><a href="https://blog.kyletang.work/2016/07/18/hd4000hdmi2560x1440x44hz/" target="_blank" rel="external">设置分辨率</a><br><a href="https://item.jd.com/4606144.html" target="_blank" rel="external">三星显示器</a><br><a href="http://os.51cto.com/art/201512/501857.htm" target="_blank" rel="external">驱动信息</a><br><a href="http://www.geforce.cn/drivers" target="_blank" rel="external">驱动搜索下载</a><br><a href="http://www.nvidia.com/Download/index.aspx?lang=cn" target="_blank" rel="external">驱动搜索</a><br><a href="https://wiki.ubuntu.com.cn/NVIDIA" target="_blank" rel="external">驱动安装1</a><br><a href="https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b" target="_blank" rel="external">驱动安装2</a><br><a href="http://blog.csdn.net/collonn/article/details/9107601" target="_blank" rel="external">驱动安装3</a></p>
 
