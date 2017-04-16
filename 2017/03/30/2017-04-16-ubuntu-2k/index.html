@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>Android开发工具网址 | 马琳</title>
+    <title>Ubuntu 2k | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Android开发工具网址 | 马琳">
+    <meta name="twitter:title" content="Ubuntu 2k | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Android开发工具网址 | 马琳">
+    <meta property="og:title" content="Ubuntu 2k | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/03/30/2017-03-30-gradle/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/03/30/2017-04-16-ubuntu-2k/"/>
 
     
       
@@ -138,33 +138,44 @@
       </span> 
    
     </div>
-    <h1 class="post-title">Android开发工具网址</h1>
+    <h1 class="post-title">Ubuntu 2k</h1>
   </header>
 
   <section class="post">
-    <p><a href="https://developer.android.com/training/index.html#class-list" target="_blank" rel="external">Android 开发者培训课程</a><br></p>
-<p><a href="https://developer.android.com/guide/index.html" target="_blank" rel="external">Android 开发者指南</a><br></p>
-<p><a href="https://developer.android.com/studio/build/index.html" target="_blank" rel="external">构建系统概览</a><br></p>
-<p><a href="https://developer.android.com/topic/performance/index.html" target="_blank" rel="external">性能优化</a><br></p>
-<p><a href="https://developer.android.com/studio/releases/build-tools.html" target="_blank" rel="external">build-tools更新日志</a><br></p>
-<p><a href="https://developer.android.com/studio/releases/sdk-tools.html" target="_blank" rel="external">SDK Tools 更新日志</a><br></p>
-<p><a href="https://developer.android.com/studio/releases/platform-tools.html" target="_blank" rel="external">platform-tools 更新日志</a><br></p>
-<p><a href="https://developer.android.com/topic/libraries/support-library/revisions.html" target="_blank" rel="external">support-library 更新日志</a><br></p>
-<p><a href="https://developer.android.com/topic/libraries/support-library/features.html" target="_blank" rel="external">support-library 说明 </a><br></p>
-<p><a href="https://www.guardsquare.com/en/proguard/manual/versions" target="_blank" rel="external">Proguard更新日志</a><br></p>
-<p><a href="https://docs.gradle.org/3.5/release-notes.html" target="_blank" rel="external">Gradle 官网更新日志</a><br></p>
-<p><a href="https://github.com/gradle/gradle/releases" target="_blank" rel="external">Gradle 更新日志</a><br></p>
-<p><a href="http://google.github.io/android-gradle-dsl/" target="_blank" rel="external">android-gradle-dsl 使用说明</a></p>
-<p><a href="http://tools.android.com/tech-docs/new-build-system" target="_blank" rel="external">com.android.tools.build.gradle 最新版本</a><br></p>
-<p><a href="https://dl.bintray.com/android/android-tools/com/android/tools/build/gradle/" target="_blank" rel="external">com.android.tools.build.gradle 历史版本</a><br></p>
-<p><a href="https://bintray.com/android/android-tools/com.android.tools.build.gradle" target="_blank" rel="external">com.android.tools.build.gradle 最新版本</a><br></p>
-<p><a href="https://developer.android.com/studio/releases/gradle-plugin.html" target="_blank" rel="external">Android Plugin for Gradle Release更新日志</a><br></p>
-<p><a href="https://developer.android.com/studio/releases/index.html" target="_blank" rel="external">Android Studio 更新日志</a><br></p>
-<p><a href="https://developer.android.com/reference/android/support/annotation/package-summary.html" target="_blank" rel="external">annotation使用API</a><br></p>
-<p><a href="https://mvnrepository.com/" target="_blank" rel="external">Maven仓库</a><br></p>
-<p><a href="https://bintray.com/bintray/jcenter" target="_blank" rel="external">jcenter仓库</a><br></p>
-<p><a href="https://bintray.com/android/android-tools" target="_blank" rel="external">android-tools</a><br></p>
-<p> ‘glide’                       : ‘com.github.bumptech.glide:glide:3.7.0’,</p>
+    <ol>
+<li>查看硬件信息<br><code>lspci -vnn | grep VGA -A 12</code></li>
+</ol>
+<p>看到如下信息<br>NVIDIA Corporation GM206 [GeForce GTX 960]</p>
+<ol>
+<li>官网下载匹配型号的驱动<br>官网地址<br><a href="http://www.geforce.cn/drivers" target="_blank" rel="external">http://www.geforce.cn/drivers</a></li>
+</ol>
+<p>选择GeForce<br>GeForce 960 Series<br>GeForce GTX 960<br>Linux 64-bit<br>Chinese<br>All</p>
+<p>搜索–同意–下载<br>得到<code>http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
+<ol>
+<li>下载驱动<br><code>cd &amp;&amp; wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></li>
+</ol>
+<ol>
+<li>编译依赖<br>sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-<code>uname -r</code></li>
+</ol>
+<ol>
+<li>屏蔽开源驱动nouveau<br><code>sudo vim /etc/modprobe.d/blacklist.conf</code></li>
+</ol>
+<p>添加<br>blacklist vga16fb<br>blacklist nouveau<br>blacklist rivafb<br>blacklist nvidiafb<br>blacklist rivatv</p>
+<ol>
+<li><p>禁用 nouveau 内核模块<br><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf</code><br><code>sudo update-initramfs -u</code></p>
+</li>
+<li><p>重启<br><code>sudo reboot</code></p>
+</li>
+<li><p>按Ctrl + Alt +F1到第一控制台（+F7是退出）。</p>
+</li>
+<li><p>输入用户名和密码后，登录后执行：<br><code>sudo service lightdm stop</code><br>或者<br><code>sudo service gdm stop</code></p>
+</li>
+</ol>
+<ol>
+<li>进入驱动所在的文件夹，安装驱动，必须以root进行安装<br><code>sudo sh NVIDIA-Linux-x86_64-375.39.run</code><br>或者<br><code>sudo sh NVIDIA*.run</code></li>
+</ol>
+<p>安装过程中全部选择YES；比如接受条约；自动配置错误，点击继续配；</p>
+<p>参考文章<br><a href="http://www.samsung.com/cn/support/downloadcenter/" target="_blank" rel="external">三星驱动</a><br><a href="https://blog.kyletang.work/2016/07/18/hd4000hdmi2560x1440x44hz/" target="_blank" rel="external">设置分辨率</a><br><a href="https://item.jd.com/4606144.html" target="_blank" rel="external">三星显示器</a><br><a href="http://os.51cto.com/art/201512/501857.htm" target="_blank" rel="external">驱动信息</a><br><a href="http://www.geforce.cn/drivers" target="_blank" rel="external">驱动搜索下载</a><br><a href="http://www.nvidia.com/Download/index.aspx?lang=cn" target="_blank" rel="external">驱动搜索</a><br><a href="https://wiki.ubuntu.com.cn/NVIDIA" target="_blank" rel="external">驱动安装1</a><br><a href="https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b" target="_blank" rel="external">驱动安装2</a><br><a href="http://blog.csdn.net/collonn/article/details/9107601" target="_blank" rel="external">驱动安装3</a></p>
 
   </section>
 
@@ -172,41 +183,28 @@
 <section class="read-more">
            
     
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/30/2017-04-16-ubuntu-2k/" title="Ubuntu 2k">Ubuntu 2k</a></h2>
-                <p class="excerpt">
-                
-                
-查看硬件信息lspci -vnn | grep VGA -A 12
-
-看到如下信息NVIDIA Corporation GM206 [GeForce GTX 960]
-
-官网下载匹配型号的驱动官网地址http://www.geforce.cn/drivers
-
-选择GeForceGeForce 9
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/2017-04-16-ubuntu-2k/">继续阅读</a></div>
-                           
-            </div>
         
         
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/03/02/2017-03-02-adb-backup/" title="Ubuntu adb backup">Ubuntu adb backup</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/30/2017-03-30-gradle/" title="Android开发工具网址">Android开发工具网址</a></h2>
                 <p class="excerpt">
                 
-                xda
-1.DownLoad adbextractorandroid-backup-extractor-20160710-bin.zip
-2.unzip
-3.DownLoad JCRJava7 JCRJave8 JCR
-解压后可以得到三个文件local_policy.jar，US_export_po
+                Android 开发者培训课程
+Android 开发者指南
+构建系统概览
+性能优化
+build-tools更新日志
+SDK Tools 更新日志
+platform-tools 更新日志
+support-library 更新日志
+support-library 说明 
+Proguard更新日志
+Gra
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-03-02T07:59:00.000Z" class="post-list__meta--date date">2017-03-02</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/02/2017-03-02-adb-backup/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/2017-03-30-gradle/">继续阅读</a></div>
                        
             </div>
         
@@ -219,7 +217,7 @@
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/03/30/2017-03-30-gradle/" data-title="Android开发工具网址" data-url="http://www.malin.xyz/2017/03/30/2017-03-30-gradle/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/03/30/2017-04-16-ubuntu-2k/" data-title="Ubuntu 2k" data-url="http://www.malin.xyz/2017/03/30/2017-04-16-ubuntu-2k/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
