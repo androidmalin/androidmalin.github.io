@@ -158,6 +158,17 @@
 <p>或者使用如下的脚本获取手机的IP地址。<br><br><code>adb shell ifconfig | grep &quot;inet addr&quot; | grep &quot;Bcast&quot; | cut -d &quot;:&quot; -f 2 | cut -d &quot; &quot; -f 1</code><br></p>
 <p>adb connect <device-ip-address><br><br>这里的 <device-ip-address> 就是上一步中找到的设备 IP 地址。<br><br>确认连接状态。<br><br>adb devices<br></device-ip-address></device-ip-address></p>
 <p><img src="http://ogxkun013.bkt.clouddn.com/adb_connect.png" alt="adb_connect"></p>
+<p>6.将/data/data/packagename/database/a.db拉到电脑上，应用为debugable=true</p>
+<p><code>adb exec-out run-as tv.panda.live.broadcast cat databases/panda_net_server.db &gt; ./panda_net_server.db</code></p>
+<p><code>adb exec-out run-as tv.panda.live.broadcast cat files/cover/cover.jpg &gt; ./cover.jpg</code></p>
+<p><code>adb shell</code></p>
+<p><code>run-as tv.panda.live.broadcast</code></p>
+<p><code>cat files/cover/cover.jpg &gt; /sdcard/cover.jpg</code></p>
+<p><code>exit</code></p>
+<p><code>exit</code></p>
+<p><code>adb pull /sdcard/cover.jpg /home/malin/nexus6p/myconfig/backup</code></p>
+<p><code>pwd</code></p>
+<p><code>w3m path</code></p>
 
   </section>
 
