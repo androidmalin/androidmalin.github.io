@@ -159,8 +159,16 @@
 <p>adb connect <device-ip-address><br><br>这里的 <device-ip-address> 就是上一步中找到的设备 IP 地址。<br><br>确认连接状态。<br><br>adb devices<br></device-ip-address></device-ip-address></p>
 <p><img src="http://ogxkun013.bkt.clouddn.com/adb_connect.png" alt="adb_connect"></p>
 <p>6.将/data/data/packagename/database/a.db拉到电脑上，应用为debugable=true</p>
-<p><code>adb exec-out run-as tv.panda.live.broadcast cat databases/panda_net_server.db &gt; ./panda_net_server.db</code></p>
-<p><code>adb exec-out run-as tv.panda.live.broadcast cat files/cover/cover.jpg &gt; ./cover.jpg</code></p>
+<ol>
+<li><p><code>adb exec-out run-as tv.panda.live.broadcast cat databases/panda_net_server.db &gt; ./panda_net_server.db</code></p>
+</li>
+<li><p><code>adb exec-out run-as tv.panda.live.broadcast cat files/cover/cover.jpg &gt; ./cover.jpg</code></p>
+</li>
+<li><p><code>adb exec-out run-as tv.panda.live.broadcast tar c databases/ &gt; databases.tar</code>,<code>tar -xvf databases.tar</code></p>
+</li>
+<li><p><a href="https://stackoverflow.com/a/18472135/3326683" target="_blank" rel="external">adb exec-out</a></p>
+</li>
+</ol>
 <p><code>adb shell</code></p>
 <p><code>run-as tv.panda.live.broadcast</code></p>
 <p><code>cat files/cover/cover.jpg &gt; /sdcard/cover.jpg</code></p>
