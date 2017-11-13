@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳</title>
+    <title>android-studio-gradle-resouce-third-library-resource-not-found | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳">
+    <meta name="twitter:title" content="android-studio-gradle-resouce-third-library-resource-not-found | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳">
+    <meta property="og:title" content="android-studio-gradle-resouce-third-library-resource-not-found | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -140,13 +140,13 @@
       </span> 
    
     </div>
-    <h1 class="post-title">android-studio-gradle-resouce-third-library-resource-not-found.markdown</h1>
+    <h1 class="post-title">android-studio-gradle-resouce-third-library-resource-not-found</h1>
   </header>
 
   <section class="post">
     <p>引言:之前碰到一个问题,想看android-gradle 插件的源码,我的AS中点击后,找不见源码,而同事的电脑点击可以.<br></p>
-<p>很奇怪.卸载重装AS也不管用.后来,搜索相关文章后.<br>发现看不见源码是因为缺少gralde–xxx.resource.jar.<br></p>
-<p>于是我收到下载相关的source.java放入到AndroidStudio安装目录中gradle下对应的目录中.写了个shell脚本.</p>
+<p>很奇怪.卸载重装AS也不管用.后来,搜索相关文章后.<br>发现看不见源码是因为缺少gralde–xxx.source.jar.<br></p>
+<p>于是我收到下载相关的source.jar放入到AndroidStudio安装目录中gradle下对应的目录中.写了个shell脚本.</p>
 <p>后来升级到<code>com.android.tools.build:gradle:3.0.0-beta7</code>后,打开新的项目,发现AndroidStudio下面正在加载gradle插件的source.jar文件.<br></p>
 <p>于是推断这个是AndroidStudio和android的gradle插件两个配合一起完成的,就是根据当前引入的依赖,自动在jcenter,Maven仓库中搜索相关库的source.jar文件,如果存在,就自动帮助下载.</p>
 <p>为了可以看到gradle插件的源码,或者其他第三方库的源码,比如okhttp,fresco源码.<br></p>
@@ -212,7 +212,7 @@ Android Plugin for Gradle Release
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/" data-title="android-studio-gradle-resouce-third-library-resource-not-found.markdown" data-url="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/" data-title="android-studio-gradle-resouce-third-library-resource-not-found" data-url="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
