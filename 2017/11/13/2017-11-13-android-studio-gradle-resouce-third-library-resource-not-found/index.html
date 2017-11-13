@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="android-studio-gradle-resouce-third-library-resource-not-found.markdown | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/11/06/questions/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/"/>
 
     
       
@@ -132,17 +132,45 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-11-06T06:58:38.114Z" class="post-list__meta--date date">2017-11-06</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-11-13T07:25:00.000Z" class="post-list__meta--date date">2017-11-13</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/gradle/">gradle</a>
+ </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title"></h1>
+    <h1 class="post-title">android-studio-gradle-resouce-third-library-resource-not-found.markdown</h1>
   </header>
 
   <section class="post">
-    <p>1.equal()和==的区别</p>
+    <p>引言:之前碰到一个问题,想看android-gradle 插件的源码,我的AS中点击后,找不见源码,而同事的电脑点击可以.<br></p>
+<p>很奇怪.卸载重装AS也不管用.后来,搜索相关文章后.<br>发现看不见源码是因为缺少gralde–xxx.resource.jar.<br></p>
+<p>于是我收到下载相关的source.java放入到AndroidStudio安装目录中gradle下对应的目录中.写了个shell脚本.</p>
+<p>后来升级到<code>com.android.tools.build:gradle:3.0.0-beta7</code>后,打开新的项目,发现AndroidStudio下面正在加载gradle插件的source.jar文件.<br></p>
+<p>于是推断这个是AndroidStudio和android的gradle插件两个配合一起完成的,就是根据当前引入的依赖,自动在jcenter,Maven仓库中搜索相关库的source.jar文件,如果存在,就自动帮助下载.</p>
+<p>为了可以看到gradle插件的源码,或者其他第三方库的源码,比如okhttp,fresco源码.<br></p>
+<ol>
+<li><p>确保项目使用<code>com.android.tools.build:gradle:3.0.0</code>;确保使用AndroidStudio3.x版本.<br></p>
+</li>
+<li><p>关闭AndroidStudio<br></p>
+</li>
+<li><p>删除项目根目录下的<code>.idea</code>,<code>.gradle</code>,<code>build</code>文件夹,删除<code>.imi</code>文件.<br></p>
+</li>
+<li><p>重新打开AndroidStudio,打开自己的工程,喝杯咖啡,等待下载相关插件第三方库源码,等待同步资源索引的完成.<br></p>
+</li>
+<li><p>control+鼠标左键,点击gradle类,第三方库的引用,查看相关源码.<br></p>
+</li>
+</ol>
+<p>为了方便完成上述步骤,可以使用下面的脚本</p>
+<ol>
+<li><p>关闭AndroidStudio<br></p>
+<figure class="highlight plain"><figcaption><span>kill `ps -aux | grep java | grep studio | awk '&#123;print $2&#125;' | xargs echo | cut -d ' ' -f 1`</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line"></div><div class="line">2. 切到工程目录下</div><div class="line">cd xxxx</div><div class="line"></div><div class="line">3. 删除项目根目录下的`.idea`,`build`,`.gradle`文件夹,删除`.imi`文件.</div><div class="line">```rm -rf ./idea ./gradle &amp;&amp; find . -name &quot;*build*&quot; -type d | xargs rm -rf &amp;&amp; find . -name &quot;*.iml&quot; -type f | xargs rm -rf</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启启动AndroidStudio<br></p>
+<p><code>sh xxxx/studio.sh</code></p>
+</li>
+</ol>
 
   </section>
 
@@ -150,6 +178,20 @@
 <section class="read-more">
            
     
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/13/questions/" title=""></a></h2>
+                <p class="excerpt">
+                
+                FAILURE: Build failed with an exception.
+
+What went wrong:Execution failed for task ‘:app:transformDexArchiveWithExternalLibsDexMergerForDebug’.java.l
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-13T08:49:52.284Z" class="post-list__meta--date date">2017-11-13</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/13/questions/">继续阅读</a></div>
+                           
+            </div>
         
         
                
@@ -178,7 +220,7 @@ Android Plugin for Gradle Release
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/06/questions/" data-title="" data-url="http://www.malin.xyz/2017/11/06/questions/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/" data-title="android-studio-gradle-resouce-third-library-resource-not-found.markdown" data-url="http://www.malin.xyz/2017/11/13/2017-11-13-android-studio-gradle-resouce-third-library-resource-not-found/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
