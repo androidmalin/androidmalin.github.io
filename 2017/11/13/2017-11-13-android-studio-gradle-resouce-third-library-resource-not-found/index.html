@@ -174,11 +174,9 @@
 <li><p>切到工程目录下<br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd xxxx</div></pre></td></tr></table></figure>
 </li>
-<li><p>删除项目根目录下的<code>.idea</code>,<code>build</code>,<code>.gradle</code>文件夹,删除<code>.imi</code>文件.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -rf .idea .gradle &amp;&amp; find . -name &quot;*build*&quot; -type d | xargs rm -rf &amp;&amp; find . -name &quot;*.iml&quot; -type f | xargs rm -rf</div></pre></td></tr></table></figure>
+<li><p>删除项目根目录下的<code>.idea</code>,<code>build</code>,<code>.gradle</code>文件夹,删除<code>.imi</code>文件.<br>rm -rf .idea .gradle &amp;&amp; find . -name “<em>build</em>“ -type d | xargs rm -rf &amp;&amp; find . -name “*.iml” -type f | xargs rm -rf</p>
 </li>
-<li><p>重启启动AndroidStudio<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh xxxx/studio.sh</div></pre></td></tr></table></figure>
+<li><p>重启启动AndroidStudio<br><br>sh xxxx/studio.sh</p>
 </li>
 </ol>
 
@@ -198,13 +196,15 @@
                 
                 Android Studio Release Notes
 Architecture Components Release Notes
-Gradle Release Notes Github
 Gradle Release Notes
-Last Android Plugin for Gradle
-And
+Gradle Release Notes Github
+Google Maven
+Last com.android.supp
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-06T05:00:00.000Z" class="post-list__meta--date date">2017-11-06</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/06/2017-11-06-android-sdk-support-tools-gradle-plugin/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-11-06T05:00:00.000Z" class="post-list__meta--date date">2017-11-06</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/android-gradle-tools/">android gradle tools</a>
+</span><a class="btn-border-small" href="/2017/11/06/2017-11-06-android-sdk-support-tools-gradle-plugin/">继续阅读</a></div>
                        
             </div>
         
