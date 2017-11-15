@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>Ubuntu adb backup | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="Ubuntu adb backup | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="Ubuntu adb backup | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/03/02/adb-backup/"/>
 
     
       
@@ -128,51 +128,98 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-03-02T07:59:00.000Z" class="post-list__meta--date date">2017-03-02</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Ubuntu adb backup</h1>
+  </header>
+
+  <section class="post">
+    <p><a href="https://forum.xda-developers.com/showthread.php?t=2011811" target="_blank" rel="external">xda</a></p>
+<p>1.DownLoad <a href="https://sourceforge.net/projects/adbextractor/" target="_blank" rel="external">adbextractor</a><br>android-backup-extractor-20160710-bin.zip</p>
+<p>2.unzip</p>
+<p>3.DownLoad JCR<br><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html" target="_blank" rel="external">Java7 JCR</a><br><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank" rel="external">Jave8 JCR</a></p>
+<p>解压后可以得到三个文件<br>local_policy.jar，US_export_policy.jar，README.txt，将两个jar文件拷贝到java的安装路径中。<br>例如：<code>/home/user1/jdk1.8.0/jre/lib/security</code><br><code>cp local_policy.jar US_export_policy.jar /home/user1/jdk1.8.0/jre/lib/security</code></p>
+<p>4.从手机中备份应用数据<br><code>adb backup -nosystem -noshared -apk -f com.android.demo.ab com.android.demo</code></p>
+<p>-nosystem表示不备份系统应用<br>-noshared表示不备份应用存储在SD中的数据<br>-apk表示备份应用APK安装包<br>-f 表示备份的.ab文件路径和文件名<br>最后是要备份应用的packageName</p>
+<p>执行后，手机上会提示备份数据，请输入密码，确认备份。</p>
+<p>5.到adbextractor解压后的文件夹android-backup-extractor-20160710-bin中。<br>将第4部得到的com.android.demo.ab文件拷贝到android-backup-extractor-20160710-bin文件夹中。<br><code>java -jar abe.jar unpack com.android.demo.ab com.android.demo.tar &lt;password&gt;</code></p>
+<p>6.解压tar文件<br>tar -xvf com.android.demo.tar</p>
+<p><a href="http://www.droidsec.cn/%E8%AF%A6%E8%A7%A3android-app-allowbackup%E9%85%8D%E7%BD%AE%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%A3%8E%E9%99%A9/" target="_blank" rel="external">1</a><br><a href="https://forum.xda-developers.com/showthread.php?t=2011811" target="_blank" rel="external">xda</a></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
     
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/30/ubuntu-2k/" title="link to post.title">Ubuntu 2k</a></h2>
-      <p class="excerpt">
-    
-      1.查看硬件信息lspci -vnn | grep VGA -A 12
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/30/ubuntu-2k/" title="Ubuntu 2k">Ubuntu 2k</a></h2>
+                <p class="excerpt">
+                
+                1.查看硬件信息lspci -vnn | grep VGA -A 12
 看到如下信息NVIDIA Corporation GM206 [GeForce GTX 960]
 2.官网下载匹配型号的驱动官网地址http://www.geforce.cn/drivers
-选择GeForceGeForce 960 SeriesGeForce GTX 960Linux 64-bitChineseAll
-搜索–
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/ubuntu-2k/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+选择GeForceGeForce 9
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/ubuntu-2k/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/01/11/vps/" title="Ubuntu VPS">Ubuntu VPS</a></h2>
+                <p class="excerpt">
+                
+                1.购买服务https://www.kvmla.com
+2.登录远程ssh root@xx.xx.xx.xx
+xx.xx.xx.xx为远程地址kvmla中在如下位置可以找到配置清单。客户中心 &amp;gt; 我的客户中心 &amp;gt; 我的产品与服务 &amp;gt; 产品详细信息（kvmla为主IP地址）
+Are 
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-01-11T05:00:00.000Z" class="post-list__meta--date date">2017-01-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/01/11/vps/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/02/adb-backup/" title="link to post.title">Ubuntu adb backup</a></h2>
-      <p class="excerpt">
-    
-      xda
-1.DownLoad adbextractorandroid-backup-extractor-20160710-bin.zip
-2.unzip
-3.DownLoad JCRJava7 JCRJave8 JCR
-解压后可以得到三个文件local_policy.jar，US_export_policy.jar，README.txt，将两个jar文件拷贝到java的安装路径中。例如：/home
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-02T07:59:00.000Z" class="post-list__meta--date date">2017-03-02</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/02/adb-backup/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
-
-
-
-</div>
-
+</section>
 
             
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/03/02/adb-backup/" data-title="Ubuntu adb backup" data-url="http://www.malin.xyz/2017/03/02/adb-backup/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
             <footer class="footer">
     <span class="footer__copyright">
         本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>

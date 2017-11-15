@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>Ubuntu修改Host不生效的问题 | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="Ubuntu修改Host不生效的问题 | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="Ubuntu修改Host不生效的问题 | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz"/>
+    <link rel="canonical" href="http://www.malin.xyz/2016/12/18/http/"/>
 
     
       
@@ -128,51 +128,90 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Ubuntu修改Host不生效的问题</h1>
+  </header>
+
+  <section class="post">
+    <p>1.编辑<code>/etc/hosts</code>文件<br><code>sudo vim /etc/hosts</code><br></p>
+<p>添加host，或者注释掉host<br></p>
+<p>2.重启网络<br><code>sudo /etc/init.d/networking restart</code><br><br>3.使用ping xxxxx测试修改后是否生效。<br></p>
+<p>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br><br>使用如下的命令查找hosts.swp文件。<br><br><code>locate update</code><br><code>locate *.swp</code></p>
+<p>5.找到后删除这个文件<br><code>sudo rm -rf /xx/xx/hosts.swp</code></p>
+<p>6.清除DNS缓存<br><code>/etc/init.d/dns-clean</code></p>
+<p>7.重启DNS<br><code>/etc/init.d/dnsmasq restart</code></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
     
-  <ol class="post-list">
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/12/22/shell/" title="使用脚本安装并启动一个APK">使用脚本安装并启动一个APK</a></h2>
+                <p class="excerpt">
+                
+                1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &amp;#39;{print $2}&amp;
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-12-22T09:24:00.000Z" class="post-list__meta--date date">2016-12-22</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/22/shell/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/12/14/host/" title="Ubuntu Http 请求">Ubuntu Http 请求</a></h2>
+                <p class="excerpt">
+                
+                1.httpie
+http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC
+http get https://api.weibo.com/2/trends/hou
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-12-14T09:24:00.000Z" class="post-list__meta--date date">2016-12-14</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/14/host/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/30/ubuntu-2k/" title="link to post.title">Ubuntu 2k</a></h2>
-      <p class="excerpt">
-    
-      1.查看硬件信息lspci -vnn | grep VGA -A 12
-看到如下信息NVIDIA Corporation GM206 [GeForce GTX 960]
-2.官网下载匹配型号的驱动官网地址http://www.geforce.cn/drivers
-选择GeForceGeForce 960 SeriesGeForce GTX 960Linux 64-bitChineseAll
-搜索–
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/ubuntu-2k/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/03/02/adb-backup/" title="link to post.title">Ubuntu adb backup</a></h2>
-      <p class="excerpt">
-    
-      xda
-1.DownLoad adbextractorandroid-backup-extractor-20160710-bin.zip
-2.unzip
-3.DownLoad JCRJava7 JCRJave8 JCR
-解压后可以得到三个文件local_policy.jar，US_export_policy.jar，README.txt，将两个jar文件拷贝到java的安装路径中。例如：/home
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-03-02T07:59:00.000Z" class="post-list__meta--date date">2017-03-02</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/02/adb-backup/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
-
-
-
-</div>
-
+</section>
 
             
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2016/12/18/http/" data-title="Ubuntu修改Host不生效的问题" data-url="http://www.malin.xyz/2016/12/18/http/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
             <footer class="footer">
     <span class="footer__copyright">
         本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>

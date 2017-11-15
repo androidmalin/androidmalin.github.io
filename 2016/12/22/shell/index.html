@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>使用脚本安装并启动一个APK | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="使用脚本安装并启动一个APK | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="使用脚本安装并启动一个APK | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz"/>
+    <link rel="canonical" href="http://www.malin.xyz/2016/12/22/shell/"/>
 
     
       
@@ -128,106 +128,87 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-12-22T09:24:00.000Z" class="post-list__meta--date date">2016-12-22</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">使用脚本安装并启动一个APK</h1>
+  </header>
+
+  <section class="post">
+    <p>1.安装并启动一个的APK（例如app.apk这个文件）<br>首先需要将aapt配置到环境变量中，aapt的路径在<code>/sdk/build-tools/xxxxx/</code><br><br><img src="http://ogxkun013.bkt.clouddn.com/aapt2.png" alt=""><br><br>a.获取APK的包名<br><code>aapt dump badging app.apk | grep package | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world<br><br>b.得到APK的启动Activity类名<br><code>aapt dump badging app.apk | grep activity | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world.activity.MainActivity<br><br>c.将APK文件安装到设备<br><code>adb install -r app.apk</code><br><br>d.使用adb命令启动应用<br><code>adb shell am start -n package/launchable-activity</code><br><br>例如：<br><br><code>adb shell am start -n com.malin.world/com.malin.world.activity.MainActivity</code><br><br>如下所示<br><img src="http://ogxkun013.bkt.clouddn.com/aapt3.png" alt=""><br><br>e.将上面的四个命令写成shell脚本(例如命名为<code>runApp.sh</code>文件)<br><img src="http://ogxkun013.bkt.clouddn.com/aaptRunApp.png" alt=""><br><br>d.给脚本授权可执行的权限。<br><code>chmod +x runapp.sh</code><br><br>f.可以将该脚本加入环境变量中。<br>这里可以参考这篇文章 <a href="http://www.malin.xyz/ma/lin/update/2016/11/17/adb.html">Linux,Unix下环境变量的配置</a><br><br>g.执行试试看。<br><img src="http://ogxkun013.bkt.clouddn.com/installRun.png" alt=""><br><br>该APK被安装到了手机上并启动了<br><br>参考文章列表<br><a href="http://stackoverflow.com/questions/2789462/find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web" target="_blank" rel="external">find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web</a></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
     
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/26/smali/" title="link to post.title">Smali,BakSmali</a></h2>
-      <p class="excerpt">
-    
-      1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloads
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/12/26/smali/" title="Smali,BakSmali">Smali,BakSmali</a></h2>
+                <p class="excerpt">
+                
+                1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloads
 例如下载smali-2.2b4.jarbaksmali-2.2b4.jarsmalibaksmali
-2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为ba
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-26T12:19:00.000Z" class="post-list__meta--date date">2016-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/26/smali/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/22/shell/" title="link to post.title">使用脚本安装并启动一个APK</a></h2>
-      <p class="excerpt">
-    
-      1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &amp;#39;{print $2}&amp;#39; | sed s/name=//g | sed s/\&amp;#39;//g例如得到如下的结果co
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-22T09:24:00.000Z" class="post-list__meta--date date">2016-12-22</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/22/shell/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/18/http/" title="link to post.title">Ubuntu修改Host不生效的问题</a></h2>
-      <p class="excerpt">
-    
-      1.编辑/etc/hosts文件sudo vim /etc/hosts
+2.将smali-
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-12-26T12:19:00.000Z" class="post-list__meta--date date">2016-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/26/smali/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2016/12/18/http/" title="Ubuntu修改Host不生效的问题">Ubuntu修改Host不生效的问题</a></h2>
+                <p class="excerpt">
+                
+                1.编辑/etc/hosts文件sudo vim /etc/hosts
 添加host，或者注释掉host
 2.重启网络sudo /etc/init.d/networking restart3.使用ping xxxxx测试修改后是否生效。
-4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。使用如下的命令查找hosts.swp文件。locate updat
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/18/http/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/18/http/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/14/host/" title="link to post.title">Ubuntu Http 请求</a></h2>
-      <p class="excerpt">
-    
-      1.httpie
-http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC
-http get https://api.weibo.com/2/trends/hourly.json &amp;quot;access_token&amp;quot;==&amp;quot;2.004YppQ
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-14T09:24:00.000Z" class="post-list__meta--date date">2016-12-14</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/14/host/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/06/unzip/" title="link to post.title">android使用tcpdump抓包</a></h2>
-      <p class="excerpt">
-    
-      0.如果是手机的话，请先root了，再执行如下的命令
-1.adb shell
-2.su
-3.给手机/data/local/目录授权chmod 777 /data/local/
-4.下载tcpdump点击下载
-5.将tcpdump推送到手机的/data/local/目录下adb push tcpdump /data/local/tcpdump
-6.给tcpdump设置相关执行权限。chmod 675
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-06T09:24:00.000Z" class="post-list__meta--date date">2016-12-06</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/06/unzip/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/12/04/tcp/" title="link to post.title">Ubuntu下解压乱码的问题</a></h2>
-      <p class="excerpt">
-    
-      在工作中，经常遇到设计师发来的UI图片压缩包（MacOX上压缩的），产品给的文档（Windows下压缩的）。解压出来，都是乱码。解决方案：1.安装p7zip，convmvsudo apt-get install p7zip convmv
-安装完之后，就可以用7za和convmv两个命令完成解压缩任务。
-2.解压文件LANG=C 7za x your-zip-file.zip用于解压缩，而LANG=
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-12-04T09:24:00.000Z" class="post-list__meta--date date">2016-12-04</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/04/tcp/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
-
-
-
-</div>
-
+</section>
 
             
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2016/12/22/shell/" data-title="使用脚本安装并启动一个APK" data-url="http://www.malin.xyz/2016/12/22/shell/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
             <footer class="footer">
     <span class="footer__copyright">
         本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
