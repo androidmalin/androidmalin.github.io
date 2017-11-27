@@ -142,7 +142,10 @@
   </header>
 
   <section class="post">
-    <p>1.v2签名问题,如何打印但钱的签名是否是v2<br>2.<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html</a><br>3.如何查看一个依赖的依赖库.例如:com.alibaba.android:ultraviewpager:1.0.3<br>方法自己拼接pom的地址.<br><a href="http://central.maven.org/maven2/com/alibaba/android/ultraviewpager/1.0.3/ultraviewpager-1.0.3.pom" target="_blank" rel="external">http://central.maven.org/maven2/com/alibaba/android/ultraviewpager/1.0.3/ultraviewpager-1.0.3.pom</a><br>4.aapt2<br>gradle.properties中增加android.enableAapt2=false</p>
+    <p>1.v2签名问题,如何打印但钱的签名是否是v2</p>
+<p>2.<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html</a></p>
+<p>3.如何查看一个依赖的依赖库.例如:com.alibaba.android:ultraviewpager:1.0.3<br>方法自己拼接pom的地址.<br><a href="http://central.maven.org/maven2/com/alibaba/android/ultraviewpager/1.0.3/ultraviewpager-1.0.3.pom" target="_blank" rel="external">http://central.maven.org/maven2/com/alibaba/android/ultraviewpager/1.0.3/ultraviewpager-1.0.3.pom</a></p>
+<p>4.aapt2<br>gradle.properties中增加android.enableAapt2=false</p>
 <p>Error:(11) error: ‘@@array/pref_entries_player’ is incompatible with attribute android:entries (attr) reference.</p>
 <p>5.ndk</p>
 <p>Error: Flag android.useDeprecatedNdk is no longer supported and will be removed in the next version of Android Studio.  Please switch to a supported build system.<br>  Consider using CMake or ndk-build integration. For more information, go to:<br>   <a href="https://d.android.com/r/studio-ui/add-native-code.html#ndkCompile" target="_blank" rel="external">https://d.android.com/r/studio-ui/add-native-code.html#ndkCompile</a><br>   To get started, you can use the sample ndk-build script the Android<br>   plugin generated for you at:<br>   /home/malin/panda2/pandalive-android-v2/jniverify/build/intermediates/ndk/debug/Android.mk<br>  Alternatively, you can use the experimental plugin:<br>   <a href="https://developer.android.com/r/tools/experimental-plugin.html" target="_blank" rel="external">https://developer.android.com/r/tools/experimental-plugin.html</a><br>  To continue using the deprecated NDK compile for another 60 days, set<br>  android.deprecatedNdkCompileLease=1511234986381 in gradle.properties</p>
@@ -151,6 +154,69 @@
 <li>What went wrong:<br>Execution failed for task ‘:libtest:packageDebugResources’.</li>
 </ul>
 <p>/home/malin/malin_demo/ContentProviderSample/libtest/src/main/res/values/strings.xml: Error: In DataSet ‘main’, no data file for changedFile. This is an internal error in the incremental builds code; to work around it, try doing a full clean build.</p>
+<p>7.</p>
+<p>FAILURE: Build completed with 3 failures.</p>
+<h2 id="1-Task-failed-with-an-exception"><a href="#1-Task-failed-with-an-exception" class="headerlink" title="1: Task failed with an exception."></a>1: Task failed with an exception.</h2><ul>
+<li><p>What went wrong:<br>Could not resolve all files for configuration ‘:libxy:debugAnnotationProcessorClasspath’.</p>
+<blockquote>
+<p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Required by:</p>
+<pre><code>project :libxy &gt; com.alibaba:arouter-compiler:1.1.4
+</code></pre><p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Could not parse POM <a href="https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom" target="_blank" rel="external">https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom</a><br>Could not resolve org.apache.commons:commons-parent:37.<br>Could not resolve org.apache.commons:commons-parent:37.<br>Could not get resource ‘<a href="https://jcenter.bintray.com/org/apache/commons/commons-parent/37/commons-parent-37.pom" target="_blank" rel="external">https://jcenter.bintray.com/org/apache/commons/commons-parent/37/commons-parent-37.pom</a>‘.<br>Could not GET ‘<a href="https://jcenter.bintray.com/org/apache/commons/commons-parent/37/commons-parent-37.pom" target="_blank" rel="external">https://jcenter.bintray.com/org/apache/commons/commons-parent/37/commons-parent-37.pom</a>‘.<br>Read timed out</p>
+</blockquote>
+</li>
+<li><p>Try:</p>
+<h1 id="Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output"><a href="#Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output" class="headerlink" title="Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output."></a>Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output.</h1></li>
+</ul>
+<h2 id="2-Task-failed-with-an-exception"><a href="#2-Task-failed-with-an-exception" class="headerlink" title="2: Task failed with an exception."></a>2: Task failed with an exception.</h2><ul>
+<li><p>What went wrong:<br>Could not resolve all files for configuration ‘:libpanda:debugAnnotationProcessorClasspath’.</p>
+<blockquote>
+<p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Required by:</p>
+<pre><code>project :libpanda &gt; com.alibaba:arouter-compiler:1.1.4
+</code></pre><p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Could not parse POM <a href="https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom" target="_blank" rel="external">https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom</a><br>Could not download commons-parent.pom (org.apache.commons:commons-parent:37): Skipped due to earlier error<br>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Could not parse POM <a href="http://maven.aliyun.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom</a><br>Could not download commons-parent.pom (org.apache.commons:commons-parent:37): Skipped due to earlier error</p>
+</blockquote>
+</li>
+<li><p>Try:</p>
+<h1 id="Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output-1"><a href="#Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output-1" class="headerlink" title="Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output."></a>Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output.</h1></li>
+</ul>
+<h2 id="3-Task-failed-with-an-exception"><a href="#3-Task-failed-with-an-exception" class="headerlink" title="3: Task failed with an exception."></a>3: Task failed with an exception.</h2><ul>
+<li><p>What went wrong:<br>Could not resolve all files for configuration ‘:libsesame:debugAnnotationProcessorClasspath’.</p>
+<blockquote>
+<p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Required by:</p>
+<pre><code>project :libsesame &gt; com.alibaba:arouter-compiler:1.1.4
+</code></pre><p>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Could not parse POM <a href="https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom" target="_blank" rel="external">https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom</a><br>Could not download commons-parent.pom (org.apache.commons:commons-parent:37): Skipped due to earlier error<br>Could not resolve org.apache.commons:commons-lang3:3.4.<br>Could not parse POM <a href="http://maven.aliyun.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.pom</a><br>Could not download commons-parent.pom (org.apache.commons:commons-parent:37): Skipped due to earlier error</p>
+</blockquote>
+</li>
+<li><p>Try:</p>
+<h1 id="Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output-2"><a href="#Run-with-–stacktrace-option-to-get-the-stack-trace-Run-with-–info-or-–debug-option-to-get-more-log-output-2" class="headerlink" title="Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output."></a>Run with –stacktrace option to get the stack trace. Run with –info or –debug option to get more log output.</h1></li>
+<li><p>Get more help at <a href="https://help.gradle.org" target="_blank" rel="external">https://help.gradle.org</a></p>
+</li>
+</ul>
+<p>BUILD FAILED in 2m 8s<br>1550 actionable tasks: 1550 executed</p>
+<p>8.Telegram</p>
+<p>Running dex as a separate process.</p>
+<p>To run dex in process, the Gradle daemon needs a larger heap.<br>It currently has 1024 MB.<br>For faster builds, increase the maximum heap size for the Gradle daemon to at least 1536 MB.<br>To do this set org.gradle.jvmargs=-Xmx1536M in the project gradle.properties.<br>For more information see <a href="https://docs.gradle.org/current/userguide/build_environment.html" target="_blank" rel="external">https://docs.gradle.org/current/userguide/build_environment.html</a></p>
+<p>UNEXPECTED TOP-LEVEL ERROR:<br>java.lang.OutOfMemoryError: GC overhead limit exceeded<br>        at com.android.dx.util.ByteArray.slice(ByteArray.java:98)<br>        at com.android.dx.cf.cst.ConstantPoolParser.parseUtf8(ConstantPoolParser.java:417)<br>        at com.android.dx.cf.cst.ConstantPoolParser.parse0(ConstantPoolParser.java:271)<br>        at com.android.dx.cf.cst.ConstantPoolParser.parse0(ConstantPoolParser.java:297)<br>        at com.android.dx.cf.cst.ConstantPoolParser.parse(ConstantPoolParser.java:153)<br>        at com.android.dx.cf.cst.ConstantPoolParser.parseIfNecessary(ConstantPoolParser.java:127)<br>        at com.android.dx.cf.cst.ConstantPoolParser.getPool(ConstantPoolParser.java:118)<br>        at com.android.dx.cf.direct.DirectClassFile.parse0(DirectClassFile.java:505)<br>        at com.android.dx.cf.direct.DirectClassFile.parse(DirectClassFile.java:420)<br>        at com.android.dx.cf.direct.DirectClassFile.parseToInterfacesIfNecessary(DirectClassFile.java:402)<br>        at com.android.dx.cf.direct.DirectClassFile.getMagic(DirectClassFile.java:253)<br>        at com.android.dx.command.dexer.Main.parseClass(Main.java:774)<br>        at com.android.dx.command.dexer.Main.access$1600(Main.java:86)<br>        at com.android.dx.command.dexer.Main$ClassParserTask.call(Main.java:1745)<br>        at com.android.dx.command.dexer.Main.processClass(Main.java:757)<br>        at com.android.dx.command.dexer.Main.processFileBytes(Main.java:725)<br>        at com.android.dx.command.dexer.Main.access$1200(Main.java:86)<br>        at com.android.dx.command.dexer.Main$FileBytesConsumer.processFileBytes(Main.java:1698)<br>        at com.android.dx.cf.direct.ClassPathOpener.processArchive(ClassPathOpener.java:284)<br>        at com.android.dx.cf.direct.ClassPathOpener.processOne(ClassPathOpener.java:166)<br>        at com.android.dx.cf.direct.ClassPathOpener.process(ClassPathOpener.java:144)<br>        at com.android.dx.command.dexer.Main.processOne(Main.java:679)<br>        at com.android.dx.command.dexer.Main.processAllFiles(Main.java:571)<br>        at com.android.dx.command.dexer.Main.runMultiDex(Main.java:368)<br>        at com.android.dx.command.dexer.Main.runDx(Main.java:289)<br>        at com.android.dx.command.dexer.Main.main(Main.java:247)<br>        at com.android.dx.command.Main.main(Main.java:94)</p>
+<p>在用户目录下.gradle目录下,建立gradle.properties文件.内容如下<br>/home/malin/.gradle/gradle.properties</p>
+<p>#加快编译速度的配置<br>org.gradle.daemon=true<br>org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8<br>org.gradle.parallel=true<br>org.gradle.configureondemand=true</p>
+<p>#加快编译速度的配置</p>
+<p>#用aapt2<br>android.enableAapt2=true</p>
+<p>#<a href="https://marschall.github.io/2017/04/17/disabling-gradle-cache.html" target="_blank" rel="external">https://marschall.github.io/2017/04/17/disabling-gradle-cache.html</a><br>org.gradle.caching=true</p>
+<p>#<a href="http://developers.googleblog.cn/2017/08/draft-android-dex.html" target="_blank" rel="external">http://developers.googleblog.cn/2017/08/draft-android-dex.html</a><br>android.enableD8=true</p>
+<p>9.</p>
+<p>#.gradle 的路径过长，windows不支持,会出现如下错误</p>
+<p>#C:\Windows\System32\config\systemprofile.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.0.0.aar\192971c5e8296a0a2330dc28124a19bf\res\layout\tooltip.xml: error: file not found</p>
+<p>#需要修改.gradle的路径</p>
+<p>#<a href="http://blog.h5min.cn/msl0903/article/details/71077898" target="_blank" rel="external">http://blog.h5min.cn/msl0903/article/details/71077898</a></p>
+<p>#<a href="http://blog.csdn.net/qq_19764133/article/details/70792558" target="_blank" rel="external">http://blog.csdn.net/qq_19764133/article/details/70792558</a></p>
+<p>#<a href="http://www.cnblogs.com/doublegi/p/5956575.html" target="_blank" rel="external">http://www.cnblogs.com/doublegi/p/5956575.html</a></p>
+<p>#<a href="http://blog.h5min.cn/msl0903/article/details/71077898" target="_blank" rel="external">http://blog.h5min.cn/msl0903/article/details/71077898</a></p>
+<p>#<a href="https://stackoverflow.com/questions/43674890/jenkins-gradle-appmergedebugresources-unable-to-open-png-file" target="_blank" rel="external">https://stackoverflow.com/questions/43674890/jenkins-gradle-appmergedebugresources-unable-to-open-png-file</a></p>
+<p>#<a href="https://stackoverflow.com/questions/47272220/appmergedebugresources-failed-error-java-util-concurrent-executionexception" target="_blank" rel="external">https://stackoverflow.com/questions/47272220/appmergedebugresources-failed-error-java-util-concurrent-executionexception</a></p>
+<p>#<a href="https://stackoverflow.com/questions/47471777/error-when-compiling-with-gradle-cant-find-downloaded-dependencies" target="_blank" rel="external">https://stackoverflow.com/questions/47471777/error-when-compiling-with-gradle-cant-find-downloaded-dependencies</a></p>
+<p>#.gradle修改修改,增加环境变量</p>
+<p>#$GRADLE_USER_HOME$</p>
+<p>#或者配置gradle.user.home=C:\gradle-cache</p>
+<p>最后解决办法:<br>1.解决.gradle路径过长的问题<br>gradle命令增加参数,不勾选Force GRADLE_USER_HOME<br>-g=$WORKSPACE/.gradlecache</p>
 
   </section>
 
