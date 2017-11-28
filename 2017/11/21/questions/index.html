@@ -218,6 +218,11 @@
 <p>#或者配置gradle.user.home=C:\gradle-cache</p>
 <p>最后解决办法:<br>1.解决.gradle路径过长的问题<br>gradle命令增加参数,不勾选Force GRADLE_USER_HOME<br>-g=$WORKSPACE/.gradlecache</p>
 <p>10.<br>Error:Execution failed for task ‘:libbiz:mockableAndroidJar’.<br>Output file [/home/malin/pandarecorder-android/src/libbiz/build/generated/mockable-android-27.v3.jar] already exists.</p>
+<p>11.</p>
+<blockquote>
+<p>Task :app:transformDexArchiveWithDexMergerForGuanwangDebug FAILED<br>Dex: Error converting bytecode to dex:<br>Cause: com.android.dex.DexException: Multiple dex files define Ltv/panda/PandaSocket/panda/packet/PacketBodyPushMessage;<br>    UNEXPECTED TOP-LEVEL EXCEPTION:<br>    com.android.dex.DexException: Multiple dex files define Ltv/panda/PandaSocket/panda/packet/PacketBodyPushMessage;</p>
+</blockquote>
+<p>com.android.dex.DexException: Multiple dex files define Ltv/panda/PandaSocket/panda/packet/PacketBodyPushMessage;<br>        at com.android.dx.merge.DexMerger.readSortableTypes(DexMerger.java:661)<br>        at com.android.dx.merge.DexMerger.getSortedTypes(DexMerger.java:616)<br>        at com.android.dx.merge.DexMerger.mergeClassDefs(DexMerger.java:598)<br>        at com.android.dx.merge.DexMerger.mergeDexes(DexMerger.java:171)<br>        at com.android.dx.merge.DexMerger.merge(DexMerger.java:198)<br>        at com.android.builder.dexing.DexArchiveMergerCallable.call(DexArchiveMergerCallable.java:61)<br>        at com.android.builder.dexing.DexArchiveMergerCallable.call(DexArchiveMergerCallable.java:36)<br>        at java.util.concurrent.ForkJoinTask$AdaptedCallable.exec(ForkJoinTask.java:1424)<br>        at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)<br>        at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)<br>        at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)<br>        at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)</p>
 
   </section>
 
@@ -225,6 +230,20 @@
 <section class="read-more">
            
     
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found.markdown">gradle3.0.0-aar-not-found.markdown</a></h2>
+                <p class="excerpt">
+                
+                1234gradle cleanrm -rf .idea .gradle &amp;amp;&amp;amp; find . -name &amp;quot;*build*&amp;quot; -type d | xargs rm -rf &amp;amp;&amp;amp; find . -name &amp;quot;*.iml&amp;quot; -typ
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
+</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
+                           
+            </div>
         
         
                
