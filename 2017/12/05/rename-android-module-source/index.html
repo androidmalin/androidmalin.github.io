@@ -177,8 +177,11 @@ echo ‘export PATH=$PATH:/home/malin/chromium/depot_tools’ &amp;gt;&amp;gt; ~
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/28/rename-android-module-source-name/" title="rename-android-module-source-name">rename-android-module-source-name</a></h2>
                 <p class="excerpt">
                 
-                gradle4.3版本出错,关闭buildcache后正常,使用gradle4.4版本正常.
-123456789android.useDeprecatedNdk=trueorg.gradle.daemon=falseorg.gradle.jvmargs=-Xmx2048m -XX:MaxPermSi
+                1.build cache
+开启:gradle assembleDebug --build-cache
+或者:
+关闭:gradle assembleDebug --no-build-cache
+2.daemon1234567Since Gradle 3.0, we enable Daemon by 
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-28T07:30:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
