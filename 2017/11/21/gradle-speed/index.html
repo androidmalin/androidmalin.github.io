@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>gradle3.0.0-aar-not-found | 马琳</title>
+    <title>gradle Optimize Your Build Speed | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="gradle3.0.0-aar-not-found | 马琳">
+    <meta name="twitter:title" content="gradle Optimize Your Build Speed | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="gradle3.0.0-aar-not-found | 马琳">
+    <meta property="og:title" content="gradle Optimize Your Build Speed | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/11/28/gradle3.0.0-aar-not-found/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/11/21/gradle-speed/"/>
 
     
       
@@ -132,60 +132,28 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
- </span>
+      <time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">gradle3.0.0-aar-not-found</h1>
+    <h1 class="post-title">gradle Optimize Your Build Speed</h1>
   </header>
 
   <section class="post">
-    <p>android gradle插件升级到3.0.0后,使用<code>assemble${PRODUCT_FLAVORS}</code>或者<code>assemble${PRODUCT_FLAVORS}${BUILD_TYPE}</code>不会产生aar.具体测试步骤如下.</p>
-<p>可能使用到的命令.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">gradle clean</div><div class="line">rm -rf .idea .gradle &amp;&amp; find . -name &quot;*build*&quot; -type d | xargs rm -rf &amp;&amp; find . -name &quot;*.iml&quot; -type f | xargs rm -r</div><div class="line">find . -name &quot;*.aar&quot; -type f</div><div class="line">find . -name &quot;*.apk&quot; -type f</div></pre></td></tr></table></figure></p>
-<p>1.gradle assembleGoogle -x lint<br>aar:无</p>
-<p>apk:</p>
-<p>./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk</p>
-<p>./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk</p>
-<p>2.gradle assembleGoogleRelease -x lint</p>
-<p>aar:无</p>
-<p>apk:<br><code>./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk</code></p>
-<p>3.gradle assembleGoogleDebug -x lint</p>
-<p>aar:无</p>
-<p>apk:</p>
-<p><code>./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk</code></p>
-<p>4.gradle build -x lint</p>
-<p>build:Assembles and tests this project</p>
-<p>aar:</p>
-<p><code>./libimage/build/outputs/aar/libimage-release.aar</code></p>
-<p><code>./libimage/build/outputs/aar/libimage-debug.aar</code></p>
-<p>apk:</p>
-<p><code>./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk</code></p>
-<p>5.gradle assemble -x lint</p>
-<p>aar</p>
-<p><code>./libimage/build/outputs/aar/libimage-release.aar</code></p>
-<p><code>./libimage/build/outputs/aar/libimage-debug.aar</code></p>
-<p>apk:</p>
-<p><code>./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk</code></p>
-<p>6.gradle assembleDebug -x lint</p>
-<p>aar:<br><code>./libimage/build/outputs/aar/libimage-debug.aar</code></p>
-<p>apk:<br><code>./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk</code></p>
-<p>7.gradle assembleRelease -x lint</p>
-<p>aar:<br><code>./libimage/build/outputs/aar/libimage-release.aar</code></p>
-<p>apk:<br><code>./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk</code></p>
-<p><code>./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk</code></p>
-<p>8.结论<br>使用<code>assemble${PRODUCT_FLAVORS}</code>或者<code>assemble${PRODUCT_FLAVORS}${BUILD_TYPE}</code>不会产生aar.<br>需要使用<code>assemble${BUILD_TYPE}</code>或者<code>assemble</code>任务</p>
-<p><a href="https://stackoverflow.com/questions/40342170/android-studio-release-build-does-not-output-aar" target="_blank" rel="external">stackoverflow</a></p>
+    <p>0.保持工具为最新</p>
+<p>1.用Android7.0以上的设备测试</p>
+<p>2.minSkd&gt;=21</p>
+<p>3.为测试版本创建productFlavors</p>
+<p>4.Avoid compiling unnecessary resources</p>
+<p>5.Use static build config values with your debug build</p>
+<p>6.Use static dependency versions</p>
+<p>7.Enable offline mode</p>
+<p>8.Enable configuration on demand</p>
+<p>9.Create library modules</p>
+<p>1.${home}/.gradle/gradle.properties<br>创建gradle.properties文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#加快编译速度的配置</div><div class="line">org.gradle.daemon=true</div><div class="line">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</div><div class="line">org.gradle.parallel=true</div><div class="line">org.gradle.configureondemand=true</div><div class="line">#加快编译速度的配置</div><div class="line"></div><div class="line">#设置socoket5代理</div><div class="line">#org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</div><div class="line"></div><div class="line"></div><div class="line">#GitHub中引用jar包更新失败的解决方案</div><div class="line">#To fix compile error. 这里的三个变量名根据uploadArchives中所引用的变量名不同，具体看情况而配置.</div><div class="line">sonatypeRepo=null</div><div class="line">sonatypeUsername=null</div><div class="line">sonatypePassword=null  </div><div class="line">#GitHub中引用jar包更新失败的解决方案</div></pre></td></tr></table></figure>
 
   </section>
 
@@ -196,20 +164,16 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/rename-android-module-source-name/" title="rename-android-module-source-name">rename-android-module-source-name</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
                 <p class="excerpt">
                 
-                0.socket5代理设置
-gradle -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080 build
-1.build cache
-开启:gradle assembleDebug --build-cache
-或者:
-关闭:gradle assemble
+                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
+可能使用到的命令.1234gradle cleanrm -rf .idea
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T07:30:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/rename-android-module-source-name/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
                            
             </div>
         
@@ -217,18 +181,15 @@ gradle -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080 build
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/21/questions/" title="question">question</a></h2>
                 <p class="excerpt">
                 
-                0.保持工具为最新
-1.用Android7.0以上的设备测试
-2.minSkd&amp;gt;=21
-3.为测试版本创建productFlavors
-4.Avoid compiling unnecessary resources
-5.Use static build config values with y
+                1.v2签名问题,如何打印但钱的签名是否是v2
+2.http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html
+3.如何查看一个依赖的依赖库.例如:com.alibaba.android:ultraviewpag
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/questions/">继续阅读</a></div>
                        
             </div>
         
@@ -241,7 +202,7 @@ gradle -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080 build
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/28/gradle3.0.0-aar-not-found/" data-title="gradle3.0.0-aar-not-found" data-url="http://www.malin.xyz/2017/11/28/gradle3.0.0-aar-not-found/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/21/gradle-speed/" data-title="gradle Optimize Your Build Speed" data-url="http://www.malin.xyz/2017/11/21/gradle-speed/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
