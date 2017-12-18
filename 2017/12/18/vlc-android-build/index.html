@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/12/14/vlc-android-build/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/12/18/vlc-android-build/"/>
 
     
       
@@ -132,7 +132,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-12-14T10:12:00.000Z" class="post-list__meta--date date">2017-12-14</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-12-18T07:26:00.000Z" class="post-list__meta--date date">2017-12-18</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
@@ -142,9 +142,18 @@
   </header>
 
   <section class="post">
-    <p>VLC官网：<a href="http://www.videolan.org" target="_blank" rel="external">http://www.videolan.org</a><br>VLC源码：<a href="http://www.videolan.org/vlc/download-sources.html" target="_blank" rel="external">http://www.videolan.org/vlc/download-sources.html</a><br>VLC依赖：ftp://ftp.videolan.org/pub/contrib/ 或 <a href="http://download.videolan.org/pub/contrib/" target="_blank" rel="external">http://download.videolan.org/pub/contrib/</a><br>VLC框架介绍：<a href="http://www.codeweblog.com/the-architecture-of-vlc-media-framework/" target="_blank" rel="external">http://www.codeweblog.com/the-architecture-of-vlc-media-framework/</a><br>VLC-Android编译官方文档：<a href="https://wiki.videolan.org/AndroidCompile/" target="_blank" rel="external">https://wiki.videolan.org/AndroidCompile/</a></p>
-<p>出现了如下的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">malin@malin:~/gitlab/vlc-android$ sh compile.sh -a armeabi-v7a</div><div class="line">VLC source not found, cloning</div><div class="line">正克隆到 &apos;vlc&apos;...</div><div class="line">remote: Counting objects: 540230, done.</div><div class="line">remote: Compressing objects: 100% (103216/103216), done.</div><div class="line">error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function.</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: 过早的文件结束符（EOF）</div><div class="line">fatal: index-pack 失败</div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/google/protobuf/blob/master/src/README.md" target="_blank" rel="external">protobuf3编译安装</a><br>参考文章<br><a href="http://blog.csdn.net/wkw1125/article/details/56845405" target="_blank" rel="external">从零开始在Linux编译VLC-Android开源项目</a></p>
+    <p>出现了如下的问题</p>
+<p>1.环境变量的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Set $ANDROID_SDK to point to your Android SDK directory</div><div class="line"></div><div class="line">export ANDROID_SDK=/path/to/android-sdk</div><div class="line">Set $ANDROID_NDK to point to your Android NDK directory</div><div class="line"></div><div class="line">export ANDROID_NDK=/path/to/android-ndk</div><div class="line">Add some useful binaries to your $PATH</div><div class="line"></div><div class="line">export PATH=$PATH:$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools</div></pre></td></tr></table></figure>
+<p>2.Gradle下载过慢的问题<br>分析<a href="https://code.videolan.org/videolan/vlc-android/blob/master/compile.sh" target="_blank" rel="external">compile.sh</a>脚本发现它使用的gradle远程下载地址过慢.<br>解决办法就是将compile.sh中的gradle下载地址换掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-   GRADLE_URL=https://download.videolan.org/pub/contrib/gradle/gradle-$&#123;GRADLE_VERSION&#125;-bin.zip</div><div class="line">+   GRADLE_URL=https://downloads.gradle.org/distributions/gradle-$&#123;GRADLE_VERSION&#125;-bin.zip</div></pre></td></tr></table></figure>
+<p>3.clone vlc-3.0下载速度过慢的问题</p>
+<p>需要分析<a href="https://code.videolan.org/videolan/vlc-android/blob/master/compile.sh" target="_blank" rel="external">compile.sh</a>脚本到底做了什么工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">malin@malin:~/gitlab/vlc-android$ sh compile.sh -a armeabi-v7a</div><div class="line">VLC source not found, cloning</div><div class="line">正克隆到 &apos;vlc&apos;...</div><div class="line">remote: Counting objects: 540230, done.</div><div class="line">remote: Compressing objects: 100% (103216/103216), done.</div><div class="line">error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function.</div><div class="line">fatal: The remote end hung up unexpectedly</div><div class="line">fatal: 过早的文件结束符（EOF）</div><div class="line">fatal: index-pack 失败</div></pre></td></tr></table></figure>
+<p>原因是网速过慢,下载中断了,解决方法,使用github的地址下载vlc-3.0<br><a href="https://github.com/videolan/vlc-3.0" target="_blank" rel="external">https://github.com/videolan/vlc-3.0</a></p>
+<p><code>git clone git@github.com:videolan/vlc-3.0.git vlc</code></p>
+<p>4.ndk的版本问题<br>ndk需要<a href="https://developer.android.com/ndk/downloads/older_releases.html#ndk-14-downloads" target="_blank" rel="external">android-ndk-r14b</a></p>
+<p>参考文章<br><a href="https://wiki.videolan.org/AndroidCompile#Get_VLC_Source" target="_blank" rel="external">VLC-AndroidCompile</a><br><a href="https://code.videolan.org/videolan/vlc-android" target="_blank" rel="external">vlc-android Gitlab源码</a><br><a href="https://git.videolan.org/" target="_blank" rel="external">videolan</a><br><a href="https://github.com/videolan/vlc-3.0" target="_blank" rel="external">VLC-Github</a><br><a href="https://github.com/google/protobuf/blob/master/src/README.md" target="_blank" rel="external">protobuf3编译安装</a><br><a href="http://blog.csdn.net/wkw1125/article/details/56845405" target="_blank" rel="external">从零开始在Linux编译VLC-Android开源项目</a></p>
 
   </section>
 
@@ -183,7 +192,7 @@ Android Support Reposito
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/12/14/vlc-android-build/" data-title="vlc-android-build" data-url="http://www.malin.xyz/2017/12/14/vlc-android-build/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/12/18/vlc-android-build/" data-title="vlc-android-build" data-url="http://www.malin.xyz/2017/12/18/vlc-android-build/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
