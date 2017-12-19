@@ -134,6 +134,33 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/12/22/shell/" title="link to post.title">使用脚本安装并启动一个APK</a></h2>
+      <p class="excerpt">
+    
+      1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &amp;#39;{print $2}&amp;#39; | sed s/name=//g | sed s/\&amp;#39;//g例如得到如下的结果co
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2016-12-22T09:24:00.000Z" class="post-list__meta--date date">2016-12-22</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/22/shell/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2016/12/18/http/" title="link to post.title">Ubuntu修改Host不生效的问题</a></h2>
+      <p class="excerpt">
+    
+      1.编辑/etc/hosts文件sudo vim /etc/hosts
+添加host，或者注释掉host
+2.重启网络sudo /etc/init.d/networking restart3.使用ping xxxxx测试修改后是否生效。
+4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。使用如下的命令查找hosts.swp文件。locate updat
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2016-12-18T09:24:00.000Z" class="post-list__meta--date date">2016-12-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/12/18/http/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2016/12/14/host/" title="link to post.title">Ubuntu Http 请求</a></h2>
       <p class="excerpt">
     
@@ -252,39 +279,6 @@ Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板�
     </li>
   
     
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/10/04/android-good-website/" title="link to post.title">Android开发中相见恨晚的网站</a></h2>
-      <p class="excerpt">
-    
-      说明:摘抄自《Android群英转：神兵利器》
-1.Proguard自动生成https://proguard.herokuapp.com/
-2.Git中gitignore文件自动生成https://www.gitignore.io/
-3.在线MarkDownhttps://www.zybuluo.com/mdeditor
-3.思维导图软件全平台（Linux,Windows,Mac）http://w
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-10-04T14:22:00.000Z" class="post-list__meta--date date">2016-10-04</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/10/04/android-good-website/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2016/03/09/write-code-that-is-easy-to-delete-not-easy-to/" title="link to post.title">编写易于删除，而不是易于扩展的代码</a></h2>
-      <p class="excerpt">
-    
-      
-感谢郭晓磊同学对文章地修改，感谢汤涛叔叔的大力支持。由于编程经验有限，翻译难免有不对的地方，欢迎大家纠正错误。
-
-原文链接：http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to
-编写易于删除，而不是易于扩展的代码
-“毫无目的地去编码，将会导致无法维护和删除”
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2016-03-09T14:22:00.000Z" class="post-list__meta--date date">2016-03-09</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2016/03/09/write-code-that-is-easy-to-delete-not-easy-to/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
   </ol>
 
 
@@ -292,7 +286,9 @@ Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板�
     
       <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/2/">← 最近</a>
     
-    <span class="pagination__page-number" > 3 / 3 </span>
+    <span class="pagination__page-number" > 3 / 4 </span>
+    
+      <a class="older-posts pagination__older btn btn-small btn-tertiary" href="/page/4/">更早 →</a>
     
   </nav>
 
