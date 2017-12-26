@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>find-so-from-aar | 马琳</title>
+    <title>replugin-publishToMavenLocal | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="find-so-from-aar | 马琳">
+    <meta name="twitter:title" content="replugin-publishToMavenLocal | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="find-so-from-aar | 马琳">
+    <meta property="og:title" content="replugin-publishToMavenLocal | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/12/19/find-aar-so/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/12/26/replugin-offline-compile/"/>
 
     
       
@@ -132,33 +132,24 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-12-19T05:02:00.000Z" class="post-list__meta--date date">2017-12-19</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-12-26T10:33:00.000Z" class="post-list__meta--date date">2017-12-26</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">find-so-from-aar</h1>
+    <h1 class="post-title">replugin-publishToMavenLocal</h1>
   </header>
 
   <section class="post">
-    <p>1.编译<br><code>gradle assembleDebug -x lint</code></p>
-<p>2.查找aar<br><code>mkdir -p malinaar &amp;&amp; find . -name &quot;*.aar&quot; -type f | xargs -i cp {} ./malinaar</code></p>
-<p>3.重命名aar为zip后缀<br><code>cd malinaar &amp;&amp; rename &#39;s/\.aar/.zip/&#39; *.aar</code></p>
-<p>4.批量解压到对应的zip文件名下<br>将如下的脚本保存成 unzipll.sh 然后赋予可执行的权限</p>
-<p>例如可以这样<br><code>vim unzipll.sh &amp;&amp; chmod +x unzipll.sh</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">mkdir -p malinoutput</div><div class="line"></div><div class="line">for file in *.zip</div><div class="line">do</div><div class="line">filename=$(echo $file|cut -d&apos;.&apos; -f1)</div><div class="line">unzip $file -d malinoutput/$filename</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>然后执行<code>unzipll.sh</code></p>
-<p><code>./unzipll.sh</code></p>
-<p>5.从解压的文件中查找对应的so</p>
-<p><code>cd malinoutput</code></p>
-<p>xxx表示要寻找的so<br><code>find . -name &quot;*.so&quot; -type f | grep xxx</code></p>
-<p>或者用下面的步骤</p>
-<p>1.同上</p>
-<p>2.同上</p>
-<p>3.同上</p>
-<p>4.将zip包中的信息保存在file.json文件中<br><code>unzip -v &quot;*.zip&quot; &gt; ./file.json</code></p>
-<p>5.从文件中查找制定的so<br>可以使用文本编辑器</p>
+    <p>1.删除build-cache<br><code>rm -rf /home/malin/.android/build-cache</code></p>
+<p>2.删除gradle的cache<br><code>rm -rf /home/malin/.gradle/caches/modules-2/files-2.1/com.qihoo360.replugin/replugin-host-gradle</code><br><code>rm -rf /home/malin/.gradle/caches/modules-2/files-2.1/com.qihoo360.replugin/replugin-plugin-gradle</code></p>
+<p>3.删除mavenLocal中replugin目录<br>cd<br><code>rm -rf /home/malin/.m2/repository/com/qihoo360/replugin</code></p>
+<p>4.replugin-host-gradle的publishToMavenLocal<br><code>cd /home/malin/malin_demo/RePlugin/replugin-host-gradle</code><br><code>gradle publishToMavenLocal</code></p>
+<p>5.replugin-plugin-gradle的publishToMavenLocal<br><code>cd /home/malin/malin_demo/RePlugin/replugin-plugin-gradle</code><br><code>gradle publishToMavenLocal</code></p>
+<p>6.clean实例Demo的工程缓存<br><code>cd /home/malin/malin_github/RePluginSample</code><br><code>rm -rf .gradle .idea &amp;&amp; find . -name &quot;*build*&quot; -type d | xargs rm -rf</code></p>
+<p>7.修改项目根目录中build.gradle的第一个仓库为 mavenLocal()</p>
+<p>8.离线编译安装Demo查看log,确认修改插件的输出<br><code>cd /home/malin/malin_github/RePluginSample</code><br><code>gradle assembleDebug --offline</code></p>
 
   </section>
 
@@ -166,33 +157,20 @@
 <section class="read-more">
            
     
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/12/26/replugin-offline-compile/" title="replugin-publishToMavenLocal">replugin-publishToMavenLocal</a></h2>
-                <p class="excerpt">
-                
-                1.删除build-cacherm -rf /home/malin/.android/build-cache
-2.删除gradle的cacherm -rf /home/malin/.gradle/caches/modules-2/files-2.1/com.qihoo360.replugin/rep
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-12-26T10:33:00.000Z" class="post-list__meta--date date">2017-12-26</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/12/26/replugin-offline-compile/">继续阅读</a></div>
-                           
-            </div>
         
         
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/12/19/compile/" title="AOSP-Telegrame-Shadowsocks-Chromium-VLC">AOSP-Telegrame-Shadowsocks-Chromium-VLC</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/12/19/find-aar-so/" title="find-so-from-aar">find-so-from-aar</a></h2>
                 <p class="excerpt">
                 
-                1.ndk:
-Telegrame:Shadowsocks:Chromium:VLC:
-
+                1.编译gradle assembleDebug -x lint
+2.查找aarmkdir -p malinaar &amp;amp;&amp;amp; find . -name &amp;quot;*.aar&amp;quot; -type f | xargs -i cp {} ./malinaar
+3.重命名aar为zip后缀
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-12-19T02:38:00.000Z" class="post-list__meta--date date">2017-12-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/12/19/compile/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-12-19T05:02:00.000Z" class="post-list__meta--date date">2017-12-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/12/19/find-aar-so/">继续阅读</a></div>
                        
             </div>
         
@@ -205,7 +183,7 @@ Telegrame:Shadowsocks:Chromium:VLC:
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/12/19/find-aar-so/" data-title="find-so-from-aar" data-url="http://www.malin.xyz/2017/12/19/find-aar-so/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/12/26/replugin-offline-compile/" data-title="replugin-publishToMavenLocal" data-url="http://www.malin.xyz/2017/12/26/replugin-offline-compile/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
