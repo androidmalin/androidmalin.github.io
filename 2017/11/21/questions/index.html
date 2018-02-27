@@ -185,7 +185,7 @@
 <p>23.查看依赖<br>gradle :app:dependencies –configuration releaseCompileClasspath</p>
 <p>24.gradle 依赖报告</p>
 <p>首先在app/build.gradle中应用 ‘project-report’插件<br>apply plugin: ‘project-report’<br>然后执行 gradle projectReport命令生成依赖报告</p>
-<p>gradle :app:dependencyInsight –dependency com.android.support:appcompat-v7 –configuration releaseRuntimeClasspath</p>
+<p>gradle :app:dependencyInsight –dependency com.android.support:appcompat-v7 –configuration releaseRuntimeClasspath<br><a href="https://stackoverflow.com/questions/21645071/using-gradle-to-find-dependency-tree" target="_blank" rel="external">https://stackoverflow.com/questions/21645071/using-gradle-to-find-dependency-tree</a></p>
 <p>androidJacocoAgent - The Jacoco agent to use to get coverage data.<br>androidJacocoAnt - The Jacoco ant tasks to use to get execute Gradle tasks.<br>androidTestImplementation - Implementation only dependencies for ‘androidTest’ sources.<br>debugAndroidTestCompileClasspath - Resolved configuration for compilation for variant: debugAndroidTest<br>debugAndroidTestRuntimeClasspath - Resolved configuration for runtime for variant: debugAndroidTest<br>debugCompileClasspath - Resolved configuration for compilation for variant: debug<br>debugImplementation - Implementation only dependencies for ‘debug’ sources.<br>debugRuntimeClasspath - Resolved configuration for runtime for variant: debug ++++<br>debugUnitTestCompileClasspath - Resolved configuration for compilation for variant: debugUnitTest<br>debugUnitTestRuntimeClasspath - Resolved configuration for runtime for variant: debugUnitTest<br>implementation - Implementation only dependencies for ‘main’ sources.</p>
 <p>releaseCompileClasspath - Resolved configuration for compilation for variant: release<br>releaseRuntimeClasspath - Resolved configuration for runtime for variant: release<br>releaseUnitTestCompileClasspath - Resolved configuration for compilation for variant: releaseUnitTest<br>releaseUnitTestRuntimeClasspath - Resolved configuration for runtime for variant: releaseUnitTest</p>
 
@@ -198,6 +198,23 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
+                <p class="excerpt">
+                
+                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
+可能使用到的命令.1234gradle cleanrm -rf .idea
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
+</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -210,21 +227,6 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
-                <p class="excerpt">
-                
-                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
-参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
