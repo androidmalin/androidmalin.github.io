@@ -142,7 +142,10 @@
   </header>
 
   <section class="post">
-    <p>1.v2签名问题,如何打印当前的签名是否是v2<br>在<code>app/build.gradle</code>中增加如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">signingConfigs &#123;</div><div class="line">    myConfig &#123;</div><div class="line">        storeFile file(STOREFILE)</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        storePassword STOREPASSWORD</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        keyAlias KEYALIAS</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        keyPassword KEYPASSWORD</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//Release</div><div class="line">println &apos;sign config_&apos; + android.signingConfigs.myConfig</div><div class="line"></div><div class="line">//Debug</div><div class="line">println &apos;sign config_&apos; + android.signingConfigs.debug</div></pre></td></tr></table></figure></p>
+    <p>0.Release版本中去除Log代码<br>在app/build.gradle中增加,使用<code>proguard-android-optimize.txt</code>替换默认的<code>proguard-android.txt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">release &#123;</div><div class="line">            //noinspection GroovyAssignabilityCheck</div><div class="line">            debuggable false</div><div class="line">            zipAlignEnabled true</div><div class="line">            signingConfig signingConfigs.myConfig</div><div class="line">            minifyEnabled true //启用通过 ProGuard 实现的代码压缩</div><div class="line">            shrinkResources true // 去除无效的资源文件</div><div class="line">            // proguard-android.txt 文件的位置 /sdk/tools/proguard/</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android-optimize.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>然后在<code>proguard-rules.pro</code>中增加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-assumenosideeffects class android.util.Log &#123;</div><div class="line">    public static boolean isLoggable(java.lang.String, int);</div><div class="line">    public static int v(...);</div><div class="line">    public static int i(...);</div><div class="line">    public static int w(...);</div><div class="line">    public static int d(...);</div><div class="line">    public static int e(...);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.v2签名问题,如何打印当前的签名是否是v2<br>在<code>app/build.gradle</code>中增加如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">signingConfigs &#123;</div><div class="line">    myConfig &#123;</div><div class="line">        storeFile file(STOREFILE)</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        storePassword STOREPASSWORD</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        keyAlias KEYALIAS</div><div class="line">        //noinspection GroovyAssignabilityCheck</div><div class="line">        keyPassword KEYPASSWORD</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//Release</div><div class="line">println &apos;sign config_&apos; + android.signingConfigs.myConfig</div><div class="line"></div><div class="line">//Debug</div><div class="line">println &apos;sign config_&apos; + android.signingConfigs.debug</div></pre></td></tr></table></figure></p>
 <p>执行<code>gralde clean</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sign config_SigningConfig_Decorated&#123;name=myConfig, storeFile=/home/malin/malin_demo/application/malin.jks, storePassword=xxxx, keyAlias=xxxx, keyPassword=xxxx, storeType=/home/malin/malin_demo/application/malin.jks, v1SigningEnabled=true, v2SigningEnabled=true&#125;</div></pre></td></tr></table></figure>
 <p>2.<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0312/2587.html</a><br>查看编译使用的Proguard的版本<br><code>gradle buildEnvironment | grep proguard</code></p>
@@ -207,23 +210,6 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -236,6 +222,21 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
+                <p class="excerpt">
+                
+                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
+参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
