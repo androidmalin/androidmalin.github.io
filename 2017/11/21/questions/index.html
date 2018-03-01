@@ -144,6 +144,7 @@
   <section class="post">
     <p>-3.gradle插件代码断点调试<br><code>gradle assembleDebug -Dorg.gradle.jvmargs=&quot;-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005&quot;</code></p>
 <p>或者在工程根目录下的<code>gradle.properties</code>文件中增加<code>org.gradle.jvmargs=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</code></p>
+<p>参考<a href="https://stackoverflow.com/questions/9315398/how-to-run-jetty-via-gradle-in-debug-mode/9648945#" target="_blank" rel="external">How to run Jetty via Gradle in Debug Mode</a></p>
 <p>-2.代码生成图片<br><a href="https://github.com/dawnlabs/carbon" target="_blank" rel="external">https://github.com/dawnlabs/carbon</a><br><a href="https://carbon.now.sh" target="_blank" rel="external">https://carbon.now.sh</a></p>
 <p>-1.项目中gradle版本的升级<br><code>gradle wrapper --gradle-version 4.0 --distribution-type all</code></p>
 <p>0.Release版本中去除Log代码<br>在app/build.gradle中增加,使用<code>proguard-android-optimize.txt</code>替换默认的<code>proguard-android.txt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">release &#123;</div><div class="line">            //noinspection GroovyAssignabilityCheck</div><div class="line">            debuggable false</div><div class="line">            zipAlignEnabled true</div><div class="line">            signingConfig signingConfigs.myConfig</div><div class="line">            minifyEnabled true //启用通过 ProGuard 实现的代码压缩</div><div class="line">            shrinkResources true // 去除无效的资源文件</div><div class="line">            // proguard-android.txt 文件的位置 /sdk/tools/proguard/</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android-optimize.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
@@ -257,23 +258,6 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -286,6 +270,21 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
+                <p class="excerpt">
+                
+                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
+参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
