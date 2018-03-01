@@ -142,7 +142,10 @@
   </header>
 
   <section class="post">
-    <p>-1.项目中gradle版本的升级<br><code>gradle wrapper --gradle-version 4.0 --distribution-type all</code></p>
+    <p>-3.gradle插件代码断点调试<br><code>gradle assembleDebug -Dorg.gradle.jvmargs=&quot;-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005&quot;</code></p>
+<p>或者在工程根目录下的<code>gradle.properties</code>文件中增加<code>org.gradle.jvmargs=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</code></p>
+<p>-2.代码生成图片<br><a href="https://github.com/dawnlabs/carbon" target="_blank" rel="external">https://github.com/dawnlabs/carbon</a><br><a href="https://carbon.now.sh" target="_blank" rel="external">https://carbon.now.sh</a></p>
+<p>-1.项目中gradle版本的升级<br><code>gradle wrapper --gradle-version 4.0 --distribution-type all</code></p>
 <p>0.Release版本中去除Log代码<br>在app/build.gradle中增加,使用<code>proguard-android-optimize.txt</code>替换默认的<code>proguard-android.txt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">release &#123;</div><div class="line">            //noinspection GroovyAssignabilityCheck</div><div class="line">            debuggable false</div><div class="line">            zipAlignEnabled true</div><div class="line">            signingConfig signingConfigs.myConfig</div><div class="line">            minifyEnabled true //启用通过 ProGuard 实现的代码压缩</div><div class="line">            shrinkResources true // 去除无效的资源文件</div><div class="line">            // proguard-android.txt 文件的位置 /sdk/tools/proguard/</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android-optimize.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
 <p>然后在<code>proguard-rules.pro</code>中增加</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#-------------------------------log-------------------------------</div><div class="line">-assumenosideeffects class android.util.Log &#123;</div><div class="line">    public static boolean isLoggable(java.lang.String, int);</div><div class="line">    public static int v(...);</div><div class="line">    public static int i(...);</div><div class="line">    public static int w(...);</div><div class="line">    public static int d(...);</div><div class="line">    public static int e(...);</div><div class="line">    public static int wtf(...);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#keep 这个类</div><div class="line">-keep class com.orhanobut.logger.AndroidLogAdapter</div><div class="line"># 删除自定义的日志提示类提示语句</div><div class="line">-assumenosideeffects class com.orhanobut.logger.AndroidLogAdapter &#123;</div><div class="line">     public static *** v(...);</div><div class="line">     public static *** i(...);</div><div class="line">     public static *** w(...);</div><div class="line">     public static *** d(...);</div><div class="line">     public static *** e(...);</div><div class="line">     public static *** wtf(...);</div><div class="line">&#125;</div><div class="line">#-------------------------------log-------------------------------</div></pre></td></tr></table></figure>
@@ -206,6 +209,12 @@
 <p>28.gradle wrapper升级<br><code>gradlew wrapper --gradle-version 4.2.1</code><br><code>gradlew wrapper</code></p>
 <p>29.gradle的命令行flag,环境变量,配置文件,的优先顺序<br><code>Command-line flags such as --build-cache. These have precedence over properties and environment variables.</code></p>
 <p>30.gradle命令提示自动完成<br><a href="https://github.com/gradle/gradle-completion" target="_blank" rel="external">Command-line completion</a><br>Gradle provides bash and zsh tab completion support for tasks, options, and Gradle properties through gradle-completion, installed separately.<br><a href="https://docs.gradle.org/current/userguide/img/gradle-completion-4.0.gif" target="_blank" rel="external"></a></p>
+<p>31.gradle配置文件,生效的优先级<br>Setting up a consistent environment for your build is as simple as placing these settings into a <code>gradle.properties</code> file. The configuration is applied in following order (if an option is configured in multiple locations the <em>last one wins</em>):</p>
+<ul>
+<li><code>gradle.properties</code> in project root directory.</li>
+<li><code>gradle.properties</code> in <code>GRADLE_USER_HOME</code> directory.</li>
+<li>system properties, e.g. when <code>-Dgradle.user.home</code> is set on the command line.</li>
+</ul>
 <p>31.<br>Performance options<br>Try these options when optimizing build performance. Learn more about improving performance of Gradle builds here.</p>
 <p>Many of these options can be specified in gradle.properties so command-line flags are not necessary. See the configuring build environment guide.</p>
 <p><code>--build-cache</code>, <code>--no-build-cache</code><br>Toggles the Gradle build cache. Gradle will try to reuse outputs from previous builds. Default is off.</p>
@@ -248,6 +257,23 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
+                <p class="excerpt">
+                
+                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
+可能使用到的命令.1234gradle cleanrm -rf .idea
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
+</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -260,21 +286,6 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
-                <p class="excerpt">
-                
-                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
-参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
