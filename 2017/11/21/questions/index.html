@@ -200,10 +200,10 @@
 <p>20.<br>gradle 本身包含了groovy,依赖JDK<br>gradle init 可以将 translate simple pom.xml files to Gradle.</p>
 <p>21.<br><code>grep -n demo</code> #显示行号<br><code>grep -C 5 demo</code> #搜索显示demo关键字出现的上下5行内容<br><code>cat -n demo.txt</code> #显示行号</p>
 <p>22.查看<code>support-annotations</code>最终使用的版本</p>
-<p><code>com.android.tools.build:gradle:3.0.0</code>之前<br><code>gradle :app:dependencyInsight --dependency support-annotations --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency appcompat-v7 --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency gson --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency okhttp --configuration compile</code></p>
-<p><code>gradle :app:dependencyInsight --dependency eventbus --configuration compile</code></p>
-<p><code>com.android.tools.build:gradle:3.0.0</code>之后<br><code>gradle :app:dependencyInsight --dependency support-annotations --configuration releaseCompileClasspath</code><br><code>gradle :app:dependencyInsight --dependency support-annotations --configuration debugCompileClasspath</code></p>
-<p><code>gradle :app:dependencyInsight --dependency support-annotations --configuration releaseRuntimeClasspath</code><br><code>gradle :app:dependencyInsight --dependency support-annotations --configuration debugRuntimeClasspath</code></p>
+<p><code>com.android.tools.build:gradle:3.0.0</code>之前使用<br><code>gradle :app:dependencyInsight --dependency com.android.support --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency appcompat-v7 --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency gson --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency okhttp --configuration compile</code><br><code>gradle :app:dependencyInsight --dependency eventbus --configuration compile</code></p>
+<p><code>com.android.tools.build:gradle:3.0.0</code>之后使用<br><code>gradle :app:dependencyInsight --dependency com.android.support --configuration releaseCompileClasspath</code><br><code>gradle :app:dependencyInsight --dependency com.android.support --configuration debugCompileClasspath</code></p>
+<p><code>gradle :app:dependencyInsight --dependency appcompat-v7 --configuration releaseRuntimeClasspath</code><br><code>gradle :app:dependencyInsight --dependency appcompat-v7 --configuration debugRuntimeClasspath</code></p>
+<p>例子:<br><code>gradle :app:dependencyInsight --dependency com.android --configuration debugCompileClasspath</code><br><code>gradle :app:dependencyInsight --dependency com.android.support:preference-v7 --configuration debugCompileClasspath</code><br><code>gradle :app:dependencyInsight --dependency com.android.support:cardview-v7 --configuration debugCompileClasspath</code></p>
 <p>参考链接 <a href="https://guides.gradle.org/building-android-apps" target="_blank" rel="external">https://guides.gradle.org/building-android-apps</a></p>
 <p>23.查看依赖<br><code>gradle :app:dependencies --configuration releaseCompileClasspath</code></p>
 <p>24.gradle 依赖报告</p>
@@ -264,6 +264,23 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
+                <p class="excerpt">
+                
+                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
+可能使用到的命令.1234gradle cleanrm -rf .idea
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
+</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -276,21 +293,6 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
-                <p class="excerpt">
-                
-                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
-参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
