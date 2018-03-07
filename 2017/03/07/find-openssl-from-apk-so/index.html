@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>gradle Optimize Your Build Speed | 马琳</title>
+    <title>find-so-from-aar | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta name="twitter:title" content="find-so-from-aar | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta property="og:title" content="find-so-from-aar | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/11/21/gradle-speed/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2017/03/07/find-openssl-from-apk-so/"/>
 
     
       
@@ -132,28 +132,24 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2017-03-07T07:22:00.000Z" class="post-list__meta--date date">2017-03-07</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">gradle Optimize Your Build Speed</h1>
+    <h1 class="post-title">find-so-from-aar</h1>
   </header>
 
   <section class="post">
-    <p>0.保持工具为最新</p>
-<p>1.用Android7.0以上的设备测试</p>
-<p>2.minSkd&gt;=21</p>
-<p>3.为测试版本创建productFlavors</p>
-<p>4.Avoid compiling unnecessary resources</p>
-<p>5.Use static build config values with your debug build</p>
-<p>6.Use static dependency versions</p>
-<p>7.Enable offline mode</p>
-<p>8.Enable configuration on demand</p>
-<p>9.Create library modules</p>
-<p>1.${home}/.gradle/gradle.properties<br>创建gradle.properties文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#加快编译速度的配置</div><div class="line">org.gradle.daemon=true</div><div class="line">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</div><div class="line">org.gradle.parallel=true</div><div class="line">org.gradle.configureondemand=true</div><div class="line">#加快编译速度的配置</div><div class="line"></div><div class="line">#设置socoket5代理</div><div class="line">#org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</div><div class="line"></div><div class="line"></div><div class="line">#GitHub中引用jar包更新失败的解决方案</div><div class="line">#To fix compile error. 这里的三个变量名根据uploadArchives中所引用的变量名不同，具体看情况而配置.</div><div class="line">sonatypeRepo=null</div><div class="line">sonatypeUsername=null</div><div class="line">sonatypePassword=null  </div><div class="line">#GitHub中引用jar包更新失败的解决方案</div></pre></td></tr></table></figure>
+    <p>1.解压APK,进入<code>lib/armeabi/</code>目录<br>2.到处所有<code>so</code>文件的函数表.<br><code>nm -D libName.so</code>查看<code>so</code>文件符号表<br>可以使用下面的<code>shell</code>脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">mkdir -p sooutput</div><div class="line">for file in *.so</div><div class="line">do</div><div class="line">filename=$(echo $file | cut -d &apos;.&apos; -f1)</div><div class="line">nm -D $file | awk &apos;&#123;print $3&#125;&apos; &gt; ./sooutput/$file.txt</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>3.在函数表文件夹<code>sooutput</code>,使用内容查找包含<code>SSL</code>字段的文件.<br><code>cd sooutput</code><br><code>grep -rn &quot;SSL&quot;*</code></p>
+<p>4.将可疑的符号表文件和标准的SSL文件对比.<br>ssl.h的github上的地址为<a href="https://github.com/openssl/openssl/blob/master/include/openssl/ssl.h" target="_blank" rel="external">https://github.com/openssl/openssl/blob/master/include/openssl/ssl.h</a><br>匹配关键的方法.<br><code>http https://raw.githubusercontent.com/openssl/openssl/master/include/openssl/ssl.h | grep __owur</code></p>
+<p>或者导出Android手机中的libssl.so文件.使用类似的方式,导出函数表文件.对比两个文件相同的行.<br><code>cat $1 $2 | sort | uniq -d | sort -n</code></p>
+<p>5.综合判断</p>
+<p>附录:<br><code>awk &#39;{print $1}&#39;</code>取出第一列<br><code>grep -rn &quot;hello,world!&quot; *</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">* : 表示当前目录所有文件，也可以是某个文件名</div><div class="line">-r 是递归查找</div><div class="line">-n 是显示行号</div><div class="line">-R 查找所有文件包含子目录</div><div class="line">-i 忽略大小写</div></pre></td></tr></table></figure></p>
+<p>链接:<br><a href="https://en.wikipedia.org/wiki/OpenSSL" target="_blank" rel="external">OpenSSL Version List</a><br><a href="http://www.cnblogs.com/itech/archive/2012/09/16/2687423.html" target="_blank" rel="external">Linux的nm查看动态和静态库中的符号</a><br><a href="http://man.linuxde.net/strings" target="_blank" rel="external">strings命令</a><br><a href="http://blog.csdn.net/benny5609/article/details/2314541" target="_blank" rel="external">C语言中#define的用法</a></p>
 
   </section>
 
@@ -164,16 +160,16 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/30/ubuntu-2k/" title="Ubuntu 2k">Ubuntu 2k</a></h2>
                 <p class="excerpt">
                 
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
+                1.查看硬件信息lspci -vnn | grep VGA -A 12
+看到如下信息NVIDIA Corporation GM206 [GeForce GTX 960]
+2.官网下载匹配型号的驱动官网地址http://www.geforce.cn/drivers
+选择GeForceGeForce 9
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-03-30T02:14:00.000Z" class="post-list__meta--date date">2017-03-30</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/30/ubuntu-2k/">继续阅读</a></div>
                            
             </div>
         
@@ -181,15 +177,17 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/21/questions/" title="question">question</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2017/03/02/adb-backup/" title="Ubuntu adb backup">Ubuntu adb backup</a></h2>
                 <p class="excerpt">
                 
-                -6.ClassLoaderAndroid动态加载之ClassLoader详解
--5.Warning:Theandroid.dexOptions.incrementalproperty is deprecated and it has no effect on the build process.
-
+                xda
+1.DownLoad adbextractorandroid-backup-extractor-20160710-bin.zip
+2.unzip
+3.DownLoad JCRJava7 JCRJave8 JCR
+解压后可以得到三个文件local_policy.jar，US_export_po
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/questions/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2017-03-02T07:59:00.000Z" class="post-list__meta--date date">2017-03-02</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/03/02/adb-backup/">继续阅读</a></div>
                        
             </div>
         
@@ -202,7 +200,7 @@
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/21/gradle-speed/" data-title="gradle Optimize Your Build Speed" data-url="http://www.malin.xyz/2017/11/21/gradle-speed/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/03/07/find-openssl-from-apk-so/" data-title="find-so-from-aar" data-url="http://www.malin.xyz/2017/03/07/find-openssl-from-apk-so/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
