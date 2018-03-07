@@ -134,6 +134,19 @@
   
     
     <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/03/07/find-openssl-from-apk-so/" title="link to post.title">find-so-from-aar</a></h2>
+      <p class="excerpt">
+    
+      1.解压APK,进入lib/armeabi/目录2.到处所有so文件的函数表.nm -D libName.so查看so文件符号表可以使用下面的shell脚本
+1234567#!/bin/bashmkdir -p sooutputfor file in *.sodofilename=$(echo $file | cut -d &amp;apos;.&amp;apos; -f1)nm -D $file | awk &amp;
+    &hellip;
+      </p>
+      <div class="post-list__meta"><time datetime="2018-03-07T07:22:00.000Z" class="post-list__meta--date date">2018-03-07</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/03/07/find-openssl-from-apk-so/">继续阅读</a></div>
+      <hr class="post-list__divider" />
+    </li>
+  
+    
+    <li>
       <h2 class="post-list__post-title post-title"><a href="/2017/12/26/replugin-offline-compile/" title="link to post.title">replugin-publishToMavenLocal</a></h2>
       <p class="excerpt">
     
@@ -272,26 +285,6 @@ R.string.pl_libreserrorR.string.pl_libshare_s
     &hellip;
       </p>
       <div class="post-list__meta"><time datetime="2017-12-05T02:49:00.000Z" class="post-list__meta--date date">2017-12-05</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/12/05/rename-android-module-source/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/11/28/rename-android-module-source-name/" title="link to post.title">rename-android-module-source-name</a></h2>
-      <p class="excerpt">
-    
-      0.socket5代理设置
-gradle -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080 build
-1.build cache
-开启:gradle assembleDebug --build-cache
-或者:
-关闭:gradle assembleDebug --no-build-cache
-2.daemon1234567Since Gradle
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-11-28T07:30:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/rename-android-module-source-name/">继续阅读</a></div>
       <hr class="post-list__divider" />
     </li>
   
