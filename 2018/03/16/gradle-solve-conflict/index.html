@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>gradle 版本冲突解决 | 马琳</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="gradle 版本冲突解决 | 马琳">
+    <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="gradle 版本冲突解决 | 马琳">
+    <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
+
+    
+    <meta name="author" content="马琳">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/avatar-small.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://www.malin.xyz/2018/03/16/gradle-solve-conflict/"/>
+
+    
+      
+</head>
+
+<body class="home-template no-js">
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 马琳 的主页"><img src="/images/avatar.jpg" width="80" alt="马琳 logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for 马琳">马琳</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">简单，美好，奋发</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">进阶之路<br/>相信美好的事件即将发生</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/androidmalin" title="查看我的GitHub主页" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+        <li class="navigation__item">
+            <a href="http://stackoverflow.com/users/3326683/malin" title="Stack Overflow" target="_blank">
+                <i class='social fa fa-stack-overflow'></i>
+                <span class="label">Stack Overflow</span>
+            </a>
+        </li>
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-purple"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-16T02:25:00.000Z" class="post-list__meta--date date">2018-03-16</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">gradle 版本冲突解决</h1>
+  </header>
+
+  <section class="post">
+    <p>1.插件<br><code>app/build.gradle</code>顶部增加<br><code>apply plugin: &#39;project-report&#39;</code><br>执行<br><code>gradlew.bat projectReport</code><br><code>gradlew.bat -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080 projectReport</code><br>在浏览器中打开生成的html链接</p>
+<p>搜索<br><code>com.android.support:multidex:1.0.3</code><br><code>com.android.support:multidex-instrumentation:1.0.1</code></p>
+<p>2.内置任务<br><code>gradle -q app:dependencies</code><br><code>gradle -q app:dependencies &gt; depen.txt</code></p>
+<p>3.统一版本</p>
+<p>所有工程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">    //将配置一次性地应用于所有的Project</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123; url &apos;https://maven.google.com&apos; &#125;</div><div class="line">        maven &#123; url &apos;https://dl.google.com/dl/android/maven2/&apos; &#125;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    configurations.all &#123;</div><div class="line">        resolutionStrategy &#123;</div><div class="line">            eachDependency &#123; details -&gt;</div><div class="line">                // Force all of the primary support libraries to use the same version.</div><div class="line">                if (details.requested.group == &apos;com.android.support&apos;</div><div class="line">                        &amp;&amp; details.requested.name != &apos;multidex&apos;</div><div class="line">                        &amp;&amp; details.requested.name != &apos;multidex-instrumentation&apos;) &#123;</div><div class="line">                    details.useVersion &quot;27.0.2&quot;</div><div class="line">                &#125;</div><div class="line">                // Force all the error-prone dependencies to use the same version.</div><div class="line">                if (details.requested.group == &apos;com.android.support&apos;</div><div class="line">                        &amp;&amp; (details.requested.name.startsWith(&apos;multidex&apos;) || details.requested.name.startsWith(&apos;multidex-instrumentation&apos;))) &#123;</div><div class="line">                    details.useVersion &quot;1.0.1&quot;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除主工程外<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">subprojects &#123;</div><div class="line">    //配置所有的子Project（不包含根Project）</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123; url &apos;https://maven.google.com&apos; &#125;</div><div class="line">        maven &#123; url &apos;https://dl.google.com/dl/android/maven2/&apos; &#125;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    configurations.all &#123;</div><div class="line">        resolutionStrategy &#123;</div><div class="line">            eachDependency &#123; details -&gt;</div><div class="line">                // Force all of the primary support libraries to use the same version.</div><div class="line">                if (details.requested.group == &apos;com.android.support&apos;</div><div class="line">                        &amp;&amp; details.requested.name != &apos;multidex&apos;</div><div class="line">                        &amp;&amp; details.requested.name != &apos;multidex-instrumentation&apos;) &#123;</div><div class="line">                    details.useVersion &quot;27.0.2&quot;</div><div class="line">                &#125;</div><div class="line">                // Force all the error-prone dependencies to use the same version.</div><div class="line">                if (details.requested.group == &apos;com.android.support&apos;</div><div class="line">                        &amp;&amp; (details.requested.name.startsWith(&apos;multidex&apos;) || details.requested.name.startsWith(&apos;multidex-instrumentation&apos;))) &#123;</div><div class="line">                    details.useVersion &quot;1.0.1&quot;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    task subTask &lt;&lt; &#123;</div><div class="line">        println project.name</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="https://github.com/facebook/shimmer-android" target="_blank" rel="external">https://github.com/facebook/shimmer-android</a><br><a href="https://github.com/tabassumLatif/ShimmerRecyclerView" target="_blank" rel="external">https://github.com/tabassumLatif/ShimmerRecyclerView</a><br><a href="https://github.com/sharish/ShimmerRecyclerView" target="_blank" rel="external">https://github.com/sharish/ShimmerRecyclerView</a><br><a href="http://facebook.github.io/shimmer-android/" target="_blank" rel="external">http://facebook.github.io/shimmer-android/</a><br><a href="https://github.com/team-supercharge/ShimmerLayout" target="_blank" rel="external">https://github.com/team-supercharge/ShimmerLayout</a></p>
+<p><a href="https://stackoverflow.com/questions/36857713/place-holder-list-item-like-facebook-for-content-loading" target="_blank" rel="external">https://stackoverflow.com/questions/36857713/place-holder-list-item-like-facebook-for-content-loading</a><br><a href="http://mercury.io/blog/the-psychology-of-waiting-loading-animations-and-facebook" target="_blank" rel="external">http://mercury.io/blog/the-psychology-of-waiting-loading-animations-and-facebook</a></p>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
+    
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/03/08/gradle-proxy-android-studio/" title="gradle-proxy-android-studio">gradle-proxy-android-studio</a></h2>
+                <p class="excerpt">
+                
+                1.android studio 设置中选择proxy设置后,竟然将相关的配置写入了/home/user/.gradle/gradle.properties文件中了.导致全局生效,关闭代理后,依赖下载不下来.
+
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-03-08T09:07:00.000Z" class="post-list__meta--date date">2018-03-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/03/08/gradle-proxy-android-studio/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+            
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2018/03/16/gradle-solve-conflict/" data-title="gradle 版本冲突解决" data-url="http://www.malin.xyz/2018/03/16/gradle-solve-conflict/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+    </span>
+    <span class="footer__copyright">
+        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
+    </span>
+    <span class="footer__copyright">
+        &copy; 2018 - 本站由 <a href="/">@MaLin</a> 创建,
+        使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">hexo-theme-new-vno</a> 主题,
+        修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+    </span>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+     
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-89472793-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?2e6a34a2717b5b9525b61e33eb564d65";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    
+    </script>
+    
+</body>
+</html>
