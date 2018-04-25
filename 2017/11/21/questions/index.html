@@ -142,7 +142,11 @@
   </header>
 
   <section class="post">
-    <p>-16.使用IntelliJ IDEA搭建Android集成开发环境<br>idea没有sync button 解决方案,<a href="https://stackoverflow.com/questions/20815998/cant-find-sync-project-with-gradle-files-button-in-intellij-idea" target="_blank" rel="external">https://stackoverflow.com/questions/20815998/cant-find-sync-project-with-gradle-files-button-in-intellij-idea</a></p>
+    <p>-17.android gradle插件升级到3.1.x之后出现的几个问题</p>
+<p><a href="https://stackoverflow.com/questions/49990933/configuration-on-demand-is-not-supported-by-the-current-version-of-the-android-g" target="_blank" rel="external">Configuration on demand is not supported by the current version of the Android Gradle plugin</a></p>
+<p><a href="https://stackoverflow.com/questions/48846879/new-error-after-update-to-gradle-tool-to-3-1-0-beta3-or-3-2-0-alpha03" target="_blank" rel="external">The SourceSet ‘xxx’ is not recognized by the Android Gradle Plugin. Perhaps you misspelled something?</a></p>
+<p><a href="https://stackoverflow.com/questions/49511200/the-sourceset-instrumenttest-is-not-recognized-by-the-android-gradle-plugin" target="_blank" rel="external">The SourceSet ‘instrumentTest’ is not recognized by the Android Gradle Plugin</a></p>
+<p>-16.使用IntelliJ IDEA搭建Android集成开发环境<br>idea没有sync button 解决方案,<a href="https://stackoverflow.com/questions/20815998/cant-find-sync-project-with-gradle-files-button-in-intellij-idea" target="_blank" rel="external">https://stackoverflow.com/questions/20815998/cant-find-sync-project-with-gradle-files-button-in-intellij-idea</a></p>
 <p>-15.sendStatReportRequest</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">04-24 18:52:14.071 11679-13684/? I/StatReportEngine: selfUpdateReport sendStatReportRequest</div><div class="line">04-24 18:52:14.071 11679-13684/? I/SDKReportManager2: timelyReport</div><div class="line">    &gt;&gt;mPostHandler handleMessage exit</div><div class="line">04-24 18:52:14.071 11679-31357/? I/BaseHttpRequest: halleyTest serverUrl=http://masdk.3g.qq.com/</div><div class="line">04-24 18:52:14.154 11679-31357/? I/StatReportEngine: errorCode: 0</div><div class="line">04-24 18:52:14.155 11679-31357/? I/ProtocolPackage: enter</div></pre></td></tr></table></figure>
 <p>-14.Ubuntu Android Studio 使用ss配置代理.<br>在项目根目录下的gradle.properties中加入如下的配置<br><code>org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</code></p>
@@ -290,23 +294,6 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -319,6 +306,21 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
+                <p class="excerpt">
+                
+                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
+参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
