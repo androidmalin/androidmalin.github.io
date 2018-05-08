@@ -142,7 +142,8 @@
   </header>
 
   <section class="post">
-    <p>-18.</p>
+    <p>-19.查看webview 数据库文件db<br><code>data/data/packagename/app_webview/Cookies</code><br>使用sqilite<br><code>sqlite3 Cookies</code><br><code>.help</code><br><code>.schema</code> List names of tables If TABLE specified, only list tables matching LIKE pattern TABLE<br><code>.tables</code> Show the CREATE statements matching PATTERN Add –indent for pretty-printing<br><code>.schema cookies</code><br><code>select * from cookies;</code> 查看cookies表</p>
+<p>-18.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SUBSYSTEMS==&quot;usb&quot;, ATTRS&#123;idVendor&#125;==&quot;18d1&quot;, MODE=&quot;0640&quot;, OWNER=&quot;mbp&quot;</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">malin@malin:~/sdk/platform-tools$ ll</div><div class="line">总用量 8152</div><div class="line">drwxrwxr-x  5 malin malin    4096 4月  14 13:41 ./</div><div class="line">drwxrwxr-x 18 malin malin    4096 4月  16 14:57 ../</div><div class="line">-rwxrwxr-x  1 malin malin 2604257 4月  14 13:41 adb*</div><div class="line">drwxrwxr-x  2 malin malin    4096 4月  14 13:41 api/</div><div class="line">-rwxrwxr-x  1 malin malin   57775 4月  14 13:41 dmtracedump*</div><div class="line">-rwxrwxr-x  1 malin malin  795033 4月  14 13:41 e2fsdroid*</div><div class="line">-rwxrwxr-x  1 malin malin  300287 4月  14 13:41 etc1tool*</div><div class="line">-rwxrwxr-x  1 malin malin 1265485 4月  14 13:41 fastboot*</div><div class="line">-rwxrwxr-x  1 malin malin   16938 4月  14 13:41 hprof-conv*</div><div class="line">drwxrwxr-x  2 malin malin    4096 4月  14 13:41 lib64/</div><div class="line">-rwxrwxr-x  1 malin malin  163952 4月  14 13:41 make_f2fs*</div><div class="line">-rwxrwxr-x  1 malin malin  768379 4月  14 13:41 mke2fs*</div><div class="line">-rwxrwxr-x  1 malin malin    1184 4月  14 13:41 mke2fs.conf*</div><div class="line">-rw-rw-r--  1 malin malin  323847 4月  14 13:41 NOTICE.txt</div><div class="line">-rw-rw-r--  1 malin malin   17208 4月  14 13:41 package.xml</div><div class="line">-rwxrwxr-x  1 malin malin  703237 4月  14 13:41 sload_f2fs*</div><div class="line">-rw-rw-r--  1 malin malin      38 4月  14 13:41 source.properties</div><div class="line">-rwxrwxr-x  1 malin malin 1272133 4月  14 13:41 sqlite3*</div><div class="line">drwxrwxr-x  3 malin malin    4096 4月  14 13:41 systrace/</div><div class="line">malin@malin:~/sdk/platform-tools$ sudo chmod +s fastboot</div><div class="line">[sudo] malin 的密码：</div><div class="line">malin@malin:~/sdk/platform-tools$ ll</div><div class="line">总用量 8152</div><div class="line">drwxrwxr-x  5 malin malin    4096 4月  14 13:41 ./</div><div class="line">drwxrwxr-x 18 malin malin    4096 4月  16 14:57 ../</div><div class="line">-rwxrwxr-x  1 malin malin 2604257 4月  14 13:41 adb*</div><div class="line">drwxrwxr-x  2 malin malin    4096 4月  14 13:41 api/</div><div class="line">-rwxrwxr-x  1 malin malin   57775 4月  14 13:41 dmtracedump*</div><div class="line">-rwxrwxr-x  1 malin malin  795033 4月  14 13:41 e2fsdroid*</div><div class="line">-rwxrwxr-x  1 malin malin  300287 4月  14 13:41 etc1tool*</div><div class="line">-rwsrwsr-x  1 malin malin 1265485 4月  14 13:41 fastboot*</div><div class="line">-rwxrwxr-x  1 malin malin   16938 4月  14 13:41 hprof-conv*</div><div class="line">drwxrwxr-x  2 malin malin    4096 4月  14 13:41 lib64/</div><div class="line">-rwxrwxr-x  1 malin malin  163952 4月  14 13:41 make_f2fs*</div><div class="line">-rwxrwxr-x  1 malin malin  768379 4月  14 13:41 mke2fs*</div><div class="line">-rwxrwxr-x  1 malin malin    1184 4月  14 13:41 mke2fs.conf*</div><div class="line">-rw-rw-r--  1 malin malin  323847 4月  14 13:41 NOTICE.txt</div><div class="line">-rw-rw-r--  1 malin malin   17208 4月  14 13:41 package.xml</div><div class="line">-rwxrwxr-x  1 malin malin  703237 4月  14 13:41 sload_f2fs*</div><div class="line">-rw-rw-r--  1 malin malin      38 4月  14 13:41 source.properties</div><div class="line">-rwxrwxr-x  1 malin malin 1272133 4月  14 13:41 sqlite3*</div><div class="line">drwxrwxr-x  3 malin malin    4096 4月  14 13:41 systrace/</div></pre></td></tr></table></figure>
 <p>-17.android gradle插件升级到3.1.x之后出现的几个问题</p>
@@ -297,23 +298,6 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
-        
-        
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
                 <h2 class="post-list__post-title post-title"><a href="/2017/11/21/gradle-speed/" title="gradle Optimize Your Build Speed">gradle Optimize Your Build Speed</a></h2>
                 <p class="excerpt">
                 
@@ -326,6 +310,21 @@
                 &hellip;
                 </p>
                 <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/gradle-speed/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/11/19/jenkins/" title="jenkins-gmail-config">jenkins-gmail-config</a></h2>
+                <p class="excerpt">
+                
+                Gmail设置,配置成功后,可能还是发送失败,这时可能是Google账号开启了两部验证,请生成专属密码,用专属密码登录.
+参考文章error-when-sending-email-with-jenkinsRead Gmail messages on other email clients using
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-11-19T12:46:00.000Z" class="post-list__meta--date date">2017-11-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/19/jenkins/">继续阅读</a></div>
                        
             </div>
         
