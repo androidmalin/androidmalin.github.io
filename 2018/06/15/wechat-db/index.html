@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>马琳 | 简单，美好，奋发</title>
+    <title>wechat | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="马琳 | 简单，美好，奋发">
+    <meta name="twitter:title" content="wechat | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="马琳 | 简单，美好，奋发">
+    <meta property="og:title" content="wechat | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz"/>
+    <link rel="canonical" href="http://www.malin.xyz/2018/06/15/wechat-db/"/>
 
     
       
@@ -128,66 +128,75 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-06-15T02:25:00.000Z" class="post-list__meta--date date">2018-06-15</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">wechat</h1>
+  </header>
+
+  <section class="post">
+    <p>（手机IMEI + 微信uin ）取MD5的前7位</p>
+<p>手机的IMEI获取：手机拨号盘输入：<code>*#06#  ,你或者用android代码获取可以，怎么都行</code><br>或者 <code>adb shell service call iphonesubinfo 1 | awk -F &quot;&#39;&quot; &#39;{print $2}&#39; | sed &#39;1 d&#39; | tr -d &#39;.&#39; | awk &#39;{print}&#39; ORS=</code><br>nexus6p:<br>867982021177614</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">uid:</div><div class="line">cd /data/data/com.tencent.mm/shared_prefs</div><div class="line">cat auth_info_key_prefs.xml</div><div class="line">&lt;int name=&quot;_auth_uin&quot; value=&quot;1612047176&quot; /&gt;</div><div class="line"></div><div class="line">（手机IMEI + 微信uin )==8679820211776141612047176</div><div class="line"></div><div class="line">取MD5(32位小写) == 51096839112723abc0a096fa0d054b76</div><div class="line">取MD5的前7位:5109683</div><div class="line"></div><div class="line"></div><div class="line">其中MicroMsg下某个用户的文件夹名称为 md5(mm+uid)</div><div class="line">例如</div><div class="line">md5(mm1612047176)=089c975516ccefb11195d7695bdbf908</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">adb shell</div><div class="line">su</div><div class="line">cp /data/data/com.tencent.mm/MicroMsg/089c975516ccefb11195d7695bdbf908/EnMicroMsg.db /sdcard/</div><div class="line">adb pull /sdcard/EnMicroMsg.db</div><div class="line">adb shell am force-stop com.tencent.mm</div><div class="line">adb shell am start com.tencent.mm/com.tencent.mm.ui.LauncherUI &amp;&amp; pidcat.py com.tencent.mm -t XposedTag</div><div class="line">sqlcipher EnMicroMsg.db &apos;PRAGMA key = &quot;5109683&quot;; PRAGMA cipher_use_hmac = off; PRAGMA kdf_iter = 4000; ATTACH DATABASE &quot;decrypted_database.db&quot; AS decrypted_database KEY &quot;&quot;;SELECT sqlcipher_export(&quot;decrypted_database&quot;);DETACH DATABASE decrypted_database;&apos;</div><div class="line">sqlitebrowser decrypted_database.db</div></pre></td></tr></table></figure>
+
+  </section>
+
+</article>
+<section class="read-more">
+           
     
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/15/wechat-db/" title="link to post.title">wechat</a></h2>
-      <p class="excerpt">
-    
-      （手机IMEI + 微信uin ）取MD5的前7位
-手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -d &amp;#39;.&amp;#
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-15T02:25:00.000Z" class="post-list__meta--date date">2018-06-15</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/06/15/wechat-db/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/08/magisk/" title="link to post.title">Magisk</a></h2>
-      <p class="excerpt">
-    
-      https://twrp.me/huawei/huaweinexus6p.html
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/06/08/magisk/" title="Magisk">Magisk</a></h2>
+                <p class="excerpt">
+                
+                https://twrp.me/huawei/huaweinexus6p.html
 https://github.com/topjohnwu/Magisk/releases
-https://mp.weixin.qq.com/s?__biz=MzAwMzczMTQzMg==&amp;amp;mid=2649567526&amp;amp;idx=1&amp;amp;sn=3324c3c19096b096cd8425913a7
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-08T12:13:00.000Z" class="post-list__meta--date date">2018-06-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/06/08/magisk/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+https://mp.weixin.qq.com/s?__biz=MzAwMzczMTQzMg==&amp;amp;mid=26495
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-06-08T12:13:00.000Z" class="post-list__meta--date date">2018-06-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/06/08/magisk/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/06/05/douyin/" title="link to post.title">douyin</a></h2>
-      <p class="excerpt">
-    
-      1.热修复 美团 robustRobust
-2.chromium网络库chromium-cronet
-3.播放器ijkplayer
-4.butterknifebutterknife
-5.frescofresco
-6.gif图库android-gif-drawable
-7.lottielottie
-8.状态栏ImmersionBar
-9.CustomActivityOnCrash crash拦截Cu
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2018-06-05T10:37:00.000Z" class="post-list__meta--date date">2018-06-05</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/06/05/douyin/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-  </ol>
-
-
-
-</div>
-
+</section>
 
             
+<section class="post-comments">
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2018/06/15/wechat-db/" data-title="wechat" data-url="http://www.malin.xyz/2018/06/15/wechat-db/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"malin"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
             <footer class="footer">
     <span class="footer__copyright">
         本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
