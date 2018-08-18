@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>gradle Optimize Your Build Speed | 马琳</title>
+    <title>Source for Android 28 | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta name="twitter:title" content="Source for Android 28 | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta property="og:title" content="Source for Android 28 | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/11/21/gradle-speed/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2018/08/18/android-source/"/>
 
     
       
@@ -132,28 +132,31 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2018-08-18T09:58:00.000Z" class="post-list__meta--date date">2018-08-18</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">gradle Optimize Your Build Speed</h1>
+    <h1 class="post-title">Source for Android 28</h1>
   </header>
 
   <section class="post">
-    <p>0.保持工具为最新</p>
-<p>1.用Android7.0以上的设备测试</p>
-<p>2.minSkd&gt;=21</p>
-<p>3.为测试版本创建productFlavors</p>
-<p>4.Avoid compiling unnecessary resources</p>
-<p>5.Use static build config values with your debug build</p>
-<p>6.Use static dependency versions</p>
-<p>7.Enable offline mode</p>
-<p>8.Enable configuration on demand</p>
-<p>9.Create library modules</p>
-<p>1.${home}/.gradle/gradle.properties<br>创建gradle.properties文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#加快编译速度的配置</div><div class="line">org.gradle.daemon=true</div><div class="line">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</div><div class="line">org.gradle.parallel=true</div><div class="line">org.gradle.configureondemand=true</div><div class="line">#加快编译速度的配置</div><div class="line"></div><div class="line">#设置socoket5代理</div><div class="line">#org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</div><div class="line"></div><div class="line"></div><div class="line">#GitHub中引用jar包更新失败的解决方案</div><div class="line">#To fix compile error. 这里的三个变量名根据uploadArchives中所引用的变量名不同，具体看情况而配置.</div><div class="line">sonatypeRepo=null</div><div class="line">sonatypeUsername=null</div><div class="line">sonatypePassword=null  </div><div class="line">#GitHub中引用jar包更新失败的解决方案</div></pre></td></tr></table></figure>
+    <p>#1. Source for Android 28<br>android SDK Platform -&gt; Android API 28 -&gt; Source for Android 28 这个源码位置在<br><a href="https://android.googlesource.com/platform/frameworks/base/+refs" target="_blank" rel="external">frameworks/base</a>下的<a href="https://android.googlesource.com/platform/frameworks/base/+/sdk-release" target="_blank" rel="external">sdk-release</a>分支.</p>
+<p>#2. <a href="https://gist.github.com/cketti/71475220a08c9ee43fd48ecaaf7046a5" target="_blank" rel="external">Build your own android-28 sources</a><br>Build “Sources for Android 28” so you can comfortably browse the Android API source in Android Studio.</p>
+<ol>
+<li>Collect source files</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mkdir android-sdk-source-build</div><div class="line">cd android-sdk-source-build</div><div class="line"></div><div class="line">mkdir -p frameworks/base</div><div class="line"></div><div class="line"># Fetch repositories that contain the sources we&apos;re interested in</div><div class="line">git clone --depth 1 https://android.googlesource.com/platform/frameworks/base -b android-9.0.0_r3 frameworks/base</div><div class="line">git clone --depth 1 https://android.googlesource.com/platform/libcore -b android-9.0.0_r3</div><div class="line">git clone --depth 1 https://android.googlesource.com/platform/development -b android-9.0.0_r3</div><div class="line"></div><div class="line"># Create a basic source.properties file</div><div class="line">echo -e &quot;Pkg.UserSrc=false\nPkg.Revision=1\nAndroidVersion.ApiLevel=28&quot; &gt; source.properties</div><div class="line"></div><div class="line"># Modify the script to create a sources ZIP to use &quot;android-28&quot; as top-level directory</div><div class="line">cat development/build/tools/mk_sources_zip.py | sed -e &apos;s/TOP_FOLDER = .*/TOP_FOLDER = &quot;android-28&quot;/&apos; &gt; my_mk_sources_zip.py</div><div class="line"></div><div class="line"># Run the script to create android-28-sources.zip</div><div class="line">python my_mk_sources_zip.py -z source.properties android-28-sources.zip .</div></pre></td></tr></table></figure>
+<ol>
+<li><p>Extract into Android SDK source directory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unzip android-28-sources.zip -d $&#123;ANDROID_HOME&#125;/sources</div></pre></td></tr></table></figure>
+</li>
+<li><p>Restart Android Studio and SDK sources should show up.</p>
+</li>
+</ol>
+<p>说明:android-9.0.0_r3是一个tag.<br>指定 tag 代码<br><code>git checkout -b demobranch demotag</code></p>
+<p>#3.<br>第一次使用<br>Sync成功后，所有的git库都处于 no branch状态，不能进行操作<br>需要初化分支<br>Repo start master –all</p>
 
   </section>
 
@@ -161,33 +164,25 @@
 <section class="read-more">
            
     
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
         
         
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/21/questions/" title="question">question</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/08/08/chromium-cronet/" title="chromium-cronet">chromium-cronet</a></h2>
                 <p class="excerpt">
                 
-                -19.查看webview 数据库文件dbdata/data/packagename/app_webview/Cookies使用sqilitesqlite3 Cookies.help.schema List names of tables If TABLE specified, only list 
+                cronet 编译文档
+google cloud编译好的文件
+google cloud编译好的文件使用说明
+Quick Start Guide to Using Cronet
+chromium tag
+GoogleChromeLabs-cronet-sample
+源码分析
+
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/questions/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2018-08-08T04:10:00.000Z" class="post-list__meta--date date">2018-08-08</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/08/08/chromium-cronet/">继续阅读</a></div>
                        
             </div>
         
@@ -200,7 +195,7 @@
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/21/gradle-speed/" data-title="gradle Optimize Your Build Speed" data-url="http://www.malin.xyz/2017/11/21/gradle-speed/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2018/08/18/android-source/" data-title="Source for Android 28" data-url="http://www.malin.xyz/2018/08/18/android-source/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
