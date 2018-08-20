@@ -163,7 +163,7 @@
 <p>#5. repo如何取消本地改动（How to discard changes using repo）<br><code>repo forall -vc &quot;git reset --hard&quot;</code><br>如果执行完成后，依旧提示某个目录有改动，则切换到有问题的目录，继续执行<br><code>git reset --hard</code></p>
 <p><a href="https://stackoverflow.com/a/18096819/3326683" target="_blank" rel="external">how-to-discard-changes-using-repo</a></p>
 <p>#6. android studio 打开AOSP源码<br>官方文档<br><a href="https://android.googlesource.com/platform/development/+/android-9.0.0_r3/tools/idegen/README" target="_blank" rel="external">development/tools/idegen</a></p>
-<p>#7. android 27<br>sdk <code>Source for Android 27</code> 中包含<br><code>/home/malin/sdk/sources/android-27/android/arch/lifecycle/LifecycleRuntimeTrojanProvider.java</code></p>
+<p>#7. android 27<br>sdk <code>Source for Android 27</code> 中包含<br><code>/home/malin/sdk/sources/android-27/android/arch/lifecycle/LifecycleRuntimeTrojanProvider.java</code><br>这个很奇怪.按道理应该是手动引入的依赖.现在却放在了<code>Source for Android 27</code>中了.</p>
 <p><a href="https://github.com/aosp-mirror/platform_frameworks_support/commit/566dbfd4b16f43685d4bdc835b1b862883b94d96" target="_blank" rel="external">Remove LifecycleDispatcher &amp; Rename LifecycleRuntimeTrojanProvider</a></p>
 <p><code>cd /onet/malin/android_source/frameworks/support</code><br><code>git log --all | grep -C 10 &quot;Remove&quot; | grep -C 10 LifecycleDispatcher | grep -C 10 566dbfd4b16f43685d4bdc835b1b862883b94d96</code></p>
 
