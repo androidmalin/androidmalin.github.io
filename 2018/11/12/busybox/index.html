@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>gradle Optimize Your Build Speed | 马琳</title>
+    <title>BusyBox | 马琳</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta name="twitter:title" content="BusyBox | 马琳">
     <meta name="twitter:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="gradle Optimize Your Build Speed | 马琳">
+    <meta property="og:title" content="BusyBox | 马琳">
     <meta property="og:description" content="androidmalin 马琳 https://github.com/androidmalin malin">
 
     
@@ -35,7 +35,7 @@
     <meta name="generator" content="hexo"/>
     
 
-    <link rel="canonical" href="http://www.malin.xyz/2017/11/21/gradle-speed/"/>
+    <link rel="canonical" href="http://www.malin.xyz/2018/11/12/busybox/"/>
 
     
       
@@ -132,28 +132,32 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <time datetime="2018-11-12T01:59:00.000Z" class="post-list__meta--date date">2018-11-12</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
       <span class="page-pv">
       &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
       </span> 
    
     </div>
-    <h1 class="post-title">gradle Optimize Your Build Speed</h1>
+    <h1 class="post-title">BusyBox</h1>
   </header>
 
   <section class="post">
-    <p>0.保持工具为最新</p>
-<p>1.用Android7.0以上的设备测试</p>
-<p>2.minSkd&gt;=21</p>
-<p>3.为测试版本创建productFlavors</p>
-<p>4.Avoid compiling unnecessary resources</p>
-<p>5.Use static build config values with your debug build</p>
-<p>6.Use static dependency versions</p>
-<p>7.Enable offline mode</p>
-<p>8.Enable configuration on demand</p>
-<p>9.Create library modules</p>
-<p>1.${home}/.gradle/gradle.properties<br>创建gradle.properties文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#加快编译速度的配置</div><div class="line">org.gradle.daemon=true</div><div class="line">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</div><div class="line">org.gradle.parallel=true</div><div class="line">org.gradle.configureondemand=true</div><div class="line">#加快编译速度的配置</div><div class="line"></div><div class="line">#设置socoket5代理</div><div class="line">#org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080</div><div class="line"></div><div class="line"></div><div class="line">#GitHub中引用jar包更新失败的解决方案</div><div class="line">#To fix compile error. 这里的三个变量名根据uploadArchives中所引用的变量名不同，具体看情况而配置.</div><div class="line">sonatypeRepo=null</div><div class="line">sonatypeUsername=null</div><div class="line">sonatypePassword=null  </div><div class="line">#GitHub中引用jar包更新失败的解决方案</div></pre></td></tr></table></figure>
+    <p>0.下载源码解压.<br><code>tar -jxvf xx.tar.bz2</code><br>1.<code>sudo apt-get install gcc-arm-linux-gnueabi</code></p>
+<p>2.<code>export ARCH=arm</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Makefile:152</div><div class="line"># Another way is to have ARCH set in the environment.</div><div class="line"># The default ARCH is the host where make is executed</div></pre></td></tr></table></figure>
+<p>3.<code>export CROSS_COMPILE=arm-linux-gnueabi-</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Makefile:160</div><div class="line"># Alternatively CROSS_COMPILE can be set in the environment.</div><div class="line"># Default value for CROSS_COMPILE is not to prefix executables</div></pre></td></tr></table></figure>
+<p>4.<code>make menuconfig</code> (if you dont get a config menu, you need to <code>sudo apt-get install libncurses5-dev</code>)</p>
+<p>Busybox Settings –&gt; — Build Options –&gt; Build static binary (no shared libs) -  点击空格键</p>
+<p>Busybox Settings –&gt; Installation Options –&gt; Don’t use /usr  -   点击空格键</p>
+<p>5.<code>make -j8</code></p>
+<p>6.<code>readelf -h busybox</code><br>编译完成后会生成busybox可执行文件，输入以下命令可以查看生成的文件信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">readelf -h busybox</div><div class="line">ELF Header:</div><div class="line">  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00</div><div class="line">  Class:                             ELF32</div><div class="line">  Data:                              2&apos;s complement, little endian</div><div class="line">  Version:                           1 (current)</div><div class="line">  OS/ABI:                            UNIX - System V</div><div class="line">  ABI Version:                       0</div><div class="line">  Type:                              EXEC (Executable file)</div><div class="line">  Machine:                           ARM</div><div class="line">  Version:                           0x1</div><div class="line">  Entry point address:               0x14110</div><div class="line">  Start of program headers:          52 (bytes into file)</div><div class="line">  Start of section headers:          2085504 (bytes into file)</div><div class="line">  Flags:                             0x5000200, Version5 EABI, soft-float ABI</div><div class="line">  Size of this header:               52 (bytes)</div><div class="line">  Size of program headers:           32 (bytes)</div><div class="line">  Number of program headers:         7</div><div class="line">  Size of section headers:           40 (bytes)</div><div class="line">  Number of section headers:         27</div><div class="line">  Section header string table index: 26</div></pre></td></tr></table></figure>
+<p>Machine: ARM ==&gt;说明为ARM架构</p>
+<p>7.<br>修改/system目录可写<br><code>mount -o remount,rw /system</code></p>
+<p>复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限</p>
+<p><code>cd /system/xbin</code><br><code>chmod 755 busybox</code></p>
+<p>8.这时就可以使用 busybox 的命令了，例如以前没有清屏的clear命令，现在只需输入 busybox clear 就可以实现清屏功能，使用完整版的 ls 只需输入 busybox ls 。<br>但是每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。<br><code>cd /system/xbin</code><br><code>busybox --install .</code><br>参考文章<br><a href="https://blog.csdn.net/a345017062/article/details/6250619" target="_blank" rel="external">Android自带的toolbox分析及扩展</a><br><a href="https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323" target="_blank" rel="external">Cross Compiling C/C++ for ARM on Linux</a><br><a href="https://blog.csdn.net/hexingen/article/details/76736708" target="_blank" rel="external">Android安装系统App(adb push实现)</a><br><a href="https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw" target="_blank" rel="external">remount-system-in-rw</a><br><a href="https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html" target="_blank" rel="external">为Android安装BusyBox —— 完整的bash shell</a></p>
 
   </section>
 
@@ -161,33 +165,19 @@
 <section class="read-more">
            
     
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/28/gradle3.0.0-aar-not-found/" title="gradle3.0.0-aar-not-found">gradle3.0.0-aar-not-found</a></h2>
-                <p class="excerpt">
-                
-                android gradle插件升级到3.0.0后,使用assemble${PRODUCT_FLAVORS}或者assemble${PRODUCT_FLAVORS}${BUILD_TYPE}不会产生aar.具体测试步骤如下.
-可能使用到的命令.1234gradle cleanrm -rf .idea
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2017-11-28T06:39:00.000Z" class="post-list__meta--date date">2017-11-28</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/gradle3/">gradle3</a>
-</span><a class="btn-border-small" href="/2017/11/28/gradle3.0.0-aar-not-found/">继续阅读</a></div>
-                           
-            </div>
         
         
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2017/11/21/questions/" title="question">question</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2018/08/18/android-source/" title="Source for Android 28">Source for Android 28</a></h2>
                 <p class="excerpt">
                 
-                -19.查看webview 数据库文件dbdata/data/packagename/app_webview/Cookies使用sqilitesqlite3 Cookies.help.schema List names of tables If TABLE specified, only list 
+                #1. Source for Android 28android SDK Platform -&amp;gt; Android API 28 -&amp;gt; Source for Android 28 这个源码位置在frameworks/base下的sdk-release分支.
+#2. Build your o
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2017-11-21T03:02:00.000Z" class="post-list__meta--date date">2017-11-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/11/21/questions/">继续阅读</a></div>
+                <div class="post-list__meta"><time datetime="2018-08-18T09:58:00.000Z" class="post-list__meta--date date">2018-08-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2018/08/18/android-source/">继续阅读</a></div>
                        
             </div>
         
@@ -200,7 +190,7 @@
             
 <section class="post-comments">
   <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2017/11/21/gradle-speed/" data-title="gradle Optimize Your Build Speed" data-url="http://www.malin.xyz/2017/11/21/gradle-speed/"></div>
+  <div class="ds-thread" data-thread-key="http://www.malin.xyz/2018/11/12/busybox/" data-title="BusyBox" data-url="http://www.malin.xyz/2018/11/12/busybox/"></div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
