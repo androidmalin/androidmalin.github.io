@@ -147,7 +147,7 @@
 <p>3.重命名aar为zip后缀<br><code>cd malinaar &amp;&amp; rename &#39;s/\.aar/.zip/&#39; *.aar</code></p>
 <p>4.批量解压到对应的zip文件名下<br>将如下的脚本保存成 unzipll.sh 然后赋予可执行的权限</p>
 <p>例如可以这样<br><code>vim unzipll.sh &amp;&amp; chmod +x unzipll.sh</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">mkdir -p malinoutput</div><div class="line"></div><div class="line">for file in *.zip</div><div class="line">do</div><div class="line">filename=$(echo $file|cut -d&apos;.&apos; -f1)</div><div class="line">unzip $file -d malinoutput/$filename</div><div class="line">done</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">mkdir -p malinoutput</span><br><span class="line"></span><br><span class="line">for file in *.zip</span><br><span class="line">do</span><br><span class="line">filename=$(echo $file|cut -d&apos;.&apos; -f1)</span><br><span class="line">unzip $file -d malinoutput/$filename</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <p>然后执行<code>unzipll.sh</code></p>
 <p><code>./unzipll.sh</code></p>
 <p>5.从解压的文件中查找对应的so</p>

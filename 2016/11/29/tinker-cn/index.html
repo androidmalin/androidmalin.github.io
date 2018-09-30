@@ -144,14 +144,14 @@
   <section class="post">
     <p>0.<br>首先确保你电脑配置了<code>gradle</code>环境变量，并且grade的版本大于等于2.14.1<br><br>例如<code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br></p>
 <p>可以使用这个命令查看gradle版本号<br><br><code>gradle --version</code><br></p>
-<p>Gradle可以从这个网站下载<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="external">https://services.gradle.org/distributions</a></p>
-<p>确保你配置了<code>adb</code>环境变量。如果没有配置，可以参考这篇文章<a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="external">Linux,Unix下环境变量的配置</a><br><br>可以使用<code>adb --version</code>查看是否配置了<code>adb</code>环境变量。</p>
-<p>本文所有命令均在Ubuntu上调试的，Mac OS上应该都有，Windows上开发的同学可以自行转换为相应的命令<br><br>本文参考Tinker的官方wiki来写的。<br><br><a href="https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="external">https://github.com/Tencent/tinker/wiki</a><br></p>
-<p>1.从github上下载<a href="https://github.com/Tencent/tinker" target="_blank" rel="external">tinker</a>的源码<br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
+<p>Gradle可以从这个网站下载<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">https://services.gradle.org/distributions</a></p>
+<p>确保你配置了<code>adb</code>环境变量。如果没有配置，可以参考这篇文章<a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="noopener">Linux,Unix下环境变量的配置</a><br><br>可以使用<code>adb --version</code>查看是否配置了<code>adb</code>环境变量。</p>
+<p>本文所有命令均在Ubuntu上调试的，Mac OS上应该都有，Windows上开发的同学可以自行转换为相应的命令<br><br>本文参考Tinker的官方wiki来写的。<br><br><a href="https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">https://github.com/Tencent/tinker/wiki</a><br></p>
+<p>1.从github上下载<a href="https://github.com/Tencent/tinker" target="_blank" rel="noopener">tinker</a>的源码<br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
 <p>2.切换到tinker-sample-android目录下<br><br><code>cd tinker/tinker-sample-android</code></p>
 <p>3.下载依赖，第一次运行可能需要很长时间，因为需要下载一些依赖库.<br><br><code>gradle clean</code></p>
 <p>4.编译生成Debug版本的Apk<br><br><code>gradle assembleDebug</code></p>
-<p>5.将编译生成的apk安装到手机或者模拟器中(<a href="https://www.genymotion.com/" target="_blank" rel="external">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="external">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
+<p>5.将编译生成的apk安装到手机或者模拟器中(<a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="noopener">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
 <p>6.启动安装的apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
 <p>7.修改代码，这里演示修改MainActivity中的TAG,来验证热修复<br><br>7.1: 得到MainActivity中TAG变量的行数<br><br><code>grep -n &quot;TAG&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d &quot;:&quot; -f 1</code></p>
 <p>7.2: 将TAG替换为新的值例如:IWantToTestHotFix<br><br>  注意：下一行中的<code>42</code>为上一条命令中获取的<code>MainActivity中TAG变量的行数</code>，<code>IWantToTestHotFix</code>为我们要替换后的TAG值。<br><br><code>sed -i &#39;42s/.*/private static final String TAG = &quot;IWantToTestHotFix&quot;;/&#39; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>

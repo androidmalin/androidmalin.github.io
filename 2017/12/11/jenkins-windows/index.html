@@ -155,7 +155,7 @@
 <p>2.解决apk生成路径不同的问题</p>
 <p>jenkins–&gt;构建后操作–&gt;Archive the artifacts</p>
 <p>${WORKSPACE}/app/build/outputs/apk/</p>
-<p>修改为<br>${WORKSPACE}/app/build/outputs/apk/<em>*/</em>.apk</p>
+<p>修改为<br>${WORKSPACE}/app/build/outputs/apk/*<em>/</em>.apk</p>
 <p>ContentProviderSample/app/apk/malin.apk<br>ContentProviderSample/app/build/outputs/apk/google/release/malin.apk</p>
 <p>assemble${PRODUCT_FLAVORS}${BUILD_TYPE} -x lint –build-cache –daemon –parallel -g=$WORKSPACE/.gradlecache</p>
 <p>${PRODUCT_FLAVORS}${BUILD_TYPE}</p>

@@ -144,13 +144,13 @@
   <section class="post">
     <p>0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br></p>
 <blockquote>
-<p>e.g. <code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br><br>You can download the gradle from this website<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="external">https://services.gradle.org/distributions</a><br><br><br><br>add <code>adb</code> ,<code>gradle</code> on your path<br><br>You can see this article <a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="external">How to adb into your path</a><br><br><br><br><br>You can see the <a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="external">Tinker wiki</a>.<br><br><a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="external">https://github.com/Tencent/tinker/wiki</a><br></p>
+<p>e.g. <code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br><br>You can download the gradle from this website<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">https://services.gradle.org/distributions</a><br><br><br><br>add <code>adb</code> ,<code>gradle</code> on your path<br><br>You can see this article <a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="noopener">How to adb into your path</a><br><br><br><br><br>You can see the <a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="noopener">Tinker wiki</a>.<br><br><a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="noopener">https://github.com/Tencent/tinker/wiki</a><br></p>
 </blockquote>
-<p>1.DownLoad the source code of <a href="https://github.com/Tencent/tinker" target="_blank" rel="external">tinker</a> from github <br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
+<p>1.DownLoad the source code of <a href="https://github.com/Tencent/tinker" target="_blank" rel="noopener">tinker</a> from github <br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
 <p>2.Open the Sample project<br><br><code>cd tinker/tinker-sample-android</code></p>
 <p>3.DownLoad the dependencies of sample,It may take a long time when you run firstly,you can drink a cup of coffee.<br><br><code>gradle clean</code></p>
 <p>4.Buid debug apk<br><br><code>gradle assembleDebug</code></p>
-<p>5.Install the debug base apk into your phone or emulator(e.g. <a href="https://www.genymotion.com/" target="_blank" rel="external">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="external">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
+<p>5.Install the debug base apk into your phone or emulator(e.g. <a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="noopener">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
 <p>6.Start the debug base apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
 <p>7.Change some codes in order to fix bugs<br></p>
 <blockquote>

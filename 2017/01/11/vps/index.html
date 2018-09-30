@@ -142,19 +142,19 @@
   </header>
 
   <section class="post">
-    <p>1.购买服务<br><a href="https://www.kvmla.com" target="_blank" rel="external">https://www.kvmla.com</a></p>
+    <p>1.购买服务<br><a href="https://www.kvmla.com" target="_blank" rel="noopener">https://www.kvmla.com</a></p>
 <p>2.登录远程<br><code>ssh root@xx.xx.xx.xx</code></p>
 <p><code>xx.xx.xx.xx</code>为远程地址<br>kvmla中在如下位置可以找到配置清单。<br>客户中心 &gt; 我的客户中心 &gt; 我的产品与服务 &gt; 产品详细信息<br>（kvmla为主IP地址）</p>
 <p><code>Are you sure you want to continue connecting (yes/no)? yes</code></p>
 <p>3.查看python<br><code>python</code><br><code>python3</code></p>
-<p>4.安装pip<br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="external">安装说明</a></p>
+<p>4.安装pip<br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">安装说明</a></p>
 <p><code>cd /home/</code><br><code>wget https://bootstrap.pypa.io/get-pip.py</code><br><code>python get-pip.py</code></p>
 <p>查看是否安装成功<br><code>pip --version</code></p>
 <p>5.安装shadowsocks<br><code>pip install shadowsocks</code></p>
 <p>创建文件config.json,路径为<code>/etc/shadowsocks/config.json</code><br><code>cd /etc/</code><br><code>mkdir shadowsocks</code><br><code>vim config.json</code><br>添加如下内容<br>{<br>    “server”: “xx.xx.xx.xx”,<br>    “server_port”: xxxx,<br>    “local_port”: 1080,<br>    “password”: “xxx”,<br>    “timeout”: 60,<br>    “method”: “aes-256-cfb”<br>}</p>
 <p>6.启动shadowsocks<br><code>ssserver -c /etc/shadowsocks/config.json -d start</code></p>
 <p>如果想要停止<br><code>ssserver -d stop</code></p>
-<p><code>grep -rne &quot;Monniya&quot;</code><br>参考文章<br><a href="http://www.jianshu.com/p/28fd29e350b6" target="_blank" rel="external">搭建Shadowsocks服务器</a><br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="external">pip</a></p>
+<p><code>grep -rne &quot;Monniya&quot;</code><br>参考文章<br><a href="http://www.jianshu.com/p/28fd29e350b6" target="_blank" rel="noopener">搭建Shadowsocks服务器</a><br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">pip</a></p>
 
   </section>
 

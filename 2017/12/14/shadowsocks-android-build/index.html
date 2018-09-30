@@ -144,8 +144,8 @@
   </header>
 
   <section class="post">
-    <p>源码<br><a href="https://github.com/shadowsocks/shadowsocks-android" target="_blank" rel="external">shadowsocks-android</a></p>
-<p>编译按照github readme即可.<br>1.编译下载依赖速度很慢<br>2.出现一些日志<a href="https://github.com/shadowsocks/shadowsocks-android/issues/1312" target="_blank" rel="external">error</a>不要害怕</p>
+    <p>源码<br><a href="https://github.com/shadowsocks/shadowsocks-android" target="_blank" rel="noopener">shadowsocks-android</a></p>
+<p>编译按照github readme即可.<br>1.编译下载依赖速度很慢<br>2.出现一些日志<a href="https://github.com/shadowsocks/shadowsocks-android/issues/1312" target="_blank" rel="noopener">error</a>不要害怕</p>
 <p>编译需要的工具<br>JDK<br>SBT(scal编译使用)<br>Go<br>Andorid SDK</p>
 <ul>
 <li>Build Tools 26+</li>
@@ -167,11 +167,11 @@
 <li>Set environment variable <code>ANDROID_HOME</code> to <code>/path/to/android-sdk</code></li>
 <li>(optional) Set environment variable <code>ANDROID_NDK_HOME</code> to <code>/path/to/android-ndk</code> (default: <code>$ANDROID_HOME/ndk-bundle</code>)</li>
 <li>Set environment variable <code>GOROOT_BOOTSTRAP</code> to <code>/path/to/go</code></li>
-<li>Create your key following the instructions at <a href="https://developer.android.com/studio/publish/app-signing.html" target="_blank" rel="external">https://developer.android.com/studio/publish/app-signing.html</a></li>
+<li>Create your key following the instructions at <a href="https://developer.android.com/studio/publish/app-signing.html" target="_blank" rel="noopener">https://developer.android.com/studio/publish/app-signing.html</a></li>
 <li>Create <code>mobile/local.properties</code> from <code>mobile/local.properties.example</code> with your own key information</li>
 <li>Invoke the building like this</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git submodule update --init --recursive</div><div class="line"></div><div class="line"><span class="comment"># Build the App</span></div><div class="line">sbt clean go-build android:package-release</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init --recursive</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build the App</span></span><br><span class="line">sbt clean go-build android:package-release</span><br></pre></td></tr></table></figure>
 
   </section>
 

@@ -144,16 +144,22 @@
   <section class="post">
     <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>本文中使用的是Gradle命令，已经添加将Gradle添加到了环境变量中。</p>
 <p>0.查看Gradle版本<br><br><code>gradle --version</code></p>
-<p>com.android.tools.build:gradle版本网址查看地址<br><br><a href="https://bintray.com/android/android-tools/com.android.tools.build.gradle" target="_blank" rel="external">https://bintray.com/android/android-tools/com.android.tools.build.gradle</a><br></p>
-<p>其他的一些android tool版本分布查看网址<br><a href="https://bintray.com/android/android-tools/" target="_blank" rel="external">https://bintray.com/android/android-tools/</a><br></p>
-<p>1.刷新Gradle缓存<br><br><a href="http:stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#" target="_blank" rel="external">force gradle to redownload dependencies</a><br></p>
+<p>com.android.tools.build:gradle版本网址查看地址<br><br><a href="https://bintray.com/android/android-tools/com.android.tools.build.gradle" target="_blank" rel="noopener">https://bintray.com/android/android-tools/com.android.tools.build.gradle</a><br></p>
+<p>其他的一些android tool版本分布查看网址<br><a href="https://bintray.com/android/android-tools/" target="_blank" rel="noopener">https://bintray.com/android/android-tools/</a><br></p>
+<p>1.刷新Gradle缓存<br><br><a href="http:stackoverflow.com/questions/13565082/how-can-i-force-gradle-to-redownload-dependencies#" target="_blank" rel="noopener">force gradle to redownload dependencies</a><br></p>
 <p>用于解决一些奇怪的依赖问题<br><br><code>gradle --refresh-dependencies</code></p>
 <p><br><br>2.查看依赖关系<br>比如项目引用了很多库，这些库都依赖了okhttp,此时你又单独引入了okhttp后，此时存在多个okhttp的版本。<br><br>那么最后，这些库到底依赖或者说使用了哪个版本的okhttp呢？这个问题，在某些情况下，显得十分重要。<br></p>
 <p>比如我在项目中使用了如下的库</p>
 <blockquote>
 <p>RxJava<br>compile ‘io.reactivex:rxandroid:1.2.1’<br>compile ‘io.reactivex:rxjava:1.1.10’  </p>
+</blockquote>
+<blockquote>
 <p>Retrofit2<br>compile ‘com.squareup.retrofit2:retrofit:2.1.0’<br>compile ‘com.squareup.retrofit2:converter-gson:2.1.0’<br>compile ‘com.squareup.retrofit2:adapter-rxjava:2.1.0’  </p>
+</blockquote>
+<blockquote>
 <p>OkHttp<br>compile ‘com.squareup.okhttp3:okhttp:3.4.1’  </p>
+</blockquote>
+<blockquote>
 <p>logging-interceptor<br>debugCompile ‘com.squareup.okhttp3:logging-interceptor:3.4.1’  </p>
 </blockquote>
 <p>查看okhttp，在各个库的依赖中最后依赖的版本<br><br><code>gradle -q app:dependencyInsight --dependency okhttp --configuration compile</code></p>
