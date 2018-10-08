@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="说明:1.Android Studio中自动生成的JavaDoc出现乱码 Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板中＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。 2.开">
+<meta name="description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool 6.what-is-jetifie">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android中遇到的一些问题">
-<meta property="og:url" content="https://www.malin.xyz/2016/10/05/android-question/index.html">
+<meta property="og:title" content="AndroidX,migrate,jetifier">
+<meta property="og:url" content="https://www.malin.xyz/2018/10/08/androidx/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="说明:1.Android Studio中自动生成的JavaDoc出现乱码 Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板中＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。 2.开">
+<meta property="og:description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool 6.what-is-jetifie">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-22T03:23:01.000Z">
+<meta property="og:updated_time" content="2018-10-08T13:14:02.425Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android中遇到的一些问题">
-<meta name="twitter:description" content="说明:1.Android Studio中自动生成的JavaDoc出现乱码 Android Studio 生成javadoc时，在＂Tools-&amp;gt;Gerenate JavaDoc”面板中＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。 2.开">
+<meta name="twitter:title" content="AndroidX,migrate,jetifier">
+<meta name="twitter:description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool 6.what-is-jetifie">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://www.malin.xyz/2016/10/05/android-question/"/>
+  <link rel="canonical" href="https://www.malin.xyz/2018/10/08/androidx/"/>
 
 
 
 
 
-  <title>Android中遇到的一些问题 | 马琳</title>
+  <title>AndroidX,migrate,jetifier | 马琳</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2016/10/05/android-question/">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2018/10/08/androidx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="马琳">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android中遇到的一些问题</h1>
+          <h1 class="post-title" itemprop="name headline">AndroidX,migrate,jetifier</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-05T17:09:00+08:00">
-                2016-10-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-08T21:13:00+08:00">
+                2018-10-08
               </time>
             
 
@@ -272,28 +272,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ma-Lin-update/" itemprop="url" rel="index">
-                    <span itemprop="name">Ma Lin update</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -302,8 +280,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/10/05/android-question/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/05/android-question/" itemprop="commentCount"></span>
+                <a href="/2018/10/08/androidx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/08/androidx/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -331,10 +309,13 @@
       
 
       
-        <h3 id="说明"><a href="#说明" class="headerlink" title="说明:"></a>说明:</h3><p>1.Android Studio中自动生成的JavaDoc出现乱码</p>
-<p>Android Studio 生成javadoc时，在＂Tools-&gt;Gerenate JavaDoc”面板中<br>＂Other command line arguments:”栏里输入＂-encoding utf-8 -charset utf-8＂,<br>就是以utf-8编码读取文件和生成javadoc，否则会出现乱码。</p>
-<p>2.开发者选项中从右到左</p>
-<p>3.统计git某个分支下的commit数量<br>git log | grep <a href="mailto:malin.myemail@163.com" target="_blank" rel="noopener">malin.myemail@163.com</a> | wc -l</p>
+        <p>一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法.</p>
+<p>1.<a href="https://developer.android.com/jetpack/androidx/" target="_blank" rel="noopener">AndroidX Overview</a></p>
+<p>2.<a href="https://www.jianshu.com/p/164a4272b61b" target="_blank" rel="noopener">Hello World, AndroidX</a></p>
+<p>3.<a href="https://android-developers.googleblog.com/2018/05/hello-world-androidx.html" target="_blank" rel="noopener">hello-world-androidx</a></p>
+<p>4.<a href="https://developer.android.com/jetpack/androidx/migrate" target="_blank" rel="noopener">Migrating to AndroidX</a></p>
+<p>5.<a href="http://www.akexorcist.com/2018/07/android-jetifier-binary-migration-tool.html" target="_blank" rel="noopener">android-jetifier-binary-migration-tool</a></p>
+<p>6.<a href="https://stackoverflow.com/questions/51680671/what-is-jetifier" target="_blank" rel="noopener">what-is-jetifier</a></p>
 
       
     </div>
@@ -359,8 +340,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/04/android-good-website/" rel="next" title="Android开发中相见恨晚的网站">
-                <i class="fa fa-chevron-left"></i> Android开发中相见恨晚的网站
+              <a href="/2018/08/18/android-source/" rel="next" title="Source for Android 28">
+                <i class="fa fa-chevron-left"></i> Source for Android 28
               </a>
             
           </div>
@@ -369,8 +350,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/12/command-gradle/" rel="prev" title="Android中常用的Gradle命令">
-                Android中常用的Gradle命令 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/12/busybox/" rel="prev" title="BusyBox">
+                BusyBox <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -402,8 +383,8 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2016/10/05/android-question/"
-           data-title="Android中遇到的一些问题" data-url="https://www.malin.xyz/2016/10/05/android-question/">
+      <div class="ds-thread" data-thread-key="2018/10/08/androidx/"
+           data-title="AndroidX,migrate,jetifier" data-url="https://www.malin.xyz/2018/10/08/androidx/">
       </div>
     </div>
 
@@ -430,17 +411,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -500,22 +472,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明:</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
