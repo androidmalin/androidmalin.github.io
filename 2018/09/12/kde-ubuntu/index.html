@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta name="description" content="1.indicator-kdeconnect 123sudo add-apt-repository ppa:webupd8team/indicator-kdeconnectsudo apt updatesudo apt install  indicator-kdeconnect 2.123sudo apt install python-nautilussudo apt install python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BusyBox">
-<meta property="og:url" content="https://www.malin.xyz/2018/10/12/busybox/index.html">
+<meta property="og:title" content="KDE Connect Indicator">
+<meta property="og:url" content="https://www.malin.xyz/2018/09/12/kde-ubuntu/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta property="og:description" content="1.indicator-kdeconnect 123sudo add-apt-repository ppa:webupd8team/indicator-kdeconnectsudo apt updatesudo apt install  indicator-kdeconnect 2.123sudo apt install python-nautilussudo apt install python">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-09T05:07:14.145Z">
+<meta property="og:updated_time" content="2018-10-09T06:08:33.277Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BusyBox">
-<meta name="twitter:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta name="twitter:title" content="KDE Connect Indicator">
+<meta name="twitter:description" content="1.indicator-kdeconnect 123sudo add-apt-repository ppa:webupd8team/indicator-kdeconnectsudo apt updatesudo apt install  indicator-kdeconnect 2.123sudo apt install python-nautilussudo apt install python">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://www.malin.xyz/2018/10/12/busybox/"/>
+  <link rel="canonical" href="https://www.malin.xyz/2018/09/12/kde-ubuntu/"/>
 
 
 
 
 
-  <title>BusyBox | 马琳</title>
+  <title>KDE Connect Indicator | 马琳</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2018/10/12/busybox/">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2018/09/12/kde-ubuntu/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="马琳">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">BusyBox</h1>
+          <h1 class="post-title" itemprop="name headline">KDE Connect Indicator</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T09:59:00+08:00">
-                2018-10-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T16:53:00+08:00">
+                2018-09-12
               </time>
             
 
@@ -280,8 +280,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/12/busybox/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/12/busybox/" itemprop="commentCount"></span>
+                <a href="/2018/09/12/kde-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/12/kde-ubuntu/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -309,31 +309,13 @@
       
 
       
-        <p>0.下载源码解压.<br><code>tar -jxvf xx.tar.bz2</code><br>1.<code>sudo apt-get install gcc-arm-linux-gnueabi</code></p>
-<p>2.<code>export ARCH=arm</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Makefile:152</span><br><span class="line"># Another way is to have ARCH set in the environment.</span><br><span class="line"># The default ARCH is the host where make is executed</span><br></pre></td></tr></table></figure>
-<p>3.<code>export CROSS_COMPILE=arm-linux-gnueabi-</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Makefile:160</span><br><span class="line"># Alternatively CROSS_COMPILE can be set in the environment.</span><br><span class="line"># Default value for CROSS_COMPILE is not to prefix executables</span><br></pre></td></tr></table></figure>
-<p>4.<code>make menuconfig</code> (if you dont get a config menu, you need to <code>sudo apt-get install libncurses5-dev</code>)</p>
-<p>Busybox Settings –&gt; — Build Options –&gt; Build static binary (no shared libs) -  点击空格键</p>
-<p>Busybox Settings –&gt; Installation Options –&gt; Don’t use /usr  -   点击空格键</p>
-<p>5.<code>make -j8</code></p>
-<p>6.<code>readelf -h busybox</code><br>编译完成后会生成busybox可执行文件，输入以下命令可以查看生成的文件信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">readelf -h busybox</span><br><span class="line">ELF Header:</span><br><span class="line">  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00</span><br><span class="line">  Class:                             ELF32</span><br><span class="line">  Data:                              2&apos;s complement, little endian</span><br><span class="line">  Version:                           1 (current)</span><br><span class="line">  OS/ABI:                            UNIX - System V</span><br><span class="line">  ABI Version:                       0</span><br><span class="line">  Type:                              EXEC (Executable file)</span><br><span class="line">  Machine:                           ARM</span><br><span class="line">  Version:                           0x1</span><br><span class="line">  Entry point address:               0x14110</span><br><span class="line">  Start of program headers:          52 (bytes into file)</span><br><span class="line">  Start of section headers:          2085504 (bytes into file)</span><br><span class="line">  Flags:                             0x5000200, Version5 EABI, soft-float ABI</span><br><span class="line">  Size of this header:               52 (bytes)</span><br><span class="line">  Size of program headers:           32 (bytes)</span><br><span class="line">  Number of program headers:         7</span><br><span class="line">  Size of section headers:           40 (bytes)</span><br><span class="line">  Number of section headers:         27</span><br><span class="line">  Section header string table index: 26</span><br></pre></td></tr></table></figure>
-<p>Machine: ARM ==&gt;说明为ARM架构</p>
-<p>7.<br>修改/system目录可写<br><code>mount -o remount,rw /system</code></p>
-<p>复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限</p>
-<p><code>cd /system/xbin</code><br><code>chmod 755 busybox</code></p>
-<p>8.这时就可以使用 busybox 的命令了，例如以前没有清屏的clear命令，现在只需输入 busybox clear 就可以实现清屏功能，使用完整版的 ls 只需输入 busybox ls 。<br>但是每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。<br><code>cd /system/xbin</code><br><code>busybox --install .</code></p>
-<p>9.</p>
-<p>修改init.rc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">修改init.rc文件可写</span><br><span class="line">`mount -o remount,rw /`</span><br><span class="line"></span><br><span class="line">修改 service console /system/bin/sh 这行为                                                   </span><br><span class="line">==&gt;</span><br><span class="line">改为:service console /system/xbin/sh</span><br></pre></td></tr></table></figure></p>
-<p>查看当前的环境变量.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">angler:/ # busybox echo $PATH</span><br><span class="line">/sbin:/system/sbin:/system/bin:/system/xbin:/vendor/bin:/vendor/xbin</span><br></pre></td></tr></table></figure></p>
-<p>然后在当前的PATH前加上busybox的路径,加上后为:(删除重复的/system/xbin)<br><code>/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin</code></p>
-<p>要提醒的是, 修改PATH环境变量的时候, 应该把busybox常用命令的路径”/data/busybox/bin”放在Android的常用命令路径”/system/bin”的前面, 否则, 先查找得到的将不是busybox的命令,  可以这样设置:</p>
-<p>最终为<br><code>export PATH=/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin</code><br>或者<br><code>export PATH=/system/xbin:$PATH</code>(里面有重复的/system/xbin)<br>这样设置的是本地有效，一旦你退出当前环境．需要重新设置PATH.</p>
-<p>通过这个查看环境变量<br><code>busybox echo $PATH</code></p>
-<p>每次退出shell环境重新进入.需要再次设置一次环境变量.</p>
-<p>参考文章<br><a href="https://blog.csdn.net/a345017062/article/details/6250619" target="_blank" rel="noopener">Android自带的toolbox分析及扩展</a><br><a href="https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323" target="_blank" rel="noopener">Cross Compiling C/C++ for ARM on Linux</a><br><a href="https://blog.csdn.net/hexingen/article/details/76736708" target="_blank" rel="noopener">Android安装系统App(adb push实现)</a><br><a href="https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw" target="_blank" rel="noopener">remount-system-in-rw</a><br><a href="https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html" target="_blank" rel="noopener">为Android安装BusyBox —— 完整的bash shell</a><br><a href="https://www.cnblogs.com/shangdawei/p/4514315.html" target="_blank" rel="noopener">采用busybox 代替android 自带的shell</a></p>
+        <p>1.indicator-kdeconnect</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/indicator-kdeconnect</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install  indicator-kdeconnect</span><br></pre></td></tr></table></figure>
+<p>2.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-nautilus</span><br><span class="line">sudo apt install python-nemo</span><br><span class="line">sudo apt install python-caja</span><br></pre></td></tr></table></figure></p>
+<p>1c6063510bfbc364</p>
+<p><a href="https://github.com/Bajoja/indicator-kdeconnect" target="_blank" rel="noopener">indicator-kdeconnect</a></p>
+<p>3.电脑发送文件到手机<br><code>kdeconnect-send %F aa.img</code></p>
+<p>mkdir -p /run/user/1000/xxxxxxxxxxxxxxxx<br>sudo mount -v -t fuse.sshfs \<br>  -o rw,nosuid,nodev,uid=1000,gid=1000 \<br>  <a href="mailto:kdeconnect@10.31.4.43" target="_blank" rel="noopener">kdeconnect@10.31.4.43</a>:/ /home/malin/kdeconnect</p>
 
       
     </div>
@@ -358,8 +340,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/08/androidx/" rel="next" title="AndroidX,migrate,jetifier">
-                <i class="fa fa-chevron-left"></i> AndroidX,migrate,jetifier
+              <a href="/2018/09/12/busybox/" rel="next" title="BusyBox">
+                <i class="fa fa-chevron-left"></i> BusyBox
               </a>
             
           </div>
@@ -368,8 +350,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/12/kde-ubuntu/" rel="prev" title="KDE Connect Indicator">
-                KDE Connect Indicator <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/08/androidx/" rel="prev" title="AndroidX,migrate,jetifier">
+                AndroidX,migrate,jetifier <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -401,8 +383,8 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2018/10/12/busybox/"
-           data-title="BusyBox" data-url="https://www.malin.xyz/2018/10/12/busybox/">
+      <div class="ds-thread" data-thread-key="2018/09/12/kde-ubuntu/"
+           data-title="KDE Connect Indicator" data-url="https://www.malin.xyz/2018/09/12/kde-ubuntu/">
       </div>
     </div>
 

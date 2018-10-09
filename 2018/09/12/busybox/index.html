@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 0.support-library 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool">
+<meta name="description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AndroidX,migrate,jetifier">
-<meta property="og:url" content="https://www.malin.xyz/2018/10/08/androidx/index.html">
+<meta property="og:title" content="BusyBox">
+<meta property="og:url" content="https://www.malin.xyz/2018/09/12/busybox/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 0.support-library 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool">
+<meta property="og:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-09T04:58:04.495Z">
+<meta property="og:updated_time" content="2018-10-09T06:08:37.443Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AndroidX,migrate,jetifier">
-<meta name="twitter:description" content="一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法. 0.support-library 1.AndroidX Overview 2.Hello World, AndroidX 3.hello-world-androidx 4.Migrating to AndroidX 5.android-jetifier-binary-migration-tool">
+<meta name="twitter:title" content="BusyBox">
+<meta name="twitter:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://www.malin.xyz/2018/10/08/androidx/"/>
+  <link rel="canonical" href="https://www.malin.xyz/2018/09/12/busybox/"/>
 
 
 
 
 
-  <title>AndroidX,migrate,jetifier | 马琳</title>
+  <title>BusyBox | 马琳</title>
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2018/10/08/androidx/">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2018/09/12/busybox/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="马琳">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">AndroidX,migrate,jetifier</h1>
+          <h1 class="post-title" itemprop="name headline">BusyBox</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-08T21:13:00+08:00">
-                2018-10-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T09:59:00+08:00">
+                2018-09-12
               </time>
             
 
@@ -280,8 +280,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/08/androidx/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/08/androidx/" itemprop="commentCount"></span>
+                <a href="/2018/09/12/busybox/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/12/busybox/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -309,30 +309,31 @@
       
 
       
-        <p>一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法.</p>
-<p>0.<a href="https://developer.android.com/topic/libraries/support-library/" target="_blank" rel="noopener">support-library</a></p>
-<p>1.<a href="https://developer.android.com/jetpack/androidx/" target="_blank" rel="noopener">AndroidX Overview</a></p>
-<p>2.<a href="https://www.jianshu.com/p/164a4272b61b" target="_blank" rel="noopener">Hello World, AndroidX</a></p>
-<p>3.<a href="https://android-developers.googleblog.com/2018/05/hello-world-androidx.html" target="_blank" rel="noopener">hello-world-androidx</a></p>
-<p>4.<a href="https://developer.android.com/jetpack/androidx/migrate" target="_blank" rel="noopener">Migrating to AndroidX</a></p>
-<p>5.<a href="http://www.akexorcist.com/2018/07/android-jetifier-binary-migration-tool.html" target="_blank" rel="noopener">android-jetifier-binary-migration-tool</a></p>
-<p>一篇很好的文章.讲解Jetifier的,是泰语,可以用chrome网页自带的翻译,翻译成汉语.</p>
-<p>6.<a href="https://stackoverflow.com/questions/51680671/what-is-jetifier" target="_blank" rel="noopener">what-is-jetifier</a></p>
-<p>7.<a href="https://stackoverflow.com/questions/51280090/what-is-androidx/52517772#52517772" target="_blank" rel="noopener">what-is-androidx</a></p>
-<p>8.<a href="https://proandroiddev.com/jetpack-series-1-androidx-a-headache-for-a-better-package-structure-62c3608596fd" target="_blank" rel="noopener">Jetpack series: 1 — androidx.*, a headache for a better package structure</a></p>
-<p>9.<a href="https://developer.android.com/studio/releases/gradle-plugin" target="_blank" rel="noopener">gradle-plugin-release</a></p>
-<p>10.<a href="http://androidxref.com/9.0.0_r3/xref/frameworks/support/jetifier/jetifier/" target="_blank" rel="noopener">jetifier插件源码</a></p>
-<p>11.<a href="https://android.googlesource.com/platform/frameworks/support/+/android-9.0.0_r10" target="_blank" rel="noopener">frameworks/support/+/android-9.0.0_r10</a></p>
-<p>12.<a href="https://android.googlesource.com/platform/frameworks/support/+archive/android-9.0.0_r10/jetifier.tar.gz" target="_blank" rel="noopener">jetifier插件源码aosp</a></p>
-<p>13.<a href="https://medium.com/ta-tonthongkam/android-jetpack-android-x-36c73abff1c5" target="_blank" rel="noopener">/android-jetpack-android-x</a></p>
-<p>14.<a href="https://proandroiddev.com/jetpack-series-1-androidx-a-headache-for-a-better-package-structure-62c3608596fd" target="_blank" rel="noopener">androidx-a-headache-for-a-better-package-structure</a></p>
-<p>15.<a href="https://medium.com/mindorks/whats-new-in-android-support-library-db0ec7a8ad1" target="_blank" rel="noopener">whats-new-in-android-support-library</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">https://android-developers.googleblog.com/2018/05/hello-world-androidx.html</span><br><span class="line"></span><br><span class="line">Source refactoring updates your Java code, XML resources, and Gradle configuration to reference the refactored classes and Maven artifacts. This feature is available in Android Studio Canary 14 for applications targeting Android P.</span><br><span class="line"></span><br><span class="line">If you depend on a library that references the older Support Library, Android Studio will update that library to reference androidx instead via dependency translation. Dependency translation is automatically applied by the Android Gradle Plugin 3.2.0-alpha14, which rewrites bytecode and resources of JAR and AAR dependencies (and transitive dependencies) to reference the new androidx-packaged classes and artifacts. We will also provide a standalone translation tool as a JAR.</span><br><span class="line"></span><br><span class="line">源重构更新您的Java代码，XML资源和Gradle配置，以引用重构类和Maven工件。 此功能在Android Studio Canary 14中适用于针对Android P的应用程序。</span><br><span class="line"></span><br><span class="line">如果您依赖于引用旧支持库的库，Android Studio将通过依赖项转换更新该库以引用androidx。 依赖转换由Android Gradle Plugin 3.2.0-alpha14自动应用，它重写JAR和AAR依赖项（和传递依赖项）的字节码和资源，以引用新的androidx打包的类和工件。 我们还将提供独立的翻译工具作为JAR。</span><br></pre></td></tr></table></figure>
-<p>jetifier插件是从<a href="https://mvnrepository.com/artifact/com.android.tools.build/gradle/3.2.0-alpha11" target="_blank" rel="noopener">android gradle plugin 3.2.0-alpha11</a>开始引入的.</p>
-<p><a href="https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/0.0.1/jetifier-core-0.0.1.jar" target="_blank" rel="noopener">jetifier-core-0.0.1.jar</a></p>
-<p><a href="https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/0.0.1/jetifier-core-0.0.1.pom" target="_blank" rel="noopener">jetifier-core-0.0.1.pom</a></p>
-<p><a href="https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/0.0.1/jetifier-processor-0.0.1.jar" target="_blank" rel="noopener">jetifier-processor-0.0.1.jar</a></p>
-<p><a href="https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/0.0.1/jetifier-processor-0.0.1.pom" target="_blank" rel="noopener">jetifier-processor-0.0.1.pom</a></p>
+        <p>0.下载源码解压.<br><code>tar -jxvf xx.tar.bz2</code><br>1.<code>sudo apt-get install gcc-arm-linux-gnueabi</code></p>
+<p>2.<code>export ARCH=arm</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Makefile:152</span><br><span class="line"># Another way is to have ARCH set in the environment.</span><br><span class="line"># The default ARCH is the host where make is executed</span><br></pre></td></tr></table></figure>
+<p>3.<code>export CROSS_COMPILE=arm-linux-gnueabi-</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Makefile:160</span><br><span class="line"># Alternatively CROSS_COMPILE can be set in the environment.</span><br><span class="line"># Default value for CROSS_COMPILE is not to prefix executables</span><br></pre></td></tr></table></figure>
+<p>4.<code>make menuconfig</code> (if you dont get a config menu, you need to <code>sudo apt-get install libncurses5-dev</code>)</p>
+<p>Busybox Settings –&gt; — Build Options –&gt; Build static binary (no shared libs) -  点击空格键</p>
+<p>Busybox Settings –&gt; Installation Options –&gt; Don’t use /usr  -   点击空格键</p>
+<p>5.<code>make -j8</code></p>
+<p>6.<code>readelf -h busybox</code><br>编译完成后会生成busybox可执行文件，输入以下命令可以查看生成的文件信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">readelf -h busybox</span><br><span class="line">ELF Header:</span><br><span class="line">  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00</span><br><span class="line">  Class:                             ELF32</span><br><span class="line">  Data:                              2&apos;s complement, little endian</span><br><span class="line">  Version:                           1 (current)</span><br><span class="line">  OS/ABI:                            UNIX - System V</span><br><span class="line">  ABI Version:                       0</span><br><span class="line">  Type:                              EXEC (Executable file)</span><br><span class="line">  Machine:                           ARM</span><br><span class="line">  Version:                           0x1</span><br><span class="line">  Entry point address:               0x14110</span><br><span class="line">  Start of program headers:          52 (bytes into file)</span><br><span class="line">  Start of section headers:          2085504 (bytes into file)</span><br><span class="line">  Flags:                             0x5000200, Version5 EABI, soft-float ABI</span><br><span class="line">  Size of this header:               52 (bytes)</span><br><span class="line">  Size of program headers:           32 (bytes)</span><br><span class="line">  Number of program headers:         7</span><br><span class="line">  Size of section headers:           40 (bytes)</span><br><span class="line">  Number of section headers:         27</span><br><span class="line">  Section header string table index: 26</span><br></pre></td></tr></table></figure>
+<p>Machine: ARM ==&gt;说明为ARM架构</p>
+<p>7.<br>修改/system目录可写<br><code>mount -o remount,rw /system</code></p>
+<p>复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限</p>
+<p><code>cd /system/xbin</code><br><code>chmod 755 busybox</code></p>
+<p>8.这时就可以使用 busybox 的命令了，例如以前没有清屏的clear命令，现在只需输入 busybox clear 就可以实现清屏功能，使用完整版的 ls 只需输入 busybox ls 。<br>但是每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。<br><code>cd /system/xbin</code><br><code>busybox --install .</code></p>
+<p>9.</p>
+<p>修改init.rc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">修改init.rc文件可写</span><br><span class="line">`mount -o remount,rw /`</span><br><span class="line"></span><br><span class="line">修改 service console /system/bin/sh 这行为                                                   </span><br><span class="line">==&gt;</span><br><span class="line">改为:service console /system/xbin/sh</span><br></pre></td></tr></table></figure></p>
+<p>查看当前的环境变量.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">angler:/ # busybox echo $PATH</span><br><span class="line">/sbin:/system/sbin:/system/bin:/system/xbin:/vendor/bin:/vendor/xbin</span><br></pre></td></tr></table></figure></p>
+<p>然后在当前的PATH前加上busybox的路径,加上后为:(删除重复的/system/xbin)<br><code>/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin</code></p>
+<p>要提醒的是, 修改PATH环境变量的时候, 应该把busybox常用命令的路径”/data/busybox/bin”放在Android的常用命令路径”/system/bin”的前面, 否则, 先查找得到的将不是busybox的命令,  可以这样设置:</p>
+<p>最终为<br><code>export PATH=/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin</code><br>或者<br><code>export PATH=/system/xbin:$PATH</code>(里面有重复的/system/xbin)<br>这样设置的是本地有效，一旦你退出当前环境．需要重新设置PATH.</p>
+<p>通过这个查看环境变量<br><code>busybox echo $PATH</code></p>
+<p>每次退出shell环境重新进入.需要再次设置一次环境变量.</p>
+<p>参考文章<br><a href="https://blog.csdn.net/a345017062/article/details/6250619" target="_blank" rel="noopener">Android自带的toolbox分析及扩展</a><br><a href="https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323" target="_blank" rel="noopener">Cross Compiling C/C++ for ARM on Linux</a><br><a href="https://blog.csdn.net/hexingen/article/details/76736708" target="_blank" rel="noopener">Android安装系统App(adb push实现)</a><br><a href="https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw" target="_blank" rel="noopener">remount-system-in-rw</a><br><a href="https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html" target="_blank" rel="noopener">为Android安装BusyBox —— 完整的bash shell</a><br><a href="https://www.cnblogs.com/shangdawei/p/4514315.html" target="_blank" rel="noopener">采用busybox 代替android 自带的shell</a></p>
 
       
     </div>
@@ -357,8 +358,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/12/kde-ubuntu/" rel="next" title="KDE Connect Indicator">
-                <i class="fa fa-chevron-left"></i> KDE Connect Indicator
+              <a href="/2018/08/18/android-source/" rel="next" title="Source for Android 28">
+                <i class="fa fa-chevron-left"></i> Source for Android 28
               </a>
             
           </div>
@@ -366,6 +367,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/12/kde-ubuntu/" rel="prev" title="KDE Connect Indicator">
+                KDE Connect Indicator <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -396,8 +401,8 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2018/10/08/androidx/"
-           data-title="AndroidX,migrate,jetifier" data-url="https://www.malin.xyz/2018/10/08/androidx/">
+      <div class="ds-thread" data-thread-key="2018/09/12/busybox/"
+           data-title="BusyBox" data-url="https://www.malin.xyz/2018/09/12/busybox/">
       </div>
     </div>
 
