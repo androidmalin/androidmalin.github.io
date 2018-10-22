@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -d &amp;#39;.&amp;#">
+<meta name="description" content="微信聊天数据库密码：（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="wechat">
 <meta property="og:url" content="https://www.malin.xyz/2018/06/15/wechat-db/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -d &amp;#39;.&amp;#">
+<meta property="og:description" content="微信聊天数据库密码：（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-15T11:35:44.000Z">
+<meta property="og:updated_time" content="2018-10-22T09:54:01.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="wechat">
-<meta name="twitter:description" content="（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -d &amp;#39;.&amp;#">
+<meta name="twitter:description" content="微信聊天数据库密码：（手机IMEI + 微信uin ）取MD5的前7位 手机的IMEI获取：手机拨号盘输入：*#06#  ,你或者用android代码获取可以，怎么都行或者 adb shell service call iphonesubinfo 1 | awk -F &amp;quot;&amp;#39;&amp;quot; &amp;#39;{print $2}&amp;#39; | sed &amp;#39;1 d&amp;#39; | tr -">
 
 
 
@@ -309,7 +309,7 @@
       
 
       
-        <p>（手机IMEI + 微信uin ）取MD5的前7位</p>
+        <p>微信聊天数据库密码：（手机IMEI + 微信uin ）取MD5的前7位</p>
 <p>手机的IMEI获取：手机拨号盘输入：<code>*#06#  ,你或者用android代码获取可以，怎么都行</code><br>或者 <code>adb shell service call iphonesubinfo 1 | awk -F &quot;&#39;&quot; &#39;{print $2}&#39; | sed &#39;1 d&#39; | tr -d &#39;.&#39; | awk &#39;{print}&#39; ORS=</code><br>nexus6p:<br>867982021177614</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">chmod 777 /data/data/com.tencent.mm/shared_prefs/auth_info_key_prefs.xml</span><br><span class="line">exit</span><br><span class="line">exit</span><br><span class="line">adb shell cat /data/data/com.tencent.mm/shared_prefs/auth_info_key_prefs.xml</span><br><span class="line"></span><br><span class="line">adb shell su -c &quot;cat /data/data/com.tencent.mm/shared_prefs/*.xml | grep uin&quot;</span><br><span class="line"></span><br><span class="line">或者adb shell su -c &quot;cat /data/data/com.tencent.mm/shared_prefs/auth_info_key_prefs.xml | grep _auth_uin | cut -b 34-43&quot;</span><br><span class="line"></span><br><span class="line">uid:</span><br><span class="line">cd /data/data/com.tencent.mm/shared_prefs</span><br><span class="line">cat auth_info_key_prefs.xml</span><br><span class="line">&lt;int name=&quot;_auth_uin&quot; value=&quot;1612047176&quot; /&gt;</span><br><span class="line"></span><br><span class="line">echo -n &apos;8679820211776141612047176&apos; | md5sum</span><br><span class="line"></span><br><span class="line">（手机IMEI + 微信uin )==8679820211776141612047176</span><br><span class="line"></span><br><span class="line">取MD5(32位小写) == 51096839112723abc0a096fa0d054b76</span><br><span class="line">取MD5的前7位:5109683</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">其中MicroMsg下某个用户的文件夹名称为 md5(mm+uid)</span><br><span class="line">例如</span><br><span class="line">echo -n &apos;mm1612047176&apos; | md5sum</span><br><span class="line"></span><br><span class="line">md5(mm1612047176)=089c975516ccefb11195d7695bdbf908</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cp /data/data/com.tencent.mm/MicroMsg/089c975516ccefb11195d7695bdbf908/EnMicroMsg.db /sdcard/</span><br><span class="line">adb pull /sdcard/EnMicroMsg.db</span><br><span class="line">adb shell am force-stop com.tencent.mm</span><br><span class="line">adb shell am start com.tencent.mm/com.tencent.mm.ui.LauncherUI &amp;&amp; pidcat.py com.tencent.mm -t XposedTag</span><br><span class="line">sqlcipher EnMicroMsg.db &apos;PRAGMA key = &quot;5109683&quot;; PRAGMA cipher_use_hmac = off; PRAGMA kdf_iter = 4000; ATTACH DATABASE &quot;decrypted_database.db&quot; AS decrypted_database KEY &quot;&quot;;SELECT sqlcipher_export(&quot;decrypted_database&quot;);DETACH DATABASE decrypted_database;&apos;</span><br><span class="line">sqlitebrowser decrypted_database.db</span><br></pre></td></tr></table></figure>
@@ -426,7 +426,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

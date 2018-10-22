@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta name="description" content="BusyBox简介：BusyBox是一个遵循GPL协议、以自由软件形式发行的应用程序。Busybox在单一的可执行文件中提供了精简的Unix工具集，可运行于多款POSIX环境的操作系统，例如Linux（包括Android）、Hurd、FreeBSD等等。由于BusyBox可执行文件的文件大小比较小、并通常使用Linux内核，这使得它非常适合使用于嵌入式系统。BusyBox称为“嵌入式Linux的瑞">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BusyBox">
 <meta property="og:url" content="https://www.malin.xyz/2018/09/12/busybox/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta property="og:description" content="BusyBox简介：BusyBox是一个遵循GPL协议、以自由软件形式发行的应用程序。Busybox在单一的可执行文件中提供了精简的Unix工具集，可运行于多款POSIX环境的操作系统，例如Linux（包括Android）、Hurd、FreeBSD等等。由于BusyBox可执行文件的文件大小比较小、并通常使用Linux内核，这使得它非常适合使用于嵌入式系统。BusyBox称为“嵌入式Linux的瑞">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-09T06:08:37.443Z">
+<meta property="og:updated_time" content="2018-10-22T10:00:24.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BusyBox">
-<meta name="twitter:description" content="0.下载源码解压.tar -jxvf xx.tar.bz21.sudo apt-get install gcc-arm-linux-gnueabi 2.export ARCH=arm 123Makefile:152# Another way is to have ARCH set in the environment.# The default ARCH is the host where mak">
+<meta name="twitter:description" content="BusyBox简介：BusyBox是一个遵循GPL协议、以自由软件形式发行的应用程序。Busybox在单一的可执行文件中提供了精简的Unix工具集，可运行于多款POSIX环境的操作系统，例如Linux（包括Android）、Hurd、FreeBSD等等。由于BusyBox可执行文件的文件大小比较小、并通常使用Linux内核，这使得它非常适合使用于嵌入式系统。BusyBox称为“嵌入式Linux的瑞">
 
 
 
@@ -309,7 +309,8 @@
       
 
       
-        <p>0.下载源码解压.<br><code>tar -jxvf xx.tar.bz2</code><br>1.<code>sudo apt-get install gcc-arm-linux-gnueabi</code></p>
+        <p>BusyBox简介：<br>BusyBox是一个遵循GPL协议、以自由软件形式发行的应用程序。<br>Busybox在单一的可执行文件中提供了精简的Unix工具集，可运行于多款POSIX环境的操作系统，例如Linux（包括Android）、Hurd、FreeBSD等等。由于BusyBox可执行文件的文件大小比较小、并通常使用Linux内核，这使得它非常适合使用于嵌入式系统。<br>BusyBox称为“嵌入式Linux的瑞士军刀。</p>
+<p>0.下载源码解压.<br><code>tar -jxvf xx.tar.bz2</code><br>1.<code>sudo apt-get install gcc-arm-linux-gnueabi</code></p>
 <p>2.<code>export ARCH=arm</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Makefile:152</span><br><span class="line"># Another way is to have ARCH set in the environment.</span><br><span class="line"># The default ARCH is the host where make is executed</span><br></pre></td></tr></table></figure>
 <p>3.<code>export CROSS_COMPILE=arm-linux-gnueabi-</code></p>
@@ -333,7 +334,7 @@
 <p>最终为<br><code>export PATH=/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin</code><br>或者<br><code>export PATH=/system/xbin:$PATH</code>(里面有重复的/system/xbin)<br>这样设置的是本地有效，一旦你退出当前环境．需要重新设置PATH.</p>
 <p>通过这个查看环境变量<br><code>busybox echo $PATH</code></p>
 <p>每次退出shell环境重新进入.需要再次设置一次环境变量.</p>
-<p>参考文章<br><a href="https://blog.csdn.net/a345017062/article/details/6250619" target="_blank" rel="noopener">Android自带的toolbox分析及扩展</a><br><a href="https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323" target="_blank" rel="noopener">Cross Compiling C/C++ for ARM on Linux</a><br><a href="https://blog.csdn.net/hexingen/article/details/76736708" target="_blank" rel="noopener">Android安装系统App(adb push实现)</a><br><a href="https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw" target="_blank" rel="noopener">remount-system-in-rw</a><br><a href="https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html" target="_blank" rel="noopener">为Android安装BusyBox —— 完整的bash shell</a><br><a href="https://www.cnblogs.com/shangdawei/p/4514315.html" target="_blank" rel="noopener">采用busybox 代替android 自带的shell</a></p>
+<p>参考文章<br><a href="https://zh.wikipedia.org/wiki/BusyBox" target="_blank" rel="noopener">BusyBox维基百科</a><br><a href="https://blog.csdn.net/a345017062/article/details/6250619" target="_blank" rel="noopener">Android自带的toolbox分析及扩展</a><br><a href="https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323" target="_blank" rel="noopener">Cross Compiling C/C++ for ARM on Linux</a><br><a href="https://blog.csdn.net/hexingen/article/details/76736708" target="_blank" rel="noopener">Android安装系统App(adb push实现)</a><br><a href="https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw" target="_blank" rel="noopener">remount-system-in-rw</a><br><a href="https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html" target="_blank" rel="noopener">为Android安装BusyBox —— 完整的bash shell</a><br><a href="https://www.cnblogs.com/shangdawei/p/4514315.html" target="_blank" rel="noopener">采用busybox 代替android 自带的shell</a></p>
 
       
     </div>
@@ -445,7 +446,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

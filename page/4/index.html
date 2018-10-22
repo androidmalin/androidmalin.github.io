@@ -232,151 +232,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/03/30/ubuntu-2k/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="马琳">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="马琳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/30/ubuntu-2k/" itemprop="url">Ubuntu 2k</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T10:14:00+08:00">
-                2017-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/30/ubuntu-2k/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/30/ubuntu-2k/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.查看硬件信息<br><code>lspci -vnn | grep VGA -A 12</code></p>
-<p>看到如下信息<br>NVIDIA Corporation GM206 [GeForce GTX 960]</p>
-<p>2.官网下载匹配型号的驱动<br>官网地址<br><a href="http://www.geforce.cn/drivers" target="_blank" rel="noopener">http://www.geforce.cn/drivers</a></p>
-<p>选择GeForce<br>GeForce 960 Series<br>GeForce GTX 960<br>Linux 64-bit<br>Chinese<br>All</p>
-<p>搜索–同意–下载<br>得到<code>http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
-<p>3.下载驱动<br><code>cd &amp;&amp; wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
-<p>4.编译依赖<br>sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-<code>uname -r</code></p>
-<p>5.屏蔽开源驱动nouveau<br><code>sudo vim /etc/modprobe.d/blacklist.conf</code></p>
-<p>添加<br>blacklist vga16fb<br>blacklist nouveau<br>blacklist rivafb<br>blacklist nvidiafb<br>blacklist rivatv</p>
-<p>6.禁用 nouveau 内核模块<br><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf</code><br><code>sudo update-initramfs -u</code></p>
-<p>7.重启<br><code>sudo reboot</code></p>
-<p>8.按Ctrl + Alt +F1到第一控制台（+F7是退出）。</p>
-<p>9.输入用户名和密码后，登录后执行：<br><code>sudo service lightdm stop</code><br>或者<br><code>sudo service gdm stop</code></p>
-<p>10.进入驱动所在的文件夹，安装驱动，必须以root进行安装<br><code>sudo sh NVIDIA-Linux-x86_64-375.39.run</code><br>或者<br><code>sudo sh NVIDIA*.run</code></p>
-<p>安装过程中全部选择YES；比如接受条约；自动配置错误，点击继续配；</p>
-<p>参考文章<br><a href="http://www.samsung.com/cn/support/downloadcenter/" target="_blank" rel="noopener">三星驱动</a><br><a href="https://blog.kyletang.work/2016/07/18/hd4000hdmi2560x1440x44hz/" target="_blank" rel="noopener">设置分辨率</a><br><a href="https://item.jd.com/4606144.html" target="_blank" rel="noopener">三星显示器</a><br><a href="http://os.51cto.com/art/201512/501857.htm" target="_blank" rel="noopener">驱动信息</a><br><a href="http://www.geforce.cn/drivers" target="_blank" rel="noopener">驱动搜索下载</a><br><a href="http://www.nvidia.com/Download/index.aspx?lang=cn" target="_blank" rel="noopener">驱动搜索</a><br><a href="https://wiki.ubuntu.com.cn/NVIDIA" target="_blank" rel="noopener">驱动安装1</a><br><a href="https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b" target="_blank" rel="noopener">驱动安装2</a><br><a href="http://blog.csdn.net/collonn/article/details/9107601" target="_blank" rel="noopener">驱动安装3</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/03/02/adb-backup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1693,6 +1548,164 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2016/11/29/tinker-cn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="马琳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="马琳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/29/tinker-cn/" itemprop="url">终端下完成Tinker Sample的调试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-29T00:00:00+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/29/tinker-cn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/tinker-cn/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>0.<br>首先确保你电脑配置了<code>gradle</code>环境变量，并且grade的版本大于等于2.14.1<br><br>例如<code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br></p>
+<p>可以使用这个命令查看gradle版本号<br><br><code>gradle --version</code><br></p>
+<p>Gradle可以从这个网站下载<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">https://services.gradle.org/distributions</a></p>
+<p>确保你配置了<code>adb</code>环境变量。如果没有配置，可以参考这篇文章<a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="noopener">Linux,Unix下环境变量的配置</a><br><br>可以使用<code>adb --version</code>查看是否配置了<code>adb</code>环境变量。</p>
+<p>本文所有命令均在Ubuntu上调试的，Mac OS上应该都有，Windows上开发的同学可以自行转换为相应的命令<br><br>本文参考Tinker的官方wiki来写的。<br><br><a href="https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">https://github.com/Tencent/tinker/wiki</a><br></p>
+<p>1.从github上下载<a href="https://github.com/Tencent/tinker" target="_blank" rel="noopener">tinker</a>的源码<br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
+<p>2.切换到tinker-sample-android目录下<br><br><code>cd tinker/tinker-sample-android</code></p>
+<p>3.下载依赖，第一次运行可能需要很长时间，因为需要下载一些依赖库.<br><br><code>gradle clean</code></p>
+<p>4.编译生成Debug版本的Apk<br><br><code>gradle assembleDebug</code></p>
+<p>5.将编译生成的apk安装到手机或者模拟器中(<a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="noopener">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
+<p>6.启动安装的apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
+<p>7.修改代码，这里演示修改MainActivity中的TAG,来验证热修复<br><br>7.1: 得到MainActivity中TAG变量的行数<br><br><code>grep -n &quot;TAG&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d &quot;:&quot; -f 1</code></p>
+<p>7.2: 将TAG替换为新的值例如:IWantToTestHotFix<br><br>  注意：下一行中的<code>42</code>为上一条命令中获取的<code>MainActivity中TAG变量的行数</code>，<code>IWantToTestHotFix</code>为我们要替换后的TAG值。<br><br><code>sed -i &#39;42s/.*/private static final String TAG = &quot;IWantToTestHotFix&quot;;/&#39; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
+<p>7.3: 确认一下替换是否成功，可以通过查询替换后TAG的值和所在的行数<br><br><code>grep -n &quot;IWantToTestHotFix&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
+<p>8.获取编译生成的Debug版本APK的名字<br><br><code>find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk &#39;{print $9}&#39; | cut -d  &quot;/&quot; -f 4</code></p>
+<p>9.获取”tinkerOldApkPath”字符串在tinker-sample-android/app/build.gradle文件中的行数<br><br><code>grep -n &quot;tinkerOldApkPath&quot; app/build.gradle | head -n 1 | cut -d  &quot;:&quot; -f 1</code></p>
+<p>10.用第8步获得的APK的名字，替换到app/build.gradle中tinkerOldApkPath的值<br></p>
+<p>例如. <br><br>第8步得到的值为: <code>app-debug-1130-12-54-43.apk</code><br><br>第9步得到的值为: <code>147</code><br></p>
+<p>那么使用如下的命令直接在app/build.gradle文件中，将第<code>147</code>行将tinkerOldApkPath替换为<code>app-debug-1130-12-54-43.apk</code>.<br></p>
+<p>e.g.<br><br><code>sed -i &#39;147s/.*/tinkerOldApkPath=&quot;${bakPath}\/app-debug-1130-12-54-43.apk&quot;/&#39; app/build.gradle</code><br></p>
+<p>实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值，将number9替换为第9步得到的值。<br><br>然后执行这条命令即可完成替换工作。<br><br><code>sed -i &#39;number8s/.*/tinkerOldApkPath=&quot;${bakPath}\/number9&quot;/&#39; app/build.gradle</code><br></p>
+<p>11.确认是否替换成功<br><br>例如.<br><br><code>grep -n &quot;app-debug-1130-12-54-43.apk&quot; app/build.gradle</code></p>
+<p>实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值。<br><br>然后执行这条命令即，如果替换成功你将看到替换的字符串的名字和所在的行数。<br><br><code>grep -n &quot;number8&quot; app/build.gradle</code><br></p>
+<p>12.编译生成补丁包<br><br><code>gradle tinkerPatchDebug</code></p>
+<p>13.将补丁包APK文件推送到手机的sdcard根目录中<br><br><code>adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/</code></p>
+<p>14.点击LOADPATH Button，加载补丁，需要等上3到4秒，<br><br>如果加载成功，你将可以看到一个Toast <code>patch success,please restart process</code>.<br></p>
+<p>15.然后，就可以锁屏或者杀死该应用进程，你可以点击KILL SELF。<br><br>可以使用如下的命令完成<br><br><code>adb shell am force-stop tinker.sample.android &amp;&amp; adb shell am start tinker.sample.android/.app.MainActivity</code></p>
+<p>16.点击应用上的<code>SHOW INFO</code>按钮确认补丁是否加载成功，如果成功,可以看到.<br><br>弹出的Dialog的第一行显示[path is loaded]</p>
+<p>同时，你可以查看自己修改的TAG是否生效。使用如下的命令过滤Log的TAG即可。<br><br>这里的TAG就是第7步修改的TAG。<br><br><code>adb logcat | grep IWantToTestHotFix</code><br><br>如果执行上个命令看到了TAG为<code>IWantToTestHotFix</code>的Log，祝贺你热修复成功了<br></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1743,7 +1756,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
