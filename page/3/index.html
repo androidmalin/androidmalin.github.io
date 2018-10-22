@@ -232,6 +232,275 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/12/07/chrome-android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="马琳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="马琳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/07/chrome-android/" itemprop="url">chrome android</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-07T15:02:00+08:00">
+                2017-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/07/chrome-android/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/07/chrome-android/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.<br>mkdir chromium &amp;&amp; cd chromium</p>
+<p>2.<br>pwd<br>/home/malin/chromium/depot_tools</p>
+<p>echo ‘export PATH=$PATH:/home/malin/chromium/depot_tools’ &gt;&gt; ~/.bashrc</p>
+<p>R.string.pl_libres_error_<br>R.string.pl_libshare_share_to_name_weixin_friend<br>R.string.pl_libxy_pl_libres_error</p>
+<p>R.string.pl_libxy_pl_libshare_share_to_name_weixin_friend</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/12/05/rename-android-module-source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="马琳">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="马琳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/05/rename-android-module-source/" itemprop="url">Rename andorid module source</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-05T10:49:00+08:00">
+                2017-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/05/rename-android-module-source/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/05/rename-android-module-source/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>0.去除无用的资源.color,image,drawable,sytle等等.<br>1.shell文件批量增加前缀<br>find /tmp/dir -type f | rename ‘s/^/pl_libutil_/‘<br>rename ‘s/^/pl_libutil_/‘ *.png</p>
+<p>————-java文件——————–<br>R.drawable.common_back_icon</p>
+<p>图片文件搜索方法<br>crl+h<br>R.drawable.xxxxxxxxx<br>————-java文件——————–</p>
+<p>————-xml文件——————–<br>R.drawable.common_back_icon</p>
+<p>图片文件搜索方法<br>crl+h<br>R.drawable.xxxxxxxxx<br>————-xml文件——————–</p>
+<color name="$name$">$color$</color>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/11/28/rename-android-module-source-name/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1593,291 +1862,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/03/30/ubuntu-2k/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="马琳">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="马琳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/30/ubuntu-2k/" itemprop="url">Ubuntu 2k</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T10:14:00+08:00">
-                2017-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/30/ubuntu-2k/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/30/ubuntu-2k/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.查看硬件信息<br><code>lspci -vnn | grep VGA -A 12</code></p>
-<p>看到如下信息<br>NVIDIA Corporation GM206 [GeForce GTX 960]</p>
-<p>2.官网下载匹配型号的驱动<br>官网地址<br><a href="http://www.geforce.cn/drivers" target="_blank" rel="noopener">http://www.geforce.cn/drivers</a></p>
-<p>选择GeForce<br>GeForce 960 Series<br>GeForce GTX 960<br>Linux 64-bit<br>Chinese<br>All</p>
-<p>搜索–同意–下载<br>得到<code>http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
-<p>3.下载驱动<br><code>cd &amp;&amp; wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run</code></p>
-<p>4.编译依赖<br>sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-<code>uname -r</code></p>
-<p>5.屏蔽开源驱动nouveau<br><code>sudo vim /etc/modprobe.d/blacklist.conf</code></p>
-<p>添加<br>blacklist vga16fb<br>blacklist nouveau<br>blacklist rivafb<br>blacklist nvidiafb<br>blacklist rivatv</p>
-<p>6.禁用 nouveau 内核模块<br><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf</code><br><code>sudo update-initramfs -u</code></p>
-<p>7.重启<br><code>sudo reboot</code></p>
-<p>8.按Ctrl + Alt +F1到第一控制台（+F7是退出）。</p>
-<p>9.输入用户名和密码后，登录后执行：<br><code>sudo service lightdm stop</code><br>或者<br><code>sudo service gdm stop</code></p>
-<p>10.进入驱动所在的文件夹，安装驱动，必须以root进行安装<br><code>sudo sh NVIDIA-Linux-x86_64-375.39.run</code><br>或者<br><code>sudo sh NVIDIA*.run</code></p>
-<p>安装过程中全部选择YES；比如接受条约；自动配置错误，点击继续配；</p>
-<p>参考文章<br><a href="http://www.samsung.com/cn/support/downloadcenter/" target="_blank" rel="noopener">三星驱动</a><br><a href="https://blog.kyletang.work/2016/07/18/hd4000hdmi2560x1440x44hz/" target="_blank" rel="noopener">设置分辨率</a><br><a href="https://item.jd.com/4606144.html" target="_blank" rel="noopener">三星显示器</a><br><a href="http://os.51cto.com/art/201512/501857.htm" target="_blank" rel="noopener">驱动信息</a><br><a href="http://www.geforce.cn/drivers" target="_blank" rel="noopener">驱动搜索下载</a><br><a href="http://www.nvidia.com/Download/index.aspx?lang=cn" target="_blank" rel="noopener">驱动搜索</a><br><a href="https://wiki.ubuntu.com.cn/NVIDIA" target="_blank" rel="noopener">驱动安装1</a><br><a href="https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b" target="_blank" rel="noopener">驱动安装2</a><br><a href="http://blog.csdn.net/collonn/article/details/9107601" target="_blank" rel="noopener">驱动安装3</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.malin.xyz/2017/03/02/adb-backup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="马琳">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="马琳">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/02/adb-backup/" itemprop="url">Ubuntu adb backup</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-02T15:59:00+08:00">
-                2017-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/02/adb-backup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/02/adb-backup/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://forum.xda-developers.com/showthread.php?t=2011811" target="_blank" rel="noopener">xda</a></p>
-<p>1.DownLoad <a href="https://sourceforge.net/projects/adbextractor/" target="_blank" rel="noopener">adbextractor</a><br>android-backup-extractor-20160710-bin.zip</p>
-<p>2.unzip</p>
-<p>3.DownLoad JCR<br><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html" target="_blank" rel="noopener">Java7 JCR</a><br><a href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html" target="_blank" rel="noopener">Jave8 JCR</a></p>
-<p>解压后可以得到三个文件<br>local_policy.jar，US_export_policy.jar，README.txt，将两个jar文件拷贝到java的安装路径中。<br>例如：<code>/home/user1/jdk1.8.0/jre/lib/security</code><br><code>cp local_policy.jar US_export_policy.jar /home/user1/jdk1.8.0/jre/lib/security</code></p>
-<p>4.从手机中备份应用数据<br><code>adb backup -nosystem -noshared -apk -f com.android.demo.ab com.android.demo</code></p>
-<p>-nosystem表示不备份系统应用<br>-noshared表示不备份应用存储在SD中的数据<br>-apk表示备份应用APK安装包<br>-f 表示备份的.ab文件路径和文件名<br>最后是要备份应用的packageName</p>
-<p>执行后，手机上会提示备份数据，请输入密码，确认备份。</p>
-<p>5.到adbextractor解压后的文件夹android-backup-extractor-20160710-bin中。<br>将第4部得到的com.android.demo.ab文件拷贝到android-backup-extractor-20160710-bin文件夹中。<br><code>java -jar abe.jar unpack com.android.demo.ab com.android.demo.tar &lt;password&gt;</code></p>
-<p>6.解压tar文件<br>tar -xvf com.android.demo.tar</p>
-<p><a href="http://www.droidsec.cn/%E8%AF%A6%E8%A7%A3android-app-allowbackup%E9%85%8D%E7%BD%AE%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%A3%8E%E9%99%A9/" target="_blank" rel="noopener">1</a><br><a href="https://forum.xda-developers.com/showthread.php?t=2011811" target="_blank" rel="noopener">xda</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1928,7 +1912,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
