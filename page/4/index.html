@@ -313,21 +313,18 @@
       
         
           
-            <p>1.购买服务<br><a href="https://www.kvmla.com" target="_blank" rel="noopener">https://www.kvmla.com</a></p>
-<p>2.登录远程<br><code>ssh root@xx.xx.xx.xx</code></p>
-<p><code>xx.xx.xx.xx</code>为远程地址<br>kvmla中在如下位置可以找到配置清单。<br>客户中心 &gt; 我的客户中心 &gt; 我的产品与服务 &gt; 产品详细信息<br>（kvmla为主IP地址）</p>
-<p><code>Are you sure you want to continue connecting (yes/no)? yes</code></p>
-<p>3.查看python<br><code>python</code><br><code>python3</code></p>
-<p>4.安装pip<br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">安装说明</a></p>
-<p><code>cd /home/</code><br><code>wget https://bootstrap.pypa.io/get-pip.py</code><br><code>python get-pip.py</code></p>
-<p>查看是否安装成功<br><code>pip --version</code></p>
-<p>5.安装shadowsocks<br><code>pip install shadowsocks</code></p>
-<p>创建文件config.json,路径为<code>/etc/shadowsocks/config.json</code><br><code>cd /etc/</code><br><code>mkdir shadowsocks</code><br><code>vim config.json</code><br>添加如下内容<br>{<br>    “server”: “xx.xx.xx.xx”,<br>    “server_port”: xxxx,<br>    “local_port”: 1080,<br>    “password”: “xxx”,<br>    “timeout”: 60,<br>    “method”: “aes-256-cfb”<br>}</p>
-<p>6.启动shadowsocks<br><code>ssserver -c /etc/shadowsocks/config.json -d start</code></p>
-<p>如果想要停止<br><code>ssserver -d stop</code></p>
-<p><code>grep -rne &quot;Monniya&quot;</code><br>参考文章<br><a href="http://www.jianshu.com/p/28fd29e350b6" target="_blank" rel="noopener">搭建Shadowsocks服务器</a><br><a href="https://pip.pypa.io/en/stable/installing/" target="_blank" rel="noopener">pip</a></p>
-
-          
+          1.购买服务https://www.kvmla.com
+2.登录远程ssh root@xx.xx.xx.xx
+xx.xx.xx.xx为远程地址kvmla中在如下位置可以找到配置清单。客户中心 &gt; 我的客户中心 &gt; 我的产品与服务 &gt; 产品详细信息（kvmla为主IP地址）
+Are 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/11/vps/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -455,23 +452,17 @@
       
         
           
-            <p>1.下载smali,smali.jar,baksmali,baksmali.jar<br><a href="https://bitbucket.org/JesusFreke/smali/downloads" target="_blank" rel="noopener">https://bitbucket.org/JesusFreke/smali/downloads</a></p>
-<p>例如下载<br>smali-2.2b4.jar<br>baksmali-2.2b4.jar<br>smali<br>baksmali</p>
-<p>2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为baksmail.jar<br><code>mv smali-2.2b4.jar smali.jar</code><br><code>mv baksmali-2.2b4.jar baksmali.jar</code><br><code>chmod +x ./smali ./baksmali</code></p>
-<p>3.将四个文件拷贝到<code>/usr/local/bin/</code>文件夹下<br><code>sudo cp ./baksmali ./smali ./baksmali.jar ./smali.jar /usr/local/bin/</code></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/smail1.png" alt="smali"></p>
-<p>4.这里就可以使用smali,baksmali两个脚本了。<br><a href="https://github.com/JesusFreke/smali/wiki/SmaliBaksmali2.2" target="_blank" rel="noopener">SmaliBaksmali wiki</a></p>
-<p>将app.apk反编译为smali文件<br><code>baksmali disassemble app.apk -o app</code></p>
-<p>将smali文件编译成dex文件<br><code>smali assemble app -o classes.dex</code></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/smail2.png" alt="smali"></p>
-<p>5.试试反编译系统的app<br>a.从手机中将系统app拿出来<br><code>adb pull /system/app /home/malin/app/</code></p>
-<p>其他<br>apktool<br><a href="https://ibotpeaches.github.io/Apktool/" target="_blank" rel="noopener">官网</a></p>
-<p>dex2jar<br><a href="https://github.com/pxb1988/dex2jar" target="_blank" rel="noopener">官网</a></p>
-<p>JD-GUI<br><a href="http://jd.benow.ca/" target="_blank" rel="noopener">官网</a></p>
-<p>Apktool：解析apk包，获取资源文件和smail代码<br>dex2jar：将class.dex文件转换成为jar包<br>JD-GUI：查看jar包文件里的java代码</p>
-<p>参考文章：<br><a href="http://www.jianshu.com/p/7696c7e33eac" target="_blank" rel="noopener">Mac上简单的Android逆向</a></p>
-
-          
+          1.下载smali,smali.jar,baksmali,baksmali.jarhttps://bitbucket.org/JesusFreke/smali/downloads
+例如下载smali-2.2b4.jarbaksmali-2.2b4.jarsmalibaksmali
+2.将smali-
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/26/smali/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -599,9 +590,15 @@
       
         
           
-            <p>1.安装并启动一个的APK（例如app.apk这个文件）<br>首先需要将aapt配置到环境变量中，aapt的路径在<code>/sdk/build-tools/xxxxx/</code><br><br><img src="http://ogxkun013.bkt.clouddn.com/aapt2.png" alt=""><br><br>a.获取APK的包名<br><code>aapt dump badging app.apk | grep package | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world<br><br>b.得到APK的启动Activity类名<br><code>aapt dump badging app.apk | grep activity | awk &#39;{print $2}&#39; | sed s/name=//g | sed s/\&#39;//g</code><br><br>例如得到如下的结果<br>com.malin.world.activity.MainActivity<br><br>c.将APK文件安装到设备<br><code>adb install -r app.apk</code><br><br>d.使用adb命令启动应用<br><code>adb shell am start -n package/launchable-activity</code><br><br>例如：<br><br><code>adb shell am start -n com.malin.world/com.malin.world.activity.MainActivity</code><br><br>如下所示<br><img src="http://ogxkun013.bkt.clouddn.com/aapt3.png" alt=""><br><br>e.将上面的四个命令写成shell脚本(例如命名为<code>runApp.sh</code>文件)<br><img src="http://ogxkun013.bkt.clouddn.com/aaptRunApp.png" alt=""><br><br>d.给脚本授权可执行的权限。<br><code>chmod +x runapp.sh</code><br><br>f.可以将该脚本加入环境变量中。<br>这里可以参考这篇文章 <a href="http://www.malin.xyz/ma/lin/update/2016/11/17/adb.html">Linux,Unix下环境变量的配置</a><br><br>g.执行试试看。<br><img src="http://ogxkun013.bkt.clouddn.com/installRun.png" alt=""><br><br>该APK被安装到了手机上并启动了<br><br>参考文章列表<br><a href="http://stackoverflow.com/questions/2789462/find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web" target="_blank" rel="noopener">find-package-name-for-android-apps-to-use-intent-to-launch-market-app-from-web</a></p>
-
-          
+          1.安装并启动一个的APK（例如app.apk这个文件）首先需要将aapt配置到环境变量中，aapt的路径在/sdk/build-tools/xxxxx/a.获取APK的包名aapt dump badging app.apk | grep package | awk &#39;{print $2}&
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/22/shell/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -729,15 +726,18 @@
       
         
           
-            <p>1.编辑<code>/etc/hosts</code>文件<br><code>sudo vim /etc/hosts</code><br></p>
-<p>添加host，或者注释掉host<br></p>
-<p>2.重启网络<br><code>sudo /etc/init.d/networking restart</code><br><br>3.使用ping xxxxx测试修改后是否生效。<br></p>
-<p>4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br><br>使用如下的命令查找hosts.swp文件。<br><br><code>locate update</code><br><code>locate *.swp</code></p>
-<p>5.找到后删除这个文件<br><code>sudo rm -rf /xx/xx/hosts.swp</code></p>
-<p>6.清除DNS缓存<br><code>/etc/init.d/dns-clean</code></p>
-<p>7.重启DNS<br><code>/etc/init.d/dnsmasq restart</code></p>
-
-          
+          1.编辑/etc/hosts文件sudo vim /etc/hosts
+添加host，或者注释掉host
+2.重启网络sudo /etc/init.d/networking restart3.使用ping xxxxx测试修改后是否生效。
+4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/18/http/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -865,16 +865,17 @@
       
         
           
-            <p>1.httpie<br></p>
-<p><code>http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC</code><br></p>
-<p><code>http get https://api.weibo.com/2/trends/hourly.json &quot;access_token&quot;==&quot;2.004YppQEmwhOvBb3fbef84beEkKntC&quot;</code><br></p>
-<p><code>http post https://api.weibo.com/2/statuses/upload_url_text.json &quot;status&quot;==&quot;hello world&quot; &quot;url&quot;==&quot;http://www.baidu.com&quot;</code><br></p>
-<p><a href="http://www.jianshu.com/p/0736d508be44" target="_blank" rel="noopener">使用httpie进行接口测试</a><br></p>
-<p>2.httpstat<br></p>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5NjQ4MjYwMQ==&amp;mid=2664608594&amp;idx=1&amp;sn=410f48527e4910f1d44f5965ea628d74&amp;chksm=bdce88148ab901020d130d32fc5bb4ad4bd72c1ec767560b893d681009cfaef16ca9902a88d9&amp;mpshare=1&amp;scene=1&amp;srcid=1218XPDF0n0YNmWHlvrbuDx4&amp;pass_ticket=o7BDekJR2QaDbACYuZJJpI8dCs9%2BnyzdFKx%2B2qtah3ktUrKscsWvC6tJGZQFZ6r%2F#rd" target="_blank" rel="noopener">httpstat：一个检查网站性能的 curl 统计分析工具</a><br></p>
-<p><a href="https://github.com/reorx/httpstat" target="_blank" rel="noopener">httpstat GitHub主页</a><br></p>
-
-          
+          1.httpie
+http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC
+http get https://api.weibo.com/2/trends/hou
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/14/host/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1002,63 +1003,20 @@
       
         
           
-            <p>0.如果是手机的话，请先root了，再执行如下的命令<br></p>
-<p>1.adb shell<br></p>
-<p>2.su<br></p>
-<p>3.给手机<code>/data/local/</code>目录授权<br><br><code>chmod 777 /data/local/</code></p>
-<p>4.下载tcpdump<a href="http://www.strazzere.com/android/tcpdump" target="_blank" rel="noopener">点击下载</a></p>
-<p>5.将<code>tcpdump</code>推送到手机的<code>/data/local/</code>目录下<br><br><code>adb push tcpdump /data/local/tcpdump</code></p>
-<p>6.给tcpdump设置相关执行权限。<br><br><code>chmod 6755 /data/local/tcpdump</code></p>
-<p>7.启动tcpdump开始抓取<br><br><code>/data/local/tcpdump -p -vv -s 0 -w /sdcard/capture.pcap</code></p>
-<p>-p 将网络接口设置成非混杂模式<br><br>-vv 输出详细的报文信息<br><br>-s 设置捕获数据包的长度，从每个分组中读取最开始的snaplen个字节，而不是默认的68个字节，这里使用0，表示获取全部数据包。<br><br>-w 将监听到的数据包写入指定文件，不分析和打印数据包。<br></p>
-<p>8.从手机中将数据包拉到电脑目录中<br><br><code>adb pull /sdcard/capture.pcap /home/malin/nn</code><br></p>
-<p>批量解压<br><code>unzip -o &quot;*.zip&quot; -d ./out</code></p>
-<p>参考资料<br><br><a href="http://codingnow.cn/android/1633.html" target="_blank" rel="noopener">android使用tcpdump抓包</a><br><br><a href="http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html" target="_blank" rel="noopener">Wireshark基本介绍和学习TCP三次握手</a><br><br><a href="http://www.myhack58.com/Article/48/67/2013/39798.htm" target="_blank" rel="noopener">详解使用tcpdump、wireshark对Android应用程序进行抓包并分析</a><br><br><a href="http://mrpeak.cn/blog/tutorial-tcpdump/" target="_blank" rel="noopener">IOS,Android网络抓包教程之tcpdump</a><br><br><a href="http://www.cnblogs.com/findyou/p/3491035.html" target="_blank" rel="noopener">Android抓包方法(二)之Tcpdump命令+Wireshark</a><br><br><a href="http://baike.baidu.com/link?url=oxGJFuDFnX4vkKbKadGsBz-Ysu4rb5Zk_XHQywUF_FUwqTGhg0lT-Lb1PBg3yxhZJhc9bZ73Mc2eB1L2gK4b_D31pmrY8uGUg1yCrDqQtJO" target="_blank" rel="noopener">0x16进制</a><br><br><a href="http://stackoverflow.com/questions/12722157/not-able-to-run-executable-file-from-adb-shell" target="_blank" rel="noopener">not-able-to-run-executable-file-from-adb-shell</a><br><br><a href="http://blog.csdn.net/zrzlj/article/details/6076219/" target="_blank" rel="noopener">Wireshark和TcpDump抓包分析心得</a><br><br><a href="https://www.centos.bz/2014/07/linux-commandline-capture-packets-tshark-wireshark/" target="_blank" rel="noopener">Linux命令行抓包及包解析工具tshark(wireshark)使用实例解析</a><br><br><a href="https://wiki.ubuntu.com.cn/%E7%BD%91%E5%8D%A1" target="_blank" rel="noopener">网卡</a><br><br><a href="http://blog.csdn.net/hanyuxinting/article/details/5558095" target="_blank" rel="noopener">wireshark的使用（filter的用法</a></p>
-<p>ifconfig<br><br>enp3s0<br></p>
-<p><code>sudo tcpdump -i enp3s0</code><br></p>
-<p>可以用到的命令<br><br>实时打印当前http请求的url(包括域名)<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;tcp dst port 80&#39; -Y &#39;http.host and http.request.uri&#39; -T fields -e http.host -e http.request.uri -l | tr -d &#39;\t&#39;</code><br>下面介绍参数含义：</p>
-<p>-s 512 :只抓取前512个字节数据<br><br>-i enp3s0 :捕获enp3s0网卡(可以通过ifconfig获取，或者 <code>sudo lshw -class network | grep &quot;logical name&quot;</code>）<br><br>-n :禁止网络对象名称解析<br><br>-f ‘tcp dst port 80’ :只捕捉协议为tcp,目的端口为80的数据包<br><br>-Y ‘http.host and http.request.uri’ :过滤出http.host和http.request.uri<br><br>-T fields -e http.host -e http.request.uri :打印http.host和http.request.uri<br><br>-l ：输出到标准输出<br></p>
-<p>对数据进行过滤<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.46 || ip src 10.31.4.39 &amp;&amp; tcp port 46869 || tcp port 8888&#39;</code><br></p>
-<p><code>ip.src == 10.31.4.46 &amp;&amp; ip.dst == 10.31.4.39 &amp;&amp; tcp.port eq 46027  ||  tcp.port eq 46030 &amp;&amp; http</code><br></p>
-<p><code>tcp &amp;&amp; tcp.port eq 1084 &amp;&amp; ip.src == 10.110.18.48</code><br></p>
-<p>过滤登录接口<br><br>/home/malin/malinoo/bili.pcapng  位置196<br><br><code>ip.src == 10.31.4.46 || ip.src == 10.31.4.39&amp;&amp; tcp.port eq 46869 || tcp.port eq 8888</code></p>
-<p>点击想要查看的地址，右键–&gt;追踪流–&gt;TCP流。可以查看相关的网络信息。<br><br>这个功能我比较喜欢，可以查看此次http，client端请求和server端返回的数据<br></p>
-<p><code>sudo tcpdump -i enp3s0 -AAl src 10.31.4.46 or dst 10.31.4.39</code><br></p>
-<p>过滤URL<br><br><code>ip.src == 10.31.4.46 &amp;&amp; http contains &quot;panda&quot; &amp;&amp; http</code><br><br><code>ip.src == 10.31.4.46 &amp;&amp; http contains &quot;panda&quot; &amp;&amp; http &amp;&amp; http.request.method == &quot;GET&quot; || http.request.method==&quot;POST&quot; &amp;&amp; http.request.uri  contains &quot;panda&quot;</code><br></p>
-<p>contains”操作符允许一个过滤器搜索一串字符，其形式为字符串，或者字节，或者字节组。例如在搜索一个HTTP URL地址，可以使用下面的过滤器：<br><br>http contains “<a href="http://www.wireshark.org”；" target="_blank" rel="noopener">http://www.wireshark.org”；</a> <br><br>“contains”操作符不能被用于原子型的字段，比如数字和ip地址。<br></p>
-<p>http.host==6san.com<br><br>http.host contains 6san.com<br><br>//过滤经过指定域名的http数据包，这里的host值不一定是请求中的域名<br></p>
-<p>http.response.code==302<br><br>//过滤http响应状态码为302的数据包<br></p>
-<p>http.response==1<br><br>//过滤所有的http响应包<br><br>http.request==1<br><br>//过滤所有的http请求，貌似也可以使用http.request<br></p>
-<p>http.request.method==POST<br><br>//wireshark过滤所有请求方式为POST的http请求包，注意POST为大写<br></p>
-<p>http.cookie contains guid<br><br>//过滤含有指定cookie的http数据包<br></p>
-<p>http.request.uri==”/online/setpoint”<br><br>//过滤请求的uri，取值是域名后的部分<br></p>
-<p>http.request.full_uri==” <a href="http://task.browser.360.cn/online/setpoint”" target="_blank" rel="noopener">http://task.browser.360.cn/online/setpoint”</a><br><br>//过滤含域名的整个url则需要使用http.request.full_uri<br></p>
-<p>http.server contains “nginx”<br><br>//过滤http头中server字段含有nginx字符的数据包<br></p>
-<p>http.content_type == “text/html”<br><br>//过滤content_type是text/html的http响应、post包，即根据文件类型过滤http数据包<br></p>
-<p>http.content_encoding == “gzip”<br><br>//过滤content_encoding是gzip的http包<br></p>
-<p>http.transfer_encoding == “chunked”<br><br>//根据transfer_encoding过滤<br></p>
-<p>http.content_length == 279<br><br>http.content_length_header == “279”<br><br>//根据content_length的数值过滤<br></p>
-<p>http.server<br><br>//过滤所有含有http头中含有server字段的数据包<br></p>
-<p>http.request.version == “HTTP/1.1”<br><br>//过滤HTTP/1.1版本的http包，包括请求和响应<br></p>
-<p>http.response.phrase == “OK”<br><br>//过滤http响应中的phrase<br></p>
-<p>sslkeylog</p>
-<p>ip.src == 10.31.4.62 &amp;&amp; ip.dst == 10.31.4.90</p>
-<p>ip.src == 10.31.4.116 &amp;&amp; http contains “panda” &amp;&amp; http &amp;&amp; http.request.method == “GET” || http.request.method==”POST” &amp;&amp; http.request.uri  contains “panda”<br>ip.src == 10.31.4.116 &amp;&amp; http &amp;&amp; http.request.method == “GET” || http.request.method==”POST” &amp;&amp; http.request.uri  contains “getFollowLiveCount”</p>
-<p>sudo tar zxvf jdk-8u112-linux-x64.tar.gz -C /usr/lib/jvm</p>
-<p>tshark -s 512 -i enp3s0 -n -f ‘ip src 10.31.4.116 &amp;&amp; ip src 10.31.4.90 &amp;&amp; tcp port 46869 || tcp port 8888’</p>
-<p><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.116 &amp;&amp; ip dst 10.31.4.90&#39; -Y &#39;http.request.uri contains &quot;panda&quot;&#39; -T fields -e http.request.uri -l | tr -d &#39;\t&#39;</code></p>
-<p>实时打印当前http请求的url(包括域名)<br><br><code>tshark -s 512 -i enp3s0 -n -f &#39;ip src 10.31.4.116 &amp;&amp; ip dst 10.31.4.90&#39; -Y &#39;http.host and http.request.uri&#39; -T fields -e http.host -e http.request.uri -l | tr -d &#39;\t&#39;</code></p>
-<p>git status</p>
-<p>耗费了 2.92 秒以枚举未跟踪的文件。’status -uno’ 也许能提高速度，<br>但您需要小心不要忘了添加新文件（参见 ‘git help status’）。<br>修改尚未加入提交（使用 “git add” 和/或 “git commit -a”）<br>git status -uno</p>
-<p>ip.src == 10.31.4.62 &amp;&amp; ip.dst == 10.31.146.12</p>
-<p>ip.src == 10.31.146.12 &amp;&amp; ip.dst == 10.31.4.116</p>
-<p>tshark -s 512 -i enp3s0 -n -f ‘ip src 10.31.146.12 &amp;&amp; ip dst 10.31.4.116’</p>
-<p>ip.src == 10.31.146.12 &amp;&amp; ip.dst == 10.31.4.116 &amp;&amp; tcp.flags.syn == 0x02</p>
-<p>ip.src == 101.201.233.158 &amp;&amp; ip.dst == 10.31.4.116 &amp;&amp; tcp</p>
-<p>ip.dst == 10.31.4.116</p>
-<p>sed -i ‘42s/.*/private static final String TAG = “IWantToTestHotFix”;/‘ app/src/main/java/tinker/sample/android/app/MainActivity.java</p>
-
-          
+          0.如果是手机的话，请先root了，再执行如下的命令
+1.adb shell
+2.su
+3.给手机/data/local/目录授权chmod 777 /data/local/
+4.下载tcpdump点击下载
+5.将tcpdump推送到手机的/data/local/目录下adb push tcpdum
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/06/unzip/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1186,13 +1144,16 @@
       
         
           
-            <p>在工作中，经常遇到设计师发来的UI图片压缩包（MacOX上压缩的），产品给的文档（Windows下压缩的）。解压出来，都是乱码。<br><br>解决方案：<br><br>1.安装<code>p7zip</code>，<code>convmv</code><br><code>sudo apt-get install p7zip convmv</code><br></p>
-<p>安装完之后，就可以用7za和convmv两个命令完成解压缩任务。<br></p>
-<p>2.解压文件<br><br><code>LANG=C 7za x your-zip-file.zip</code><br><br>用于解压缩，而LANG=C表示以US-ASCII这样的编码输出文件名，如果没有这个语言设置，它同样会输出乱码，只不过是UTF8格式的乱码(convmv会忽略这样的乱码)。<br></p>
-<p>3.格式转换<br><br><code>convmv -f GBK -t utf8 --notest -r .</code><br><br>将GBK编码的文件名转化为UTF8编码，-r表示递归访问目录，即对当前目录中所有文件进行转换。<br></p>
-<p>4.如果嫌这样很麻烦，可以修改成shell脚本。<br></p>
-
-          
+          在工作中，经常遇到设计师发来的UI图片压缩包（MacOX上压缩的），产品给的文档（Windows下压缩的）。解压出来，都是乱码。解决方案：1.安装p7zip，convmvsudo apt-get install p7zip convmv
+安装完之后，就可以用7za和convmv两个命令完成解压缩任务
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/04/tcp/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1320,61 +1281,17 @@
       
         
           
-            <p>0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br></p>
-<blockquote>
-<p>e.g. <code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br><br>You can download the gradle from this website<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">https://services.gradle.org/distributions</a><br><br><br><br>add <code>adb</code> ,<code>gradle</code> on your path<br><br>You can see this article <a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="noopener">How to adb into your path</a><br><br><br><br><br>You can see the <a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="noopener">Tinker wiki</a>.<br><br><a href="https://github.com/Tencent/tinker/wiki" target="_blank" rel="noopener">https://github.com/Tencent/tinker/wiki</a><br></p>
-</blockquote>
-<p>1.DownLoad the source code of <a href="https://github.com/Tencent/tinker" target="_blank" rel="noopener">tinker</a> from github <br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
-<p>2.Open the Sample project<br><br><code>cd tinker/tinker-sample-android</code></p>
-<p>3.DownLoad the dependencies of sample,It may take a long time when you run firstly,you can drink a cup of coffee.<br><br><code>gradle clean</code></p>
-<p>4.Buid debug apk<br><br><code>gradle assembleDebug</code></p>
-<p>5.Install the debug base apk into your phone or emulator(e.g. <a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="noopener">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
-<p>6.Start the debug base apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
-<p>7.Change some codes in order to fix bugs<br></p>
-<blockquote>
-<p>TODO:// Coding in order to fix bug1<br><br>TODO:// Coding in order to fix bug2<br></p>
-</blockquote>
-<p>e.g.Change the Log TAG of MainActivity<br></p>
-<p>one: get row of TAG<br><br><code>grep -n &quot;TAG&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d &quot;:&quot; -f 1</code></p>
-<p>two: Replace the TAG to your tag eg:TestTinker<br><br><code>sed -i &#39;42s/.*/private static final String TAG = &quot;TestTinker&quot;;/&#39; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
-<p>three: confirm the change successfully<br><br><code>grep -n &quot;TestTinker&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
-<p>8.Get the base debug apk fileName<br><br><code>find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk &#39;{print $9}&#39; | cut -d  &quot;/&quot; -f 4</code></p>
-<p>9.Get “tinkerOldApkPath” first occurrence of rows which from tinker-sample-android/app/build.gradle<br><br><code>grep -n &quot;tinkerOldApkPath&quot; app/build.gradle | head -n 1 | cut -d  &quot;:&quot; -f 1</code></p>
-<p>10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br></p>
-<blockquote>
-<p>Replace the line numbers which from number9 and apkName which from number8</p>
-</blockquote>
-<p>e.g. <br><br><img src="http://ogxkun013.bkt.clouddn.com/tinker10.png" alt="tinker10"></p>
-<p>number8 app-debug-1130-12-54-43.apk<br><br>number9 147<br></p>
-<p>thus,you can get the command.<br></p>
-<blockquote>
-<p>sed -i ‘number8s/.*/tinkerOldApkPath=”${bakPath}\/number9”/‘ app/build.gradle<br></p>
-</blockquote>
-<p>e.g.<br><br><code>sed -i &#39;147s/.*/tinkerOldApkPath=&quot;${bakPath}\/app-debug-1130-12-54-43.apk&quot;/&#39; app/build.gradle</code><br></p>
-<p>11.confirm the number11 do successfully</p>
-<blockquote>
-<p>grep -n “number8” app/build.gradle<br></p>
-</blockquote>
-<p>e.g.<br><br><code>grep -n &quot;app-debug-1130-12-54-43.apk&quot; app/build.gradle</code></p>
-<p>12.Build in order to the patch apk<br><br><code>gradle tinkerPatchDebug</code></p>
-<p>13.Push patch apk into phone or emulator<br><br><code>adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/</code></p>
-<p>14.Click LOADPATH Button on the Sample App<br><br>If PATH load success,the you can see the Toast which is <code>patch success,please restart process</code>.<br></p>
-<p>15.kill the running apk or restart the running apk<br><br><code>adb shell am force-stop tinker.sample.android</code></p>
-<p>or<br></p>
-<p>If you phone is root,you can use adb shell kill -9 pid<br><br>./kill.sh<br></p>
-<p>the content of kill.sh<br></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/kill2.png" alt="kill.sh"></p>
-<p>a.<code>vim kill.sh &amp;&amp; chmod 777 ./kill.sh</code><br><br>b.input content of kill.sh<br><br>c.then <code>./kill.sh</code></p>
-<p>16.Start the apk again<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
-<p>17.Click showinfo in order to confirm the patch load successfully or not.</p>
-<p><code>adb logcat | grep TestTinker</code><br></p>
-<p>If you see log which tag is “TestTinker”,Congratulate to you!<br></p>
-<p>18.Change some codes in order to hot fix bugs from number 8<br></p>
-<blockquote>
-<p>TODO:// Coding in order to fix bug1<br><br>TODO:// Coding in order to fix bug2<br></p>
-</blockquote>
+          0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1
 
-          
+e.g. 2.14.1 3.1 3.2 3.2.1You can download the gradle from this websit
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/29/tinker/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1502,37 +1419,17 @@
       
         
           
-            <p>0.<br>首先确保你电脑配置了<code>gradle</code>环境变量，并且grade的版本大于等于2.14.1<br><br>例如<code>2.14.1</code> <code>3.1</code> <code>3.2</code> <code>3.2.1</code><br></p>
-<p>可以使用这个命令查看gradle版本号<br><br><code>gradle --version</code><br></p>
-<p>Gradle可以从这个网站下载<br><br><a href="https://services.gradle.org/distributions" target="_blank" rel="noopener">https://services.gradle.org/distributions</a></p>
-<p>确保你配置了<code>adb</code>环境变量。如果没有配置，可以参考这篇文章<a href="http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html" target="_blank" rel="noopener">Linux,Unix下环境变量的配置</a><br><br>可以使用<code>adb --version</code>查看是否配置了<code>adb</code>环境变量。</p>
-<p>本文所有命令均在Ubuntu上调试的，Mac OS上应该都有，Windows上开发的同学可以自行转换为相应的命令<br><br>本文参考Tinker的官方wiki来写的。<br><br><a href="https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97" target="_blank" rel="noopener">https://github.com/Tencent/tinker/wiki</a><br></p>
-<p>1.从github上下载<a href="https://github.com/Tencent/tinker" target="_blank" rel="noopener">tinker</a>的源码<br><br><code>git clone git@github.com:Tencent/tinker.git</code></p>
-<p>2.切换到tinker-sample-android目录下<br><br><code>cd tinker/tinker-sample-android</code></p>
-<p>3.下载依赖，第一次运行可能需要很长时间，因为需要下载一些依赖库.<br><br><code>gradle clean</code></p>
-<p>4.编译生成Debug版本的Apk<br><br><code>gradle assembleDebug</code></p>
-<p>5.将编译生成的apk安装到手机或者模拟器中(<a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://www.bluestacks.cn/bdsem_anmnq.html" target="_blank" rel="noopener">Bluestacks</a>)<br><br><code>adb uninstall tinker.sample.android &amp;&amp; adb install app/build/bakApk/*.apk</code></p>
-<p>6.启动安装的apk<br><br><code>adb shell am start tinker.sample.android/.app.MainActivity</code></p>
-<p>7.修改代码，这里演示修改MainActivity中的TAG,来验证热修复<br><br>7.1: 得到MainActivity中TAG变量的行数<br><br><code>grep -n &quot;TAG&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d &quot;:&quot; -f 1</code></p>
-<p>7.2: 将TAG替换为新的值例如:IWantToTestHotFix<br><br>  注意：下一行中的<code>42</code>为上一条命令中获取的<code>MainActivity中TAG变量的行数</code>，<code>IWantToTestHotFix</code>为我们要替换后的TAG值。<br><br><code>sed -i &#39;42s/.*/private static final String TAG = &quot;IWantToTestHotFix&quot;;/&#39; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
-<p>7.3: 确认一下替换是否成功，可以通过查询替换后TAG的值和所在的行数<br><br><code>grep -n &quot;IWantToTestHotFix&quot; app/src/main/java/tinker/sample/android/app/MainActivity.java</code></p>
-<p>8.获取编译生成的Debug版本APK的名字<br><br><code>find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk &#39;{print $9}&#39; | cut -d  &quot;/&quot; -f 4</code></p>
-<p>9.获取”tinkerOldApkPath”字符串在tinker-sample-android/app/build.gradle文件中的行数<br><br><code>grep -n &quot;tinkerOldApkPath&quot; app/build.gradle | head -n 1 | cut -d  &quot;:&quot; -f 1</code></p>
-<p>10.用第8步获得的APK的名字，替换到app/build.gradle中tinkerOldApkPath的值<br></p>
-<p>例如. <br><br>第8步得到的值为: <code>app-debug-1130-12-54-43.apk</code><br><br>第9步得到的值为: <code>147</code><br></p>
-<p>那么使用如下的命令直接在app/build.gradle文件中，将第<code>147</code>行将tinkerOldApkPath替换为<code>app-debug-1130-12-54-43.apk</code>.<br></p>
-<p>e.g.<br><br><code>sed -i &#39;147s/.*/tinkerOldApkPath=&quot;${bakPath}\/app-debug-1130-12-54-43.apk&quot;/&#39; app/build.gradle</code><br></p>
-<p>实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值，将number9替换为第9步得到的值。<br><br>然后执行这条命令即可完成替换工作。<br><br><code>sed -i &#39;number8s/.*/tinkerOldApkPath=&quot;${bakPath}\/number9&quot;/&#39; app/build.gradle</code><br></p>
-<p>11.确认是否替换成功<br><br>例如.<br><br><code>grep -n &quot;app-debug-1130-12-54-43.apk&quot; app/build.gradle</code></p>
-<p>实际使用时，你要做的就是将下面命令中number8替换为第8步得到的值。<br><br>然后执行这条命令即，如果替换成功你将看到替换的字符串的名字和所在的行数。<br><br><code>grep -n &quot;number8&quot; app/build.gradle</code><br></p>
-<p>12.编译生成补丁包<br><br><code>gradle tinkerPatchDebug</code></p>
-<p>13.将补丁包APK文件推送到手机的sdcard根目录中<br><br><code>adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/</code></p>
-<p>14.点击LOADPATH Button，加载补丁，需要等上3到4秒，<br><br>如果加载成功，你将可以看到一个Toast <code>patch success,please restart process</code>.<br></p>
-<p>15.然后，就可以锁屏或者杀死该应用进程，你可以点击KILL SELF。<br><br>可以使用如下的命令完成<br><br><code>adb shell am force-stop tinker.sample.android &amp;&amp; adb shell am start tinker.sample.android/.app.MainActivity</code></p>
-<p>16.点击应用上的<code>SHOW INFO</code>按钮确认补丁是否加载成功，如果成功,可以看到.<br><br>弹出的Dialog的第一行显示[path is loaded]</p>
-<p>同时，你可以查看自己修改的TAG是否生效。使用如下的命令过滤Log的TAG即可。<br><br>这里的TAG就是第7步修改的TAG。<br><br><code>adb logcat | grep IWantToTestHotFix</code><br><br>如果执行上个命令看到了TAG为<code>IWantToTestHotFix</code>的Log，祝贺你热修复成功了<br></p>
-
-          
+          0.首先确保你电脑配置了gradle环境变量，并且grade的版本大于等于2.14.1例如2.14.1 3.1 3.2 3.2.1
+可以使用这个命令查看gradle版本号gradle --version
+Gradle可以从这个网站下载https://services.gradle.org/distr
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/29/tinker-cn/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1660,43 +1557,18 @@
       
         
           
-            <p>这里配置到当前的用户下<br></p>
-<p>1.编辑配置文件<br><br>命令如下<br><br><code>vim ~/.bashrc</code></p>
-<p>2.进入后，在英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以Android SDK Tool为例<br></p>
-<p><code>export ANDROID_HOME=/home/malin/sdk</code><br><br><code>export PATH=$PATH:$ANDROID_HOME/platform-tools</code><br><br><code>export PATH=$PATH:$ANDROID_HOME/tools</code><br></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/huanjing.png" alt="environment"></p>
-<blockquote>
-<p>说明:<br><br>这里/home/malin/sdk 是我电脑上Android SDK的路径。请替换为你自己电脑上Android SDK的路径。<br><br>便捷的方法是，使用cd命令切换到sdk的文件夹下。<br><br>例如：<code>cd /home/malin/sdk</code>。然后使用pwd命令查看当前的路径<br></p>
-</blockquote>
-<p>插入如上的文本后，就是保存了,步骤如下所示:<br><br>a.按 Esc键（键盘的左上角）<br><br>b.英文输入法下输入 :wq<br><br>c.输入回车<br><br>这样紫就保存了.<br></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/e2.png" alt="environment2"></p>
-<p>3.使配置文件生效<br><br>使用如下的命令<br><br><code>source ~/.bashrc</code></p>
-<p>4.测试是否生效<br><br><code>adb version</code></p>
-<p>5.获取手机IP地址：<br><br>将 Android 设备与要运行 adb 的电脑连接到同一个局域网，比如连到同一个 WiFi。<br><br>将设备与电脑通过 USB 线连接。<br><br>应确保连接成功（可运行 adb devices 看是否能列出该设备）。<br><br>让设备在 5555 端口监听 TCP/IP 连接：<br><br>adb tcpip 5555<br><br>断开 USB 连接。<br><br>找到设备的 IP 地址。<br><br>一般能在「设置」-「关于手机」-「状态信息」-「IP地址」找到。<br><br>通过 IP 地址连接设备。<br></p>
-<p>或者使用如下的脚本获取手机的IP地址。<br><br><code>adb shell ifconfig | grep &quot;inet addr&quot; | grep &quot;Bcast&quot; | cut -d &quot;:&quot; -f 2 | cut -d &quot; &quot; -f 1</code><br></p>
-<p>adb connect <device-ip-address><br><br>这里的 <device-ip-address> 就是上一步中找到的设备 IP 地址。<br><br>确认连接状态。<br><br>adb devices<br></device-ip-address></device-ip-address></p>
-<p><img src="http://ogxkun013.bkt.clouddn.com/adb_connect.png" alt="adb_connect"></p>
-<p>6.将/data/data/packagename/database/a.db拉到电脑上，应用为debugable=true</p>
-<ol>
-<li><p><code>adb exec-out run-as tv.panda.live.broadcast cat databases/panda_net_server.db &gt; ./panda_net_server.db</code></p>
-</li>
-<li><p><code>adb exec-out run-as tv.panda.live.broadcast cat files/cover/cover.jpg &gt; ./cover.jpg</code></p>
-</li>
-<li><p><code>adb exec-out run-as tv.panda.live.broadcast tar c databases/ &gt; databases.tar</code>,<code>tar -xvf databases.tar</code></p>
-</li>
-<li><p><a href="https://stackoverflow.com/a/18472135/3326683" target="_blank" rel="noopener">adb exec-out</a></p>
-</li>
-</ol>
-<p><code>adb shell</code></p>
-<p><code>run-as tv.panda.live.broadcast</code></p>
-<p><code>cat files/cover/cover.jpg &gt; /sdcard/cover.jpg</code></p>
-<p><code>exit</code></p>
-<p><code>exit</code></p>
-<p><code>adb pull /sdcard/cover.jpg /home/malin/nexus6p/myconfig/backup</code></p>
-<p><code>pwd</code></p>
-<p><code>w3m path</code></p>
-
-          
+          这里配置到当前的用户下
+1.编辑配置文件命令如下vim ~/.bashrc
+2.进入后，在英文输入法下，输入i(表示插入),在配置文件的最后，添加如下配置，这里以Android SDK Tool为例
+export ANDROID_HOME=/home/malin/sdkexport PATH=$PA
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/17/adb/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
