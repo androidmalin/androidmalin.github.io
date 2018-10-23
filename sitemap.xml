@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.malin.xyz/2017/12/07/chrome-android/</loc>
+    
+    <lastmod>2018-10-22T10:00:55.367Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.malin.xyz/2018/09/12/busybox/</loc>
     
     <lastmod>2018-10-22T10:00:24.367Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://www.malin.xyz/2018/06/15/wechat-db/</loc>
     
     <lastmod>2018-10-22T09:54:01.569Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.malin.xyz/2018/10/17/android-video/</loc>
-    
-    <lastmod>2018-10-17T08:56:42.155Z</lastmod>
     
   </url>
   
@@ -194,13 +194,6 @@
     <loc>https://www.malin.xyz/2017/11/28/rename-android-module-source-name/</loc>
     
     <lastmod>2017-12-09T09:57:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.malin.xyz/2017/12/07/chrome-android/</loc>
-    
-    <lastmod>2017-12-08T06:16:41.000Z</lastmod>
     
   </url>
   
