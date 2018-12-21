@@ -4,6 +4,38 @@
 
     
   <url>
+    <loc>https://www.malin.xyz/2018/12/21/reactjs/</loc>
+    <lastmod>2018-12-21T07:06:51.956Z</lastmod>
+    <data>
+        <display>
+        <title>Mac下React环境配置</title>
+        <pubTime>2018-12-21T02:45:00.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.malin.xyz/2018/06/08/magisk/</loc>
+    <lastmod>2018-12-12T16:06:14.429Z</lastmod>
+    <data>
+        <display>
+        <title>Magisk</title>
+        <pubTime>2018-06-08T12:13:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.malin.xyz/2018/11/23/flutter/</loc>
     <lastmod>2018-12-04T09:40:19.640Z</lastmod>
     <data>
@@ -150,21 +182,6 @@
         
         <tag>android-tools</tag>
          
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.malin.xyz/2018/06/08/magisk/</loc>
-    <lastmod>2018-06-08T12:13:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Magisk</title>
-        <pubTime>2018-06-08T12:13:00.000Z</pubTime>
-        
          
            
         </display>
