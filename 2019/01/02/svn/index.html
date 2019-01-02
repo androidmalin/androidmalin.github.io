@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. 下载远程仓库项目svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.com/malin/oktest 3. 将">
+<meta name="description" content="1. 下载远程仓库项目3分钟练成SVN命令高手：SVN常用命令 svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.">
 <meta name="keywords" content="svn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="svn">
 <meta property="og:url" content="https://www.malin.xyz/2019/01/02/svn/index.html">
 <meta property="og:site_name" content="马琳">
-<meta property="og:description" content="1. 下载远程仓库项目svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.com/malin/oktest 3. 将">
+<meta property="og:description" content="1. 下载远程仓库项目3分钟练成SVN命令高手：SVN常用命令 svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-02T13:36:22.226Z">
+<meta property="og:updated_time" content="2019-01-02T13:48:41.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn">
-<meta name="twitter:description" content="1. 下载远程仓库项目svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.com/malin/oktest 3. 将">
+<meta name="twitter:description" content="1. 下载远程仓库项目3分钟练成SVN命令高手：SVN常用命令 svn checkout remote-url  local-dir  --username==xxx --password==xxx例如svn checkout svn://svnbucket.com/malin/oktest/ 2. 列出远程项目的结构svn list url例如:svn list svn://svnbucket.">
 
 
 
@@ -310,7 +310,8 @@
       
 
       
-        <h4 id="1-下载远程仓库项目"><a href="#1-下载远程仓库项目" class="headerlink" title="1. 下载远程仓库项目"></a>1. 下载远程仓库项目</h4><p><code>svn checkout remote-url  local-dir  --username==xxx --password==xxx</code><br>例如<br><code>svn checkout svn://svnbucket.com/malin/oktest/</code></p>
+        <h4 id="1-下载远程仓库项目"><a href="#1-下载远程仓库项目" class="headerlink" title="1. 下载远程仓库项目"></a>1. 下载远程仓库项目</h4><p><a href="https://segmentfault.com/a/1190000014549695" target="_blank" rel="noopener">3分钟练成SVN命令高手：SVN常用命令</a></p>
+<p><code>svn checkout remote-url  local-dir  --username==xxx --password==xxx</code><br>例如<br><code>svn checkout svn://svnbucket.com/malin/oktest/</code></p>
 <h4 id="2-列出远程项目的结构"><a href="#2-列出远程项目的结构" class="headerlink" title="2. 列出远程项目的结构"></a>2. 列出远程项目的结构</h4><p><code>svn list url</code><br>例如:<br><code>svn list svn://svnbucket.com/malin/oktest</code></p>
 <h4 id="3-将本地项目提交到远程服务器"><a href="#3-将本地项目提交到远程服务器" class="headerlink" title="3. 将本地项目提交到远程服务器"></a>3. 将本地项目提交到远程服务器</h4><p><code>svn import project_dir http://192.168.1.2/svn/remote_dir -m &quot;必填, 不填此命令执行不会成功.&quot;</code><br><code>svn import /Users/malin/minsheng/SvnProject svn://svnbucket.com/malin/oktest/branches/SvnProject -m &quot;init project commit&quot;</code><br><code>svn import /Users/malin/malin_review/svn/oktest2/ svn://svnbucket.com/malin/oktest2/branches/oktest2 -m &quot;init project commit&quot;</code></p>
 <h4 id="4-忽略已经提交的配置文件"><a href="#4-忽略已经提交的配置文件" class="headerlink" title="4. 忽略已经提交的配置文件,"></a>4. 忽略已经提交的配置文件,</h4><h1 id="若想创建了一个文件夹，并且把它加入版本控制，但忽略文件夹中的所有文件的内容"><a href="#若想创建了一个文件夹，并且把它加入版本控制，但忽略文件夹中的所有文件的内容" class="headerlink" title="若想创建了一个文件夹，并且把它加入版本控制，但忽略文件夹中的所有文件的内容"></a>若想创建了一个文件夹，并且把它加入版本控制，但忽略文件夹中的所有文件的内容</h1><p><code>svn mkdir spool</code><br><code>svn propset svn:ignore &#39;*&#39; spool</code><br><code>svn ci -m &#39;Adding &quot;spool&quot; and ignoring its contents.&#39;</code></p>
