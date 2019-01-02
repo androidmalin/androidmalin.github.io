@@ -4,8 +4,57 @@
 
     
   <url>
+    <loc>https://www.malin.xyz/2019/01/02/svn/</loc>
+    <lastmod>2019-01-02T13:26:41.784Z</lastmod>
+    <data>
+        <display>
+        <title>svn</title>
+        <pubTime>2019-01-02T10:38:00.000Z</pubTime>
+        
+        <tag>svn</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.malin.xyz/2018/12/28/android-studio/</loc>
+    <lastmod>2018-12-28T13:00:43.647Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio Config</title>
+        <pubTime>2018-12-28T12:58:00.000Z</pubTime>
+        
+        <tag>android studio</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.malin.xyz/2016/11/17/adb0/</loc>
+    <lastmod>2018-12-28T12:58:05.179Z</lastmod>
+    <data>
+        <display>
+        <title>Linux,Unix下环境变量的配置</title>
+        <pubTime>2016-11-17T12:14:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.malin.xyz/2018/12/21/reactjs/</loc>
-    <lastmod>2018-12-21T07:08:09.012Z</lastmod>
+    <lastmod>2018-12-21T07:47:45.719Z</lastmod>
     <data>
         <display>
         <title>Mac下React环境配置</title>
