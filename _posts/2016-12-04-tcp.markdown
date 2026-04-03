@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Ubuntu下解压乱码的问题"
+date: 2016-12-04 17:24:00 +0800
+tags: []
+---
+
+在工作中，经常遇到设计师发来的UI图片压缩包（MacOX上压缩的），产品给的文档（Windows下压缩的）。解压出来，都是乱码。<br/>
+解决方案：<br/>
+1.安装`p7zip`，`convmv`
+`sudo apt-get install p7zip convmv`<br/>
+
+安装完之后，就可以用7za和convmv两个命令完成解压缩任务。<br/>
+
+2.解压文件<br/>
+`LANG=C 7za x your-zip-file.zip`<br/>
+用于解压缩，而LANG=C表示以US-ASCII这样的编码输出文件名，如果没有这个语言设置，它同样会输出乱码，只不过是UTF8格式的乱码(convmv会忽略这样的乱码)。<br/>
+
+3.格式转换<br/>
+`convmv -f GBK -t utf8 --notest -r .`<br/>
+将GBK编码的文件名转化为UTF8编码，-r表示递归访问目录，即对当前目录中所有文件进行转换。<br/>
+
+4.如果嫌这样很麻烦，可以修改成shell脚本。<br/>

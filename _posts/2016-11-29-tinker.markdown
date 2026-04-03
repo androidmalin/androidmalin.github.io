@@ -1,0 +1,129 @@
+---
+layout: post
+title: "Tinker"
+date: 2016-11-29 12:55:00 +0800
+tags: []
+---
+
+0.Check your version of gradle,Ensure the version of gradle greater than 2.14.1<br/>
+
+>e.g. `2.14.1` `3.1` `3.2` `3.2.1`<br/>
+You can download the gradle from this website<br/>
+[https://services.gradle.org/distributions](https://services.gradle.org/distributions)<br/>
+<br/>
+add `adb` ,`gradle` on your path<br/>
+You can see this article [How to adb into your path](http://www.goodmalin.com/ma/lin/update/2016/11/17/adb.html)
+<br/>
+<br/>
+You can see the [Tinker wiki](https://github.com/Tencent/tinker/wiki).<br/>
+[https://github.com/Tencent/tinker/wiki](https://github.com/Tencent/tinker/wiki)<br/>
+
+
+1.DownLoad the source code of [tinker](https://github.com/Tencent/tinker) from github <br/>
+`git clone git@github.com:Tencent/tinker.git`
+
+2.Open the Sample project<br/>
+`cd tinker/tinker-sample-android`
+
+3.DownLoad the dependencies of sample,It may take a long time when you run firstly,you can drink a cup of coffee.<br/>
+`gradle clean`
+
+4.Buid debug apk<br/>
+`gradle assembleDebug`
+
+5.Install the debug base apk into your phone or emulator(e.g. [Genymotion](https://www.genymotion.com/),[Bluestacks](http://www.bluestacks.cn/bdsem_anmnq.html))<br/>
+`adb uninstall tinker.sample.android && adb install app/build/bakApk/*.apk`
+
+6.Start the debug base apk<br/>
+`adb shell am start tinker.sample.android/.app.MainActivity`
+
+7.Change some codes in order to fix bugs<br/>
+
+>TODO:// Coding in order to fix bug1<br/>
+>TODO:// Coding in order to fix bug2<br/>
+
+e.g.Change the Log TAG of MainActivity<br/>
+
+one: get row of TAG<br/>
+`grep -n "TAG" app/src/main/java/tinker/sample/android/app/MainActivity.java | head -n 1 | cut -d ":" -f 1`
+
+two: Replace the TAG to your tag eg:TestTinker<br/>
+`sed -i '42s/.*/private static final String TAG = "TestTinker";/' app/src/main/java/tinker/sample/android/app/MainActivity.java`
+
+three: confirm the change successfully<br/>
+`grep -n "TestTinker" app/src/main/java/tinker/sample/android/app/MainActivity.java`
+
+
+8.Get the base debug apk fileName<br/>
+`find app/build/bakApk/ -type f -name *.apk -print | xargs ls -ltr | head -n 1 | awk '{print $9}' | cut -d  "/" -f 4`
+
+9.Get "tinkerOldApkPath" first occurrence of rows which from tinker-sample-android/app/build.gradle<br/>
+`grep -n "tinkerOldApkPath" app/build.gradle | head -n 1 | cut -d  ":" -f 1`
+
+10.Change the config of app/build.gradle to Updte the tinkerOldApkPath<br/>
+
+>Replace the line numbers which from number9 and apkName which from number8
+
+e.g. <br/>
+![tinker10](http://ogxkun013.bkt.clouddn.com/tinker10.png)
+
+number8 app-debug-1130-12-54-43.apk<br/>
+number9 147<br/>
+
+thus,you can get the command.<br/>
+
+> sed -i 'number8s/.*/tinkerOldApkPath="${bakPath}\/number9"/' app/build.gradle<br/>
+
+e.g.<br/>
+`sed -i '147s/.*/tinkerOldApkPath="${bakPath}\/app-debug-1130-12-54-43.apk"/' app/build.gradle`<br/>
+
+
+
+11.confirm the number11 do successfully
+>grep -n "number8" app/build.gradle<br/>
+
+e.g.<br/>
+`grep -n "app-debug-1130-12-54-43.apk" app/build.gradle`
+
+
+12.Build in order to the patch apk<br/>
+`gradle tinkerPatchDebug`
+
+
+13.Push patch apk into phone or emulator<br/>
+`adb push app/build/outputs/tinkerPatch/debug/patch_signed_7zip.apk /sdcard/`
+
+14.Click LOADPATH Button on the Sample App<br/>
+If PATH load success,the you can see the Toast which is `patch success,please restart process`.<br/>
+
+
+15.kill the running apk or restart the running apk<br/>
+`adb shell am force-stop tinker.sample.android`
+
+or<br/>
+
+If you phone is root,you can use adb shell kill -9 pid<br/>
+./kill.sh<br/>
+
+the content of kill.sh<br/>
+
+![kill.sh](http://ogxkun013.bkt.clouddn.com/kill2.png)
+
+
+a.`vim kill.sh && chmod 777 ./kill.sh`<br/>
+b.input content of kill.sh<br/>
+c.then `./kill.sh`
+
+16.Start the apk again<br/>
+`adb shell am start tinker.sample.android/.app.MainActivity`
+
+17.Click showinfo in order to confirm the patch load successfully or not.
+
+`adb logcat | grep TestTinker`<br/>
+
+If you see log which tag is "TestTinker",Congratulate to you!<br/>
+
+18.Change some codes in order to hot fix bugs from number 8<br/>
+
+>TODO:// Coding in order to fix bug1<br/>
+>TODO:// Coding in order to fix bug2<br/>

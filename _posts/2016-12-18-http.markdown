@@ -1,0 +1,29 @@
+---
+layout: post
+title: "Ubuntu修改Host不生效的问题"
+date: 2016-12-18 17:24:00 +0800
+tags: []
+---
+
+1.编辑`/etc/hosts`文件
+`sudo vim /etc/hosts`<br/>
+
+添加host，或者注释掉host<br/>
+
+2.重启网络
+`sudo /etc/init.d/networking restart`<br/>
+3.使用ping xxxxx测试修改后是否生效。<br/>
+
+4.如果没有生效的话，有可能是因为有一次使用vim,然后异常退出，产生了hosts.swp文件。<br/>
+使用如下的命令查找hosts.swp文件。<br/>
+`locate update `
+`locate *.swp`
+
+5.找到后删除这个文件
+`sudo rm -rf /xx/xx/hosts.swp`
+
+6.清除DNS缓存
+`/etc/init.d/dns-clean`
+
+7.重启DNS
+`/etc/init.d/dnsmasq restart`

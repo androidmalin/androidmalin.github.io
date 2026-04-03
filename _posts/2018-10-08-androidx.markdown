@@ -1,0 +1,68 @@
+---
+layout: post
+title: "AndroidX,migrate,jetifier"
+date: 2018-10-08 21:13:00 +0800
+tags: []
+---
+
+一次读完如下的文章,可以明白AndroidX的由来,如何迁移,以及迁移中关于对第三库依赖的解决方法.
+
+0.[support-library](https://developer.android.com/topic/libraries/support-library/)
+
+1.[AndroidX Overview](https://developer.android.com/jetpack/androidx/)
+
+2.[Hello World, AndroidX](https://www.jianshu.com/p/164a4272b61b)
+
+3.[hello-world-androidx](https://android-developers.googleblog.com/2018/05/hello-world-androidx.html)
+
+4.[Migrating to AndroidX](https://developer.android.com/jetpack/androidx/migrate)
+
+5.[android-jetifier-binary-migration-tool](http://www.akexorcist.com/2018/07/android-jetifier-binary-migration-tool.html)
+
+一篇很好的文章.讲解Jetifier的,是泰语,可以用chrome网页自带的翻译,翻译成汉语.
+
+6.[what-is-jetifier](https://stackoverflow.com/questions/51680671/what-is-jetifier)
+
+7.[what-is-androidx](https://stackoverflow.com/questions/51280090/what-is-androidx/52517772#52517772)
+
+8.[Jetpack series: 1 — androidx.*, a headache for a better package structure](https://proandroiddev.com/jetpack-series-1-androidx-a-headache-for-a-better-package-structure-62c3608596fd)
+
+9.[gradle-plugin-release](https://developer.android.com/studio/releases/gradle-plugin)
+
+
+10.[jetifier插件源码](http://androidxref.com/9.0.0_r3/xref/frameworks/support/jetifier/jetifier/)
+
+11.[frameworks/support/+/android-9.0.0_r10](https://android.googlesource.com/platform/frameworks/support/+/android-9.0.0_r10)
+
+12.[jetifier插件源码aosp](https://android.googlesource.com/platform/frameworks/support/+archive/android-9.0.0_r10/jetifier.tar.gz)
+
+13.[/android-jetpack-android-x](https://medium.com/ta-tonthongkam/android-jetpack-android-x-36c73abff1c5)
+
+14.[androidx-a-headache-for-a-better-package-structure](https://proandroiddev.com/jetpack-series-1-androidx-a-headache-for-a-better-package-structure-62c3608596fd)
+
+15.[whats-new-in-android-support-library](https://medium.com/mindorks/whats-new-in-android-support-library-db0ec7a8ad1)
+
+```
+https://android-developers.googleblog.com/2018/05/hello-world-androidx.html
+
+Source refactoring updates your Java code, XML resources, and Gradle configuration to reference the refactored classes and Maven artifacts. This feature is available in Android Studio Canary 14 for applications targeting Android P.
+
+If you depend on a library that references the older Support Library, Android Studio will update that library to reference androidx instead via dependency translation. Dependency translation is automatically applied by the Android Gradle Plugin 3.2.0-alpha14, which rewrites bytecode and resources of JAR and AAR dependencies (and transitive dependencies) to reference the new androidx-packaged classes and artifacts. We will also provide a standalone translation tool as a JAR.
+
+源重构更新您的Java代码，XML资源和Gradle配置，以引用重构类和Maven工件。 此功能在Android Studio Canary 14中适用于针对Android P的应用程序。
+
+如果您依赖于引用旧支持库的库，Android Studio将通过依赖项转换更新该库以引用androidx。 依赖转换由Android Gradle Plugin 3.2.0-alpha14自动应用，它重写JAR和AAR依赖项（和传递依赖项）的字节码和资源，以引用新的androidx打包的类和工件。 我们还将提供独立的翻译工具作为JAR。
+```
+
+jetifier插件是从[android gradle plugin 3.2.0-alpha11](https://mvnrepository.com/artifact/com.android.tools.build/gradle/3.2.0-alpha11)开始引入的.
+
+
+[jetifier-core-0.0.1.jar](https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/0.0.1/jetifier-core-0.0.1.jar)
+
+[jetifier-core-0.0.1.pom](https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/0.0.1/jetifier-core-0.0.1.pom)
+
+
+
+[jetifier-processor-0.0.1.jar](https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/0.0.1/jetifier-processor-0.0.1.jar)
+
+[jetifier-processor-0.0.1.pom](https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/0.0.1/jetifier-processor-0.0.1.pom)

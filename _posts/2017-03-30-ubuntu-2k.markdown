@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Ubuntu 2k"
+date: 2017-03-30 10:14:00 +0800
+tags: []
+---
+
+1.查看硬件信息
+`lspci -vnn | grep VGA -A 12`
+
+看到如下信息
+NVIDIA Corporation GM206 [GeForce GTX 960]
+
+2.官网下载匹配型号的驱动
+官网地址
+http://www.geforce.cn/drivers
+
+选择GeForce
+GeForce 960 Series
+GeForce GTX 960
+Linux 64-bit
+Chinese
+All
+
+搜索--同意--下载
+得到`http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run`
+
+3.下载驱动
+`cd && wget -c http://cn.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run`
+
+
+4.编译依赖
+sudo apt-get install build-essential pkg-config xserver-xorg-dev linux-headers-`uname -r`
+
+
+5.屏蔽开源驱动nouveau
+`sudo vim /etc/modprobe.d/blacklist.conf`
+
+添加
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist nvidiafb
+blacklist rivatv
+
+
+6.禁用 nouveau 内核模块
+`echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf`
+`sudo update-initramfs -u`
+
+7.重启
+`sudo reboot`
+
+8.按Ctrl + Alt +F1到第一控制台（+F7是退出）。
+
+9.输入用户名和密码后，登录后执行：
+`sudo service lightdm stop`
+或者
+`sudo service gdm stop`
+
+
+10.进入驱动所在的文件夹，安装驱动，必须以root进行安装
+`sudo sh NVIDIA-Linux-x86_64-375.39.run`
+或者
+`sudo sh NVIDIA*.run`
+
+安装过程中全部选择YES；比如接受条约；自动配置错误，点击继续配；
+
+参考文章
+[三星驱动](http://www.samsung.com/cn/support/downloadcenter/)
+[设置分辨率](https://blog.kyletang.work/2016/07/18/hd4000hdmi2560x1440x44hz/)
+[三星显示器](https://item.jd.com/4606144.html)
+[驱动信息](http://os.51cto.com/art/201512/501857.htm)
+[驱动搜索下载](http://www.geforce.cn/drivers)
+[驱动搜索](http://www.nvidia.com/Download/index.aspx?lang=cn)
+[驱动安装1](https://wiki.ubuntu.com.cn/NVIDIA)
+[驱动安装2](https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b)
+[驱动安装3](http://blog.csdn.net/collonn/article/details/9107601)

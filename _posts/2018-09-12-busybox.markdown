@@ -1,0 +1,123 @@
+---
+layout: post
+title: "BusyBox"
+date: 2018-09-12 09:59:00 +0800
+tags: []
+---
+
+0.下载源码解压.
+`tar -jxvf xx.tar.bz2`
+1.`sudo apt-get install gcc-arm-linux-gnueabi`
+
+2.`export ARCH=arm`
+
+```
+Makefile:152
+# Another way is to have ARCH set in the environment.
+# The default ARCH is the host where make is executed
+```
+
+3.`export CROSS_COMPILE=arm-linux-gnueabi-`
+
+```
+Makefile:160
+# Alternatively CROSS_COMPILE can be set in the environment.
+# Default value for CROSS_COMPILE is not to prefix executables
+```
+
+
+4.`make menuconfig` (if you dont get a config menu, you need to `sudo apt-get install libncurses5-dev`)
+
+Busybox Settings --> --- Build Options --> Build static binary (no shared libs) -  点击空格键
+
+Busybox Settings --> Installation Options --> Don't use /usr  -   点击空格键
+
+
+5.`make -j8`
+
+
+6.`readelf -h busybox`
+编译完成后会生成busybox可执行文件，输入以下命令可以查看生成的文件信息：
+
+```
+readelf -h busybox
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x14110
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          2085504 (bytes into file)
+  Flags:                             0x5000200, Version5 EABI, soft-float ABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         7
+  Size of section headers:           40 (bytes)
+  Number of section headers:         27
+  Section header string table index: 26
+```
+Machine: ARM ==>说明为ARM架构
+
+
+7.
+修改/system目录可写
+`mount -o remount,rw /system`
+
+复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限
+
+`cd /system/xbin`
+`chmod 755 busybox`
+
+8.这时就可以使用 busybox 的命令了，例如以前没有清屏的clear命令，现在只需输入 busybox clear 就可以实现清屏功能，使用完整版的 ls 只需输入 busybox ls 。
+但是每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。
+`cd /system/xbin`
+`busybox --install .`
+
+9.
+
+修改init.rc
+```
+修改init.rc文件可写
+`mount -o remount,rw /`
+
+修改 service console /system/bin/sh 这行为                                                   
+==>
+改为:service console /system/xbin/sh
+```
+
+查看当前的环境变量.
+```
+angler:/ # busybox echo $PATH
+/sbin:/system/sbin:/system/bin:/system/xbin:/vendor/bin:/vendor/xbin
+
+```
+然后在当前的PATH前加上busybox的路径,加上后为:(删除重复的/system/xbin)
+`/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin`
+
+要提醒的是, 修改PATH环境变量的时候, 应该把busybox常用命令的路径”/data/busybox/bin”放在Android的常用命令路径”/system/bin”的前面, 否则, 先查找得到的将不是busybox的命令,  可以这样设置:
+
+最终为
+`export PATH=/system/xbin:/sbin:/system/sbin:/system/bin:/vendor/bin:/vendor/xbin`
+或者
+`export PATH=/system/xbin:$PATH`(里面有重复的/system/xbin)
+这样设置的是本地有效，一旦你退出当前环境．需要重新设置PATH.
+
+通过这个查看环境变量
+`busybox echo $PATH`
+
+
+每次退出shell环境重新进入.需要再次设置一次环境变量.
+
+参考文章
+[Android自带的toolbox分析及扩展](https://blog.csdn.net/a345017062/article/details/6250619)
+[Cross Compiling C/C++ for ARM on Linux](https://forum.xda-developers.com/android/development/guide-cross-compiling-c-c-arm-linux-t2999323)
+[Android安装系统App(adb push实现)](https://blog.csdn.net/hexingen/article/details/76736708)
+[remount-system-in-rw](https://android.stackexchange.com/questions/60446/cant-remount-system-in-rw)
+[为Android安装BusyBox —— 完整的bash shell](https://www.cnblogs.com/xiaowenji/archive/2011/03/12/1982309.html)
+[采用busybox 代替android 自带的shell](https://www.cnblogs.com/shangdawei/p/4514315.html)

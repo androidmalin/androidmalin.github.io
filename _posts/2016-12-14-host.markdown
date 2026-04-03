@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Ubuntu Http 请求"
+date: 2016-12-14 17:24:00 +0800
+tags: []
+---
+
+1.httpie<br/>
+
+`http get https://api.weibo.com/2/trends/hourly.json?access_token=2.004YppQEmwhOvBb3fbef84beEkKntC`<br/>
+
+`http get https://api.weibo.com/2/trends/hourly.json "access_token"=="2.004YppQEmwhOvBb3fbef84beEkKntC"`<br/>
+
+`http post https://api.weibo.com/2/statuses/upload_url_text.json "status"=="hello world" "url"=="http://www.baidu.com"`<br/>
+
+
+[使用httpie进行接口测试](http://www.jianshu.com/p/0736d508be44)<br/>
+
+2.httpstat<br/>
+
+[httpstat：一个检查网站性能的 curl 统计分析工具](https://mp.weixin.qq.com/s?__biz=MjM5NjQ4MjYwMQ==&mid=2664608594&idx=1&sn=410f48527e4910f1d44f5965ea628d74&chksm=bdce88148ab901020d130d32fc5bb4ad4bd72c1ec767560b893d681009cfaef16ca9902a88d9&mpshare=1&scene=1&srcid=1218XPDF0n0YNmWHlvrbuDx4&pass_ticket=o7BDekJR2QaDbACYuZJJpI8dCs9%2BnyzdFKx%2B2qtah3ktUrKscsWvC6tJGZQFZ6r%2F#rd)<br/>
+
+[httpstat GitHub主页](https://github.com/reorx/httpstat)<br/>

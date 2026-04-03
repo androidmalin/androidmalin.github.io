@@ -1,0 +1,59 @@
+---
+layout: post
+title: "Smali,BakSmali"
+date: 2016-12-26 20:19:00 +0800
+tags: []
+---
+
+1.下载smali,smali.jar,baksmali,baksmali.jar
+https://bitbucket.org/JesusFreke/smali/downloads
+
+例如下载
+smali-2.2b4.jar
+baksmali-2.2b4.jar
+smali
+baksmali
+
+2.将smali-2.2b4.jar重新命名为smali.jar，将baksmali-2.2b4.jar重新命名为baksmail.jar
+`mv smali-2.2b4.jar smali.jar`
+`mv baksmali-2.2b4.jar baksmali.jar`
+`chmod +x ./smali ./baksmali`
+
+3.将四个文件拷贝到`/usr/local/bin/`文件夹下
+`sudo cp ./baksmali ./smali ./baksmali.jar ./smali.jar /usr/local/bin/`
+
+![smali](http://ogxkun013.bkt.clouddn.com/smail1.png)
+
+4.这里就可以使用smali,baksmali两个脚本了。
+[SmaliBaksmali wiki](https://github.com/JesusFreke/smali/wiki/SmaliBaksmali2.2)
+
+将app.apk反编译为smali文件
+`baksmali disassemble app.apk -o app`
+
+将smali文件编译成dex文件
+`smali assemble app -o classes.dex`
+
+![smali](http://ogxkun013.bkt.clouddn.com/smail2.png)
+
+5.试试反编译系统的app
+a.从手机中将系统app拿出来
+`adb pull /system/app /home/malin/app/`
+
+
+
+其他
+apktool
+[官网](https://ibotpeaches.github.io/Apktool/)
+
+dex2jar
+[官网](https://github.com/pxb1988/dex2jar)
+
+JD-GUI
+[官网](http://jd.benow.ca/)
+
+Apktool：解析apk包，获取资源文件和smail代码
+dex2jar：将class.dex文件转换成为jar包
+JD-GUI：查看jar包文件里的java代码
+
+参考文章：
+[Mac上简单的Android逆向](http://www.jianshu.com/p/7696c7e33eac)

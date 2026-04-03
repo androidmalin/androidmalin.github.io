@@ -1,0 +1,111 @@
+---
+layout: post
+title: "gradle3.0.0-aar-not-found"
+date: 2017-11-28 14:39:00 +0800
+tags: [gradle3]
+---
+
+android gradle插件升级到3.0.0后,使用`assemble${PRODUCT_FLAVORS}`或者`assemble${PRODUCT_FLAVORS}${BUILD_TYPE}`不会产生aar.具体测试步骤如下.
+
+可能使用到的命令.
+```
+gradle clean
+rm -rf .idea .gradle && find . -name "*build*" -type d | xargs rm -rf && find . -name "*.iml" -type f | xargs rm -r
+find . -name "*.aar" -type f
+find . -name "*.apk" -type f
+```
+
+1.gradle assembleGoogle -x lint
+aar:无
+
+apk:
+
+./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk
+
+./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk
+
+
+2.gradle assembleGoogleRelease -x lint
+
+aar:无
+
+apk:
+`./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk`
+
+
+3.gradle assembleGoogleDebug -x lint
+
+aar:无
+
+apk:
+
+`./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk`
+
+
+4.gradle build -x lint
+
+build:Assembles and tests this project
+
+aar:
+
+`./libimage/build/outputs/aar/libimage-release.aar`
+
+`./libimage/build/outputs/aar/libimage-debug.aar`
+
+apk:
+
+`./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk`
+
+
+5.gradle assemble -x lint
+
+aar
+
+`./libimage/build/outputs/aar/libimage-release.aar`
+
+`./libimage/build/outputs/aar/libimage-debug.aar`
+
+
+apk:
+
+`./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk`
+
+
+6.gradle assembleDebug -x lint
+
+aar:
+`./libimage/build/outputs/aar/libimage-debug.aar`
+
+apk:
+`./app/build/outputs/apk/XiaoMi/debug/Debug_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/debug/Debug_Google_v4.7.0.apk`
+
+7.gradle assembleRelease -x lint
+
+aar:
+`./libimage/build/outputs/aar/libimage-release.aar`
+
+apk:
+`./app/build/outputs/apk/XiaoMi/release/Release_XiaoMi_v4.7.0.apk`
+
+`./app/build/outputs/apk/Google/release/Release_Google_v4.7.0.apk`
+
+
+8.结论
+使用`assemble${PRODUCT_FLAVORS}`或者`assemble${PRODUCT_FLAVORS}${BUILD_TYPE}`不会产生aar.
+需要使用`assemble${BUILD_TYPE}`或者`assemble`任务
+
+[stackoverflow](https://stackoverflow.com/questions/40342170/android-studio-release-build-does-not-output-aar)
