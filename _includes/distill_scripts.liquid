@@ -16,7 +16,15 @@
 <!-- Custom overrides -->
 <script src="{{ '/assets/js/distillpub/overrides.js' | relative_url }}"></script>
 
+{% assign contains_mermaid_code = page.content contains '```mermaid' %}
+{% assign load_mermaid = false %}
 {% if page.mermaid and page.mermaid.enabled %}
+  {% assign load_mermaid = true %}
+{% elsif contains_mermaid_code %}
+  {% assign load_mermaid = true %}
+{% endif %}
+
+{% if load_mermaid %}
   <!-- Mermaid and D3 -->
   <script
     defer
