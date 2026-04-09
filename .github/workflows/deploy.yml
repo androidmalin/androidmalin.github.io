@@ -1,8 +1,5 @@
 name: Deploy site
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 on:
   push:
     branches:
@@ -25,8 +22,6 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v6
-      - name: Setup Pages ⚙️
-        uses: actions/configure-pages@v5
       - name: Setup Ruby 💎
         uses: ruby/setup-ruby@v1
         with:
@@ -62,10 +57,23 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
+      - name: Archive Pages artifact 📦
+        run: |
+          tar \
+            --dereference --hard-dereference \
+            --directory _site \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            --exclude='.[^/]*' \
+            --exclude=.git \
+            --exclude=.github \
+            .
       - name: Upload Pages artifact 📦
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
-          path: _site
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build
