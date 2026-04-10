@@ -1,8 +1,8 @@
 # androidmalin.github.io
 
-这个仓库已经重建为 `Jekyll + al-folio` 博客站点，部署目标是 GitHub Pages 用户站点：
+这个仓库已经重建为 `Jekyll + al-folio` 博客站点，部署目标是阿里云 OSS 静态站点：
 
-- 线上地址：`https://androidmalin.github.io`
+- 线上地址：`https://androidmalin.com`
 - 本地预览：Docker
 - 主题：`https://github.com/alshedivat/al-folio`
 
@@ -11,7 +11,7 @@
 - `_posts/`：你的博客 Markdown 文章
 - `_pages/`：站点页面
 - `assets/`：图片、样式、脚本等静态资源
-- `.github/workflows/deploy.yml`：GitHub Pages 自动部署
+- `.github/workflows/deploy.yml`：GitHub Actions 自动构建并发布到阿里云 OSS
 
 ## 先安装 Docker Desktop
 
@@ -77,20 +77,36 @@ categories: [android]
 /2026/04/03/my-post/
 ```
 
-## 发布到 GitHub Pages
+## 发布到阿里云 OSS
 
 1. 把改动提交到 `master` 或 `main`
-2. 打开 GitHub 仓库的 `Settings -> Actions -> General`
-3. 将 `Workflow permissions` 改为 `Read and write permissions`
-4. 打开 `Settings -> Pages`
-5. 将发布分支设置为 `gh-pages`
-6. 推送代码后，GitHub Actions 会自动构建并发布
+2. 在 GitHub 仓库的 `Settings -> Environments -> github-pages` 中配置：
+   - `ACCESS_KEY_ID`
+   - `ACCESS_KEY_SECRET`
+3. 推送代码后，GitHub Actions 会自动构建 Jekyll 站点，并把 `_site/` 同步到 `oss://androidmalinblog/`
 
 部署工作流已经在仓库中：
 
 ```text
 .github/workflows/deploy.yml
 ```
+
+## OSS 一次性配置
+
+GitHub Action 只负责“构建并上传文件”。以下几项需要你在阿里云侧一次性完成：
+
+1. 在 Bucket `androidmalinblog` 上开启“静态页面托管”
+2. 默认首页设为 `index.html`
+3. 默认 404 页面设为 `404.html`
+4. 绑定自定义域名 `androidmalin.com`
+5. 在 DNS 中把 `androidmalin.com` 指向 OSS 对应的香港节点
+6. 如果你要启用 HTTPS，再为该域名绑定 SSL 证书
+
+说明：
+
+- 这个仓库使用的是 Jekyll 的目录式链接，例如 `/about/`、`/2026/04/03/post/`
+- 因此 OSS 静态页面托管必须支持子目录首页解析，否则这些链接会失效
+- 当前工作流会自动把 Bucket 的网站首页配置为 `index.html` 和 `404.html`
 
 ## 下一步建议
 

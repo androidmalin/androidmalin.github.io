@@ -15,4 +15,4 @@ announcements:
 
 这里是博客的介绍页
 
-- GitHub Pages 地址：`https://androidmalin.github.io`
+- 正式地址：`https://androidmalin.com`

@@ -1,4 +1,4 @@
-name: Deploy site
+name: Deploy site to Aliyun OSS
 
 on:
   push:
@@ -9,16 +9,22 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: aliyun-oss
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: https://androidmalin.com
+    env:
+      OSS_BUCKET: androidmalinblog
+      OSS_ENDPOINT: oss-cn-hongkong.aliyuncs.com
+      OSS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID || vars.ACCESS_KEY_ID }}
+      OSS_ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET || vars.ACCESS_KEY_SECRET }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v6
@@ -47,9 +53,16 @@ jobs:
 
           config.write_text(text)
           PY
+      - name: Validate OSS credentials 🔐
+        run: |
+          if [ -z "${OSS_ACCESS_KEY_ID}" ] || [ -z "${OSS_ACCESS_KEY_SECRET}" ]; then
+            echo "Missing ACCESS_KEY_ID or ACCESS_KEY_SECRET in the github-pages environment." >&2
+            exit 1
+          fi
+      - name: Install system dependencies 📦
+        run: sudo apt-get update && sudo apt-get install -y imagemagick unzip
       - name: Install and Build 🔧
         run: |
-          sudo apt-get update && sudo apt-get install -y imagemagick
           pip3 install --upgrade nbconvert
           export JEKYLL_ENV=production
           bundle exec jekyll build
@@ -57,31 +70,38 @@ jobs:
         run: |
           npm install -g purgecss
           purgecss -c purgecss.config.js
-      - name: Archive Pages artifact 📦
+      - name: Install ossutil 🧰
         run: |
-          tar \
-            --dereference --hard-dereference \
-            --directory _site \
-            -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude='.[^/]*' \
-            --exclude=.git \
-            --exclude=.github \
-            .
-      - name: Upload Pages artifact 📦
-        uses: actions/upload-artifact@v6
-        with:
-          name: github-pages
-          path: ${{ runner.temp }}/artifact.tar
-          retention-days: 1
-          if-no-files-found: error
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v4
+          curl -fsSL -o ossutil.zip https://gosspublic.alicdn.com/ossutil/1.7.19/ossutil-v1.7.19-linux-amd64.zip
+          echo "dcc512e4a893e16bbee63bc769339d8e56b21744fd83c8212a9d8baf28767343  ossutil.zip" | sha256sum -c -
+          unzip -q ossutil.zip
+          sudo install ossutil-v1.7.19-linux-amd64/ossutil /usr/local/bin/ossutil
+      - name: Configure ossutil ⚙️
+        run: |
+          cat > "${HOME}/.ossutilconfig" <<EOF
+          [Credentials]
+          language = EN
+          endpoint = ${OSS_ENDPOINT}
+          accessKeyID = ${OSS_ACCESS_KEY_ID}
+          accessKeySecret = ${OSS_ACCESS_KEY_SECRET}
+          EOF
+          chmod 600 "${HOME}/.ossutilconfig"
+      - name: Configure bucket website hosting 🌐
+        run: |
+          cat > oss-website.xml <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <WebsiteConfiguration>
+            <IndexDocument>
+              <Suffix>index.html</Suffix>
+              <SupportSubDir>true</SupportSubDir>
+              <Type>0</Type>
+            </IndexDocument>
+            <ErrorDocument>
+              <Key>404.html</Key>
+              <HttpStatus>404</HttpStatus>
+            </ErrorDocument>
+          </WebsiteConfiguration>
+          EOF
+          ossutil website --method put "oss://${OSS_BUCKET}" oss-website.xml
+      - name: Sync site to OSS 🚀
+        run: ossutil sync "_site/" "oss://${OSS_BUCKET}/" --delete -f
