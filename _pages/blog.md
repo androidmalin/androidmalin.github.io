@@ -4,6 +4,12 @@ permalink: /
 title: 首页
 nav: true
 nav_order: 1
+
+hero: true
+hero_image: assets/img/12.jpg
+hero_title: 马琳的博客
+hero_subtitle: 越努力，越幸运。
+
 pagination:
   enabled: true
   collection: posts

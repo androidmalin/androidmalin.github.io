@@ -8,7 +8,52 @@
   box-shadow: none;
   border-bottom: 1px solid var(--global-divider-color);
   background-color: var(--global-bg-color);
-  opacity: 0.95;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+// Kim Lab style: nav links are uppercase with subtle tracking
+.navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+}
+
+// Active page gets an underline accent rather than a background swap
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.35rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+}
+
+// Transparent state when navbar overlays a hero image
+.navbar.navbar-transparent {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+
+  .navbar-brand,
+  .navbar-nav .nav-item .nav-link,
+  #search-toggle,
+  #light-toggle {
+    color: #fff !important;
+  }
+
+  .navbar-toggler .icon-bar {
+    background-color: #fff !important;
+  }
 }
 
 .navbar .dropdown-menu,

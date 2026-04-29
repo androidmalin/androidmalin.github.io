@@ -1,0 +1,27 @@
+{%- comment -%}
+  Full-bleed hero with darkened image and bottom-aligned title.
+  Renders unless page sets `hero: false` in front-matter.
+  Override image via `page.hero_image`, title via `page.hero_title` (default: page.title).
+{%- endcomment -%}
+
+{% unless page.hero == false %}
+  {% assign hero_image = page.hero_image | default: page.img | default: 'assets/img/12.jpg' %}
+  {% if page.hero_title %}
+    {% assign hero_title = page.hero_title %}
+  {% elsif page.title and page.title != 'blank' %}
+    {% assign hero_title = page.title %}
+  {% else %}
+    {% assign hero_title = site.title %}
+  {% endif %}
+
+  <section class="hero">
+    <img class="hero-image" src="{{ hero_image | relative_url }}" alt="">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">{{ hero_title }}</h1>
+      {% if page.hero_subtitle %}
+        <p class="hero-subtitle">{{ page.hero_subtitle }}</p>
+      {% endif %}
+    </div>
+  </section>
+{% endunless %}
