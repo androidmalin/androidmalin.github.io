@@ -61,6 +61,7 @@
 
   .navbar-nav .nav-item .nav-link {
     color: var(--global-text-color);
+    font-weight: 500;
 
     &:hover {
       color: var(--global-hover-color);
@@ -69,7 +70,6 @@
 
   .navbar-nav .nav-item.active > .nav-link {
     background-color: inherit;
-    font-weight: bolder;
     color: var(--global-theme-color);
 
     &:hover {
@@ -183,8 +183,26 @@
   border: 0;
   background-color: inherit;
   color: var(--global-text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 
   &:hover {
     color: var(--global-hover-color);
+  }
+
+  .shortcut-key-mac {
+    display: none;
+  }
+}
+
+html.is-mac #search-toggle {
+  .shortcut-key-default {
+    display: none;
+  }
+
+  .shortcut-key-mac {
+    display: inline;
   }
 }

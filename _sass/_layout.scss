@@ -4,10 +4,21 @@
 
 @use "variables" as v;
 
+html {
+  scrollbar-gutter: stable;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
 body {
   padding-bottom: 0;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans SC", Arial, sans-serif;
 
   h1,
   h2,

@@ -118,7 +118,12 @@ html.transition,
 html.transition *,
 html.transition *:before,
 html.transition *:after {
-  transition: all 750ms !important;
+  transition:
+    color 750ms !important,
+    background-color 750ms !important,
+    border-color 750ms !important,
+    fill 750ms !important,
+    stroke 750ms !important;
   transition-delay: 0 !important;
 }
 

@@ -134,3 +134,15 @@ blockquote {
     }
   }
 }
+
+article.post-content {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans SC", Arial, sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+article.post-content p,
+article.post-content li {
+  font-size: inherit;
+  line-height: inherit;
+}

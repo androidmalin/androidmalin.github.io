@@ -42,21 +42,6 @@
 
       <div class="collapse navbar-collapse text-right" id="navbarNav">
         <ul class="navbar-nav ml-auto flex-nowrap">
-          {% for page in site.pages %}
-            {% if page.permalink == '/' %} {% assign about_title = page.title %} {% endif %}
-          {% endfor %}
-
-          <!-- About -->
-          <li class="nav-item {% if page.permalink == '/' %}active{% endif %}">
-            <a class="nav-link" href="{{ '/' | relative_url }}">
-              {{- about_title }}
-              {% if page.permalink == '/' %}
-                <span class="sr-only">(current)</span>
-              {% endif %}
-            </a>
-          </li>
-
-          <!-- Other pages -->
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
           {% for p in sorted_pages %}
             {% if p.nav and p.autogen == null %}
@@ -98,10 +83,20 @@
                   </div>
                 </li>
               {% else %}
-                {% assign parent_link = p.permalink | remove: 'index.html' %}
-                <li class="nav-item {% if page.url contains parent_link %}active{% endif %}">
+                {% assign current_url = page.url | remove: 'index.html' %}
+                {% assign nav_url = p.url | remove: 'index.html' %}
+                {% assign nav_permalink = p.permalink | remove: 'index.html' %}
+                {% assign is_active = false %}
+                {% if current_url == nav_url or current_url == nav_permalink %}
+                  {% assign is_active = true %}
+                {% endif %}
+                <li class="nav-item {% if is_active %}active{% endif %}">
                   {%- if p.permalink contains '://' -%}
                     {%- assign url = p.permalink -%}
+                  {%- elsif p.url == '/index.html' -%}
+                    {%- assign url = '/' -%}
+                  {%- elsif p.permalink == '/' -%}
+                    {%- assign url = '/' -%}
                   {%- elsif p.permalink contains '/blog/' -%}
                     {%- assign url = '/blog/' -%}
                   {%- else -%}
@@ -109,7 +104,7 @@
                   {%- endif %}
                   <a class="nav-link" href="{{ url | relative_url }}">
                     {{- p.title }}
-                    {% if page.url contains p.url %}
+                    {% if is_active %}
                       <span class="sr-only">(current)</span>
                     {% endif %}
                   </a>
@@ -121,7 +116,10 @@
             <!-- Search -->
             <li class="nav-item">
               <button id="search-toggle" title="Search" onclick="openSearchModal()">
-                <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span>
+                <span class="nav-link">
+                  <span class="shortcut-key shortcut-key-default">ctrl</span><span class="shortcut-key shortcut-key-mac">&#x2318;</span>
+                  k <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
               </button>
             </li>
           {% endif %}
