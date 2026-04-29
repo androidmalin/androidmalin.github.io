@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Android Handler 面试分析"
+title: "Android Handler 总结"
 date: 2026-04-29 10:05:00 +0800
 description: "梳理 Android Handler、Looper、MessageQueue 和 Message 的消息机制，以及线程通信、延迟消息和内存泄漏问题。"
 tags: [android, handler, interview]
 categories: [android]
 ---
 
-# Android Handler 面试分析
+# Android Handler 总结
 
 简洁结论：**Handler 是 Android 消息机制中的核心类，用于向某个线程的 MessageQueue 发送和处理 Message 或 Runnable。** 它常用于线程间通信、把子线程结果切回主线程、延迟任务和消息调度。Handler 背后的核心是 `Handler + Looper + MessageQueue + Message` 这一套消息循环机制。
 

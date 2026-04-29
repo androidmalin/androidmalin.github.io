@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Android LiveData 面试分析"
+title: "Android LiveData 总结"
 date: 2026-04-29 10:15:00 +0800
 description: "梳理 LiveData 的生命周期感知、观察机制、ViewModel 使用方式，以及与 Flow/StateFlow 的取舍。"
 tags: [android, jetpack, livedata, interview]
 categories: [android]
 ---
 
-# Android LiveData 面试分析
+# Android LiveData 总结
 
 简洁结论：**LiveData 是 Android Jetpack 中一个具有生命周期感知能力的可观察数据容器，常用于 ViewModel 向 Activity/Fragment 暴露 UI 状态。** 它的核心价值是让 UI 层安全地观察数据变化，避免页面销毁后继续回调导致崩溃或内存泄漏。不过在 Kotlin 协程、Flow 和 Compose 体系下，很多新项目会优先使用 `StateFlow`、`SharedFlow` 或 Compose `State`。
 

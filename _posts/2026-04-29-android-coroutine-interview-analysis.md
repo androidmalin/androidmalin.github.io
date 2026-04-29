@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Android Coroutine 面试分析"
+title: "Android Coroutine 总结"
 date: 2026-04-29 10:00:00 +0800
 description: "梳理 Kotlin Coroutine 在 Android 中的定位、核心概念、线程切换、结构化并发和面试常见问题。"
 tags: [android, kotlin, coroutine, interview]
 categories: [android]
 ---
 
-# Android Coroutine 面试分析
+# Android Coroutine
 
 简洁结论：**Coroutine 是 Kotlin 提供的轻量级并发编程模型，在 Android 中主要用于以接近同步代码的方式编写异步任务。** 它通过挂起函数、协程作用域、调度器和结构化并发，解决回调嵌套、线程切换复杂、生命周期取消困难等问题，是现代 Android 异步编程的主流方案。
 

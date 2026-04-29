@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Android Retrofit 面试分析"
+title: "Android Retrofit 总结"
 date: 2026-04-29 10:30:00 +0800
 description: "梳理 Retrofit 的声明式 API、注解、Converter、CallAdapter，以及它和 OkHttp 的协作方式。"
 tags: [android, retrofit, network, interview]
 categories: [android]
 ---
 
-# Android Retrofit 面试分析
+# Android Retrofit 总结
 
 简洁结论：**Retrofit 是 Square 开源的类型安全 HTTP API 声明框架，常用于 Android 中把 REST API 描述成 Kotlin/Java 接口。** 它负责把接口方法、注解和参数转换成 HTTP 请求，并通过 Converter 把响应体转换成业务对象；真正的网络请求通常交给 OkHttp 执行。
 
