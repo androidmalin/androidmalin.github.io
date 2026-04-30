@@ -16,7 +16,12 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %} {% unless page.hero == false %}has-hero{% endunless %}">
+  {% assign show_hero = true %}
+  {% if page.hero == false or page.layout == "post" %}
+    {% assign show_hero = false %}
+  {% endif %}
+
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %} {% if show_hero %}has-hero{% endif %}">
     <!-- Header -->
     {% include header.liquid %}
 

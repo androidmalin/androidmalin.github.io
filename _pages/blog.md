@@ -6,6 +6,9 @@ nav: true
 nav_order: 1
 
 hero: true
+hero_align: center
+hero_text: false
+hero_image_position: center
 hero_image: assets/img/12.jpg
 hero_title: 马琳的博客
 hero_subtitle: 越努力，越幸运。

@@ -4,6 +4,9 @@
 
 @use "variables" as v;
 
+$navbar-action-size: 1.02rem;
+$navbar-action-button-size: 2.4rem;
+
 .navbar {
   box-shadow: none;
   border-bottom: 1px solid var(--global-divider-color);
@@ -12,13 +15,31 @@
     background-color 0.25s ease,
     border-color 0.25s ease,
     color 0.25s ease;
+
+  .container,
+  .navbar-collapse,
+  .navbar-nav,
+  .nav-item,
+  .toggle-container {
+    align-items: center;
+  }
+
+  .navbar-nav,
+  .nav-item,
+  .toggle-container {
+    display: flex;
+  }
 }
 
 // Kim Lab style: nav links are uppercase with subtle tracking
 .navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: $navbar-action-button-size;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.85rem;
+  font-size: $navbar-action-size;
+  line-height: 1;
 }
 
 // Active page gets an underline accent rather than a background swap
@@ -38,16 +59,18 @@
 
 // Transparent state when navbar overlays a hero image
 .navbar.navbar-transparent {
-  background: transparent !important;
-  background-color: transparent !important;
-  border-bottom: none !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  background-color: rgba(0, 0, 0, 0.35) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
   box-shadow: none !important;
   opacity: 1 !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 
   .navbar-brand,
   .navbar-nav .nav-item .nav-link,
   #search-toggle,
-  #light-toggle {
+  .theme-toggle {
     color: #fff !important;
   }
 
@@ -200,26 +223,40 @@
   }
 }
 
-#light-toggle {
-  padding: 0;
-  border: 0;
-  background-color: inherit;
-  color: var(--global-text-color);
-  /* Fix footprint to prevent navbar shifting when icon changes */
-  width: 2rem;
-  height: 2rem;
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
+  color: var(--global-text-color);
+  width: $navbar-action-button-size;
+  height: $navbar-action-button-size;
 
-  &:hover {
-    color: var(--global-hover-color);
+  button {
+    padding: 0;
+    border: 0;
+    background-color: inherit;
+    color: inherit;
+    width: $navbar-action-button-size;
+    height: $navbar-action-button-size;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $navbar-action-size;
+
+    &:hover {
+      color: var(--global-hover-color);
+    }
   }
 }
 
-@media (min-width: 576px) {
-  #light-toggle {
-    transform: translateY(4px);
+.theme-toggle,
+#search-toggle {
+  i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 }
 
@@ -232,6 +269,8 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  font-size: $navbar-action-size;
+  line-height: 1;
 
   &:hover {
     color: var(--global-hover-color);

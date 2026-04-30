@@ -1,11 +1,21 @@
 {%- comment -%}
-  Full-bleed hero with darkened image and bottom-aligned title.
+  Full-bleed hero with image and text.
   Renders unless page sets `hero: false` in front-matter.
   Override image via `page.hero_image`, title via `page.hero_title` (default: page.title).
+  Optional `hero_align: top|center` changes the vertical placement of the text block.
+  Optional `hero_image_position: center` centers the image crop.
+  Optional `hero_text: false` hides the title/subtitle block.
 {%- endcomment -%}
 
-{% unless page.hero == false %}
+{% assign show_hero = true %}
+{% if page.hero == false or page.layout == "post" %}
+  {% assign show_hero = false %}
+{% endif %}
+
+{% if show_hero %}
   {% assign hero_image = page.hero_image | default: page.img | default: 'assets/img/12.jpg' %}
+  {% assign hero_align = page.hero_align | default: 'bottom' %}
+  {% assign hero_image_position = page.hero_image_position | default: 'bottom' %}
   {% if page.hero_title %}
     {% assign hero_title = page.hero_title %}
   {% elsif page.title and page.title != 'blank' %}
@@ -14,14 +24,15 @@
     {% assign hero_title = site.title %}
   {% endif %}
 
-  <section class="hero">
+  <section class="hero {% if hero_align == 'top' %}hero-align-top{% elsif hero_align == 'center' %}hero-align-center{% endif %} {% if hero_image_position == 'center' %}hero-image-center{% endif %}">
     <img class="hero-image" src="{{ hero_image | relative_url }}" alt="">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">{{ hero_title }}</h1>
-      {% if page.hero_subtitle %}
-        <p class="hero-subtitle">{{ page.hero_subtitle }}</p>
-      {% endif %}
-    </div>
+    {% unless page.hero_text == false %}
+      <div class="hero-content {% if hero_align == 'top' %}hero-content-top{% elsif hero_align == 'center' %}hero-content-center{% endif %}">
+        <h1 class="hero-title">{{ hero_title }}</h1>
+        {% if page.hero_subtitle %}
+          <p class="hero-subtitle">{{ page.hero_subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endunless %}
   </section>
-{% endunless %}
+{% endif %}

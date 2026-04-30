@@ -1,15 +1,11 @@
 // Has to be in the head tag, otherwise a flicker effect will occur.
 
-// Toggle through light, dark, and system theme settings.
-let toggleThemeSetting = () => {
-  let themeSetting = determineThemeSetting();
-  if (themeSetting == "system") {
-    setThemeSetting("light");
-  } else if (themeSetting == "light") {
-    setThemeSetting("dark");
-  } else {
-    setThemeSetting("system");
-  }
+let setLightTheme = () => {
+  setThemeSetting("light");
+};
+
+let setDarkTheme = () => {
+  setThemeSetting("dark");
 };
 
 // Change the theme setting and apply the theme.
@@ -292,22 +288,29 @@ let determineComputedTheme = () => {
 };
 
 let initTheme = () => {
-  let themeSetting = determineThemeSetting();
+  setThemeSetting(determineThemeSetting());
 
-  setThemeSetting(themeSetting);
-
-  // Add event listener to the theme toggle button.
+  // Add event listeners to the explicit theme buttons.
   document.addEventListener("DOMContentLoaded", function () {
-    const mode_toggle = document.getElementById("light-toggle");
+    const lightToggle = document.getElementById("theme-toggle-light");
+    const darkToggle = document.getElementById("theme-toggle-dark");
 
-    mode_toggle.addEventListener("click", function () {
-      toggleThemeSetting();
-    });
+    if (lightToggle) {
+      lightToggle.addEventListener("click", function () {
+        setLightTheme();
+      });
+    }
+
+    if (darkToggle) {
+      darkToggle.addEventListener("click", function () {
+        setDarkTheme();
+      });
+    }
   });
 
   // Add event listener to the system theme preference change.
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
-    applyTheme();
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    setThemeSetting("system");
   });
 };
 

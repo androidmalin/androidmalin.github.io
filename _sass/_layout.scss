@@ -4,6 +4,22 @@
 
 @use "variables" as v;
 
+// Global content transition animation
+.container[role="main"] {
+  animation: contentSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes contentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }
@@ -26,13 +42,13 @@ body {
   h4,
   h5,
   h6 {
-    scroll-margin-top: 66px;
+    scroll-margin-top: 74px;
   }
 }
 
 body.fixed-top-nav {
   // Add some padding for the nav-bar.
-  padding-top: 57px;
+  padding-top: 64px;
 }
 
 body.fixed-top-nav.has-hero {
@@ -58,21 +74,20 @@ body.fixed-top-nav.has-hero {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center bottom;
     z-index: 1;
   }
 
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.55);
-    z-index: 2;
+  &.hero-image-center {
+    .hero-image {
+      object-position: center center;
+    }
   }
 
   .hero-content {
     position: absolute;
     inset: 0;
-    z-index: 3;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -81,6 +96,22 @@ body.fixed-top-nav.has-hero {
     margin: 0 auto;
     padding: 0 1.5rem 2.5rem;
     color: #fff;
+  }
+
+  &.hero-align-top {
+    .hero-content {
+      justify-content: flex-start;
+      padding-top: 2.25rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  &.hero-align-center {
+    .hero-content {
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 
   .hero-title {
@@ -99,10 +130,6 @@ body.fixed-top-nav.has-hero {
     font-size: 1rem;
     letter-spacing: 0.04em;
   }
-}
-
-html[data-theme="dark"] .hero .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.65);
 }
 
 // Hide layout-level page titles when the hero already shows them

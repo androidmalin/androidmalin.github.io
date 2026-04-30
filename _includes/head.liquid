@@ -136,7 +136,10 @@
   >
 {% endif %}
 
-{% if page.images %}
+  <!-- View Transition -->
+  <meta name="view-transition" content="same-origin">
+
+  {% if page.images %}
   {% if page.images.compare %}
     <!-- Image comparison slider -->
     <link
