@@ -16,12 +16,20 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+  {% assign show_hero = true %}
+  {% if page.hero == false or page.layout == "post" %}
+    {% assign show_hero = false %}
+  {% endif %}
+
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %} {% if show_hero %}has-hero{% endif %}">
     <!-- Header -->
     {% include header.liquid %}
 
+    <!-- Hero -->
+    {% include hero.liquid %}
+
     <!-- Content -->
-    <div class="container mt-5" role="main">
+    <div class="container {% if page.hero == false %}mt-5{% else %}mt-4{% endif %}" role="main">
       {% if page.toc and page.toc.sidebar %}
         {% if page.toc.sidebar == 'right' %}
           <div class="row">

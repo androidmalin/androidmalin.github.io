@@ -4,6 +4,22 @@
 
 @use "variables" as v;
 
+// Global content transition animation
+.container[role="main"] {
+  animation: contentSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes contentSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }
@@ -26,13 +42,109 @@ body {
   h4,
   h5,
   h6 {
-    scroll-margin-top: 66px;
+    scroll-margin-top: 74px;
   }
 }
 
 body.fixed-top-nav {
   // Add some padding for the nav-bar.
-  padding-top: 57px;
+  padding-top: 64px;
+}
+
+body.fixed-top-nav.has-hero {
+  padding-top: 0 !important;
+}
+
+/******************************************************************************
+ * Hero
+ ******************************************************************************/
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 360px;
+  max-height: 640px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    z-index: 1;
+  }
+
+  &.hero-image-center {
+    .hero-image {
+      object-position: center center;
+    }
+  }
+
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    max-width: v.$max-content-width;
+    margin: 0 auto;
+    padding: 0 1.5rem 2.5rem;
+    color: #fff;
+  }
+
+  &.hero-align-top {
+    .hero-content {
+      justify-content: flex-start;
+      padding-top: 2.25rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  &.hero-align-center {
+    .hero-content {
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .hero-title {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    margin: 0.75rem 0 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+// Hide layout-level page titles when the hero already shows them
+body.has-hero .post-header .post-title,
+body.has-hero .post-header .desc,
+body.has-hero .header-bar {
+  display: none;
+}
+
+body.has-hero .post-header {
+  margin-top: 0;
+}
+
+header {
+  background-color: transparent !important;
 }
 
 body.sticky-bottom-footer {

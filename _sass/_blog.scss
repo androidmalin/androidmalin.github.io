@@ -66,9 +66,20 @@
     a {
       color: var(--global-text-color);
       text-decoration: none;
+      transition: all 0.3s ease;
+
+      h3 {
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
 
       &:hover {
         color: var(--global-theme-color);
+        opacity: 0.8;
+      }
+
+      &:active {
+        transform: scale(0.99);
       }
     }
 
@@ -101,6 +112,10 @@
 }
 
 .post {
+  .post-title {
+    animation: titleEnter 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   .post-meta {
     color: var(--global-text-color-light);
     font-size: 0.875rem;
@@ -121,6 +136,19 @@
         color: var(--global-theme-color);
       }
     }
+  }
+}
+
+@keyframes titleEnter {
+  from {
+    opacity: 0;
+    letter-spacing: -2px;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: normal;
+    filter: blur(0);
   }
 }
 
