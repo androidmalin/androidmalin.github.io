@@ -24,10 +24,13 @@ hr {
 }
 
 table {
+  border-collapse: collapse;
+
   td,
   th {
+    border: 1px solid var(--global-divider-color);
     font-size: 1rem;
-    padding: 1px 1rem 1px 0;
+    padding: 0.4rem 0.75rem;
   }
 
   th {
