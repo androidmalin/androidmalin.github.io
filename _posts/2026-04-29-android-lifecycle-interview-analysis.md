@@ -7,8 +7,6 @@ tags: [android, jetpack, lifecycle, interview]
 categories: [android]
 ---
 
-# Android Lifecycle 总结
-
 简洁结论：**Lifecycle 是 Android Jetpack 中用于描述、感知和分发组件生命周期状态的基础组件。** 它把 Activity、Fragment 等组件的生命周期抽象成统一的状态和事件模型，让业务对象可以解耦地感知生命周期变化，从而更安全地启动任务、停止任务、注册资源和释放资源。
 
 ## 1. What：它是什么？

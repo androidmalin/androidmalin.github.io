@@ -7,8 +7,6 @@ tags: [android, kotlin, coroutine, interview]
 categories: [android]
 ---
 
-# Android Coroutine
-
 简洁结论：**Coroutine 是 Kotlin 提供的轻量级并发编程模型，在 Android 中主要用于以接近同步代码的方式编写异步任务。** 它通过挂起函数、协程作用域、调度器和结构化并发，解决回调嵌套、线程切换复杂、生命周期取消困难等问题，是现代 Android 异步编程的主流方案。
 
 ## 1. What：它是什么？

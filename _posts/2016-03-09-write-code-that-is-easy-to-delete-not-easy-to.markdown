@@ -10,9 +10,6 @@ tags: []
 
 原文链接：[http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to](http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to)
 
-
-## 编写易于删除，而不是易于扩展的代码
-
 >“毫无目的地去编码，将会导致无法维护和删除” —— Jean-Paul Sartre《Programming in ANSI C》
 
 我们编写的每一行代码都应该是可维护的。为了避免写出大量的代码，我们应该构建一个可复用的软件。代码可复用的问题将在未来潜移默化地改变你的编程思想。

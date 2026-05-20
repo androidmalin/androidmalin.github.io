@@ -7,8 +7,6 @@ tags: [android, kotlin, stateflow, interview]
 categories: [android]
 ---
 
-# Android MutableStateFlow 总结
-
 简洁结论：**MutableStateFlow 是 Kotlin Coroutines Flow 体系中用于表示“可变状态流”的类型，常用于 Android ViewModel 中管理和暴露 UI 状态。** 它是热流，会始终持有一个最新值，新订阅者会立即收到当前值；它很适合表达页面状态，但不适合直接表达 Toast、导航这类一次性事件。
 
 ## 1. What：它是什么？

@@ -7,8 +7,6 @@ tags: [android, retrofit, network, interview]
 categories: [android]
 ---
 
-# Android Retrofit 总结
-
 简洁结论：**Retrofit 是 Square 开源的类型安全 HTTP API 声明框架，常用于 Android 中把 REST API 描述成 Kotlin/Java 接口。** 它负责把接口方法、注解和参数转换成 HTTP 请求，并通过 Converter 把响应体转换成业务对象；真正的网络请求通常交给 OkHttp 执行。
 
 ## 1. What：它是什么？

@@ -7,8 +7,6 @@ tags: [android, jetpack, viewmodel, interview]
 categories: [android]
 ---
 
-# Android ViewModel 总结
-
 简洁结论：**ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑的组件。** 它通常位于 UI 层和数据层之间，负责为 Activity、Fragment 或 Compose Screen 准备并暴露界面状态。它最大的价值是：在配置变化时保留状态，例如屏幕旋转导致 Activity/Fragment 重建时，ViewModel 不会立刻销毁。
 
 ## 1. What：它是什么？

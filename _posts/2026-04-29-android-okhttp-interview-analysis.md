@@ -7,8 +7,6 @@ tags: [android, okhttp, network, interview]
 categories: [android]
 ---
 
-# Android OkHttp 总结
-
 简洁结论：**OkHttp 是 Square 开源的高性能 HTTP 客户端，是 Android 网络请求体系中非常常见的底层网络库。** 它负责真正执行 HTTP 请求，提供连接复用、HTTP/2、GZIP、缓存、超时、重试、拦截器等能力。Retrofit 通常负责接口抽象，OkHttp 负责底层请求执行。
 
 ## 1. What：它是什么？
