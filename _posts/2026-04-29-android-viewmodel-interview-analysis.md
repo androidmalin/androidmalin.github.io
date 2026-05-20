@@ -477,3 +477,37 @@ ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑�
   https://developer.android.com/reference/androidx/lifecycle/SavedStateHandle
 - Android Developers: State and Jetpack Compose  
   https://developer.android.com/develop/ui/compose/state
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[ViewModel] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[屏幕级状态持有者]
+    B --> B2[UI层业务逻辑]
+
+    C --> C1[跨配置变化保留状态]
+    C --> C2[解耦Activity/Fragment]
+    C --> C3[异步任务生命周期管理]
+    C --> C4[多Fragment共享状态]
+
+    D --> D1[StateFlow/LiveData暴露状态]
+    D --> D2[viewModelScope启动协程]
+    D --> D3[Hilt依赖注入]
+    D --> D4[SavedStateHandle进程恢复]
+
+    E --> E1[ViewModelStoreOwner]
+    E --> E2[ViewModelStore缓存实例]
+    E --> E3[ViewModelProvider获取/创建]
+    E --> E4[Factory创建带参实例]
+
+    F --> F1[不能应对进程死亡]
+    F --> F2[不持有Activity/View]
+    F --> F3[不适合后台长任务]
+    F --> F4[事件需单独建模]
+```

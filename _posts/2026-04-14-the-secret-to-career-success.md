@@ -7,8 +7,6 @@ tags: [career, teamwork, growth]
 categories: [career]
 ---
 
-# 职业成功的秘诀
-
 ## 译文
 
 原文链接：[The Secret to Career Success](http://algeri-wong.com/yishan/the-secret-to-career-success.html)
@@ -131,3 +129,26 @@ categories: [career]
 ### 更贴近原意的一句话总结
 
 **帮助他人成功，往往是职业上最有效的自我成就方式之一。** 当你持续让周围的人因为你而做得更好时，你也更可能随着团队的成功而成长、被认可，并获得晋升。
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[职业成功的秘诀] --> B[核心策略]
+    A --> C[常见问题]
+    A --> D[关键收益]
+
+    B --> B1[帮助身边人取得成功]
+    B --> B2[把主要精力放在别人身上]
+    B --> B3[先把自己的工作做好]
+
+    C --> C1[会被占便宜吗]
+    C --> C2[什么时候做自己的工作]
+    C --> C3[功劳会被抢走吗]
+
+    D --> D1[投入产出比更高]
+    D --> D2[摩擦更少协作更多]
+    D --> D3[获得广泛认可]
+    D --> D4[晋升阻力更小]
+    D --> D5[工作更快乐]
+```

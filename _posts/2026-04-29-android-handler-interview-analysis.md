@@ -359,3 +359,37 @@ Handler 是 Android 消息机制中的核心类，用来向某个线程的 Messa
   https://developer.android.com/reference/android/os/Message
 - Android Developers: HandlerThread API reference  
   https://developer.android.com/reference/android/os/HandlerThread.html
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[Handler] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[Android消息机制核心类]
+    B --> B2[发送和处理Message/Runnable]
+
+    C --> C1[子线程切回主线程]
+    C --> C2[延迟任务调度]
+    C --> C3[线程间通信]
+    C --> C4[串行消息处理]
+
+    D --> D1[Handler指定Looper]
+    D --> D2[post/sendMessage]
+    D --> D3[removeCallbacksAndMessages]
+    D --> D4[HandlerThread后台线程]
+
+    E --> E1[Looper.prepare创建消息循环]
+    E --> E2[Looper.loop轮询消息]
+    E --> E3[MessageQueue按时间排序]
+    E --> E4[ThreadLocal绑定线程]
+
+    F --> F1[内存泄漏风险]
+    F --> F2[无参Handler不推荐]
+    F --> F3[postDelayed不保证精确]
+    F --> F4[现代项目优先用协程]
+```

@@ -440,3 +440,37 @@ Coroutine 是 Kotlin 提供的轻量级异步并发模型，在 Android 中主�
   https://kotlinlang.org/docs/coroutines-basics.html
 - Kotlin Documentation: Coroutine context and dispatchers  
   https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[Coroutine] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[轻量级异步并发模型]
+    B --> B2[suspend函数挂起恢复]
+
+    C --> C1[消除回调嵌套]
+    C --> C2[简化线程切换]
+    C --> C3[结构化生命周期管理]
+    C --> C4[与Jetpack生态协作]
+
+    D --> D1[viewModelScope/lifecycleScope]
+    D --> D2[withContext切换Dispatcher]
+    D --> D3[launch/async并发]
+    D --> D4[超时与取消]
+
+    E --> E1[挂起函数编译成状态机]
+    E --> E2[Continuation保存恢复点]
+    E --> E3[CoroutineContext上下文]
+    E --> E4[结构化并发父子关系]
+
+    F --> F1[不要用GlobalScope]
+    F --> F2[协程不是线程仍需选Dispatcher]
+    F --> F3[取消是协作式的]
+    F --> F4[不适合可靠后台任务]
+```

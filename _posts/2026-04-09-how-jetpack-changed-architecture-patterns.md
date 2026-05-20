@@ -7,8 +7,6 @@ tags: [android, jetpack, mvvm]
 categories: [android]
 ---
 
-# Jetpack 给架构模式带来了怎样的改变？
-
 Jetpack 和 MVVM 之间的关系，是 Android 架构演进里绕不开的一部分。
 
 MVVM 可以说是官方通过 Jetpack 带动起来的新风向。这里真正要讨论的，其实并不只是“Jetpack 是什么”，而是：Jetpack 到底给 Android 架构模式的落地，尤其是 MVVM 的落地，带来了哪些具体改变？

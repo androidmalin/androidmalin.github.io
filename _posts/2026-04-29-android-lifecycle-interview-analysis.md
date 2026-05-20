@@ -502,3 +502,37 @@ Lifecycle 是 Android Jetpack 中对组件生命周期的标准化抽象，它�
   https://developer.android.com/guide/fragments/lifecycle
 - Android Developers: ProcessLifecycleOwner API reference  
   https://developer.android.com/reference/androidx/lifecycle/ProcessLifecycleOwner
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[Lifecycle] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[生命周期状态抽象]
+    B --> B2[LifecycleOwner/LifecycleObserver]
+
+    C --> C1[解耦生命周期逻辑]
+    C --> C2[避免资源泄漏]
+    C --> C3[组件自动随生命周期启停]
+    C --> C4[减少Activity/Fragment负担]
+
+    D --> D1[DefaultLifecycleObserver]
+    D --> D2[viewLifecycleOwner]
+    D --> D3[repeatOnLifecycle]
+    D --> D4[lifecycleScope]
+
+    E --> E1[状态机 INITIALIZED->RESUMED]
+    E --> E2[事件分发 ON_CREATE/ON_START]
+    E --> E3[观察者模式]
+    E --> E4[Fragment双生命周期]
+
+    F --> F1[只描述时机不保证业务]
+    F --> F2[需区分lifecycle/viewLifecycleOwner]
+    F --> F3[不能替代ViewModel]
+    F --> F4[不能替代WorkManager/Service]
+```

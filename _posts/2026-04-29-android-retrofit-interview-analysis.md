@@ -399,3 +399,37 @@ Retrofit 是 Android 中常用的类型安全 HTTP API 框架，它通过接口�
   https://square.github.io/retrofit/configuration/
 - Retrofit API: Retrofit class  
   https://square.github.io/retrofit/2.x/retrofit/retrofit2/Retrofit.html
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[Retrofit] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[类型安全HTTP API框架]
+    B --> B2[接口+注解声明请求]
+
+    C --> C1[减少样板代码]
+    C --> C2[自动参数拼接]
+    C --> C3[自动JSON解析]
+    C --> C4[支持suspend/RxJava]
+
+    D --> D1[@GET/@POST/@PUT/@DELETE]
+    D --> D2[@Path/@Query/@Body/@Header]
+    D --> D3[Converter数据转换]
+    D --> D4[CallAdapter返回适配]
+
+    E --> E1[动态代理生成实现]
+    E --> E2[ServiceMethod缓存]
+    E --> E3[注解解析成请求]
+    E --> E4[OkHttp执行请求]
+
+    F --> F1[baseUrl写法注意]
+    F --> F2[错误体需手动解析]
+    F --> F3[不适合直接暴露给UI]
+    F --> F4[大文件上传需额外处理]
+```

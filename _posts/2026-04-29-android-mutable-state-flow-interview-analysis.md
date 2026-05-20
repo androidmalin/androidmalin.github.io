@@ -552,3 +552,37 @@ MutableStateFlow 是 Kotlin Coroutines Flow 体系中的可变状态流，常用
   https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/
 - Kotlin API: MutableStateFlow  
   https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-mutable-state-flow/
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[MutableStateFlow] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[可变状态流]
+    B --> B2[热流始终持有最新值]
+
+    C --> C1[集中管理UI状态]
+    C --> C2[单向数据流]
+    C --> C3[新订阅者立即收到最新值]
+    C --> C4[配合协程体系]
+
+    D --> D1[_uiState内部可变]
+    D --> D2[uiState对外只读]
+    D --> D3[update原子更新]
+    D --> D4[stateIn转冷流为热流]
+
+    E --> E1[热流独立存在]
+    E --> E2[equals合并重复值]
+    E --> E3[不自然完成]
+    E --> E4[线程安全update]
+
+    F --> F1[不适合一次性事件]
+    F --> F2[必须有初始值]
+    F --> F3[不感知Android生命周期]
+    F --> F4[高频更新可能丢中间状态]
+```

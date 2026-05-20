@@ -7,8 +7,6 @@ tags: [android, architecture, modularization]
 categories: [android]
 ---
 
-# 如何实现组件？
-
 理解了组件化的定义，以及它要解决的复用与隔离问题之后，接下来更关键的问题就是：组件化究竟该怎么实现？
 
 ## 先看实现路径：定义、实现、集成

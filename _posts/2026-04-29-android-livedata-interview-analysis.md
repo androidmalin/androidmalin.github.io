@@ -367,3 +367,37 @@ LiveData 是 Android Jetpack Lifecycle 组件中的一个生命周期感知型�
   https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
 - Android Developers: Fragment lifecycle  
   https://developer.android.com/guide/fragments/lifecycle
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[LiveData] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[生命周期感知数据容器]
+    B --> B2[observable data holder]
+
+    C --> C1[避免页面销毁后回调]
+    C --> C2[自动移除观察者]
+    C --> C3[后台回前台收到最新值]
+    C --> C4[简化生命周期管理]
+
+    D --> D1[MutableLiveData内部可变]
+    D --> D2[LiveData对外只读]
+    D --> D3[observe绑定LifecycleOwner]
+    D --> D4[setValue/postValue更新]
+
+    E --> E1[观察者模式]
+    E --> E2[Lifecycle状态判断]
+    E --> E3[STARTED/RESUMED才分发]
+    E --> E4[DESTROYED自动移除]
+
+    F --> F1[不适合复杂异步流]
+    F --> F2[一次性事件粘性问题]
+    F --> F3[postValue可能合并更新]
+    F --> F4[不适合数据层通用方案]
+```

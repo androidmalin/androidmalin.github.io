@@ -363,3 +363,37 @@ OkHttp 是 Android 中常用的高性能 HTTP 客户端，负责真正执行 HTT
   https://square.github.io/okhttp/features/connections/
 - OkHttp: Caching  
   https://square.github.io/okhttp/features/caching/
+
+## 思维导图
+
+```mermaid
+flowchart LR
+    A[OkHttp] --> B[What]
+    A --> C[Why]
+    A --> D[How]
+    A --> E[Principle]
+    A --> F[Trade-off]
+
+    B --> B1[高性能HTTP客户端]
+    B --> B2[Android网络栈底层执行]
+
+    C --> C1[连接复用减少握手]
+    C --> C2[HTTP/2多路复用]
+    C --> C3[GZIP透明压缩]
+    C --> C4[拦截器统一处理]
+
+    D --> D1[OkHttpClient全局复用]
+    D --> D2[同步execute]
+    D --> D3[异步enqueue]
+    D --> D4[拦截器链配置]
+
+    E --> E1[Call表示完整请求]
+    E --> E2[Dispatcher管理并发]
+    E --> E3[拦截器责任链]
+    E --> E4[ConnectionPool连接复用]
+
+    F --> F1[不要频繁创建Client]
+    F --> F2[ResponseBody必须关闭]
+    F --> F3[回调不在主线程]
+    F --> F4[缓存依赖HTTP语义]
+```
