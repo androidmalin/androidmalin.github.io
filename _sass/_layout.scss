@@ -19,7 +19,7 @@ html {
 body {
   padding-bottom: 0;
   color: var(--global-text-color);
-  background-color: var(--global-bg-color);
+  background-color: var(--global-page-bg-color);
   font-family: -apple-system, "system-ui", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "MiSans L3", "Segoe UI", sans-serif;
   font-weight: 400;
   text-autospace: normal;
@@ -45,7 +45,7 @@ body.sticky-bottom-footer {
 }
 
 .container {
-  max-width: v.$max-content-width;
+  max-width: v.$max-content-width !important;
 }
 
 // Profile
