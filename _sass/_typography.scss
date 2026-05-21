@@ -25,12 +25,18 @@ hr {
 
 table {
   border-collapse: collapse;
+  margin-block: 1.5em;
+  height: auto;
+  line-height: inherit;
 
   td,
   th {
     border: 1px solid var(--global-divider-color);
-    font-size: 1rem;
-    padding: 0.4rem 0.75rem;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: 1.6;
+    padding: 0.5rem 0.85rem;
   }
 
   th {
@@ -139,13 +145,49 @@ blockquote {
 }
 
 article.post-content {
-  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans SC", Arial, sans-serif;
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-family: -apple-system, "system-ui", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "MiSans L3", "Segoe UI", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.75;
+  word-break: break-word;
 }
 
 article.post-content p,
 article.post-content li {
   font-size: inherit;
   line-height: inherit;
+  margin-block: 0.8em;
 }
+
+/* 文章页全局 baseline：覆盖 MDB 的 font-weight: 300，作用于 .post-content 之外的区域（推荐阅读、引用、评论等） */
+.post {
+  font-weight: 400;
+}
+
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* 文章正文区的标题：渐进字重 + 字号层级 + 上下间距（特异性 > .post h1-h6，会覆盖上面规则） */
+article.post-content h1,
+article.post-content h2,
+article.post-content h3,
+article.post-content h4,
+article.post-content h5,
+article.post-content h6 {
+  margin-block: 1.5em 0.6em;
+}
+
+article.post-content h1 { font-size: 2em;    font-weight: 600; }
+article.post-content h2 { font-size: 1.6em;  font-weight: 600; }
+article.post-content h3 { font-size: 1.35em; font-weight: 500; }
+article.post-content h4 { font-size: 1.15em; font-weight: 500; }
+article.post-content h5 { font-size: 1em;    font-weight: 500; }
+article.post-content h6 { font-size: 0.9em;  font-weight: 500; }
