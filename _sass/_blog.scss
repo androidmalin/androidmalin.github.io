@@ -9,6 +9,52 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
+/* 大屏笔电（≤1200px）：留白略收 */
+@media (max-width: 1200px) {
+  .post {
+    padding: 3rem 3.5rem;
+  }
+}
+
+/* 平板（≤992px）：留白进一步收 */
+@media (max-width: 992px) {
+  .post {
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* 小平板 / 大手机（≤768px）：去掉横向多余留白 */
+@media (max-width: 768px) {
+  .post {
+    padding: 2rem 1.25rem;
+  }
+}
+
+/* 手机（≤576px）：满铺卡片、最小留白、降低字号 */
+@media (max-width: 576px) {
+  .post {
+    padding: 1.5rem 1rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  article.post-content {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  article.post-content h1 { font-size: 1.6em; }
+  article.post-content h2 { font-size: 1.4em; }
+  article.post-content h3 { font-size: 1.2em; }
+
+  article.post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .header-bar {
   border-bottom: 1px solid var(--global-divider-color);
   text-align: center;
