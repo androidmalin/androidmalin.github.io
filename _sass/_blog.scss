@@ -31,12 +31,17 @@
   }
 }
 
-/* 手机（≤576px）：满铺卡片、最小留白、降低字号 */
+/* 手机（≤576px）：完全去掉卡片视觉 —— 满铺、无圆角、无阴影、与 body 同色 */
 @media (max-width: 576px) {
+  body {
+    background-color: var(--global-bg-color);
+  }
+
   .post {
     padding: 1.5rem 1rem;
     border-radius: 0;
     box-shadow: none;
+    background-color: transparent;
   }
 
   article.post-content {
