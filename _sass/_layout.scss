@@ -35,8 +35,13 @@ body {
 }
 
 body.fixed-top-nav {
-  // Add some padding for the nav-bar.
-  padding-top: 57px;
+  // 匹配 navbar 高度
+  padding-top: 64px;
+}
+
+// 主内容容器与 navbar 的间距 = 10px（覆盖 Bootstrap 的 mt-5 = 48px）
+body > .container.mt-5 {
+  margin-top: 10px !important;
 }
 
 body.sticky-bottom-footer {

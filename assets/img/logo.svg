@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="420" height="280" viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="animated happy android robot logo">
+  <title>Animated Happy Android Robot Logo</title>
+  <desc>Transparent animated SVG showing a slim happy Android-style robot head with gentle floating motion, antenna wiggle, eye blink, and pulsing glow.</desc>
+
+  <defs>
+    <linearGradient id="androidBody" x1="35" y1="40" x2="395" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="28%" stop-color="#A9FFF0"/>
+      <stop offset="54%" stop-color="#3DDC84"/>
+      <stop offset="78%" stop-color="#18B86C"/>
+      <stop offset="100%" stop-color="#F4FFF8"/>
+    </linearGradient>
+
+    <radialGradient id="domeShine" cx="32%" cy="20%" r="78%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.96"/>
+      <stop offset="24%" stop-color="#EFFFF7" stop-opacity="0.75"/>
+      <stop offset="56%" stop-color="#3DDC84" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#00130B" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="antennaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#B8FFF1"/>
+      <stop offset="70%" stop-color="#3DDC84"/>
+      <stop offset="100%" stop-color="#0F8E57"/>
+    </linearGradient>
+
+    <radialGradient id="eyeGloss" cx="35%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="18%" stop-color="#B7F8FF"/>
+      <stop offset="42%" stop-color="#0D86FF"/>
+      <stop offset="74%" stop-color="#07101C"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+
+    <filter id="softGlow" x="-35%" y="-40%" width="170%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.24
+                0 0 0 0 0.86
+                0 0 0 0 0.52
+                0 0 0 0.70 0" result="greenGlow"/>
+      <feMerge>
+        <feMergeNode in="greenGlow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- transparent background -->
+  <ellipse cx="210" cy="255" rx="145" ry="14" fill="#3DDC84" opacity="0.16" filter="url(#softGlow)">
+    <animate attributeName="opacity" values="0.10;0.20;0.10" dur="2.8s" repeatCount="indefinite"/>
+    <animate attributeName="rx" values="138;150;138" dur="2.8s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <g id="robot" filter="url(#softGlow)">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -4; 0 0; 0 3; 0 0" dur="3.2s" repeatCount="indefinite"/>
+
+    <!-- left antenna -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0 150 96; -4 150 96; 0 150 96; 3 150 96; 0 150 96" dur="2.6s" repeatCount="indefinite"/>
+      <line x1="150" y1="96" x2="102" y2="30" stroke="url(#antennaGrad)" stroke-width="25" stroke-linecap="round"/>
+      <line x1="144" y1="90" x2="99" y2="28" stroke="#FFFFFF" stroke-opacity="0.52" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <!-- right antenna -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0 344 96; 4 344 96; 0 344 96; -3 344 96; 0 344 96" dur="2.6s" repeatCount="indefinite"/>
+      <line x1="344" y1="96" x2="392" y2="30" stroke="url(#antennaGrad)" stroke-width="25" stroke-linecap="round"/>
+      <line x1="350" y1="90" x2="395" y2="28" stroke="#FFFFFF" stroke-opacity="0.52" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <!-- dome -->
+    <path d="M 72 225
+             C 72 132, 148 73, 247 73
+             C 346 73, 422 132, 422 225
+             L 422 242
+             C 422 256, 411 267, 397 267
+             L 97 267
+             C 83 267, 72 256, 72 242
+             Z"
+          fill="url(#androidBody)" stroke="#F2FFF8" stroke-opacity="0.72" stroke-width="4"/>
+
+    <!-- shine -->
+    <path d="M 94 214
+             C 111 136, 177 96, 248 96
+             C 316 96, 375 126, 404 185
+             C 362 165, 307 152, 247 152
+             C 187 152, 133 175, 94 214 Z"
+          fill="url(#domeShine)" opacity="0.94">
+      <animate attributeName="opacity" values="0.86;0.98;0.86" dur="2.4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- lower rim -->
+    <path d="M 88 248 C 162 262, 332 262, 406 248"
+          fill="none" stroke="#0B331F" stroke-opacity="0.56" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 88 249 C 164 260, 334 260, 406 249"
+          fill="none" stroke="#B5FFE1" stroke-opacity="0.82" stroke-width="2.4" stroke-linecap="round">
+      <animate attributeName="stroke-opacity" values="0.65;0.95;0.65" dur="2.6s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- eyes with blink animation -->
+    <g>
+      <ellipse cx="184" cy="188" rx="24" ry="28" fill="url(#eyeGloss)" stroke="#D3FBFF" stroke-opacity="0.70" stroke-width="3">
+        <animate attributeName="ry" values="28;28;28;4;28;28" keyTimes="0;0.40;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="175" cy="177" r="6" fill="#FFFFFF" opacity="0.96">
+        <animate attributeName="cy" values="177;177;186;177;177" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.96;0.96;0.2;0.96;0.96" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="194" cy="199" r="5" fill="#62E9FF" opacity="0.76">
+        <animate attributeName="opacity" values="0.76;0.76;0.15;0.76;0.76" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <g>
+      <ellipse cx="310" cy="188" rx="24" ry="28" fill="url(#eyeGloss)" stroke="#D3FBFF" stroke-opacity="0.70" stroke-width="3">
+        <animate attributeName="ry" values="28;28;28;4;28;28" keyTimes="0;0.40;0.44;0.48;0.52;1" dur="4.4s" begin="0s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="301" cy="177" r="6" fill="#FFFFFF" opacity="0.96">
+        <animate attributeName="cy" values="177;177;186;177;177" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.96;0.96;0.2;0.96;0.96" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="320" cy="199" r="5" fill="#62E9FF" opacity="0.76">
+        <animate attributeName="opacity" values="0.76;0.76;0.15;0.76;0.76" keyTimes="0;0.44;0.48;0.52;1" dur="4.4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- smile -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 1; 0 0; 0 -1; 0 0" dur="3.2s" repeatCount="indefinite"/>
+      <path d="M 222 217 C 233 234, 262 234, 273 217"
+            fill="none" stroke="#04150C" stroke-width="9" stroke-linecap="round"/>
+      <path d="M 225 215 C 235 228, 260 228, 270 215"
+            fill="none" stroke="#FFFFFF" stroke-opacity="0.34" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
