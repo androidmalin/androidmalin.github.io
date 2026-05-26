@@ -7,7 +7,7 @@ tags: [android, kotlin, stateflow, interview]
 categories: [android]
 ---
 
-简洁结论：**MutableStateFlow 是 Kotlin Coroutines Flow 体系中用于表示“可变状态流”的类型，常用于 Android ViewModel 中管理和暴露 UI 状态。** 它是热流，会始终持有一个最新值，新订阅者会立即收到当前值；它很适合表达页面状态，但不适合直接表达 Toast、导航这类一次性事件。
+简洁结论：**MutableStateFlow 是 Kotlin Coroutines Flow 体系中用于表示“可变状态流”的类型，常用于 Android ViewModel 中管理和暴露 UI 状态。** 它是热流，会始终持有一个最新值，新订阅者会立即收到当前值；它很适合表达页面状态。对于 Toast、导航这类一次性 UI 动作，不能简单把它们当作持久状态长期保存在 StateFlow 中，优先按 Android 架构指南把 ViewModel 产生的动作归约为可消费的 UI state，或让 UI 直接处理纯 UI 行为。
 
 ## 1. What：它是什么？
 
@@ -77,7 +77,7 @@ Activity / Fragment / Compose
 - 配合 `viewModelScope` 可以自然融入协程体系。
 - 配合 Compose 和 `collectAsStateWithLifecycle()` 使用很自然。
 
-相比传统回调或普通变量，`MutableStateFlow` 更适合表达“状态随时间变化”的场景。
+相比传统回调或普通变量，`MutableStateFlow` 更适合表达“状态随时间变化”的场景。需要注意的是，配置变化后状态能继续存在，主要来自 ViewModel 作用域本身会跨 Activity/Fragment recreation 保留；`MutableStateFlow` 负责保存和分发当前状态值。
 
 ## 3. How：它怎么使用？
 
@@ -208,6 +208,8 @@ fun UserRoute(
 
 Compose 中不建议在普通 Composable 里直接启动无生命周期控制的 collect。`collectAsStateWithLifecycle()` 会把 Flow 转换成 Compose `State`，并且结合 Lifecycle 控制收集。
 
+使用这个 API 需要添加 `androidx.lifecycle:lifecycle-runtime-compose` 依赖。对于非 Android 的 Compose 代码，可以使用 Compose runtime 提供的 `collectAsState()`，但它不具备 Android Lifecycle 感知能力。
+
 ### 3.5 使用 value 和 update 更新状态
 
 最简单的更新方式：
@@ -253,7 +255,7 @@ val uiState: StateFlow<UserUiState> =
 
 普通 Flow 默认是 cold flow，也就是冷流。冷流只有被 collect 时才执行上游逻辑。
 
-`StateFlow` 是 hot flow，也就是热流。它的状态独立于 collector 存在，即使当前没有 collector，它也仍然持有最新值。
+`StateFlow` 是 hot flow，也就是热流。它的状态独立于 collector 存在，即使当前没有 collector，只要还有从 GC root 可达的引用，它也仍然持有最新值。
 
 ```text
 MutableStateFlow
@@ -357,7 +359,7 @@ _uiState.update { current ->
 
 `MutableStateFlow` 很适合 UI 状态管理，但它不适合所有场景。
 
-### 5.1 不适合一次性事件
+### 5.1 不适合把一次性 UI 动作当作持久状态
 
 `StateFlow` 会保存最新值，新 collector 会立即收到当前值。因此它不适合直接表示一次性事件。
 
@@ -371,13 +373,13 @@ _uiState.update { current ->
 
 如果用 StateFlow 表示导航事件，页面旋转后新 Fragment 重新收集，可能再次收到旧事件，导致重复跳转。
 
-更合适的选择是：
+按 Android 官方 UI events 指南，优先思考这个动作应该如何影响 UI state：
 
-- `MutableSharedFlow`
-- `Channel`
-- 明确的事件消费模型
+- 如果事件来自 UI 且只涉及 UI 行为，例如用户点击帮助按钮后导航，UI 可以直接调用导航逻辑。
+- 如果事件需要 ViewModel 执行业务逻辑后触发 UI 动作，ViewModel 应暴露新的 UI state，UI 根据状态执行动作，并在消费后通知 ViewModel 更新状态。
+- 如果确实使用 `MutableSharedFlow`、`Channel` 或事件包装类，要明确生产者和消费者生命周期、缓冲、重放和丢失语义，不要把它们当成默认银弹。
 
-面试中可以说：**StateFlow 适合状态，SharedFlow 更适合事件。**
+面试中可以说：**StateFlow 适合可重复渲染的状态；一次性 UI 动作要先按 UI state 建模，必要时再谨慎选择 SharedFlow、Channel 或事件消费模型。**
 
 ### 5.2 必须有初始值
 
@@ -480,7 +482,7 @@ SharingStarted.WhileSubscribed(5_000)
 
 由于 StateFlow 总是有初始值，测试时通常会先收到初始状态。
 
-如果测试的是状态变化，需要明确断言初始值和后续值。使用 `stateIn` 时，还要注意上游启动策略，否则测试中可能因为没有 collector 而不上游不启动。
+如果测试的是状态变化，需要明确断言初始值和后续值。使用 `stateIn` 时，还要注意上游启动策略，否则测试中可能因为没有 collector 而导致上游不启动。
 
 ### 5.9 类似技术对比
 
@@ -509,13 +511,13 @@ ViewModel 外部：StateFlow
 
 **StateFlow vs SharedFlow**
 
-`StateFlow` 用于状态，`SharedFlow` 更适合事件。
+`StateFlow` 用于状态，`SharedFlow` 是更通用、可配置的热流。它可以用于多播信号或事件，但在 ViewModel 向 UI 发出一次性动作时，仍应优先检查是否能建模为 UI state。
 
 `StateFlow` 有当前值，新订阅者会立即收到最新值；`SharedFlow` 可以配置 replay、buffer，更适合多播事件。
 
 **StateFlow vs Channel**
 
-`Channel` 更像协程之间的一次性消息通道，适合点对点事件。
+`Channel` 更像协程之间的一次性消息通道，适合点对点消息。但如果 ViewModel 作为生产者、UI 作为消费者，二者生命周期不同，Channel 不天然保证 UI 一定能收到并处理消息。
 
 `StateFlow` 更像状态容器，适合任何时候读取当前状态。
 
@@ -538,16 +540,20 @@ Composable: collectAsStateWithLifecycle()
 
 ## 面试口述版
 
-MutableStateFlow 是 Kotlin Coroutines Flow 体系中的可变状态流，常用于 Android ViewModel 中管理 UI 状态。它是 StateFlow 的可写版本，必须有初始值，会始终保存当前最新状态，新 collector 订阅时会立即收到最新值。使用上一般是在 ViewModel 内部定义 `private val _uiState = MutableStateFlow(...)`，对外通过 `asStateFlow()` 暴露只读的 `StateFlow`，Activity 或 Fragment 使用 `repeatOnLifecycle` 收集，Compose 中使用 `collectAsStateWithLifecycle()`。原理上，它是一个 hot flow，本身独立于 collector 存在，并通过最新值缓存和 equals 合并来分发状态变化。它很适合表达 UI 状态，例如加载、成功、失败、列表数据等，但不适合表达 Toast、导航这类一次性事件，因为新订阅者会收到最新值，可能导致事件重复消费。相比 LiveData，StateFlow 更适合协程和 Compose 体系，但它本身不感知 Android 生命周期；相比 SharedFlow，StateFlow 适合状态，SharedFlow 更适合事件。
+MutableStateFlow 是 Kotlin Coroutines Flow 体系中的可变状态流，常用于 Android ViewModel 中管理 UI 状态。它是 StateFlow 的可写版本，必须有初始值，会始终保存当前最新状态，新 collector 订阅时会立即收到最新值。使用上一般是在 ViewModel 内部定义 `private val _uiState = MutableStateFlow(...)`，对外通过 `asStateFlow()` 暴露只读的 `StateFlow`，Activity 或 Fragment 使用 `repeatOnLifecycle` 收集，Compose 中使用 `collectAsStateWithLifecycle()`。原理上，它是一个 hot flow，只要仍被引用就独立于 collector 存在，并通过最新值缓存和 equals 合并来分发状态变化。它很适合表达 UI 状态，例如加载、成功、失败、列表数据等，但不适合把 Toast、导航这类一次性 UI 动作简单保存成长期状态，因为新订阅者会收到最新值，可能导致重复消费。按 Android 架构指南，ViewModel 产生的 UI 动作应优先转成 UI state，由 UI 消费后再回写状态；只有明确生命周期和缓冲语义时，才谨慎使用 SharedFlow、Channel 或事件包装。相比 LiveData，StateFlow 更适合协程和 Compose 体系，但它本身不感知 Android 生命周期；相比 SharedFlow，StateFlow 适合状态，SharedFlow 更通用、可配置。
 
 ## 参考资料
 
 - Android Developers: StateFlow and SharedFlow  
   https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
+- Android Developers: UI events  
+  https://developer.android.com/topic/architecture/ui-layer/events
 - Android Developers: repeatOnLifecycle API reference  
   https://developer.android.com/reference/androidx/lifecycle/RepeatOnLifecycleKt
 - Android Developers: State and Jetpack Compose  
   https://developer.android.com/develop/ui/compose/state
+- Android Developers: Testing Kotlin flows on Android  
+  https://developer.android.com/kotlin/flow/test
 - Kotlin API: StateFlow  
   https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/
 - Kotlin API: MutableStateFlow  
@@ -581,7 +587,7 @@ flowchart LR
     E --> E3[不自然完成]
     E --> E4[线程安全update]
 
-    F --> F1[不适合一次性事件]
+    F --> F1[不适合直接保存一次性动作]
     F --> F2[必须有初始值]
     F --> F3[不感知Android生命周期]
     F --> F4[高频更新可能丢中间状态]

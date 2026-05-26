@@ -7,11 +7,13 @@ tags: [android, jetpack, viewmodel, interview]
 categories: [android]
 ---
 
-简洁结论：**ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑的组件。** 它通常位于 UI 层和数据层之间，负责为 Activity、Fragment 或 Compose Screen 准备并暴露界面状态。它最大的价值是：在配置变化时保留状态，例如屏幕旋转导致 Activity/Fragment 重建时，ViewModel 不会立刻销毁。
+简洁结论：**ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑的组件。** 它通常位于 UI 层和数据层之间，负责为 Activity、Fragment 或 Compose Screen 准备并暴露界面状态。它最大的价值是：在配置变化时保留状态，例如屏幕旋转导致 Activity/Fragment 重建时，绑定到同一作用域的 ViewModel 不会立刻销毁。
 
 ## 1. What：它是什么？
 
 ViewModel 是 Jetpack Architecture Components 中的一个 **屏幕级状态持有者**，官方现在也会把它描述为 UI 层中的业务逻辑或屏幕级状态持有者。
+
+严格地说，Compose 本身不是一个独立的 `ViewModelStoreOwner`。在 Compose 中获取 ViewModel 时，通常还是依赖 Activity、Fragment、Navigation destination 或 Navigation graph 提供的 `ViewModelStoreOwner`；所谓 “Compose Screen 的 ViewModel”，指的是这个屏幕对应作用域下的 ViewModel。
 
 它通常负责：
 
@@ -25,7 +27,7 @@ ViewModel 是 Jetpack Architecture Components 中的一个 **屏幕级状态持�
 典型结构是：
 
 ```text
-Activity / Fragment / Compose
+Activity / Fragment / Navigation destination / Compose screen
         ↓ observe / collect
 ViewModel
         ↓ call
@@ -218,9 +220,11 @@ val viewModel: UserViewModel = hiltViewModel()
 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 ```
 
+如果使用 AndroidX Hilt 1.3.0 或更高版本，`hiltViewModel()` 已迁移到 `androidx.hilt:hilt-lifecycle-viewmodel-compose` artifact 和 `androidx.hilt.lifecycle.viewmodel.compose` package；旧的 `androidx.hilt.navigation.compose.hiltViewModel` 仍常见于 Navigation Compose 示例，但新项目应按当前依赖选择正确 import。
+
 ### 3.6 使用 SavedStateHandle
 
-ViewModel 默认只能跨配置变化保留状态，不能天然应对系统杀进程。对于少量需要恢复的关键状态，可以使用 `SavedStateHandle`。
+ViewModel 默认只能跨配置变化保留内存中的实例状态，不能保留 ViewModel 实例本身来应对系统杀进程。对于少量需要恢复的关键状态，可以使用 `SavedStateHandle`。
 
 ```kotlin
 @HiltViewModel
@@ -246,6 +250,8 @@ class SearchViewModel @Inject constructor(
 
 不适合放大对象、Bitmap、完整列表数据或复杂业务缓存。
 
+还要注意，保存状态和任务栈相关。如果用户主动从最近任务中移除应用、强制停止应用，或系统无法恢复原任务栈，`SavedStateHandle` 也不应该被当作可靠持久化存储；需要长期保存的数据应放到数据库、DataStore、文件或后端。
+
 ## 4. Principle：它的核心原理是什么？
 
 ViewModel 的核心原理可以概括为：**ViewModelStoreOwner + ViewModelStore + ViewModelProvider + Factory。**
@@ -265,8 +271,8 @@ ViewModel 会绑定到某个作用域上。这个作用域决定了 ViewModel �
 例如：
 
 - Activity 范围的 ViewModel，在 Activity 真正 finish 时清除。
-- Fragment 范围的 ViewModel，在 Fragment 被移除或 detach 后清除。
-- Navigation 目的地或导航图范围的 ViewModel，在对应 back stack entry 出栈后清除。
+- Fragment 范围的 ViewModel，在 Fragment 被永久移除并从 `FragmentManager` detach 后清除；`onDestroyView()` 只代表 Fragment 的 View 生命周期结束，不等于 Fragment 作用域 ViewModel 被清除。
+- Navigation 目的地或导航图范围的 ViewModel，在对应 `NavBackStackEntry` 从 back stack 移除后清除。
 
 ### 4.2 ViewModelStore
 
@@ -336,7 +342,7 @@ ViewModel 可以跨配置变化保留状态，但系统杀进程后，ViewModel 
 - `onSaveInstanceState`
 - Compose 中的 `rememberSaveable`
 
-如果是业务数据，应该依赖数据库、磁盘缓存或 Repository 重新加载。
+这些机制适合保存少量 UI 状态，且恢复能力取决于 saved instance state 和任务栈是否还可恢复。如果是业务数据，应该依赖数据库、磁盘缓存或 Repository 重新加载。
 
 ### 5.2 不要持有 Activity、Fragment、View 或 Binding
 
@@ -435,7 +441,7 @@ Activity/Fragment 字段会随 UI 控制器重建而丢失；ViewModel 可以跨
 
 **ViewModel vs SavedStateHandle**
 
-ViewModel 保存内存中的 UI 状态，主要应对配置变化。`SavedStateHandle` 保存少量可恢复状态，可以辅助应对系统杀进程。
+ViewModel 保存内存中的 UI 状态，主要应对配置变化。`SavedStateHandle` 保存少量可恢复状态，可以辅助应对系统发起的进程死亡，但不替代持久化存储。
 
 **ViewModel vs Repository**
 
@@ -463,7 +469,7 @@ Compose 中有时可以用普通状态持有类管理复杂组件状态。普通
 
 ## 面试口述版
 
-ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑的组件，通常作为 Activity、Fragment 或 Compose Screen 的状态持有者。它解决的核心问题是配置变化导致的状态丢失，以及 Activity/Fragment 直接承担太多状态管理和业务调用的问题。使用上一般是在 ViewModel 中暴露 `StateFlow` 或 `LiveData`，Activity/Fragment 负责观察或收集状态并渲染 UI，真正的数据获取交给 Repository 或 UseCase。原理上，ViewModel 会绑定到一个 `ViewModelStoreOwner`，比如 Activity、Fragment 或 Navigation BackStackEntry，实例存放在 `ViewModelStore` 中，由 `ViewModelProvider` 获取或创建。配置变化时 UI 控制器会重建，但 `ViewModelStore` 中的 ViewModel 可以保留；当作用域真正结束时，ViewModel 会被清理并调用 `onCleared()`，`viewModelScope` 也会取消。它的局限是不能天然应对系统杀进程，不能持有 Activity、Fragment、View 或 Binding，也不应该承担数据层职责。少量可恢复状态可以配合 `SavedStateHandle`，复杂业务逻辑应放到 UseCase 或 Repository，长期后台任务则应该考虑 WorkManager 或 Service。
+ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑的组件，通常作为 Activity、Fragment、Navigation destination 或 Compose Screen 的状态持有者。Compose 本身不直接拥有 ViewModel，实际作用域来自 Activity、Fragment、`NavBackStackEntry` 等 `ViewModelStoreOwner`。它解决的核心问题是配置变化导致的状态丢失，以及 Activity/Fragment 直接承担太多状态管理和业务调用的问题。使用上一般是在 ViewModel 中暴露 `StateFlow` 或 `LiveData`，Activity/Fragment/Compose 负责观察或收集状态并渲染 UI，真正的数据获取交给 Repository 或 UseCase。原理上，ViewModel 会绑定到一个 `ViewModelStoreOwner`，比如 Activity、Fragment 或 Navigation BackStackEntry，实例存放在 `ViewModelStore` 中，由 `ViewModelProvider` 获取或创建。配置变化时 UI 控制器会重建，但 `ViewModelStore` 中的 ViewModel 可以保留；当作用域真正结束时，ViewModel 会被清理并调用 `onCleared()`，`viewModelScope` 也会取消。它的局限是不能保留 ViewModel 实例来应对系统杀进程，不能持有 Activity、Fragment、View 或 Binding，也不应该承担数据层职责。少量可恢复状态可以配合 `SavedStateHandle`，长期业务数据应持久化，复杂业务逻辑应放到 UseCase 或 Repository，长期后台任务则应该考虑 WorkManager 或 Service。
 
 ## 参考资料
 
@@ -475,6 +481,10 @@ ViewModel 是 Android Jetpack 中用于管理 UI 状态和屏幕级业务逻辑�
   https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-savedstate
 - Android Developers: SavedStateHandle API reference  
   https://developer.android.com/reference/androidx/lifecycle/SavedStateHandle
+- Android Developers: State holders and UI state  
+  https://developer.android.com/topic/architecture/ui-layer/stateholders
+- Android Developers: Hilt release notes  
+  https://developer.android.com/jetpack/androidx/releases/hilt
 - Android Developers: State and Jetpack Compose  
   https://developer.android.com/develop/ui/compose/state
 
