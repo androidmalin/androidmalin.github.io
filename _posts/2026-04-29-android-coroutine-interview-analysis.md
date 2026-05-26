@@ -32,11 +32,11 @@ Coroutine，中文通常叫协程，是一种可以挂起和恢复的计算任�
 
 Coroutine 主要解决 Android 异步编程复杂、线程切换繁琐、生命周期管理困难的问题。
 
-在 Android 中，很多任务不能在主线程执行：
+在 Android 中，耗时或阻塞任务不能在主线程执行：
 
-- 网络请求。
-- 数据库读写。
-- 文件读写。
+- 阻塞式网络请求。
+- 阻塞式数据库读写。
+- 阻塞式文件读写。
 - 图片处理。
 - 加密解密。
 - 数据计算。
@@ -128,9 +128,11 @@ interface UserApi {
 }
 ```
 
+Android 官方建议数据层和业务层暴露的 `suspend` 函数应该是 main-safe：调用方可以从主线程调用它，函数内部负责把长时间阻塞工作切到合适的 Dispatcher。
+
 ### 3.3 使用 withContext 切换线程
 
-CPU 密集型任务适合 `Dispatchers.Default`，IO 密集型任务适合 `Dispatchers.IO`：
+CPU 密集型任务适合 `Dispatchers.Default`，阻塞式 IO 任务适合 `Dispatchers.IO`：
 
 ```kotlin
 suspend fun loadFile(): String = withContext(Dispatchers.IO) {
@@ -140,9 +142,11 @@ suspend fun loadFile(): String = withContext(Dispatchers.IO) {
 
 面试中可以强调：**不要在主线程做耗时任务，协程不是让耗时任务变快，而是让线程使用更合理、异步代码更清晰。**
 
+示例为了简洁直接使用 `Dispatchers.IO`。实际项目中，Repository 或 UseCase 更适合注入 Dispatcher，方便测试替换。
+
 ### 3.4 在 Activity/Fragment 中使用 lifecycleScope
 
-如果任务和页面生命周期绑定，可以用 `lifecycleScope`：
+如果任务和页面生命周期绑定，可以用 `lifecycleScope`，前提是被调用的 `suspend` 函数是 main-safe：
 
 ```kotlin
 class UserActivity : AppCompatActivity() {
@@ -257,13 +261,15 @@ suspend 函数
 - `Job`：控制协程生命周期。
 - `Dispatcher`：控制协程在哪执行。
 - `CoroutineName`：调试用名称。
-- `CoroutineExceptionHandler`：处理未捕获异常。
+- `CoroutineExceptionHandler`：处理根协程未捕获异常，不能当作普通 `try-catch` 的替代。
 
 协程启动时会继承父协程上下文，也可以局部覆盖：
 
 ```kotlin
-viewModelScope.launch(Dispatchers.IO) {
-    repository.refresh()
+viewModelScope.launch(CoroutineName("refresh")) {
+    withContext(ioDispatcher) {
+        repository.refresh()
+    }
 }
 ```
 
@@ -272,7 +278,7 @@ viewModelScope.launch(Dispatchers.IO) {
 常见调度器：
 
 - `Dispatchers.Main`：主线程，适合更新 UI。
-- `Dispatchers.IO`：IO 线程池，适合网络、数据库、文件。
+- `Dispatchers.IO`：IO 线程池，适合阻塞式网络、数据库、文件等 IO。
 - `Dispatchers.Default`：默认线程池，适合 CPU 密集型任务。
 - `Dispatchers.Unconfined`：不限制线程，Android 业务代码中很少直接使用。
 
@@ -318,7 +324,7 @@ Coroutine 很强，但使用不当也容易出问题。
 
 ### 5.1 不要使用 GlobalScope
 
-`GlobalScope` 的生命周期和应用进程接近，不跟随页面或业务作用域取消。
+`GlobalScope` 会创建不绑定调用方生命周期的全局根协程，不跟随页面、ViewModel 或业务作用域取消。
 
 错误倾向：
 
@@ -363,9 +369,9 @@ while (isActive) {
 
 ### 5.4 异常传播容易误解
 
-`launch` 中未捕获异常会向父协程传播；`async` 的异常通常在 `await()` 时暴露。
+`launch` 中未捕获异常会向父协程传播；`async` 会把异常保存到 `Deferred`，`await()` 会重新抛出这个异常。但如果 `async` 是普通父作用域里的子协程，失败仍会取消父协程和兄弟协程；只有根协程或监督作用域下的行为不同。
 
-常见坑是以为给子协程加 `try-catch` 或 `CoroutineExceptionHandler` 就能处理所有异常，但结构化并发下异常传播和作用域关系有关。
+常见坑是以为给子协程加 `CoroutineExceptionHandler` 就能处理所有异常，但结构化并发下异常传播和作用域关系有关。需要恢复业务流程的异常，通常应该在协程体内用 `try-catch` 或 `runCatching` 处理。
 
 面试中可以说：**协程异常要结合 Job 层级、launch/async、supervisorScope 一起理解。**
 
@@ -428,7 +434,7 @@ Coroutine 是异步编程模型；WorkManager 是可靠后台任务调度框架�
 
 ## 面试口述版
 
-Coroutine 是 Kotlin 提供的轻量级异步并发模型，在 Android 中主要用于网络请求、数据库操作、文件读写和并发任务编排。它解决了传统回调、Thread、Handler、AsyncTask 带来的代码嵌套、线程切换复杂和生命周期取消困难的问题。使用上通常在 ViewModel 中通过 `viewModelScope.launch` 启动页面相关任务，在 Repository 中暴露 `suspend` 函数，用 `withContext(Dispatchers.IO)` 执行 IO 操作，UI 层收集 Flow 时配合 `repeatOnLifecycle`。原理上，挂起函数会被编译成状态机，通过 `Continuation` 保存恢复点；协程上下文里包含 `Job` 和 `Dispatcher`，`Job` 管理生命周期，`Dispatcher` 决定运行线程；结构化并发保证子协程受父协程管理。它的局限是协程不是线程，耗时任务仍然要选对调度器；取消是协作式的；`GlobalScope` 容易造成泄漏；可靠后台任务应该用 WorkManager，而不是只依赖协程。
+Coroutine 是 Kotlin 提供的轻量级异步并发模型，在 Android 中主要用于网络请求、数据库操作、文件读写和并发任务编排。它解决了传统回调、Thread、Handler、AsyncTask 带来的代码嵌套、线程切换复杂和生命周期取消困难的问题。使用上通常在 ViewModel 中通过 `viewModelScope.launch` 启动页面相关任务，在 Repository 中暴露 main-safe 的 `suspend` 函数，用 `withContext(Dispatchers.IO)` 执行阻塞式 IO 操作，UI 层收集 Flow 时配合 `repeatOnLifecycle`。原理上，挂起函数会被编译成状态机，通过 `Continuation` 保存恢复点；协程上下文里包含 `Job` 和 `Dispatcher`，`Job` 管理生命周期，`Dispatcher` 决定运行线程；结构化并发保证子协程受父协程管理。它的局限是协程不是线程，耗时任务仍然要选对调度器；取消是协作式的；`GlobalScope` 容易造成泄漏；可靠后台任务应该用 WorkManager，而不是只依赖协程。
 
 ## 参考资料
 
@@ -440,6 +446,10 @@ Coroutine 是 Kotlin 提供的轻量级异步并发模型，在 Android 中主�
   https://kotlinlang.org/docs/coroutines-basics.html
 - Kotlin Documentation: Coroutine context and dispatchers  
   https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html
+- Kotlin Documentation: Coroutine exceptions handling
+  https://kotlinlang.org/docs/exception-handling.html
+- Android Developers: Task scheduling
+  https://developer.android.com/develop/background-work/background-tasks/persistent
 
 ## 思维导图
 

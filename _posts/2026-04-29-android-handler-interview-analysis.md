@@ -29,7 +29,7 @@ Handler 体系中常见角色：
 
 Handler 主要解决 Android 中线程间通信和主线程任务调度的问题。
 
-Android 有一个重要规则：**UI 只能在主线程更新。**
+Android 有一个重要规则：**Android UI 工具包不是线程安全的，UI 对象应该只在主线程更新。**
 
 但是很多耗时操作必须在子线程执行：
 
@@ -111,7 +111,7 @@ message.sendToTarget()
 
 ### 3.3 移除回调和消息
 
-在页面销毁时，应该移除不再需要的延迟任务：
+在页面销毁时，应该移除不再需要的延迟任务。Activity 通常在 `onDestroy()` 清理；如果任务持有 Fragment 的 View，应该在 `onDestroyView()` 清理：
 
 ```kotlin
 override fun onDestroy() {
@@ -125,6 +125,8 @@ override fun onDestroy() {
 ```kotlin
 mainHandler.removeCallbacks(runnable)
 ```
+
+如果任务属于不同业务，可以给 `Message.obj` 使用 token；API 28+ 的 `postDelayed` 也支持 Runnable token，避免一次性清掉同一个 Handler 上的全部任务。
 
 ### 3.4 使用 HandlerThread
 
@@ -264,7 +266,7 @@ Handler 是 Android 基础机制，但业务开发中使用不当很容易出问
 
 ### 5.1 内存泄漏
 
-经典问题是非静态内部类 Handler 持有外部 Activity 引用，而 MessageQueue 中又有延迟消息持有 Handler，导致 Activity 无法释放。
+经典问题是 Java 非静态内部类 Handler、Kotlin `inner` 类，或被延迟消息持有的 Runnable 隐式引用 Activity/View，导致页面销毁后仍无法释放。
 
 例如：
 
@@ -274,9 +276,9 @@ MessageQueue -> Message -> Handler -> Activity
 
 解决思路：
 
-- 在 `onDestroy()` 中移除消息和回调。
+- Activity 在 `onDestroy()` 中移除消息和回调；Fragment 视图相关任务在 `onDestroyView()` 中清理。
 - 避免长时间延迟任务持有 Activity。
-- 使用静态内部类 + 弱引用。
+- Java 中使用静态内部类 + 弱引用，或把任务拆到独立类中，避免隐式持有外部类。
 - 现代项目中优先使用 lifecycle-aware 组件或协程作用域。
 
 ### 5.2 无参 Handler 构造函数不推荐
@@ -297,7 +299,7 @@ Handler(Looper.getMainLooper())
 
 ### 5.3 postDelayed 不保证精确执行
 
-`postDelayed` 表示延迟到某个时间后加入执行条件，但如果主线程繁忙，实际执行会推迟。
+`postDelayed` 以 `SystemClock.uptimeMillis()` 为时间基准。深度睡眠会追加延迟；如果主线程繁忙，实际执行也会推迟；如果 Looper 在投递时间前退出，消息还可能被丢弃。
 
 因此它不适合做高精度定时器。
 
@@ -309,7 +311,7 @@ handler.removeCallbacksAndMessages(null)
 
 会移除该 Handler 上所有回调和消息。如果同一个 Handler 被多个模块共享，可能误删其他任务。
 
-更好的方式是用 token 或独立 Handler 管理任务。
+更好的方式是用 token、独立 Handler 或外部取消标记管理任务。
 
 ### 5.5 MessageQueue 查询和删除可能是 O(n)
 
@@ -345,7 +347,7 @@ Handler 是消息发送和处理工具；HandlerThread 是带 Looper 的后台�
 
 ## 面试口述版
 
-Handler 是 Android 消息机制中的核心类，用来向某个线程的 MessageQueue 发送和处理 Message 或 Runnable。它解决的核心问题是线程间通信，尤其是子线程完成任务后切回主线程更新 UI，以及延迟任务和串行消息调度。使用上一般通过 `Handler(Looper.getMainLooper())` 创建主线程 Handler，然后调用 `post`、`postDelayed` 或 `sendMessage`；如果需要后台消息线程，可以使用 HandlerThread 创建带 Looper 的线程。原理上，一个线程可以通过 Looper 拥有一个 MessageQueue，Handler 负责把消息放入队列，Looper.loop 不断从队列中取出消息，并通过消息的 target Handler 分发执行。它的常见坑是 Handler 持有 Activity 导致内存泄漏、延迟消息未移除、无参 Handler 构造函数不推荐、postDelayed 不保证精确执行。现代 Android 中，业务异步流程更推荐 Coroutine，状态分发更推荐 LiveData 或 StateFlow，但 Handler 仍然是理解主线程消息循环和 UI 事件机制的基础。
+Handler 是 Android 消息机制中的核心类，用来向某个线程的 MessageQueue 发送和处理 Message 或 Runnable。它解决的核心问题是线程间通信，尤其是子线程完成任务后切回主线程更新 UI，以及延迟任务和串行消息调度。使用上一般通过 `Handler(Looper.getMainLooper())` 创建主线程 Handler，然后调用 `post`、`postDelayed` 或 `sendMessage`；如果需要后台消息线程，可以使用 HandlerThread 创建带 Looper 的线程。原理上，一个线程可以通过 Looper 拥有一个 MessageQueue，Handler 负责把消息放入队列，Looper.loop 不断从队列中取出消息，并通过消息的 target Handler 分发执行。它的常见坑是 Handler 持有 Activity/View 导致内存泄漏、延迟消息未移除、无参 Handler 构造函数不推荐、postDelayed 以 uptimeMillis 为基准且不保证精确执行。现代 Android 中，业务异步流程更推荐 Coroutine，状态分发更推荐 LiveData 或 StateFlow，但 Handler 仍然是理解主线程消息循环和 UI 事件机制的基础。
 
 ## 参考资料
 
@@ -359,6 +361,10 @@ Handler 是 Android 消息机制中的核心类，用来向某个线程的 Messa
   https://developer.android.com/reference/android/os/Message
 - Android Developers: HandlerThread API reference  
   https://developer.android.com/reference/android/os/HandlerThread.html
+- Android Developers: Processes and threads overview
+  https://developer.android.com/guide/components/processes-and-threads
+- Android Developers: Better performance through threading
+  https://developer.android.com/topic/performance/threads
 
 ## 思维导图
 
@@ -390,6 +396,6 @@ flowchart LR
 
     F --> F1[内存泄漏风险]
     F --> F2[无参Handler不推荐]
-    F --> F3[postDelayed不保证精确]
+    F --> F3[postDelayed基于uptimeMillis且不保证精确]
     F --> F4[现代项目优先用协程]
 ```

@@ -220,7 +220,7 @@ val viewModel: UserViewModel = hiltViewModel()
 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 ```
 
-如果使用 AndroidX Hilt 1.3.0 或更高版本，`hiltViewModel()` 已迁移到 `androidx.hilt:hilt-lifecycle-viewmodel-compose` artifact 和 `androidx.hilt.lifecycle.viewmodel.compose` package；旧的 `androidx.hilt.navigation.compose.hiltViewModel` 仍常见于 Navigation Compose 示例，但新项目应按当前依赖选择正确 import。
+`hiltViewModel()` 的具体 artifact 和 import 路径以当前项目所用的 AndroidX Hilt 版本为准。目前常见来源是 `androidx.hilt:hilt-navigation-compose`，对应 `androidx.hilt.navigation.compose.hiltViewModel`；迁移或升级项目时建议参考 [AndroidX Hilt 发布说明](https://developer.android.com/jetpack/androidx/releases/hilt) 并按 IDE 提示选择正确 import。
 
 ### 3.6 使用 SavedStateHandle
 
@@ -270,8 +270,8 @@ ViewModel 会绑定到某个作用域上。这个作用域决定了 ViewModel �
 
 例如：
 
-- Activity 范围的 ViewModel，在 Activity 真正 finish 时清除。
-- Fragment 范围的 ViewModel，在 Fragment 被永久移除并从 `FragmentManager` detach 后清除；`onDestroyView()` 只代表 Fragment 的 View 生命周期结束，不等于 Fragment 作用域 ViewModel 被清除。
+- Activity 范围的 ViewModel，在 Activity 因非配置变化原因被销毁时清除；配置变化（如屏幕旋转）会保留同一 `ViewModelStore`，所以重建后的 Activity 实例能拿回同一个 ViewModel 实例。判断依据是 `ComponentActivity` 在 `onDestroy` 中根据 `isChangingConfigurations()` 决定是否调用 `ViewModelStore.clear()`。
+- Fragment 范围的 ViewModel，在 Fragment 被永久销毁且不是因为配置变化时清除；`onDestroyView()` 只代表 Fragment 的 View 生命周期结束，不等于 Fragment 作用域 ViewModel 被清除。
 - Navigation 目的地或导航图范围的 ViewModel，在对应 `NavBackStackEntry` 从 back stack 移除后清除。
 
 ### 4.2 ViewModelStore

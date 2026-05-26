@@ -243,7 +243,7 @@ class CustomLifecycleOwner : LifecycleOwner {
 
 ### 3.7 使用 ProcessLifecycleOwner
 
-如果需要监听整个应用进入前台或后台，可以使用 `ProcessLifecycleOwner`：
+如果需要监听整个应用进入前台或后台，可以使用 `ProcessLifecycleOwner`。它来自 `androidx.lifecycle:lifecycle-process` 依赖：
 
 ```kotlin
 class AppLifecycleObserver : DefaultLifecycleObserver {

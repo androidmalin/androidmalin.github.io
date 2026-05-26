@@ -133,7 +133,7 @@ val retrofit = Retrofit.Builder()
 val userApi = retrofit.create(UserApi::class.java)
 ```
 
-注意：`baseUrl` 通常需要以 `/` 结尾，否则相对路径解析可能不符合预期。
+注意：`baseUrl` 必须以 `/` 结尾；接口路径如果以 `/` 开头，会被当作绝对路径，只保留 `baseUrl` 的 scheme 和 host，忽略其中的路径部分。
 
 ### 3.3 在 Repository 中调用
 
@@ -315,17 +315,17 @@ Retrofit 能显著简化网络层，但它不是万能网络框架。
 
 ### 5.1 baseUrl 和相对路径容易写错
 
-`baseUrl` 通常需要以 `/` 结尾：
+`baseUrl` 必须以 `/` 结尾：
 
 ```kotlin
 baseUrl("https://api.example.com/")
 ```
 
-接口路径如果以 `/` 开头，可能会覆盖 baseUrl 的路径部分。团队中最好统一 URL 写法。
+接口路径如果以 `/` 开头，会覆盖 `baseUrl` 的路径部分。团队中最好统一 URL 写法，通常让 `baseUrl` 以 `/` 结尾、接口相对路径不以 `/` 开头。
 
 ### 5.2 suspend 不等于自动业务成功
 
-Retrofit suspend 函数可以让网络请求写起来像同步代码，但 HTTP 错误码、业务错误码、异常仍然需要处理。
+Retrofit suspend 函数可以让网络请求写起来像同步代码，但 HTTP 错误码、业务错误码、异常仍然需要处理。如果返回 `User` 这类业务类型，非 2xx 响应会以 `HttpException` 暴露；如果返回 `Response<User>`，调用方需要检查 `isSuccessful`。
 
 例如：
 
@@ -387,7 +387,7 @@ Retrofit 面向 REST API；Apollo 更适合 GraphQL，有 schema、query、类�
 
 ## 面试口述版
 
-Retrofit 是 Android 中常用的类型安全 HTTP API 框架，它通过接口和注解描述 REST 请求，比如 `@GET`、`@POST`、`@Path`、`@Query`、`@Body`，然后在运行时生成接口实现。它解决的是手写 URL、参数、请求体、响应解析样板代码多且容易出错的问题。使用上通常定义一个 API 接口，通过 `Retrofit.Builder` 配置 `baseUrl`、`OkHttpClient` 和 Converter，再在 Repository 中调用接口，ViewModel 不直接接触 Retrofit。原理上，Retrofit 通过动态代理拦截接口方法调用，解析方法和参数注解，构造成 OkHttp 请求；Converter 负责请求体和响应体转换，CallAdapter 负责适配返回类型，比如 `Call<T>`、suspend 或 RxJava，最终由 OkHttp 执行网络请求。它的常见坑包括 baseUrl 写法、错误码和业务错误需要统一处理、Converter 顺序、不要把 Service 直接暴露给 UI、大文件上传下载需要额外处理。和 OkHttp 对比，Retrofit 是上层 API 声明框架，OkHttp 是底层 HTTP 客户端。
+Retrofit 是 Android 中常用的类型安全 HTTP API 框架，它通过接口和注解描述 REST 请求，比如 `@GET`、`@POST`、`@Path`、`@Query`、`@Body`，然后在运行时生成接口实现。它解决的是手写 URL、参数、请求体、响应解析样板代码多且容易出错的问题。使用上通常定义一个 API 接口，通过 `Retrofit.Builder` 配置以 `/` 结尾的 `baseUrl`、`OkHttpClient` 和 Converter，再在 Repository 中调用接口，ViewModel 不直接接触 Retrofit。原理上，Retrofit 通过动态代理拦截接口方法调用，解析方法和参数注解，构造成 OkHttp 请求；Converter 负责请求体和响应体转换，CallAdapter 负责适配返回类型，比如 `Call<T>`、suspend 或 RxJava，最终由 OkHttp 执行网络请求。它的常见坑包括 baseUrl 和相对路径写法、HTTP 错误和业务错误需要统一处理、Converter 顺序、不要把 Service 直接暴露给 UI、大文件上传下载需要额外处理。和 OkHttp 对比，Retrofit 是上层 API 声明框架，OkHttp 是底层 HTTP 客户端。
 
 ## 参考资料
 
@@ -399,6 +399,10 @@ Retrofit 是 Android 中常用的类型安全 HTTP API 框架，它通过接口�
   https://square.github.io/retrofit/configuration/
 - Retrofit API: Retrofit class  
   https://square.github.io/retrofit/2.x/retrofit/retrofit2/Retrofit.html
+- Retrofit API: Retrofit.Builder class
+  https://square.github.io/retrofit/2.x/retrofit/retrofit2/Retrofit.Builder.html
+- Android Developers: Best practices for coroutines in Android
+  https://developer.android.com/kotlin/coroutines/coroutines-best-practices
 
 ## 思维导图
 
@@ -428,7 +432,7 @@ flowchart LR
     E --> E3[注解解析成请求]
     E --> E4[OkHttp执行请求]
 
-    F --> F1[baseUrl写法注意]
+    F --> F1[baseUrl和相对路径写法注意]
     F --> F2[错误体需手动解析]
     F --> F3[不适合直接暴露给UI]
     F --> F4[大文件上传需额外处理]

@@ -65,7 +65,7 @@ OkHttp 提供了成熟的 HTTP 客户端能力：
 - 统一添加认证 header。
 - 网络日志打印。
 - token 失效后刷新 token。
-- 配置证书锁定或自定义 TLS。
+- 按需配置证书锁定；Android 上的 TLS 信任和明文限制优先用平台默认能力和 Network Security Config 管理。
 
 ## 3. How：它怎么使用？
 
@@ -123,7 +123,7 @@ client.newCall(request).enqueue(object : Callback {
 })
 ```
 
-注意：OkHttp 的回调不一定在主线程。如果要更新 UI，需要切回主线程。
+注意：OkHttp 的异步回调不是 Android 主线程回调。如果要更新 UI，需要切回主线程。
 
 ### 3.4 添加应用拦截器
 
@@ -305,7 +305,7 @@ response.use {
 
 OkHttp 的异步回调不是 Android 主线程回调。更新 UI 前必须切换到主线程。
 
-如果使用 Retrofit suspend + Coroutine，线程切换会更自然。
+如果使用 Retrofit suspend + Coroutine，可以由协程作用域统一管理调用上下文；但 UI 更新仍然必须发生在主线程。
 
 ### 5.4 拦截器中不要做危险阻塞
 
@@ -321,7 +321,7 @@ OkHttp 缓存不是万能缓存。它遵循 HTTP 缓存规则，是否缓存取�
 
 ### 5.6 SSL 配置容易出安全问题
 
-为了调试方便而信任所有证书、跳过主机名校验，是严重安全风险。生产环境应使用正确的证书链和必要时的证书锁定。
+为了调试方便而信任所有证书、跳过主机名校验，是严重安全风险。生产环境应使用平台信任链；需要自定义信任锚、debug-only 证书或禁用明文流量时，优先使用 Android Network Security Config。证书锁定只应在确有威胁模型和运维能力时使用。
 
 ### 5.7 OkHttp 不负责接口抽象和 JSON 映射
 
@@ -349,7 +349,7 @@ Ktor Client 是 Kotlin 多平台 HTTP 客户端，适合 KMP 场景。OkHttp 在
 
 ## 面试口述版
 
-OkHttp 是 Android 中常用的高性能 HTTP 客户端，负责真正执行 HTTP 请求和接收响应。它解决的是网络请求性能、连接复用、超时、缓存、重试和统一拦截处理的问题。使用上一般创建一个全局复用的 `OkHttpClient`，通过 `Request` 构造请求，用 `Call.execute()` 同步执行或 `enqueue()` 异步执行；实际项目中更多是把 OkHttp 配给 Retrofit，并通过拦截器统一添加 token、日志和错误处理。原理上，OkHttp 用 `Call` 表示一次完整请求任务，用 `Dispatcher` 管理异步并发，用拦截器责任链处理请求和响应，同时通过连接池复用 HTTP/1.x 连接，并支持 HTTP/2 多路复用。它的常见坑是不要频繁创建 client、响应体要关闭、异步回调不在主线程、拦截器不要做危险阻塞、SSL 配置不能为了省事绕过安全校验。和 Retrofit 对比，OkHttp 是底层 HTTP client，Retrofit 是上层接口声明和数据转换框架。
+OkHttp 是 Android 中常用的高性能 HTTP 客户端，负责真正执行 HTTP 请求和接收响应。它解决的是网络请求性能、连接复用、超时、缓存、重试和统一拦截处理的问题。使用上一般创建一个全局复用的 `OkHttpClient`，通过 `Request` 构造请求，用 `Call.execute()` 同步执行或 `enqueue()` 异步执行；实际项目中更多是把 OkHttp 配给 Retrofit，并通过拦截器统一添加 token、日志和错误处理。原理上，OkHttp 用 `Call` 表示一次完整请求任务，用 `Dispatcher` 管理异步并发，用拦截器责任链处理请求和响应，同时通过连接池复用 HTTP/1.x 连接，并支持 HTTP/2 多路复用。它的常见坑是不要频繁创建 client、响应体要关闭、异步回调不在主线程、拦截器不要做危险阻塞、TLS 配置不能为了省事绕过安全校验。和 Retrofit 对比，OkHttp 是底层 HTTP client，Retrofit 是上层接口声明和数据转换框架。
 
 ## 参考资料
 
@@ -363,6 +363,10 @@ OkHttp 是 Android 中常用的高性能 HTTP 客户端，负责真正执行 HTT
   https://square.github.io/okhttp/features/connections/
 - OkHttp: Caching  
   https://square.github.io/okhttp/features/caching/
+- Android Developers: Processes and threads overview
+  https://developer.android.com/guide/components/processes-and-threads
+- Android Developers: Network security configuration
+  https://developer.android.com/privacy-and-security/security-config
 
 ## 思维导图
 

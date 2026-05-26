@@ -148,7 +148,7 @@ _userName.postValue("background thread")
 
 ### 3.5 Transformations 和 MediatorLiveData
 
-LiveData 也支持一些简单的数据转换：
+LiveData 也支持一些简单的数据转换。`map` 和 `switchMap` 是 `androidx.lifecycle:lifecycle-livedata-ktx` 提供的 Kotlin 扩展函数，未引入该 artifact 时需要改用 `Transformations.map` / `Transformations.switchMap`：
 
 ```kotlin
 val displayName: LiveData<String> = userName.map { name ->
