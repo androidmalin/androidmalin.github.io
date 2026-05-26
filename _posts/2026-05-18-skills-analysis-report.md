@@ -13,12 +13,12 @@ Android Skills 是 Google 官方维护的一套面向 AI 的模块化指令仓�
 
 ## 安装与使用
 
-Android Skills 通过 [Android CLI](https://developer.android.com/studio/command-line/android-cli) 进行安装和管理。
+Android Skills 通过 [Android CLI](https://developer.android.com/tools/agents/android-cli) 进行安装和管理。
 
 ### 安装命令
 
 ```bash
-android skills add [--all] [--agent=<agent-name>] [--skill=<skill-name>]
+android skills add [--all] [--agent=<agent-name>] [--skill=<skill-name>] [--project=<path>]
 ```
 
 **常用示例：**
@@ -27,8 +27,8 @@ android skills add [--all] [--agent=<agent-name>] [--skill=<skill-name>]
 # 安装所有 Android Skills
 android skills add --all
 
-# 安装指定 Skill
-android skills add --skill=edge-to-edge
+# 安装指定 Skill 到当前项目
+android skills add --skill=r8-analyzer --project=.
 
 # 为指定 Agent 安装
 android skills add --agent=gemini --all
@@ -41,10 +41,11 @@ android skills add --agent=gemini --all
 | `--all` | 安装所有 Android Skills。若省略且未指定 `--skill`，则默认只安装 `android-cli` Skill |
 | `--agent` | 指定要安装的 Agent，支持逗号分隔的列表。若省略，则为所有检测到的 Agent 安装 |
 | `--skill` | 指定要安装的单个 Skill。若省略且未指定 `--all`，则默认只安装 `android-cli` Skill |
+| `--project` | 指定要安装 Skills 的项目根目录路径 |
 
 ### 安装路径
 
-如果没有检测到现有的 Agent 目录且未指定特定 Agent，Skills 默认会安装到以下路径：
+如果没有检测到现有的 Agent 目录且未指定特定 Agent，Skills 默认会为 Gemini 和 Antigravity 安装到以下路径：
 
 ```
 ~/.gemini/antigravity/skills
@@ -52,9 +53,9 @@ android skills add --agent=gemini --all
 
 ### 官方资源
 
-- [Android Skills 官方文档](https://developer.android.com/studio/preview/ai-agent-skills)
-- [Android CLI 文档](https://developer.android.com/studio/command-line/android-cli)
-- [Android Studio 官方文档](https://developer.android.com/studio/intro)
+- [Android Skills 官方文档](https://developer.android.com/tools/agents/android-skills)
+- [Android CLI 文档](https://developer.android.com/tools/agents/android-cli)
+- [Android Studio Skills 文档](https://developer.android.com/studio/gemini/skills)
 
 > **注意**：AI 生成的内容可能存在错误，建议在实际应用中始终对结果进行复核。
 
@@ -66,12 +67,11 @@ android skills add --agent=gemini --all
 | agp-9-upgrade | AGP 9 升级迁移 | Gradle、构建系统 |
 | android-cli | Android CLI 工具使用 | 命令行工具 |
 | appfunctions | AppFunctions 实现 | AI Agent、系统功能暴露 |
-| base | Android CLI 基础 | 命令行工具 |
 | camera1-to-camerax | 相机 API 迁移 | CameraX、Compose |
-| display-ai-glasses-with-jetpack-compose-glimmer | AI 眼镜应用开发 | XR、Compose Glimmer |
 | display-glasses-with-jetpack-compose-glimmer | 智能眼镜应用开发 | XR、Compose Glimmer |
 | edge-to-edge | Edge-to-Edge 适配 | 系统栏、Insets |
 | engage-sdk-integration | Play Engage SDK 集成 | Google Play、内容推荐 |
+| jetpack-compose-m3 | Wear OS Compose Material3 | Wear OS、Compose、Material3 |
 | migrate-xml-views-to-jetpack-compose | XML 迁移到 Compose | Compose 迁移 |
 | navigation-3 | Navigation 3 使用 | 导航、深链接、Scenes |
 | perfetto-sql | Perfetto SQL 查询 | 性能分析、SQL |
@@ -150,17 +150,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 5. base
-
-**作用**：编排 Android 开发任务（`android` CLI 工具的基础版本）。
-
-**核心内容**：
-- 与 `android-cli` skill 内容基本一致
-- SDK 管理、项目创建、设备交互、文档搜索、APK 运行、模拟器管理、截图、UI 布局检查、CLI 更新等
-
----
-
-## 6. camera1-to-camerax
+## 5. camera1-to-camerax
 
 **作用**：将旧版 Android 相机实现（Camera1 或原始 Camera2 API）迁移到 CameraX。
 
@@ -176,43 +166,27 @@ android skills add --agent=gemini --all
 
 ---
 
-## 7. display-ai-glasses-with-jetpack-compose-glimmer
+## 6. display-glasses-with-jetpack-compose-glimmer
 
-**作用**：为 Android Display AI Glasses 开发投影应用，使用 Jetpack Compose Glimmer UI 工具包。
-
-**核心内容**：
-- 创建 Projected Activity，UI 投影到连接的 AI 眼镜设备
-- 使用 `GlimmerTheme` 而非 `MaterialTheme`
-- 使用 Google Sans Flex 字体
-- 纯黑背景（`Color.Black`），因为 AI Glasses 使用 Additive Display
-- 最小化 UI 覆盖，底部对齐，一次只显示一个主要信息
-- 支持深度效果（DepthEffect）建立视觉层次
-- 核心组件：Card、Button、TitleChip、Icon、List、Stack、Text、Surface
-- 将触摸板输入映射到应用交互
-- 与系统 UI 集成（通知等）
-
-**前置条件**：`minSdk >= 37`
-
----
-
-## 8. display-glasses-with-jetpack-compose-glimmer
-
-**作用**：为 Display Glasses（智能眼镜）开发 Android XR 增强体验应用，使用 Jetpack Compose Glimmer。
+**作用**：为 Display Glasses（智能眼镜）开发 Android XR 增强体验应用，使用 Jetpack Compose Glimmer UI 工具包。
 
 **核心内容**：
-- 与 `display-ai-glasses-with-jetpack-compose-glimmer` 高度相似
 - 支持 Intelligent Eyewear（包括 audio glasses 和 display glasses）
-- 创建 Glasses Activity，通过 `ProjectedContext` 启动
-- 使用 `GlimmerTheme`、`createGoogleSansFlexTypography()`
-- 纯黑背景、底部对齐、深度效果、焦点管理
+- 创建 Projected Activity（Glasses Activity），UI 投影到连接的眼镜设备
+- 使用 `GlimmerTheme` 而非 `MaterialTheme`
+- 使用 `createGoogleSansFlexTypography()` 配置 Google Sans Flex 字体
+- 纯黑背景（`Color.Black`），因为 Display Glasses 使用 Additive Display（黑色渲染为透明）
+- 最小化 UI 覆盖，底部对齐，一次只显示一个主要信息
+- 支持深度效果（DepthEffect）建立视觉层次、焦点管理
 - 核心组件：Card、Button、TitleChip、Icon、List、Stack、Text、Surface
 - Glimmer Text 自动管理主题颜色，避免 Material Text 在透明屏幕上不可见的问题
+- 将触摸板输入映射到应用交互、与系统 UI 集成（通知等）
 
 **前置条件**：`compileSdk >= 37`
 
 ---
 
-## 9. edge-to-edge
+## 7. edge-to-edge
 
 **作用**：为 Jetpack Compose 应用添加自适应 Edge-to-Edge 支持，修复 UI 组件被导航栏或状态栏遮挡的问题。
 
@@ -230,7 +204,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 10. engage-sdk-integration
+## 8. engage-sdk-integration
 
 **作用**：帮助开发者集成、调试和解决 Play Engage SDK 实现问题。
 
@@ -245,7 +219,25 @@ android skills add --agent=gemini --all
 
 ---
 
-## 11. migrate-xml-views-to-jetpack-compose
+## 9. jetpack-compose-m3
+
+**作用**：为 Wear OS 项目提供使用 Jetpack Compose Material3 的专家指导，包括创建、更新和迁移。
+
+**核心内容**：
+- 涵盖 `androidx.wear.compose.material3`、`androidx.wear.compose.foundation`、`androidx.wear.compose.navigation3` 库
+- 核心组件：`AppScaffold`（外层容器，唯一）、`ScreenScaffold`（子级，可多个）、`TransformingLazyColumn`
+- 从早期版本（Material 2.5、Horologist）迁移到 Material3
+- 强制要求从样本 JAR（`<artifact>-<version>-samples-sources.jar`）中提取并阅读官方组件样例，不允许仅凭文档推断 API
+- 组件指导清单：使用 `TransformingLazyColumn` 替代 `ScalingLazyColumn`、使用 `transformedHeight` 和 `SurfaceTransformation`、`EdgeButton` 的正确使用方式（不要作为列表最后一项，使用 `ScreenScaffold` 的 slot）
+- 样式规则：不要硬编码文本大小和颜色，使用 `MaterialTheme` 的 `typography` 和 `colorScheme`
+- 使用组件的 `*Defaults` 对象处理 padding 和样式
+- 版本升级后必须进行 Gradle Sync 再重构代码
+
+**前置条件**：Kotlin >= 2.0.0、`minSdk >= 25`（Wear OS 2.0）；Kotlin 2.0+ 时需使用 `org.jetbrains.kotlin.plugin.compose` Gradle 插件
+
+---
+
+## 10. migrate-xml-views-to-jetpack-compose
 
 **作用**：提供将 Android XML View 迁移到 Jetpack Compose 的结构化工作流。
 
@@ -266,7 +258,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 12. navigation-3
+## 11. navigation-3
 
 **作用**：学习如何安装和迁移到 Jetpack Navigation 3，以及实现各种导航模式和功能。
 
@@ -285,7 +277,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 13. perfetto-sql
+## 12. perfetto-sql
 
 **作用**：将自然语言数据意图转换为语法有效的 Perfetto SQL 查询，并对本地 trace 文件执行查询。
 
@@ -298,7 +290,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 14. perfetto-trace-analysis
+## 13. perfetto-trace-analysis
 
 **作用**：分析 Perfetto trace 文件，找出 Android 应用中延迟、内存或卡顿问题的根本原因。
 
@@ -313,7 +305,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 15. play-billing-library-version-upgrade
+## 14. play-billing-library-version-upgrade
 
 **作用**：将 Android 项目从任何旧版 Google Play Billing Library (PBL) 升级到最新稳定版本。
 
@@ -328,7 +320,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 16. r8-analyzer
+## 15. r8-analyzer
 
 **作用**：分析 Android 构建文件和 R8 keep 规则，识别冗余、过于宽泛的包级规则，以及包含库消费者 keep 规则的规则。
 
@@ -344,7 +336,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 17. styles
+## 16. styles
 
 **作用**：将 Jetpack Compose Styles API 集成到 Android 项目中。
 
@@ -364,7 +356,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 18. testing-setup
+## 17. testing-setup
 
 **作用**：分析和创建原生 Android 应用的测试策略，安装测试库，设置测试基础设施。
 
@@ -384,7 +376,7 @@ android skills add --agent=gemini --all
 
 ---
 
-## 19. verified-email
+## 18. verified-email
 
 **作用**：在 Android Credential Manager API 上实现已验证电子邮件检索，集成安全、无 OTP 的电子邮件验证流程。
 
@@ -418,8 +410,7 @@ flowchart LR
     T2 --> S2[agp-9-upgrade<br/>AGP 9 升级迁移]
 
     ROOT --> T3[命令行工具]
-    T3 --> S3A[android-cli<br/>Android CLI 工具使用]
-    T3 --> S3B[base<br/>Android CLI 基础]
+    T3 --> S3[android-cli<br/>Android CLI 工具使用]
 
     ROOT --> T4[AI Agent、系统功能暴露]
     T4 --> S4[appfunctions<br/>AppFunctions 实现]
@@ -428,8 +419,7 @@ flowchart LR
     T5 --> S5[camera1-to-camerax<br/>相机 API 迁移]
 
     ROOT --> T6[XR、Compose Glimmer]
-    T6 --> S6A[display-ai-glasses-with-<br/>jetpack-compose-glimmer<br/>AI 眼镜应用开发]
-    T6 --> S6B[display-glasses-with-<br/>jetpack-compose-glimmer<br/>智能眼镜应用开发]
+    T6 --> S6[display-glasses-with-<br/>jetpack-compose-glimmer<br/>智能眼镜应用开发]
 
     ROOT --> T7[系统栏、Insets]
     T7 --> S7[edge-to-edge<br/>Edge-to-Edge 适配]
@@ -437,30 +427,33 @@ flowchart LR
     ROOT --> T8[Google Play、内容推荐]
     T8 --> S8[engage-sdk-integration<br/>Play Engage SDK 集成]
 
-    ROOT --> T9[Compose 迁移]
-    T9 --> S9[migrate-xml-views-to-<br/>jetpack-compose<br/>XML 迁移到 Compose]
+    ROOT --> T9[Wear OS、Compose、Material3]
+    T9 --> S9[jetpack-compose-m3<br/>Wear OS Compose Material3]
 
-    ROOT --> T10[导航、深链接、Scenes]
-    T10 --> S10[navigation-3<br/>Navigation 3 使用]
+    ROOT --> T10[Compose 迁移]
+    T10 --> S10[migrate-xml-views-to-<br/>jetpack-compose<br/>XML 迁移到 Compose]
 
-    ROOT --> T11[性能分析、SQL]
-    T11 --> S11[perfetto-sql<br/>Perfetto SQL 查询]
+    ROOT --> T11[导航、深链接、Scenes]
+    T11 --> S11[navigation-3<br/>Navigation 3 使用]
 
-    ROOT --> T12[性能调试、根因分析]
-    T12 --> S12[perfetto-trace-analysis<br/>Perfetto Trace 分析]
+    ROOT --> T12[性能分析、SQL]
+    T12 --> S12[perfetto-sql<br/>Perfetto SQL 查询]
 
-    ROOT --> T13[应用内购买]
-    T13 --> S13[play-billing-library-<br/>version-upgrade<br/>Play Billing 升级]
+    ROOT --> T13[性能调试、根因分析]
+    T13 --> S13[perfetto-trace-analysis<br/>Perfetto Trace 分析]
 
-    ROOT --> T14[代码混淆、包大小优化]
-    T14 --> S14[r8-analyzer<br/>R8/ProGuard 规则分析]
+    ROOT --> T14[应用内购买]
+    T14 --> S14[play-billing-library-<br/>version-upgrade<br/>Play Billing 升级]
 
-    ROOT --> T15[Compose 样式系统]
-    T15 --> S15[styles<br/>Compose Styles API]
+    ROOT --> T15[代码混淆、包大小优化]
+    T15 --> S15[r8-analyzer<br/>R8/ProGuard 规则分析]
 
-    ROOT --> T16[单元测试、UI 测试、截图测试]
-    T16 --> S16[testing-setup<br/>测试策略和基础设施]
+    ROOT --> T16[Compose 样式系统]
+    T16 --> S16[styles<br/>Compose Styles API]
 
-    ROOT --> T17[Credential Manager、身份验证]
-    T17 --> S17[verified-email<br/>已验证电子邮件获取]
+    ROOT --> T17[单元测试、UI 测试、截图测试]
+    T17 --> S17[testing-setup<br/>测试策略和基础设施]
+
+    ROOT --> T18[Credential Manager、身份验证]
+    T18 --> S18[verified-email<br/>已验证电子邮件获取]
 ```

@@ -5,8 +5,6 @@ date: 2026-05-20 02:25:20 +0800
 tags: [android, performance, baseline-profile, startup-profile]
 ---
 
-
-
 Android 应用启动和首轮交互的性能问题，本质上经常和“代码什么时候被编译、代码在 DEX 中放在哪里”有关。`baseline-prof.txt` 和 `startup-prof.txt` 都是为了解决这个问题而存在的 Profile 规则文件，但它们优化的阶段不同，目标也不同。
 
 本文介绍这两个文件是什么、有什么用途，以及它们分别能解决什么问题。
@@ -151,10 +149,10 @@ classes3.dex
 
 ## 6. 二者核心区别
 
-| 文件 | 使用者 | 生效阶段 | 主要目标 | 覆盖范围 |
-| --- | --- | --- | --- | --- |
-| `baseline-prof.txt` | ART / ProfileInstaller / Google Play | 安装后、后台 dexopt、手动 dexopt | 指导 AOT/JIT 优化关键代码路径 | 可以覆盖启动和启动后的关键用户路径 |
-| `startup-prof.txt` | D8 / R8 | release 构建阶段 | 优化 DEX 布局，让启动代码更集中、更靠前 | 应只覆盖启动到初始显示必需的路径 |
+| 文件                | 使用者                               | 生效阶段                         | 主要目标                                | 覆盖范围                           |
+| ------------------- | ------------------------------------ | -------------------------------- | --------------------------------------- | ---------------------------------- |
+| `baseline-prof.txt` | ART / ProfileInstaller / Google Play | 安装后、后台 dexopt、手动 dexopt | 指导 AOT/JIT 优化关键代码路径           | 可以覆盖启动和启动后的关键用户路径 |
+| `startup-prof.txt`  | D8 / R8                              | release 构建阶段                 | 优化 DEX 布局，让启动代码更集中、更靠前 | 应只覆盖启动到初始显示必需的路径   |
 
 更直接地说：
 
@@ -251,17 +249,16 @@ assets/dexopt/baseline.prof
 assets/dexopt/baseline.profm
 ```
 
-也可以在设备上触发 ProfileInstaller 和 speed-profile 编译后检查：
+也可以在设备上触发 ProfileInstaller 和 profile-based 编译后检查：
 
 ```bash
 adb shell am broadcast \
   -a androidx.profileinstaller.action.INSTALL_PROFILE \
-  -n com.example.app/androidx.profileinstaller.ProfileInstallReceiver
+  com.example.app/androidx.profileinstaller.ProfileInstallReceiver
 
-adb shell cmd package compile \
-  -m speed-profile -f --force-merge-profile com.example.app
+adb shell cmd package compile -f -m speed-profile com.example.app
 
-adb shell cmd package art dump com.example.app
+adb shell dumpsys package dexopt | grep -A 2 com.example.app
 ```
 
 如果状态是：
@@ -332,6 +329,8 @@ startActivityAndWait()
   https://developer.android.com/topic/performance/baselineprofiles/create-baselineprofile
 - Android Developers: Create Startup Profiles / DEX layout optimizations  
   https://developer.android.com/topic/performance/startupprofiles/dex-layout-optimizations
+- [Android Developers: Debug Baseline Profiles](https://developer.android.com/topic/performance/baselineprofiles/debug-baseline-profiles)
+- [Android Open Source Project: ART Service configuration](https://source.android.com/docs/core/runtime/configure/art-service)
 
 ## 12. Google Play、baseline-prof.txt 和 ProfileInstaller 如何协作
 
@@ -341,8 +340,8 @@ startActivityAndWait()
 
 ```text
 baseline-prof.txt 是优化清单
-Google Play 是分发/安装通道
-ProfileInstaller 是非 Play 或运行后补救通道
+Google Play / Package Manager 是官方安装与 profile 交付通道
+ProfileInstaller 是 APK 安装后的 profile 写入或入队通道
 ```
 
 ### 12.1 baseline-prof.txt：告诉系统哪些代码重要
@@ -358,25 +357,25 @@ assets/dexopt/baseline.profm
 
 设备上的 ART 可以使用这些 profile 做 `speed-profile` 编译，让关键代码提前 AOT 优化。
 
-### 12.2 Google Play：安装时使用 Baseline Profile
+### 12.2 Google Play / Package Manager：尽早交付或编译 Baseline Profile
 
-如果用户通过 Google Play 安装 App，Google Play / Package Manager 可以在安装阶段识别并使用 APK/AAB 中的 Baseline Profile。
+如果用户通过 Google Play 安装 App，Google Play / Package Manager 可以把 APK/AAB 中的 Baseline Profile 或对应的 DexMetadata profile 交给设备侧 ART 使用。
 
-结果是：用户第一次打开 App 前，系统就可能已经基于 profile 做了部分编译优化。这样冷启动、首轮页面打开、首次滚动等路径会更快。
+需要注意的是，“profile 已交付”和“代码已经编译完成”不是同一个状态。实际编译时机受 Android 版本、安装方式、AGP 版本、Play / Package Manager 行为和后台 dexopt 调度影响；有的路径会在安装过程中完成，有的路径会在后台设备更新或后续 bg-dexopt 中完成。因此不要写死“首次打开前一定已经 AOT 编译完成”，更可靠的方式是用 `ProfileVerifier` 或 `dumpsys package dexopt` 看状态。
 
-Play 安装路径下的链路大致是：
+官方安装路径下的链路大致是：
 
 ```text
 APK/AAB 内置 baseline.prof
         ↓
-Google Play / Package Manager 安装
+Google Play / Package Manager 交付 profile 或 DexMetadata
         ↓
-ART 使用 profile 做 dexopt
+ART 在安装、后台设备更新或 bg-dexopt 阶段使用 profile 编译
         ↓
-App 首次运行时关键代码已经更接近优化状态
+编译完成后，关键路径在后续启动和交互中更接近优化状态
 ```
 
-这是最理想的路径，因为优化可以在用户首次打开 App 前尽早发生。
+这是最理想的路径，因为 profile 可以通过官方安装链路尽早进入 ART，而不必等用户真实使用一段时间后再依赖 Cloud Profile 聚合。
 
 ### 12.3 ProfileInstaller：把内置 profile 写入设备
 
@@ -406,10 +405,9 @@ ProfileInstaller 读取 APK 中 assets/dexopt/baseline.prof
 ```bash
 adb shell am broadcast \
   -a androidx.profileinstaller.action.INSTALL_PROFILE \
-  -n com.example.app/androidx.profileinstaller.ProfileInstallReceiver
+  com.example.app/androidx.profileinstaller.ProfileInstallReceiver
 
-adb shell cmd package compile \
-  -m speed-profile -f --force-merge-profile com.example.app
+adb shell cmd package compile -f -m speed-profile com.example.app
 ```
 
 ### 12.4 三者完整协作流程
@@ -429,12 +427,12 @@ AGP/R8
 assets/dexopt/baseline.prof
 assets/dexopt/baseline.profm
 
-Google Play 安装路径:
+官方安装路径:
 Google Play / Package Manager
-    ↓
-安装时消费 baseline profile
-    ↓
-ART 预编译关键代码
+        ↓
+交付或安装 baseline profile / DexMetadata
+        ↓
+ART 在安装、后台更新或 bg-dexopt 阶段编译关键代码
 
 非 Play / adb / 第三方安装路径:
 App 首次运行或手动触发 ProfileInstaller
@@ -448,7 +446,7 @@ ART 预编译关键代码
 
 一句话总结：
 
-`baseline-prof.txt` 是你提供的优化意图；Google Play 会在理想安装路径上尽早把它交给 ART 使用；ProfileInstaller 则保证在 Play 之外的安装路径中，App 仍有机会把内置 profile 写入设备，让 ART 后续使用它优化代码。
+`baseline-prof.txt` 是你提供的优化意图；Google Play / Package Manager 会在官方安装路径上尽早把 profile 交给设备侧 ART；ProfileInstaller 则保证在 Play 之外或安装后补充的路径中，App 仍有机会把内置 profile 写入设备，让 ART 后续使用它优化代码。
 
 ## 13. 非 Google Play 渠道下，后台 dexopt 什么时候触发
 
@@ -522,10 +520,10 @@ RESULT_CODE_PROFILE_ENQUEUED_FOR_COMPILATION
 
 它表示 profile 已经安装，并且等待后续编译。这个状态不等于已经完成 AOT 编译，但说明 `ProfileInstaller` 这一阶段基本完成，后面要等系统 dexopt。
 
-设备侧可以通过 ART dump 查看当前包的编译状态：
+设备侧可以通过 `dumpsys package dexopt` 查看当前包的编译状态：
 
 ```bash
-adb shell cmd package art dump com.malin.video
+adb shell dumpsys package dexopt | grep -A 2 com.malin.video
 ```
 
 如果看到类似状态：
@@ -544,20 +542,19 @@ reason=bg-dexopt
 ```bash
 adb shell am broadcast \
   -a androidx.profileinstaller.action.INSTALL_PROFILE \
-  -n com.malin.video/androidx.profileinstaller.ProfileInstallReceiver
+  com.malin.video/androidx.profileinstaller.ProfileInstallReceiver
 ```
 
 然后手动触发基于 profile 的编译：
 
 ```bash
-adb shell cmd package compile \
-  -m speed-profile -f --force-merge-profile com.malin.video
+adb shell cmd package compile -f -m speed-profile com.malin.video
 ```
 
 最后检查编译状态：
 
 ```bash
-adb shell cmd package art dump com.malin.video
+adb shell dumpsys package dexopt | grep -A 2 com.malin.video
 ```
 
 这个流程适合本地验证 `baseline-prof.txt`、`ProfileInstaller` 和 ART dexopt 是否能够串起来。但它比真实用户路径更主动，因为真实用户通常要等系统后台 dexopt job 自动调度。
