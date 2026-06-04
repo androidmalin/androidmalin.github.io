@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f8fa;
+      color: #1f2328;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #d0d7de;
+      background: #ffffff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 650;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hint {
+      color: #57606a;
+      font-size: 12px;
+      text-align: right;
+      max-width: 62ch;
+      line-height: 1.4;
+    }
+
+    main {
+      overflow: auto;
+      padding: 16px;
+    }
+
+    .graph-shell {
+      width: max-content;
+      min-width: 100%;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+    }
+
+    svg {
+      max-width: none;
+      height: auto;
+      display: block;
+    }
+
+    .edge {
+      cursor: pointer;
+    }
+
+    .edge:focus,
+    .edge:focus-visible {
+      outline: none;
+    }
+
+    .edge path {
+      transition: stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
+    }
+
+    .edge:hover path {
+      stroke-width: 4;
+      filter: drop-shadow(0 0 3px currentColor);
+    }
+
+    svg.has-active .edge:not(.active) {
+      opacity: 0.22;
+    }
+
+    .edge.active {
+      opacity: 1;
+    }
+
+    .edge.active path {
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 14 8;
+      animation: flow 650ms linear infinite;
+      filter: drop-shadow(0 0 5px currentColor);
+    }
+
+    .edge.active polygon {
+      filter: drop-shadow(0 0 4px currentColor);
+    }
+
+    /* The clicked edge is the anchor of the chain: solid + pulsing so the eye
+       can find where the chain was entered. Surrounding dashes flow into it
+       (upstream callers) and out of it (downstream dependencies). */
+    .edge.origin path {
+      stroke-width: 6.5;
+      stroke-dasharray: none;
+      animation: pulse 1100ms ease-in-out infinite;
+      filter: drop-shadow(0 0 7px currentColor);
+    }
+
+    .edge.origin polygon {
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    @keyframes flow {
+      to {
+        stroke-dashoffset: -44;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 3px currentColor);
+      }
+      50% {
+        filter: drop-shadow(0 0 11px currentColor);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" style="flex:none;font-size:13px;color:#0969da;text-decoration:none;white-space:nowrap;">← 返回总览树</a>
+    <h1>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC</h1>
+    <div class="hint">点击连线：高亮其完整依赖链（上游调用方 + 下游依赖）。实心脉冲为选中边，箭头/流向即依赖方向。点其他边可换锚点，点空白处清除。</div>
+  </header>
+  <main>
+    <div class="graph-shell">
+<svg width="1095pt" height="1075pt"
+ viewBox="0.00 0.00 1095.00 1075.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(14.4 1060.9)">
+<title>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC → com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityRetainedC → com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC</title>
+<polygon fill="white" stroke="none" points="-14.4,14.4 -14.4,-1060.9 1080.72,-1060.9 1080.72,14.4 -14.4,14.4"/>
+<text xml:space="preserve" text-anchor="middle" x="136.62" y="-7.2" font-family="Times,serif" font-size="14.00">SingletonC → ActivityRetainedC → ActivityC</text>
+<g id="clust1" class="cluster">
+<title>cluster_Entry Points</title>
+<polygon fill="none" stroke="black" points="8,-531.5 8,-824.5 601.75,-824.5 601.75,-531.5 8,-531.5"/>
+<text xml:space="preserve" text-anchor="middle" x="49.75" y="-807.2" font-family="Times,serif" font-size="14.00">Entry Points</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_Map&lt;Class&lt;?&gt;, Boolean&gt;</title>
+<path fill="none" stroke="black" d="M405.75,-708.5C405.75,-708.5 581.75,-708.5 581.75,-708.5 587.75,-708.5 593.75,-714.5 593.75,-720.5 593.75,-720.5 593.75,-778.5 593.75,-778.5 593.75,-784.5 587.75,-790.5 581.75,-790.5 581.75,-790.5 405.75,-790.5 405.75,-790.5 399.75,-790.5 393.75,-784.5 393.75,-778.5 393.75,-778.5 393.75,-720.5 393.75,-720.5 393.75,-714.5 399.75,-708.5 405.75,-708.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-773.2" font-family="Times,serif" font-size="14.00">Map&lt;Class&lt;?&gt;, Boolean&gt;</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_Dependency Graph</title>
+<polygon fill="none" stroke="black" points="414.75,-295.5 414.75,-523.5 1058.32,-523.5 1058.32,-295.5 414.75,-295.5"/>
+<text xml:space="preserve" text-anchor="middle" x="475.25" y="-506.2" font-family="Times,serif" font-size="14.00">Dependency Graph</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_Subcomponents</title>
+<polygon fill="none" stroke="black" points="731.5,-146.5 731.5,-287.5 868.5,-287.5 868.5,-146.5 731.5,-146.5"/>
+<text xml:space="preserve" text-anchor="middle" x="783" y="-270.2" font-family="Times,serif" font-size="14.00">Subcomponents</text>
+</g>
+<g id="clust5" class="cluster">
+<title>cluster_SingletonC</title>
+<g id="a_clust5"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" xlink:title="Inherited from SingletonC\n@Singleton">
+<polygon fill="none" stroke="aquamarine" stroke-dasharray="5,2" points="394.88,-32.5 394.88,-287.5 592.62,-287.5 592.62,-32.5 394.88,-32.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-270.2" font-family="Times,serif" font-size="14.00">Inherited from SingletonC</text>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-253.7" font-family="Times,serif" font-size="14.00">@Singleton</text>
+</a>
+</g>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_SingletonC → ActivityRetainedC</title>
+<g id="a_clust8"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityRetainedC.html" xlink:title="Inherited from ActivityRetainedC\n@ActivityRetainedScoped">
+<polygon fill="none" stroke="bisque" stroke-dasharray="5,2" points="699.25,-531.5 699.25,-1038.5 900.75,-1038.5 900.75,-531.5 699.25,-531.5"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-1021.2" font-family="Times,serif" font-size="14.00">Inherited from ActivityRetainedC</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-1004.7" font-family="Times,serif" font-size="14.00">@ActivityRetainedScoped</text>
+</a>
+</g>
+</g>
+<!-- node0 -->
+<g id="node1" class="node">
+<title>node0</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="231.88,-575.5 99.62,-575.5 99.62,-571.5 95.62,-571.5 95.62,-567.5 99.62,-567.5 99.62,-547.5 95.62,-547.5 95.62,-543.5 99.62,-543.5 99.62,-539.5 231.88,-539.5 231.88,-575.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="99.62,-571.5 103.62,-571.5 103.62,-567.5 99.62,-567.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="99.62,-547.5 103.62,-547.5 103.62,-543.5 99.62,-543.5"/>
+<text xml:space="preserve" text-anchor="middle" x="165.75" y="-552.45" font-family="Times,serif" font-size="14.00">inject (MainActivity)</text>
+</g>
+<!-- node6 -->
+<g id="node7" class="node">
+<title>node6</title>
+<polygon fill="turquoise" stroke="turquoise" points="527.25,-490.5 460.25,-490.5 460.25,-454.5 527.25,-454.5 527.25,-490.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-467.45" font-family="Times,serif" font-size="14.00">JankStats</text>
+</g>
+<!-- node0&#45;&gt;node6 -->
+<g id="edge2" class="edge">
+<title>node0&#45;&gt;node6</title>
+<path fill="none" stroke="#1976d2" stroke-width="1.8" d="M232.72,-540.3C296.76,-523.6 392.21,-498.71 447.9,-484.19"/>
+<polygon fill="#1976d2" stroke="#1976d2" stroke-width="1.8" points="448.72,-487.6 457.52,-481.69 446.96,-480.82 448.72,-487.6"/>
+</g>
+<!-- node14 -->
+<g id="node15" class="node">
+<title>node14</title>
+<polygon fill="turquoise" stroke="turquoise" points="546,-238.5 441.5,-238.5 441.5,-202.5 546,-202.5 546,-238.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-215.45" font-family="Times,serif" font-size="14.00">AnalyticsHelper</text>
+</g>
+<!-- node0&#45;&gt;node14 -->
+<g id="edge4" class="edge">
+<title>node0&#45;&gt;node14</title>
+<path fill="none" stroke="#f57c00" stroke-width="1.8" d="M180.24,-538.74C213.44,-493.29 303.01,-374.9 393.75,-291.5 411.84,-274.87 433.91,-258.71 452.61,-246.02"/>
+<polygon fill="#f57c00" stroke="#f57c00" stroke-width="1.8" points="454.54,-248.94 460.91,-240.48 450.65,-243.12 454.54,-248.94"/>
+</g>
+<!-- node15 -->
+<g id="node16" class="node">
+<title>node15</title>
+<polygon fill="turquoise" stroke="turquoise" points="552.75,-184.5 434.75,-184.5 434.75,-148.5 552.75,-148.5 552.75,-184.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-161.45" font-family="Times,serif" font-size="14.00">TimeZoneMonitor</text>
+</g>
+<!-- node0&#45;&gt;node15 -->
+<g id="edge1" class="edge">
+<title>node0&#45;&gt;node15</title>
+<path fill="none" stroke="#d32f2f" stroke-width="1.8" d="M172.89,-538.58C193.51,-478.19 266.19,-288.42 393.75,-193.5 402.28,-187.16 412.21,-182.3 422.42,-178.59"/>
+<polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="1.8" points="423.42,-181.94 431.88,-175.56 421.29,-175.28 423.42,-181.94"/>
+</g>
+<!-- node16 -->
+<g id="node17" class="node">
+<title>node16</title>
+<polygon fill="turquoise" stroke="turquoise" points="584.62,-130.5 402.88,-130.5 402.88,-94.5 584.62,-94.5 584.62,-130.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-107.45" font-family="Times,serif" font-size="14.00">UserNewsResourceRepository</text>
+</g>
+<!-- node0&#45;&gt;node16 -->
+<g id="edge3" class="edge">
+<title>node0&#45;&gt;node16</title>
+<path fill="none" stroke="#388e3c" stroke-width="1.8" d="M173.19,-538.74C192.44,-484.09 253.21,-321.43 333.5,-203.5 355.48,-171.21 360.26,-159.62 393.75,-139.5 395.59,-138.4 397.47,-137.34 399.39,-136.32"/>
+<polygon fill="#388e3c" stroke="#388e3c" stroke-width="1.8" points="400.74,-139.55 408.28,-132.11 397.75,-133.23 400.74,-139.55"/>
+</g>
+<!-- node17 -->
+<g id="node18" class="node">
+<title>node17</title>
+<polygon fill="turquoise" stroke="turquoise" points="547.88,-76.5 439.62,-76.5 439.62,-40.5 547.88,-40.5 547.88,-76.5"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-53.45" font-family="Times,serif" font-size="14.00">NetworkMonitor</text>
+</g>
+<!-- node0&#45;&gt;node17 -->
+<g id="edge5" class="edge">
+<title>node0&#45;&gt;node17</title>
+<path fill="none" stroke="#7b1fa2" stroke-width="1.8" d="M171.19,-538.75C186.3,-477.57 240.01,-279.87 333.5,-142.5 354.24,-112.03 361.61,-103.56 393.75,-85.5 404.07,-79.7 415.69,-75.1 427.26,-71.45"/>
+<polygon fill="#7b1fa2" stroke="#7b1fa2" stroke-width="1.8" points="427.98,-74.89 436.61,-68.75 426.03,-68.16 427.98,-74.89"/>
+</g>
+<!-- node1 -->
+<g id="node2" class="node">
+<title>node1</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="259.62,-629.5 71.88,-629.5 71.88,-625.5 67.88,-625.5 67.88,-621.5 71.88,-621.5 71.88,-601.5 67.88,-601.5 67.88,-597.5 71.88,-597.5 71.88,-593.5 259.62,-593.5 259.62,-629.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="71.88,-625.5 75.88,-625.5 75.88,-621.5 71.88,-621.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="71.88,-601.5 75.88,-601.5 75.88,-597.5 71.88,-597.5"/>
+<text xml:space="preserve" text-anchor="middle" x="165.75" y="-606.45" font-family="Times,serif" font-size="14.00">inject (HiltComponentActivity)</text>
+</g>
+<!-- node2 -->
+<g id="node3" class="node">
+<title>node2</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="315.5,-791.5 16,-791.5 16,-787.5 12,-787.5 12,-783.5 16,-783.5 16,-763.5 12,-763.5 12,-759.5 16,-759.5 16,-755.5 315.5,-755.5 315.5,-791.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-787.5 20,-787.5 20,-783.5 16,-783.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-763.5 20,-763.5 20,-759.5 16,-759.5"/>
+<text xml:space="preserve" text-anchor="middle" x="165.75" y="-768.45" font-family="Times,serif" font-size="14.00">DefaultViewModelFactories.InternalFactoryFactory</text>
+</g>
+<!-- node5 -->
+<g id="node6" class="node">
+<title>node5</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="585.75,-758 413.75,-758 413.75,-762 401.75,-762 401.75,-717 585.75,-717 585.75,-758"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="401.75,-758 413.75,-758"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-740.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-724.2" font-family="Times,serif" font-size="14.00">Map&lt;Class&lt;?&gt;, Boolean&gt;</text>
+</g>
+<!-- node2&#45;&gt;node5 -->
+<g id="edge9" class="edge">
+<title>node2&#45;&gt;node5</title>
+<path fill="none" stroke="#5d4037" stroke-width="1.8" d="M316.39,-756.98C340.68,-754.29 365.37,-751.57 388.28,-749.04"/>
+<polygon fill="#5d4037" stroke="#5d4037" stroke-width="1.8" points="388.55,-752.53 398.11,-747.95 387.78,-745.57 388.55,-752.53"/>
+</g>
+<!-- node18 -->
+<g id="node19" class="node">
+<title>node18</title>
+<polygon fill="turquoise" stroke="turquoise" points="892.75,-989.5 707.25,-989.5 707.25,-985.5 703.25,-985.5 703.25,-981.5 707.25,-981.5 707.25,-961.5 703.25,-961.5 703.25,-957.5 707.25,-957.5 707.25,-953.5 892.75,-953.5 892.75,-989.5"/>
+<polyline fill="none" stroke="turquoise" points="707.25,-985.5 711.25,-985.5 711.25,-981.5 707.25,-981.5"/>
+<polyline fill="none" stroke="turquoise" points="707.25,-961.5 711.25,-961.5 711.25,-957.5 707.25,-957.5"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-966.45" font-family="Times,serif" font-size="14.00">ViewModelComponentBuilder</text>
+</g>
+<!-- node2&#45;&gt;node18 -->
+<g id="edge10" class="edge">
+<title>node2&#45;&gt;node18</title>
+<path fill="none" stroke="#455a64" stroke-width="1.8" d="M222.84,-792.46C319.62,-824.96 524.43,-892.8 699.25,-944.5 705.12,-946.24 711.2,-947.99 717.33,-949.72"/>
+<polygon fill="#455a64" stroke="#455a64" stroke-width="1.8" points="715.93,-952.97 726.5,-952.29 717.81,-946.23 715.93,-952.97"/>
+</g>
+<!-- node3 -->
+<g id="node4" class="node">
+<title>node3</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="252.12,-737.5 79.38,-737.5 79.38,-733.5 75.37,-733.5 75.37,-729.5 79.38,-729.5 79.38,-709.5 75.38,-709.5 75.38,-705.5 79.38,-705.5 79.38,-701.5 252.12,-701.5 252.12,-737.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="79.38,-733.5 83.38,-733.5 83.38,-729.5 79.38,-729.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="79.38,-709.5 83.38,-709.5 83.38,-705.5 79.38,-705.5"/>
+<text xml:space="preserve" text-anchor="middle" x="165.75" y="-714.45" font-family="Times,serif" font-size="14.00">FragmentComponentBuilder</text>
+</g>
+<!-- node10 -->
+<g id="node11" class="node">
+<title>node10</title>
+<polygon fill="turquoise" stroke="turquoise" points="564.75,-436 422.75,-436 422.75,-379 564.75,-379 564.75,-436"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-418.7" font-family="Times,serif" font-size="14.00">FragmentC.Builder</text>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-386.2" font-family="Times,serif" font-size="14.00">Subcomponent Creator</text>
+</g>
+<!-- node3&#45;&gt;node10 -->
+<g id="edge18" class="edge">
+<title>node3&#45;&gt;node10</title>
+<path fill="none" stroke="#1976d2" stroke-width="2.2" stroke-dasharray="1,5" d="M252.84,-719.53C275.43,-715.63 298.26,-707.67 315.5,-692.5 401.94,-616.41 314.79,-529.32 393.75,-445.5 398.72,-440.22 404.5,-435.67 410.73,-431.75"/>
+<polygon fill="#1976d2" stroke="#1976d2" stroke-width="2.2" points="412.37,-434.84 419.43,-426.94 408.99,-428.71 412.37,-434.84"/>
+<text xml:space="preserve" text-anchor="middle" x="358.62" y="-672.56" font-family="Times,serif" font-size="14.00">delegates</text>
+</g>
+<!-- node4 -->
+<g id="node5" class="node">
+<title>node4</title>
+<polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="240.5,-683.5 91,-683.5 91,-679.5 87,-679.5 87,-675.5 91,-675.5 91,-655.5 87,-655.5 87,-651.5 91,-651.5 91,-647.5 240.5,-647.5 240.5,-683.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="91,-679.5 95,-679.5 95,-675.5 91,-675.5"/>
+<polyline fill="none" stroke="turquoise" stroke-width="2" points="91,-655.5 95,-655.5 95,-651.5 91,-651.5"/>
+<text xml:space="preserve" text-anchor="middle" x="165.75" y="-660.45" font-family="Times,serif" font-size="14.00">ViewComponentBuilder</text>
+</g>
+<!-- node11 -->
+<g id="node12" class="node">
+<title>node11</title>
+<polygon fill="turquoise" stroke="turquoise" points="564.75,-361 422.75,-361 422.75,-304 564.75,-304 564.75,-361"/>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-343.7" font-family="Times,serif" font-size="14.00">ViewC.Builder</text>
+<text xml:space="preserve" text-anchor="middle" x="493.75" y="-311.2" font-family="Times,serif" font-size="14.00">Subcomponent Creator</text>
+</g>
+<!-- node4&#45;&gt;node11 -->
+<g id="edge20" class="edge">
+<title>node4&#45;&gt;node11</title>
+<path fill="none" stroke="#388e3c" stroke-width="2.2" stroke-dasharray="1,5" d="M241.16,-669.66C268.26,-667.11 296.81,-658.93 315.5,-638.5 345.39,-605.82 316.16,-480.76 333.5,-440 349.51,-402.38 360.28,-393.97 393.75,-370.5 399.08,-366.76 404.82,-363.34 410.76,-360.2"/>
+<polygon fill="#388e3c" stroke="#388e3c" stroke-width="2.2" points="411.94,-363.52 419.39,-355.99 408.87,-357.23 411.94,-363.52"/>
+<text xml:space="preserve" text-anchor="middle" x="358.62" y="-443.2" font-family="Times,serif" font-size="14.00">delegates</text>
+</g>
+<!-- node19 -->
+<g id="node20" class="node">
+<title>node19</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-758 708,-758 708,-717 892,-717 892,-758"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-740.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-724.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node19 -->
+<g id="edge13" class="edge">
+<title>node5&#45;&gt;node19</title>
+<path fill="none" stroke="#afb42b" stroke-width="1.8" d="M586.45,-737.5C620.8,-737.5 660.07,-737.5 695.42,-737.5"/>
+<polygon fill="#afb42b" stroke="#afb42b" stroke-width="1.8" points="695.03,-741 705.03,-737.5 695.03,-734 695.03,-741"/>
+</g>
+<!-- node20 -->
+<g id="node21" class="node">
+<title>node20</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-699 708,-699 708,-658 892,-658 892,-699"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-681.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-665.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node20 -->
+<g id="edge15" class="edge">
+<title>node5&#45;&gt;node20</title>
+<path fill="none" stroke="#303f9f" stroke-width="1.8" d="M586.45,-719.72C620.8,-713.06 660.07,-705.44 695.42,-698.59"/>
+<polygon fill="#303f9f" stroke="#303f9f" stroke-width="1.8" points="695.93,-702.05 705.08,-696.71 694.59,-695.18 695.93,-702.05"/>
+</g>
+<!-- node21 -->
+<g id="node22" class="node">
+<title>node21</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-640 708,-640 708,-599 892,-599 892,-640"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-622.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-606.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node21 -->
+<g id="edge14" class="edge">
+<title>node5&#45;&gt;node21</title>
+<path fill="none" stroke="#e64a19" stroke-width="1.8" d="M540.44,-716.05C581.49,-697.22 643.68,-669.74 699.25,-649.5 704.08,-647.74 709.06,-646 714.11,-644.31"/>
+<polygon fill="#e64a19" stroke="#e64a19" stroke-width="1.8" points="714.95,-647.71 723.36,-641.27 712.77,-641.06 714.95,-647.71"/>
+</g>
+<!-- node22 -->
+<g id="node23" class="node">
+<title>node22</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-581 708,-581 708,-540 892,-540 892,-581"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-563.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-547.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node22 -->
+<g id="edge11" class="edge">
+<title>node5&#45;&gt;node22</title>
+<path fill="none" stroke="#512da8" stroke-width="1.8" d="M518.06,-716.2C554.22,-684.29 627.17,-624.21 699.25,-590.5 702.51,-588.97 705.87,-587.5 709.29,-586.09"/>
+<polygon fill="#512da8" stroke="#512da8" stroke-width="1.8" points="710.52,-589.37 718.57,-582.49 707.98,-582.84 710.52,-589.37"/>
+</g>
+<!-- node23 -->
+<g id="node24" class="node">
+<title>node23</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-935 708,-935 708,-894 892,-894 892,-935"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-917.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-901.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node23 -->
+<g id="edge17" class="edge">
+<title>node5&#45;&gt;node23</title>
+<path fill="none" stroke="#d32f2f" stroke-width="1.8" d="M518.45,-758.98C554.81,-790.89 627.69,-850.77 699.25,-885.5 701.59,-886.64 703.99,-887.74 706.43,-888.81"/>
+<polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="1.8" points="704.97,-891.99 715.55,-892.51 707.61,-885.51 704.97,-891.99"/>
+</g>
+<!-- node24 -->
+<g id="node25" class="node">
+<title>node24</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-876 708,-876 708,-835 892,-835 892,-876"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-858.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-842.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node24 -->
+<g id="edge12" class="edge">
+<title>node5&#45;&gt;node24</title>
+<path fill="none" stroke="#0097a7" stroke-width="1.8" d="M539.57,-758.98C580.56,-778.15 643.17,-806.24 699.25,-826.5 703.23,-827.94 707.32,-829.36 711.46,-830.74"/>
+<polygon fill="#0097a7" stroke="#0097a7" stroke-width="1.8" points="710.05,-833.97 720.65,-833.74 712.22,-827.31 710.05,-833.97"/>
+</g>
+<!-- node25 -->
+<g id="node26" class="node">
+<title>node25</title>
+<polygon fill="turquoise" stroke="turquoise" points="892,-817 708,-817 708,-776 892,-776 892,-817"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-799.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-783.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
+</g>
+<!-- node5&#45;&gt;node25 -->
+<g id="edge16" class="edge">
+<title>node5&#45;&gt;node25</title>
+<path fill="none" stroke="#689f38" stroke-width="1.8" d="M586.45,-755.28C620.8,-761.94 660.07,-769.56 695.42,-776.41"/>
+<polygon fill="#689f38" stroke="#689f38" stroke-width="1.8" points="694.59,-779.82 705.08,-778.29 695.93,-772.95 694.59,-779.82"/>
+</g>
+<!-- node7 -->
+<g id="node8" class="node">
+<title>node7</title>
+<polygon fill="turquoise" stroke="turquoise" points="831.25,-436.5 768.75,-436.5 768.75,-400.5 831.25,-400.5 831.25,-436.5"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-413.45" font-family="Times,serif" font-size="14.00">Window</text>
+</g>
+<!-- node6&#45;&gt;node7 -->
+<g id="edge7" class="edge">
+<title>node6&#45;&gt;node7</title>
+<path fill="none" stroke="#c2185b" stroke-width="1.8" d="M527.6,-466.67C582.97,-456.84 694.85,-436.99 756.26,-426.09"/>
+<polygon fill="#c2185b" stroke="#c2185b" stroke-width="1.8" points="756.64,-429.57 765.87,-424.38 755.42,-422.68 756.64,-429.57"/>
+</g>
+<!-- node9 -->
+<g id="node10" class="node">
+<title>node9</title>
+<polygon fill="turquoise" stroke="turquoise" points="883.38,-490.5 716.62,-490.5 716.62,-454.5 883.38,-454.5 883.38,-490.5"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-467.45" font-family="Times,serif" font-size="14.00">JankStats.OnFrameListener</text>
+</g>
+<!-- node6&#45;&gt;node9 -->
+<g id="edge6" class="edge">
+<title>node6&#45;&gt;node9</title>
+<path fill="none" stroke="#00796b" stroke-width="1.8" d="M527.6,-472.5C569.42,-472.5 643.46,-472.5 703.65,-472.5"/>
+<polygon fill="#00796b" stroke="#00796b" stroke-width="1.8" points="703.54,-476 713.54,-472.5 703.54,-469 703.54,-476"/>
+</g>
+<!-- node8 -->
+<g id="node9" class="node">
+<title>node8</title>
+<polygon fill="turquoise" stroke="turquoise" points="1050.32,-436.5 954.42,-436.5 929.75,-400.5 1025.65,-400.5 1050.32,-436.5"/>
+<text xml:space="preserve" text-anchor="middle" x="990.03" y="-413.45" font-family="Times,serif" font-size="14.00">Activity</text>
+</g>
+<!-- node7&#45;&gt;node8 -->
+<g id="edge8" class="edge">
+<title>node7&#45;&gt;node8</title>
+<path fill="none" stroke="#c2185b" stroke-width="1.8" d="M831.63,-418.5C857.9,-418.5 896.54,-418.5 928.96,-418.5"/>
+<polygon fill="#c2185b" stroke="#c2185b" stroke-width="1.8" points="928.77,-422 938.77,-418.5 928.77,-415 928.77,-422"/>
+</g>
+<!-- node12 -->
+<g id="node13" class="node">
+<title>node12</title>
+<g id="a_node13"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.FragmentC.html" xlink:title="@FragmentScoped\nFragmentC">
+<polygon fill="#bfefff" stroke="#bfefff" points="860.5,-255 739.5,-255 739.5,-214 860.5,-214 860.5,-255"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-237.7" font-family="Times,serif" font-size="14.00">@FragmentScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-221.2" font-family="Times,serif" font-size="14.00">FragmentC</text>
+</a>
+</g>
+</g>
+<!-- node10&#45;&gt;node12 -->
+<g id="edge19" class="edge">
+<title>node10&#45;&gt;node12:w</title>
+<path fill="none" stroke="#1976d2" stroke-width="2.4" stroke-dasharray="5,2" d="M564.98,-388.18C577.67,-383.32 590.45,-377.46 601.75,-370.5 647.92,-342.07 650.97,-323.89 689.25,-285.5 707.67,-267.02 707.75,-244.17 725.13,-236.86"/>
+<polygon fill="#1976d2" stroke="#1976d2" stroke-width="2.4" points="725.68,-240.32 734.92,-235.13 724.47,-233.43 725.68,-240.32"/>
+<text xml:space="preserve" text-anchor="middle" x="649.5" y="-367.06" font-family="Times,serif" font-size="14.00">subcomponent</text>
+</g>
+<!-- node13 -->
+<g id="node14" class="node">
+<title>node13</title>
+<g id="a_node14"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewC.html" xlink:title="@ViewScoped\nViewC">
+<polygon fill="#ffb90f" stroke="#ffb90f" points="848.88,-196 751.12,-196 751.12,-155 848.88,-155 848.88,-196"/>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-178.7" font-family="Times,serif" font-size="14.00">@ViewScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="800" y="-162.2" font-family="Times,serif" font-size="14.00">ViewC</text>
+</a>
+</g>
+</g>
+<!-- node11&#45;&gt;node13 -->
+<g id="edge21" class="edge">
+<title>node11&#45;&gt;node13:w</title>
+<path fill="none" stroke="#388e3c" stroke-width="2.4" stroke-dasharray="5,2" d="M565.06,-315.53C578.55,-309.69 591.61,-301.89 601.75,-291.5 609.16,-283.9 603.35,-277.46 609.75,-269 652.15,-212.96 672.54,-179.82 736.69,-175.89"/>
+<polygon fill="#388e3c" stroke="#388e3c" stroke-width="2.4" points="736.6,-179.4 746.49,-175.61 736.4,-172.4 736.6,-179.4"/>
+<text xml:space="preserve" text-anchor="middle" x="649.5" y="-272.2" font-family="Times,serif" font-size="14.00">subcomponent</text>
+</g>
+</g>
+</svg>
+
+    </div>
+  </main>
+  <script>
+    const svg = document.querySelector("svg");
+    const edges = Array.from(document.querySelectorAll(".edge"));
+    const edgeRecords = [];
+    const incoming = new Map();
+    const outgoing = new Map();
+
+    function addToMap(map, key, record) {
+      const records = map.get(key) || [];
+      records.push(record);
+      map.set(key, records);
+    }
+
+    function edgeTitle(edge) {
+      return edge.querySelector("title")?.textContent || edge.id || "edge";
+    }
+
+    function edgeRecord(edge) {
+      const title = edgeTitle(edge);
+      const separator = title.indexOf("->");
+      if (separator === -1) {
+        return null;
+      }
+      return {
+        edge,
+        title,
+        src: title.slice(0, separator),
+        dst: title.slice(separator + 2),
+      };
+    }
+
+    // The full dependency chain through an edge: every transitive caller
+    // upstream AND every transitive dependency downstream. Both sides are walked
+    // completely and symmetrically, so the highlight is the whole connected
+    // chain rather than "full one side, truncated the other". Each direction has
+    // its own visited set, which both dedupes work and guards against cycles.
+    function dependencyChain(record) {
+      const selected = new Set([record.edge]);
+
+      function walk(node, map, nextKey, visited) {
+        (map.get(node) || []).forEach((step) => {
+          if (visited.has(step)) {
+            return;
+          }
+          visited.add(step);
+          selected.add(step.edge);
+          walk(step[nextKey], map, nextKey, visited);
+        });
+      }
+
+      walk(record.src, incoming, "src", new Set()); // upstream: who depends on this
+      walk(record.dst, outgoing, "dst", new Set()); // downstream: what this depends on
+
+      return selected;
+    }
+
+    function clearActive() {
+      edges.forEach((member) => member.classList.remove("active", "origin"));
+    }
+
+    edges.forEach((edge) => {
+      const path = edge.querySelector("path");
+      if (path) {
+        edge.style.color = path.getAttribute("stroke") || "#0969da";
+      }
+
+      const title = edgeTitle(edge);
+      edge.setAttribute("tabindex", "0");
+      edge.setAttribute("role", "button");
+      edge.setAttribute("aria-label", `Animate dependency chain containing ${title}`);
+
+      const record = edgeRecord(edge);
+      if (record) {
+        edgeRecords.push(record);
+        addToMap(outgoing, record.src, record);
+        addToMap(incoming, record.dst, record);
+      }
+
+      edge.addEventListener("click", (event) => {
+        event.stopPropagation();
+        // Clicking the current anchor again clears it; clicking any other edge
+        // re-anchors the chain onto it (even if it was part of the previous
+        // highlight), so you can keep drilling along a chain one click at a time.
+        const wasOrigin = edge.classList.contains("origin");
+        clearActive();
+
+        if (wasOrigin) {
+          svg.classList.remove("has-active");
+          return;
+        }
+
+        const chain = record ? dependencyChain(record) : new Set([edge]);
+        chain.forEach((member) => member.classList.add("active"));
+        edge.classList.add("origin");
+        svg.classList.add("has-active");
+      });
+
+      edge.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          edge.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        }
+      });
+    });
+
+    document.addEventListener("click", () => {
+      clearActive();
+      svg.classList.remove("has-active");
+    });
+  </script>
+</body>
+</html>

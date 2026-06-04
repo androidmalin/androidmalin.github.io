@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f8fa;
+      color: #1f2328;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #d0d7de;
+      background: #ffffff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 650;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hint {
+      color: #57606a;
+      font-size: 12px;
+      text-align: right;
+      max-width: 62ch;
+      line-height: 1.4;
+    }
+
+    main {
+      overflow: auto;
+      padding: 16px;
+    }
+
+    .graph-shell {
+      width: max-content;
+      min-width: 100%;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+    }
+
+    svg {
+      max-width: none;
+      height: auto;
+      display: block;
+    }
+
+    .edge {
+      cursor: pointer;
+    }
+
+    .edge:focus,
+    .edge:focus-visible {
+      outline: none;
+    }
+
+    .edge path {
+      transition: stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
+    }
+
+    .edge:hover path {
+      stroke-width: 4;
+      filter: drop-shadow(0 0 3px currentColor);
+    }
+
+    svg.has-active .edge:not(.active) {
+      opacity: 0.22;
+    }
+
+    .edge.active {
+      opacity: 1;
+    }
+
+    .edge.active path {
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 14 8;
+      animation: flow 650ms linear infinite;
+      filter: drop-shadow(0 0 5px currentColor);
+    }
+
+    .edge.active polygon {
+      filter: drop-shadow(0 0 4px currentColor);
+    }
+
+    /* The clicked edge is the anchor of the chain: solid + pulsing so the eye
+       can find where the chain was entered. Surrounding dashes flow into it
+       (upstream callers) and out of it (downstream dependencies). */
+    .edge.origin path {
+      stroke-width: 6.5;
+      stroke-dasharray: none;
+      animation: pulse 1100ms ease-in-out infinite;
+      filter: drop-shadow(0 0 7px currentColor);
+    }
+
+    .edge.origin polygon {
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    @keyframes flow {
+      to {
+        stroke-dashoffset: -44;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 3px currentColor);
+      }
+      50% {
+        filter: drop-shadow(0 0 11px currentColor);
+      }
+    }
+
+    /* 在 iframe 中嵌入(如博客文章页)时隐藏「返回博客」入口 */
+    html.in-iframe #back-to-blog {
+      display: none;
+    }
+  </style>
+  <script>
+    // 框内(如博客文章页)隐藏「返回博客」;独立标签页打开时正常显示。在 head 中尽早执行以避免闪烁。
+    if (window.self !== window.top) {
+      document.documentElement.classList.add("in-iframe");
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <a id="back-to-blog" href="/2026/06/03/nia-hilt-component-graph/" target="_top" style="flex:none;font-size:13px;color:#0969da;text-decoration:none;white-space:nowrap;">← 返回博客</a>
+    <h1>tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC</h1>
+    <div class="hint">点击连线：高亮其完整依赖链（上游调用方 + 下游依赖）。实心脉冲为选中边，箭头/流向即依赖方向。点其他边可换锚点，点空白处清除。</div>
+  </header>
+  <main>
+    <div class="graph-shell">
+<svg width="436pt" height="402pt"
+ viewBox="0.00 0.00 436.00 402.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(14.4 387.9)">
+<title>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC</title>
+<polygon fill="white" stroke="none" points="-14.4,14.4 -14.4,-387.9 421.77,-387.9 421.77,14.4 -14.4,14.4"/>
+<text xml:space="preserve" text-anchor="middle" x="38.38" y="-7.2" font-family="Times,serif" font-size="14.00">SingletonC</text>
+<!-- node0 -->
+<g id="node1" class="node">
+<title>node0</title>
+<g id="a_node1"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" xlink:title="@Singleton|@Singleton\nSingletonC">
+<polygon fill="aquamarine" stroke="aquamarine" points="349.88,-373.5 201.88,-373.5 201.88,-332.5 349.88,-332.5 349.88,-373.5"/>
+<text xml:space="preserve" text-anchor="middle" x="275.88" y="-356.2" font-family="Times,serif" font-size="14.00">@Singleton|@Singleton</text>
+<text xml:space="preserve" text-anchor="middle" x="275.88" y="-339.7" font-family="Times,serif" font-size="14.00">SingletonC</text>
+</a>
+</g>
+</g>
+<!-- node1 -->
+<g id="node2" class="node">
+<title>node1</title>
+<g id="a_node2"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityRetainedC.html" xlink:title="@ActivityRetainedScoped\nActivityRetainedC">
+<polygon fill="bisque" stroke="bisque" points="280.25,-296.5 119.5,-296.5 119.5,-255.5 280.25,-255.5 280.25,-296.5"/>
+<text xml:space="preserve" text-anchor="middle" x="199.88" y="-279.2" font-family="Times,serif" font-size="14.00">@ActivityRetainedScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="199.88" y="-262.7" font-family="Times,serif" font-size="14.00">ActivityRetainedC</text>
+</a>
+</g>
+</g>
+<!-- node0&#45;&gt;node1 -->
+<g id="edge1" class="edge">
+<title>node0&#45;&gt;node1</title>
+<path fill="none" stroke="#d32f2f" stroke-width="1.8" d="M255.91,-332.29C247.68,-324.18 237.99,-314.61 229,-305.74"/>
+<polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="1.8" points="231.49,-303.28 221.91,-298.75 226.57,-308.26 231.49,-303.28"/>
+</g>
+<!-- node2 -->
+<g id="node3" class="node">
+<title>node2</title>
+<g id="a_node3"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ServiceC.html" xlink:title="@ServiceScoped\nServiceC">
+<polygon fill="#ffff00" stroke="#ffff00" points="407.38,-296.5 298.38,-296.5 298.38,-255.5 407.38,-255.5 407.38,-296.5"/>
+<text xml:space="preserve" text-anchor="middle" x="352.88" y="-279.2" font-family="Times,serif" font-size="14.00">@ServiceScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="352.88" y="-262.7" font-family="Times,serif" font-size="14.00">ServiceC</text>
+</a>
+</g>
+</g>
+<!-- node0&#45;&gt;node2 -->
+<g id="edge2" class="edge">
+<title>node0&#45;&gt;node2</title>
+<path fill="none" stroke="#1976d2" stroke-width="1.8" d="M296.11,-332.29C304.53,-324.09 314.47,-314.41 323.66,-305.46"/>
+<polygon fill="#1976d2" stroke="#1976d2" stroke-width="1.8" points="325.84,-308.22 330.56,-298.74 320.95,-303.21 325.84,-308.22"/>
+</g>
+<!-- node3 -->
+<g id="node4" class="node">
+<title>node3</title>
+<g id="a_node4"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC.html" xlink:title="@ActivityScoped\nActivityC">
+<polygon fill="#76ee00" stroke="#76ee00" points="186.25,-219.5 73.5,-219.5 73.5,-178.5 186.25,-178.5 186.25,-219.5"/>
+<text xml:space="preserve" text-anchor="middle" x="129.88" y="-202.2" font-family="Times,serif" font-size="14.00">@ActivityScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="129.88" y="-185.7" font-family="Times,serif" font-size="14.00">ActivityC</text>
+</a>
+</g>
+</g>
+<!-- node1&#45;&gt;node3 -->
+<g id="edge3" class="edge">
+<title>node1&#45;&gt;node3</title>
+<path fill="none" stroke="#388e3c" stroke-width="1.8" d="M181.48,-255.29C173.99,-247.26 165.17,-237.81 156.96,-229.02"/>
+<polygon fill="#388e3c" stroke="#388e3c" stroke-width="1.8" points="159.63,-226.75 150.25,-221.83 154.51,-231.52 159.63,-226.75"/>
+</g>
+<!-- node4 -->
+<g id="node5" class="node">
+<title>node4</title>
+<g id="a_node5"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewModelC.html" xlink:title="@ViewModelScoped\nViewModelC">
+<polygon fill="coral" stroke="coral" points="337.75,-219.5 204,-219.5 204,-178.5 337.75,-178.5 337.75,-219.5"/>
+<text xml:space="preserve" text-anchor="middle" x="270.88" y="-202.2" font-family="Times,serif" font-size="14.00">@ViewModelScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="270.88" y="-185.7" font-family="Times,serif" font-size="14.00">ViewModelC</text>
+</a>
+</g>
+</g>
+<!-- node1&#45;&gt;node4 -->
+<g id="edge4" class="edge">
+<title>node1&#45;&gt;node4</title>
+<path fill="none" stroke="#f57c00" stroke-width="1.8" d="M218.53,-255.29C226.13,-247.26 235.08,-237.81 243.4,-229.02"/>
+<polygon fill="#f57c00" stroke="#f57c00" stroke-width="1.8" points="245.89,-231.48 250.23,-221.81 240.81,-226.67 245.89,-231.48"/>
+</g>
+<!-- node5 -->
+<g id="node6" class="node">
+<title>node5</title>
+<g id="a_node6"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.FragmentC.html" xlink:title="@FragmentScoped\nFragmentC">
+<polygon fill="#bfefff" stroke="#bfefff" points="127.38,-142.5 6.38,-142.5 6.38,-101.5 127.38,-101.5 127.38,-142.5"/>
+<text xml:space="preserve" text-anchor="middle" x="66.88" y="-125.2" font-family="Times,serif" font-size="14.00">@FragmentScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="66.88" y="-108.7" font-family="Times,serif" font-size="14.00">FragmentC</text>
+</a>
+</g>
+</g>
+<!-- node3&#45;&gt;node5 -->
+<g id="edge5" class="edge">
+<title>node3&#45;&gt;node5</title>
+<path fill="none" stroke="#7b1fa2" stroke-width="1.8" d="M113.32,-178.29C106.65,-170.35 98.81,-161.01 91.49,-152.3"/>
+<polygon fill="#7b1fa2" stroke="#7b1fa2" stroke-width="1.8" points="94.4,-150.33 85.29,-144.92 89.04,-154.83 94.4,-150.33"/>
+</g>
+<!-- node6 -->
+<g id="node7" class="node">
+<title>node6</title>
+<g id="a_node7"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewC.html" xlink:title="@ViewScoped\nViewC">
+<polygon fill="#ffb90f" stroke="#ffb90f" points="242.75,-142.5 145,-142.5 145,-101.5 242.75,-101.5 242.75,-142.5"/>
+<text xml:space="preserve" text-anchor="middle" x="193.88" y="-125.2" font-family="Times,serif" font-size="14.00">@ViewScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="193.88" y="-108.7" font-family="Times,serif" font-size="14.00">ViewC</text>
+</a>
+</g>
+</g>
+<!-- node3&#45;&gt;node6 -->
+<g id="edge6" class="edge">
+<title>node3&#45;&gt;node6</title>
+<path fill="none" stroke="#00796b" stroke-width="1.8" d="M146.69,-178.29C153.47,-170.35 161.44,-161.01 168.87,-152.3"/>
+<polygon fill="#00796b" stroke="#00796b" stroke-width="1.8" points="171.35,-154.79 175.18,-144.91 166.03,-150.24 171.35,-154.79"/>
+</g>
+<!-- node7 -->
+<g id="node8" class="node">
+<title>node7</title>
+<g id="a_node8"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewWithFragmentC.html" xlink:title="@ViewScoped\nViewWithFragmentC">
+<polygon fill="#ffb90f" stroke="#ffb90f" points="133.75,-65.5 0,-65.5 0,-24.5 133.75,-24.5 133.75,-65.5"/>
+<text xml:space="preserve" text-anchor="middle" x="66.88" y="-48.2" font-family="Times,serif" font-size="14.00">@ViewScoped</text>
+<text xml:space="preserve" text-anchor="middle" x="66.88" y="-31.7" font-family="Times,serif" font-size="14.00">ViewWithFragmentC</text>
+</a>
+</g>
+</g>
+<!-- node5&#45;&gt;node7 -->
+<g id="edge7" class="edge">
+<title>node5&#45;&gt;node7</title>
+<path fill="none" stroke="#7b1fa2" stroke-width="1.8" d="M66.88,-101.29C66.88,-94.29 66.88,-86.2 66.88,-78.42"/>
+<polygon fill="#7b1fa2" stroke="#7b1fa2" stroke-width="1.8" points="70.38,-78.56 66.88,-68.56 63.38,-78.56 70.38,-78.56"/>
+</g>
+</g>
+</svg>
+
+    </div>
+  </main>
+  <script>
+    const svg = document.querySelector("svg");
+    const edges = Array.from(document.querySelectorAll(".edge"));
+    const edgeRecords = [];
+    const incoming = new Map();
+    const outgoing = new Map();
+
+    function addToMap(map, key, record) {
+      const records = map.get(key) || [];
+      records.push(record);
+      map.set(key, records);
+    }
+
+    function edgeTitle(edge) {
+      return edge.querySelector("title")?.textContent || edge.id || "edge";
+    }
+
+    function edgeRecord(edge) {
+      const title = edgeTitle(edge);
+      const separator = title.indexOf("->");
+      if (separator === -1) {
+        return null;
+      }
+      return {
+        edge,
+        title,
+        src: title.slice(0, separator),
+        dst: title.slice(separator + 2),
+      };
+    }
+
+    // The full dependency chain through an edge: every transitive caller
+    // upstream AND every transitive dependency downstream. Both sides are walked
+    // completely and symmetrically, so the highlight is the whole connected
+    // chain rather than "full one side, truncated the other". Each direction has
+    // its own visited set, which both dedupes work and guards against cycles.
+    function dependencyChain(record) {
+      const selected = new Set([record.edge]);
+
+      function walk(node, map, nextKey, visited) {
+        (map.get(node) || []).forEach((step) => {
+          if (visited.has(step)) {
+            return;
+          }
+          visited.add(step);
+          selected.add(step.edge);
+          walk(step[nextKey], map, nextKey, visited);
+        });
+      }
+
+      walk(record.src, incoming, "src", new Set()); // upstream: who depends on this
+      walk(record.dst, outgoing, "dst", new Set()); // downstream: what this depends on
+
+      return selected;
+    }
+
+    function clearActive() {
+      edges.forEach((member) => member.classList.remove("active", "origin"));
+    }
+
+    edges.forEach((edge) => {
+      const path = edge.querySelector("path");
+      if (path) {
+        edge.style.color = path.getAttribute("stroke") || "#0969da";
+      }
+
+      const title = edgeTitle(edge);
+      edge.setAttribute("tabindex", "0");
+      edge.setAttribute("role", "button");
+      edge.setAttribute("aria-label", `Animate dependency chain containing ${title}`);
+
+      const record = edgeRecord(edge);
+      if (record) {
+        edgeRecords.push(record);
+        addToMap(outgoing, record.src, record);
+        addToMap(incoming, record.dst, record);
+      }
+
+      edge.addEventListener("click", (event) => {
+        event.stopPropagation();
+        // Clicking the current anchor again clears it; clicking any other edge
+        // re-anchors the chain onto it (even if it was part of the previous
+        // highlight), so you can keep drilling along a chain one click at a time.
+        const wasOrigin = edge.classList.contains("origin");
+        clearActive();
+
+        if (wasOrigin) {
+          svg.classList.remove("has-active");
+          return;
+        }
+
+        const chain = record ? dependencyChain(record) : new Set([edge]);
+        chain.forEach((member) => member.classList.add("active"));
+        edge.classList.add("origin");
+        svg.classList.add("has-active");
+      });
+
+      edge.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          edge.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        }
+      });
+    });
+
+    document.addEventListener("click", () => {
+      clearActive();
+      svg.classList.remove("has-active");
+    });
+  </script>
+</body>
+</html>
