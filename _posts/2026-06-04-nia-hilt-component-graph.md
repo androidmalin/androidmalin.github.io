@@ -22,6 +22,22 @@ tags: [Android, Hilt, Dagger, Scabbard]
     var frame = document.getElementById("nia-hilt-tree");
     if (!frame) return;
 
+    // 只在博客内嵌 iframe 中隐藏「返回博客」入口;独立打开总览图时仍然显示。
+    function hideBackToBlogInFrame() {
+      try {
+        var doc = frame.contentWindow.document;
+        var style = doc.getElementById("nia-hide-back-to-blog-style");
+        if (!style) {
+          style = doc.createElement("style");
+          style.id = "nia-hide-back-to-blog-style";
+          style.textContent = "#back-to-blog{display:none!important}";
+          doc.head.appendChild(style);
+        }
+      } catch (e) {
+        /* 忽略:隐藏失败不影响图的查看 */
+      }
+    }
+
     // 按真实内容高度自适应。树页面 body 设了 min-height:100vh,会让 scrollHeight 至少为一屏,
     // 所以先把它临时置 0(只改 iframe 内存中的 DOM)再测量。
     function fit() {
@@ -68,6 +84,34 @@ tags: [Android, Hilt, Dagger, Scabbard]
         }
       } catch (e) {
         /* 忽略:选中失败不影响图本身的查看 */
+      }
+    }
+
+    // 新生成的 SVG 可能不再给节点链接保留 target="_blank";在博客 iframe 内统一恢复
+    // 「点击组件节点在新标签页打开详情图」的行为。
+    function openTreeNodesInNewTabs() {
+      try {
+        var doc = frame.contentWindow.document;
+        var baseUrl = frame.contentWindow.location.href;
+        doc.querySelectorAll("g.node a").forEach(function (anchor) {
+          var href =
+            anchor.getAttribute("href") ||
+            anchor.getAttribute("xlink:href") ||
+            anchor.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+          if (!href) return;
+
+          anchor.setAttribute("target", "_blank");
+          anchor.setAttribute("rel", "noopener");
+          if (anchor.getAttribute("data-nia-new-tab-bound") === "true") return;
+          anchor.setAttribute("data-nia-new-tab-bound", "true");
+          anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+            var opened = window.open(new URL(href, baseUrl).href, "_blank", "noopener");
+            if (opened) opened.opener = null;
+          });
+        });
+      } catch (e) {
+        /* 忽略:链接降级为 iframe 内默认跳转 */
       }
     }
 
@@ -184,7 +228,9 @@ tags: [Android, Hilt, Dagger, Scabbard]
     }
 
     function onReady() {
+      hideBackToBlogInFrame();
       fit();
+      openTreeNodesInNewTabs();
       autoSelectFragmentToView();
       showClickHint();
     }

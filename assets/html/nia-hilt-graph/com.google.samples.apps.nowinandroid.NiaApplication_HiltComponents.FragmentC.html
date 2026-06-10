@@ -78,6 +78,10 @@
       transition: stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
     }
 
+    .node {
+      transition: opacity 160ms ease;
+    }
+
     .edge:hover path {
       stroke-width: 4;
       filter: drop-shadow(0 0 3px currentColor);
@@ -85,6 +89,21 @@
 
     svg.has-active .edge:not(.active) {
       opacity: 0.22;
+    }
+
+    svg.has-active .node:not(.active) {
+      opacity: 0.3;
+    }
+
+    /* Dimmed edges stay clickable (to re-anchor the chain) but hovering them
+       only nudges the opacity instead of lighting up like an active edge. */
+    svg.has-active .edge:not(.active):hover {
+      opacity: 0.55;
+    }
+
+    svg.has-active .edge:not(.active):hover path {
+      stroke-width: 2.2;
+      filter: none;
     }
 
     .edge.active {
@@ -137,7 +156,7 @@
   <header>
     <a href="tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" style="flex:none;font-size:13px;color:#0969da;text-decoration:none;white-space:nowrap;">← 返回总览树</a>
     <h1>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.FragmentC</h1>
-    <div class="hint">点击连线：高亮其完整依赖链（上游调用方 + 下游依赖）。实心脉冲为选中边，箭头/流向即依赖方向。点其他边可换锚点，点空白处清除。</div>
+    <div class="hint">点击连线：高亮经过它的所有依赖路径（上游传递调用方 + 下游传递依赖；不含源节点的其他并列依赖——想看某个类的全部依赖，请点指向它的那条边）。实心脉冲为锚点边，虚线流向即依赖方向。点其他边换锚点，再点锚点或空白处清除。</div>
   </header>
   <main>
     <div class="graph-shell">
@@ -162,41 +181,41 @@
 <polygon fill="none" stroke="black" points="616.75,-40.5 616.75,-122.5 766.5,-122.5 766.5,-40.5 616.75,-40.5"/>
 <text xml:space="preserve" text-anchor="middle" x="668.25" y="-105.2" font-family="Times,serif" font-size="14.00">Subcomponents</text>
 </g>
-<!-- node0 -->
+<!-- 927f5c7b&#45;cc43&#45;4e4f&#45;b136&#45;e1e0cc628677 -->
 <g id="node1" class="node">
-<title>node0</title>
+<title>927f5c7b&#45;cc43&#45;4e4f&#45;b136&#45;e1e0cc628677</title>
 <polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="245,-87.5 16,-87.5 16,-83.5 12,-83.5 12,-79.5 16,-79.5 16,-59.5 12,-59.5 12,-55.5 16,-55.5 16,-51.5 245,-51.5 245,-87.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-83.5 20,-83.5 20,-79.5 16,-79.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-59.5 20,-59.5 20,-55.5 16,-55.5"/>
 <text xml:space="preserve" text-anchor="middle" x="130.5" y="-64.45" font-family="Times,serif" font-size="14.00">ViewWithFragmentComponentBuilder</text>
 </g>
-<!-- node1 -->
+<!-- f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0 -->
 <g id="node2" class="node">
-<title>node1</title>
+<title>f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0</title>
 <polygon fill="turquoise" stroke="turquoise" points="509.25,-98 331.25,-98 331.25,-41 509.25,-41 509.25,-98"/>
 <text xml:space="preserve" text-anchor="middle" x="420.25" y="-80.7" font-family="Times,serif" font-size="14.00">ViewWithFragmentC.Builder</text>
 <text xml:space="preserve" text-anchor="middle" x="420.25" y="-48.2" font-family="Times,serif" font-size="14.00">Subcomponent Creator</text>
 </g>
-<!-- node0&#45;&gt;node1 -->
+<!-- 927f5c7b&#45;cc43&#45;4e4f&#45;b136&#45;e1e0cc628677&#45;&gt;f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0 -->
 <g id="edge1" class="edge">
-<title>node0&#45;&gt;node1</title>
+<title>927f5c7b&#45;cc43&#45;4e4f&#45;b136&#45;e1e0cc628677&#45;&gt;f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0</title>
 <path fill="none" stroke="#d32f2f" stroke-width="2.2" stroke-dasharray="1,5" d="M245.64,-69.5C269.49,-69.5 294.48,-69.5 317.84,-69.5"/>
 <polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="2.2" points="317.67,-73 327.67,-69.5 317.67,-66 317.67,-73"/>
 <text xml:space="preserve" text-anchor="middle" x="288.12" y="-72.7" font-family="Times,serif" font-size="14.00">delegates</text>
 </g>
-<!-- node2 -->
+<!-- 0903fd7c&#45;0fb5&#45;4c73&#45;ad4f&#45;28148afc5667 -->
 <g id="node3" class="node">
-<title>node2</title>
-<g id="a_node3"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewWithFragmentC.html" xlink:title="@ViewScoped\nViewWithFragmentC">
+<title>0903fd7c&#45;0fb5&#45;4c73&#45;ad4f&#45;28148afc5667</title>
+<g id="a_node3"><a xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewWithFragmentC.html" xlink:title="@ViewScoped\nViewWithFragmentC">
 <polygon fill="#ffb90f" stroke="#ffb90f" points="758.5,-90 624.75,-90 624.75,-49 758.5,-49 758.5,-90"/>
 <text xml:space="preserve" text-anchor="middle" x="691.62" y="-72.7" font-family="Times,serif" font-size="14.00">@ViewScoped</text>
 <text xml:space="preserve" text-anchor="middle" x="691.62" y="-56.2" font-family="Times,serif" font-size="14.00">ViewWithFragmentC</text>
 </a>
 </g>
 </g>
-<!-- node1&#45;&gt;node2 -->
+<!-- f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0&#45;&gt;0903fd7c&#45;0fb5&#45;4c73&#45;ad4f&#45;28148afc5667 -->
 <g id="edge2" class="edge">
-<title>node1&#45;&gt;node2:w</title>
+<title>f0300fb2&#45;bec4&#45;4c46&#45;bfe7&#45;1b6e75d7b9c0&#45;&gt;0903fd7c&#45;0fb5&#45;4c73&#45;ad4f&#45;28148afc5667:w</title>
 <path fill="none" stroke="#d32f2f" stroke-width="2.4" stroke-dasharray="5,2" d="M509.46,-69.5C540.81,-69.5 576.7,-69.5 610.44,-69.5"/>
 <polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="2.4" points="610.12,-73 620.12,-69.5 610.12,-66 610.12,-73"/>
 <text xml:space="preserve" text-anchor="middle" x="567" y="-72.7" font-family="Times,serif" font-size="14.00">subcomponent</text>
@@ -209,9 +228,19 @@
   <script>
     const svg = document.querySelector("svg");
     const edges = Array.from(document.querySelectorAll(".edge"));
+    const nodes = Array.from(document.querySelectorAll(".node"));
     const edgeRecords = [];
+    const recordByEdge = new Map();
+    const nodeByTitle = new Map();
     const incoming = new Map();
     const outgoing = new Map();
+
+    nodes.forEach((node) => {
+      const title = node.querySelector("title")?.textContent;
+      if (title) {
+        nodeByTitle.set(title, node);
+      }
+    });
 
     function addToMap(map, key, record) {
       const records = map.get(key) || [];
@@ -264,6 +293,7 @@
 
     function clearActive() {
       edges.forEach((member) => member.classList.remove("active", "origin"));
+      nodes.forEach((member) => member.classList.remove("active"));
     }
 
     edges.forEach((edge) => {
@@ -280,6 +310,7 @@
       const record = edgeRecord(edge);
       if (record) {
         edgeRecords.push(record);
+        recordByEdge.set(edge, record);
         addToMap(outgoing, record.src, record);
         addToMap(incoming, record.dst, record);
       }
@@ -298,7 +329,22 @@
         }
 
         const chain = record ? dependencyChain(record) : new Set([edge]);
-        chain.forEach((member) => member.classList.add("active"));
+        const chainNodes = new Set();
+        chain.forEach((member) => {
+          member.classList.add("active");
+          const memberRecord = recordByEdge.get(member);
+          if (memberRecord) {
+            chainNodes.add(memberRecord.src);
+            chainNodes.add(memberRecord.dst);
+          }
+        });
+        if (chainNodes.size === 0) {
+          // Unparseable edge title: keep every node visible instead of dimming
+          // the whole graph.
+          nodes.forEach((member) => member.classList.add("active"));
+        } else {
+          chainNodes.forEach((id) => nodeByTitle.get(id)?.classList.add("active"));
+        }
         edge.classList.add("origin");
         svg.classList.add("has-active");
       });

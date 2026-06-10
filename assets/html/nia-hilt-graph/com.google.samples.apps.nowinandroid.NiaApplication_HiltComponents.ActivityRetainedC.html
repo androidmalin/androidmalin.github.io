@@ -78,6 +78,10 @@
       transition: stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
     }
 
+    .node {
+      transition: opacity 160ms ease;
+    }
+
     .edge:hover path {
       stroke-width: 4;
       filter: drop-shadow(0 0 3px currentColor);
@@ -85,6 +89,21 @@
 
     svg.has-active .edge:not(.active) {
       opacity: 0.22;
+    }
+
+    svg.has-active .node:not(.active) {
+      opacity: 0.3;
+    }
+
+    /* Dimmed edges stay clickable (to re-anchor the chain) but hovering them
+       only nudges the opacity instead of lighting up like an active edge. */
+    svg.has-active .edge:not(.active):hover {
+      opacity: 0.55;
+    }
+
+    svg.has-active .edge:not(.active):hover path {
+      stroke-width: 2.2;
+      filter: none;
     }
 
     .edge.active {
@@ -137,7 +156,7 @@
   <header>
     <a href="tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" style="flex:none;font-size:13px;color:#0969da;text-decoration:none;white-space:nowrap;">← 返回总览树</a>
     <h1>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityRetainedC</h1>
-    <div class="hint">点击连线：高亮其完整依赖链（上游调用方 + 下游依赖）。实心脉冲为选中边，箭头/流向即依赖方向。点其他边可换锚点，点空白处清除。</div>
+    <div class="hint">点击连线：高亮经过它的所有依赖路径（上游传递调用方 + 下游传递依赖；不含源节点的其他并列依赖——想看某个类的全部依赖，请点指向它的那条边）。实心脉冲为锚点边，虚线流向即依赖方向。点其他边换锚点，再点锚点或空白处清除。</div>
   </header>
   <main>
     <div class="graph-shell">
@@ -162,138 +181,138 @@
 <polygon fill="none" stroke="black" points="579.25,-308.5 579.25,-449.5 729,-449.5 729,-308.5 579.25,-308.5"/>
 <text xml:space="preserve" text-anchor="middle" x="630.75" y="-432.2" font-family="Times,serif" font-size="14.00">Subcomponents</text>
 </g>
-<!-- node0 -->
+<!-- a56cf50e&#45;31fe&#45;4ca9&#45;91b6&#45;6bba39b1149a -->
 <g id="node1" class="node">
-<title>node0</title>
+<title>a56cf50e&#45;31fe&#45;4ca9&#45;91b6&#45;6bba39b1149a</title>
 <polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="191,-435.5 26.5,-435.5 26.5,-431.5 22.5,-431.5 22.5,-427.5 26.5,-427.5 26.5,-407.5 22.5,-407.5 22.5,-403.5 26.5,-403.5 26.5,-399.5 191,-399.5 191,-435.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="26.5,-431.5 30.5,-431.5 30.5,-427.5 26.5,-427.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="26.5,-407.5 30.5,-407.5 30.5,-403.5 26.5,-403.5"/>
 <text xml:space="preserve" text-anchor="middle" x="108.75" y="-412.45" font-family="Times,serif" font-size="14.00">ActivityComponentBuilder</text>
 </g>
-<!-- node3 -->
+<!-- 6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384 -->
 <g id="node4" class="node">
-<title>node3</title>
+<title>6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384</title>
 <polygon fill="turquoise" stroke="turquoise" points="450.75,-586 308.75,-586 308.75,-529 450.75,-529 450.75,-586"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-568.7" font-family="Times,serif" font-size="14.00">ActivityC.Builder</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-536.2" font-family="Times,serif" font-size="14.00">Subcomponent Creator</text>
 </g>
-<!-- node0&#45;&gt;node3 -->
+<!-- a56cf50e&#45;31fe&#45;4ca9&#45;91b6&#45;6bba39b1149a&#45;&gt;6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384 -->
 <g id="edge1" class="edge">
-<title>node0&#45;&gt;node3</title>
+<title>a56cf50e&#45;31fe&#45;4ca9&#45;91b6&#45;6bba39b1149a&#45;&gt;6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384</title>
 <path fill="none" stroke="#d32f2f" stroke-width="2.2" stroke-dasharray="1,5" d="M137.41,-436.49C170.33,-458.54 227.42,-495.15 279.75,-520.5 285,-523.04 290.47,-525.53 296.03,-527.92"/>
 <polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="2.2" points="294.64,-531.14 305.22,-531.75 297.33,-524.67 294.64,-531.14"/>
 <text xml:space="preserve" text-anchor="middle" x="244.62" y="-516.51" font-family="Times,serif" font-size="14.00">delegates</text>
 </g>
-<!-- node1 -->
+<!-- 8bfd15ca&#45;da7c&#45;4074&#45;b0b0&#45;3c12c7ec0af8 -->
 <g id="node2" class="node">
-<title>node1</title>
+<title>8bfd15ca&#45;da7c&#45;4074&#45;b0b0&#45;3c12c7ec0af8</title>
 <polygon fill="bisque" stroke="bisque" stroke-width="2" points="189.12,-381 28.38,-381 28.38,-377 24.37,-377 24.37,-373 28.38,-373 28.38,-348 24.38,-348 24.38,-344 28.38,-344 28.38,-340 189.12,-340 189.12,-381"/>
 <polyline fill="none" stroke="bisque" stroke-width="2" points="28.38,-377 32.38,-377 32.38,-373 28.38,-373"/>
 <polyline fill="none" stroke="bisque" stroke-width="2" points="28.38,-348 32.38,-348 32.38,-344 28.38,-344"/>
 <text xml:space="preserve" text-anchor="middle" x="108.75" y="-363.7" font-family="Times,serif" font-size="14.00">@ActivityRetainedScoped</text>
 <text xml:space="preserve" text-anchor="middle" x="108.75" y="-347.2" font-family="Times,serif" font-size="14.00">ActivityRetainedLifecycle</text>
 </g>
-<!-- node2 -->
+<!-- b4132da3&#45;190f&#45;4e42&#45;acf8&#45;deb914195391 -->
 <g id="node3" class="node">
-<title>node2</title>
+<title>b4132da3&#45;190f&#45;4e42&#45;acf8&#45;deb914195391</title>
 <polygon fill="turquoise" stroke="turquoise" stroke-width="2" points="201.5,-321.5 16,-321.5 16,-317.5 12,-317.5 12,-313.5 16,-313.5 16,-293.5 12,-293.5 12,-289.5 16,-289.5 16,-285.5 201.5,-285.5 201.5,-321.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-317.5 20,-317.5 20,-313.5 16,-313.5"/>
 <polyline fill="none" stroke="turquoise" stroke-width="2" points="16,-293.5 20,-293.5 20,-289.5 16,-289.5"/>
 <text xml:space="preserve" text-anchor="middle" x="108.75" y="-298.45" font-family="Times,serif" font-size="14.00">ViewModelComponentBuilder</text>
 </g>
-<!-- node11 -->
+<!-- 40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b -->
 <g id="node12" class="node">
-<title>node11</title>
+<title>40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b</title>
 <polygon fill="turquoise" stroke="turquoise" points="450.75,-98 308.75,-98 308.75,-41 450.75,-41 450.75,-98"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-80.7" font-family="Times,serif" font-size="14.00">ViewModelC.Builder</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-48.2" font-family="Times,serif" font-size="14.00">Subcomponent Creator</text>
 </g>
-<!-- node2&#45;&gt;node11 -->
+<!-- b4132da3&#45;190f&#45;4e42&#45;acf8&#45;deb914195391&#45;&gt;40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b -->
 <g id="edge3" class="edge">
-<title>node2&#45;&gt;node11</title>
+<title>b4132da3&#45;190f&#45;4e42&#45;acf8&#45;deb914195391&#45;&gt;40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b</title>
 <path fill="none" stroke="#1976d2" stroke-width="2.2" stroke-dasharray="1,5" d="M121.47,-284.6C146.21,-246.15 207.46,-158.18 279.75,-107.5 285.08,-103.76 290.82,-100.34 296.77,-97.2"/>
 <polygon fill="#1976d2" stroke="#1976d2" stroke-width="2.2" points="297.94,-100.52 305.39,-92.99 294.87,-94.23 297.94,-100.52"/>
 <text xml:space="preserve" text-anchor="middle" x="244.62" y="-161.56" font-family="Times,serif" font-size="14.00">delegates</text>
 </g>
-<!-- node12 -->
+<!-- 206b5f63&#45;b4f9&#45;4104&#45;9440&#45;df33da385b19 -->
 <g id="node13" class="node">
-<title>node12</title>
-<g id="a_node13"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC.html" xlink:title="@ActivityScoped\nActivityC">
+<title>206b5f63&#45;b4f9&#45;4104&#45;9440&#45;df33da385b19</title>
+<g id="a_node13"><a xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ActivityC.html" xlink:title="@ActivityScoped\nActivityC">
 <polygon fill="#76ee00" stroke="#76ee00" points="710.5,-417 597.75,-417 597.75,-376 710.5,-376 710.5,-417"/>
 <text xml:space="preserve" text-anchor="middle" x="654.12" y="-399.7" font-family="Times,serif" font-size="14.00">@ActivityScoped</text>
 <text xml:space="preserve" text-anchor="middle" x="654.12" y="-383.2" font-family="Times,serif" font-size="14.00">ActivityC</text>
 </a>
 </g>
 </g>
-<!-- node3&#45;&gt;node12 -->
+<!-- 6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384&#45;&gt;206b5f63&#45;b4f9&#45;4104&#45;9440&#45;df33da385b19 -->
 <g id="edge2" class="edge">
-<title>node3&#45;&gt;node12:w</title>
+<title>6edba007&#45;40e5&#45;40d5&#45;a8b5&#45;f83e4f808384&#45;&gt;206b5f63&#45;b4f9&#45;4104&#45;9440&#45;df33da385b19:w</title>
 <path fill="none" stroke="#d32f2f" stroke-width="2.4" stroke-dasharray="5,2" d="M451.16,-535.79C461.12,-531.42 470.96,-526.34 479.75,-520.5 538.81,-481.29 523.45,-406.92 583.27,-397.49"/>
 <polygon fill="#d32f2f" stroke="#d32f2f" stroke-width="2.4" points="583.41,-400.99 593.13,-396.77 582.9,-394.01 583.41,-400.99"/>
 <text xml:space="preserve" text-anchor="middle" x="529.5" y="-515.75" font-family="Times,serif" font-size="14.00">subcomponent</text>
 </g>
-<!-- node4 -->
+<!-- 29002228&#45;4f9e&#45;462a&#45;adab&#45;5a012e457b52 -->
 <g id="node5" class="node">
-<title>node4</title>
+<title>29002228&#45;4f9e&#45;462a&#45;adab&#45;5a012e457b52</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-157 287.75,-157 287.75,-116 471.75,-116 471.75,-157"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-139.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-123.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node5 -->
+<!-- 0185d867&#45;5a19&#45;412d&#45;852e&#45;244eec9ae6e4 -->
 <g id="node6" class="node">
-<title>node5</title>
+<title>0185d867&#45;5a19&#45;412d&#45;852e&#45;244eec9ae6e4</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-216 287.75,-216 287.75,-175 471.75,-175 471.75,-216"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-198.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-182.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node6 -->
+<!-- f09261f7&#45;4fd7&#45;4293&#45;89d3&#45;0792552fb690 -->
 <g id="node7" class="node">
-<title>node6</title>
+<title>f09261f7&#45;4fd7&#45;4293&#45;89d3&#45;0792552fb690</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-275 287.75,-275 287.75,-234 471.75,-234 471.75,-275"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-257.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-241.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node7 -->
+<!-- a5219b1f&#45;4d65&#45;4eb4&#45;b47d&#45;fdf13c71cc79 -->
 <g id="node8" class="node">
-<title>node7</title>
+<title>a5219b1f&#45;4d65&#45;4eb4&#45;b47d&#45;fdf13c71cc79</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-334 287.75,-334 287.75,-293 471.75,-293 471.75,-334"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-316.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-300.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node8 -->
+<!-- a38c836d&#45;4062&#45;4844&#45;9d51&#45;d3d35f8f5bce -->
 <g id="node9" class="node">
-<title>node8</title>
+<title>a38c836d&#45;4062&#45;4844&#45;9d51&#45;d3d35f8f5bce</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-393 287.75,-393 287.75,-352 471.75,-352 471.75,-393"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-375.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-359.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node9 -->
+<!-- 1080b219&#45;fb33&#45;456e&#45;9ee9&#45;7e950eeb364c -->
 <g id="node10" class="node">
-<title>node9</title>
+<title>1080b219&#45;fb33&#45;456e&#45;9ee9&#45;7e950eeb364c</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-452 287.75,-452 287.75,-411 471.75,-411 471.75,-452"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-434.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-418.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node10 -->
+<!-- 0a79382f&#45;90e7&#45;4115&#45;8b45&#45;bcf59b651f26 -->
 <g id="node11" class="node">
-<title>node10</title>
+<title>0a79382f&#45;90e7&#45;4115&#45;8b45&#45;bcf59b651f26</title>
 <polygon fill="turquoise" stroke="turquoise" points="471.75,-511 287.75,-511 287.75,-470 471.75,-470 471.75,-511"/>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-493.7" font-family="Times,serif" font-size="14.00">@HiltViewModelMap.KeySet</text>
 <text xml:space="preserve" text-anchor="middle" x="379.75" y="-477.2" font-family="Times,serif" font-size="14.00">KeyModule.provide()</text>
 </g>
-<!-- node13 -->
+<!-- 5c580d8f&#45;8720&#45;47cc&#45;b7e3&#45;28b661cf4a2d -->
 <g id="node14" class="node">
-<title>node13</title>
-<g id="a_node14"><a target="_blank" rel="noopener" xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewModelC.html" xlink:title="@ViewModelScoped\nViewModelC">
+<title>5c580d8f&#45;8720&#45;47cc&#45;b7e3&#45;28b661cf4a2d</title>
+<g id="a_node14"><a xlink:href="com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ViewModelC.html" xlink:title="@ViewModelScoped\nViewModelC">
 <polygon fill="coral" stroke="coral" points="721,-358 587.25,-358 587.25,-317 721,-317 721,-358"/>
 <text xml:space="preserve" text-anchor="middle" x="654.12" y="-340.7" font-family="Times,serif" font-size="14.00">@ViewModelScoped</text>
 <text xml:space="preserve" text-anchor="middle" x="654.12" y="-324.2" font-family="Times,serif" font-size="14.00">ViewModelC</text>
 </a>
 </g>
 </g>
-<!-- node11&#45;&gt;node13 -->
+<!-- 40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b&#45;&gt;5c580d8f&#45;8720&#45;47cc&#45;b7e3&#45;28b661cf4a2d -->
 <g id="edge4" class="edge">
-<title>node11&#45;&gt;node13:w</title>
+<title>40da32b2&#45;b393&#45;4d1e&#45;8e88&#45;0b1c71483d4b&#45;&gt;5c580d8f&#45;8720&#45;47cc&#45;b7e3&#45;28b661cf4a2d:w</title>
 <path fill="none" stroke="#1976d2" stroke-width="2.4" stroke-dasharray="5,2" d="M451.03,-88.58C461.47,-93.56 471.48,-99.77 479.75,-107.5 558.5,-181.13 480.89,-324.49 572.81,-336.67"/>
 <polygon fill="#1976d2" stroke="#1976d2" stroke-width="2.4" points="572.43,-340.15 582.62,-337.28 572.86,-333.17 572.43,-340.15"/>
 <text xml:space="preserve" text-anchor="middle" x="529.5" y="-339.1" font-family="Times,serif" font-size="14.00">subcomponent</text>
@@ -306,9 +325,19 @@
   <script>
     const svg = document.querySelector("svg");
     const edges = Array.from(document.querySelectorAll(".edge"));
+    const nodes = Array.from(document.querySelectorAll(".node"));
     const edgeRecords = [];
+    const recordByEdge = new Map();
+    const nodeByTitle = new Map();
     const incoming = new Map();
     const outgoing = new Map();
+
+    nodes.forEach((node) => {
+      const title = node.querySelector("title")?.textContent;
+      if (title) {
+        nodeByTitle.set(title, node);
+      }
+    });
 
     function addToMap(map, key, record) {
       const records = map.get(key) || [];
@@ -361,6 +390,7 @@
 
     function clearActive() {
       edges.forEach((member) => member.classList.remove("active", "origin"));
+      nodes.forEach((member) => member.classList.remove("active"));
     }
 
     edges.forEach((edge) => {
@@ -377,6 +407,7 @@
       const record = edgeRecord(edge);
       if (record) {
         edgeRecords.push(record);
+        recordByEdge.set(edge, record);
         addToMap(outgoing, record.src, record);
         addToMap(incoming, record.dst, record);
       }
@@ -395,7 +426,22 @@
         }
 
         const chain = record ? dependencyChain(record) : new Set([edge]);
-        chain.forEach((member) => member.classList.add("active"));
+        const chainNodes = new Set();
+        chain.forEach((member) => {
+          member.classList.add("active");
+          const memberRecord = recordByEdge.get(member);
+          if (memberRecord) {
+            chainNodes.add(memberRecord.src);
+            chainNodes.add(memberRecord.dst);
+          }
+        });
+        if (chainNodes.size === 0) {
+          // Unparseable edge title: keep every node visible instead of dimming
+          // the whole graph.
+          nodes.forEach((member) => member.classList.add("active"));
+        } else {
+          chainNodes.forEach((id) => nodeByTitle.get(id)?.classList.add("active"));
+        }
         edge.classList.add("origin");
         svg.classList.add("has-active");
       });

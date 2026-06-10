@@ -78,6 +78,10 @@
       transition: stroke-width 160ms ease, filter 160ms ease, opacity 160ms ease;
     }
 
+    .node {
+      transition: opacity 160ms ease;
+    }
+
     .edge:hover path {
       stroke-width: 4;
       filter: drop-shadow(0 0 3px currentColor);
@@ -85,6 +89,21 @@
 
     svg.has-active .edge:not(.active) {
       opacity: 0.22;
+    }
+
+    svg.has-active .node:not(.active) {
+      opacity: 0.3;
+    }
+
+    /* Dimmed edges stay clickable (to re-anchor the chain) but hovering them
+       only nudges the opacity instead of lighting up like an active edge. */
+    svg.has-active .edge:not(.active):hover {
+      opacity: 0.55;
+    }
+
+    svg.has-active .edge:not(.active):hover path {
+      stroke-width: 2.2;
+      filter: none;
     }
 
     .edge.active {
@@ -137,7 +156,7 @@
   <header>
     <a href="tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html" style="flex:none;font-size:13px;color:#0969da;text-decoration:none;white-space:nowrap;">← 返回总览树</a>
     <h1>com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.ServiceC</h1>
-    <div class="hint">点击连线：高亮其完整依赖链（上游调用方 + 下游依赖）。实心脉冲为选中边，箭头/流向即依赖方向。点其他边可换锚点，点空白处清除。</div>
+    <div class="hint">点击连线：高亮经过它的所有依赖路径（上游传递调用方 + 下游传递依赖；不含源节点的其他并列依赖——想看某个类的全部依赖，请点指向它的那条边）。实心脉冲为锚点边，虚线流向即依赖方向。点其他边换锚点，再点锚点或空白处清除。</div>
   </header>
   <main>
     <div class="graph-shell">
@@ -155,9 +174,19 @@
   <script>
     const svg = document.querySelector("svg");
     const edges = Array.from(document.querySelectorAll(".edge"));
+    const nodes = Array.from(document.querySelectorAll(".node"));
     const edgeRecords = [];
+    const recordByEdge = new Map();
+    const nodeByTitle = new Map();
     const incoming = new Map();
     const outgoing = new Map();
+
+    nodes.forEach((node) => {
+      const title = node.querySelector("title")?.textContent;
+      if (title) {
+        nodeByTitle.set(title, node);
+      }
+    });
 
     function addToMap(map, key, record) {
       const records = map.get(key) || [];
@@ -210,6 +239,7 @@
 
     function clearActive() {
       edges.forEach((member) => member.classList.remove("active", "origin"));
+      nodes.forEach((member) => member.classList.remove("active"));
     }
 
     edges.forEach((edge) => {
@@ -226,6 +256,7 @@
       const record = edgeRecord(edge);
       if (record) {
         edgeRecords.push(record);
+        recordByEdge.set(edge, record);
         addToMap(outgoing, record.src, record);
         addToMap(incoming, record.dst, record);
       }
@@ -244,7 +275,22 @@
         }
 
         const chain = record ? dependencyChain(record) : new Set([edge]);
-        chain.forEach((member) => member.classList.add("active"));
+        const chainNodes = new Set();
+        chain.forEach((member) => {
+          member.classList.add("active");
+          const memberRecord = recordByEdge.get(member);
+          if (memberRecord) {
+            chainNodes.add(memberRecord.src);
+            chainNodes.add(memberRecord.dst);
+          }
+        });
+        if (chainNodes.size === 0) {
+          // Unparseable edge title: keep every node visible instead of dimming
+          // the whole graph.
+          nodes.forEach((member) => member.classList.add("active"));
+        } else {
+          chainNodes.forEach((id) => nodeByTitle.get(id)?.classList.add("active"));
+        }
         edge.classList.add("origin");
         svg.classList.add("has-active");
       });
