@@ -21,6 +21,7 @@ tags: [Android, Hilt, Dagger, Scabbard]
   (function () {
     var frame = document.getElementById("nia-hilt-tree");
     if (!frame) return;
+    var hintCleanup = null;
 
     // 只在博客内嵌 iframe 中隐藏「返回博客」入口;独立打开总览图时仍然显示。
     function hideBackToBlogInFrame() {
@@ -62,6 +63,8 @@ tags: [Android, Hilt, Dagger, Scabbard]
     function autoSelectFragmentToView() {
       try {
         var doc = frame.contentWindow.document;
+        var svg = doc.querySelector("svg");
+        if (svg && svg.classList.contains("has-active")) return;
         var scopeOf = {};
         doc.querySelectorAll("g.node").forEach(function (node) {
           var title = node.querySelector("title");
@@ -106,6 +109,7 @@ tags: [Android, Hilt, Dagger, Scabbard]
           anchor.setAttribute("data-nia-new-tab-bound", "true");
           anchor.addEventListener("click", function (event) {
             event.preventDefault();
+            event.stopPropagation();
             var opened = window.open(new URL(href, baseUrl).href, "_blank", "noopener");
             if (opened) opened.opener = null;
           });
@@ -121,6 +125,8 @@ tags: [Android, Hilt, Dagger, Scabbard]
       try {
         var doc = frame.contentWindow.document;
         var win = frame.contentWindow;
+        if (doc.body.getAttribute("data-nia-hints-dismissed") === "true") return;
+        if (hintCleanup) hintCleanup();
 
         // 每个节点的气泡方位;SingletonC 额外带小手。
         var bubbleConfig = {
@@ -213,15 +219,20 @@ tags: [Android, Hilt, Dagger, Scabbard]
           win.removeEventListener("resize", place);
           window.removeEventListener("resize", place);
           doc.removeEventListener("click", onDocClick, true);
+          if (hintCleanup === dismiss) hintCleanup = null;
         }
-        // 仅当点击落在「节点」(组件方框 / 链接)内时才移除提示;点击空白处或连线时保留。
+        // 仅当用户在 iframe 内实际停留并点击节点时才移除提示;打开新标签页的节点链接会保留提示。
         function onDocClick(event) {
           var t = event.target;
-          if (t && t.closest && t.closest("g.node")) dismiss();
+          if (!t || !t.closest || !t.closest("g.node")) return;
+          if (t.closest("g.node a")) return;
+          doc.body.setAttribute("data-nia-hints-dismissed", "true");
+          dismiss();
         }
         doc.addEventListener("click", onDocClick, true);
         win.addEventListener("resize", place);
         window.addEventListener("resize", place);
+        hintCleanup = dismiss;
       } catch (e) {
         /* 悬浮提示失败不影响图的查看 */
       }
@@ -237,6 +248,11 @@ tags: [Android, Hilt, Dagger, Scabbard]
 
     frame.addEventListener("load", onReady);
     window.addEventListener("resize", fit);
+    window.addEventListener("pageshow", onReady);
+    window.addEventListener("focus", onReady);
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) onReady();
+    });
     if (frame.contentDocument && frame.contentDocument.readyState === "complete") onReady();
   })();
 </script>
