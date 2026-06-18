@@ -1,0 +1,386 @@
+---
+layout: post
+title: "搞懂 GC Root"
+date: 2026-06-18 01:41:00 +0800
+tags: [android, gc]
+---
+
+如果你写过 Java 或 Kotlin,那你已经默认接受了一件事:对象用完不用自己 `free`,垃圾回收器(GC)会替你收尸。你大概也听过"没人引用的对象会被回收"这句话。这篇我们就来戳破这句话——它不完全对,而真正决定一个对象生死的东西,叫 **GC Root**。
+
+不需要你懂 Android 的内存机制,只要你知道"栈上有局部变量、堆上有对象、变量指向对象"就够了。
+
+## 一个真的会上线的 bug
+
+先看一段再普通不过的代码。一个 Activity,旋转一下屏幕就会触发它销毁重建:
+
+```kotlin
+class LeakActivity : AppCompatActivity() {
+
+    companion object {
+        // 想在别处方便地拿到所有页面,于是把每个 Activity 都塞进一个静态列表
+        val created = mutableListOf<Activity>()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        created += this
+    }
+}
+```
+
+逻辑上没毛病,编译器一声不吭。但你每旋转一次屏幕,系统就 `onDestroy` 掉旧的 `LeakActivity`、新建一个,而每一个旧的——连同它背后整棵 View 树、Bitmap、Context——**全都回收不掉**,统统留在 `created` 里。转十次,内存里就躺着十个死掉的 Activity。这就是 Android 里最经典的内存泄漏。
+
+奇怪的地方在于:旧 Activity 早就 `onDestroy` 了,系统也不再用它,可它就是不死。问题出在 `created` 这个静态列表把每个实例都攥着、从不松手。
+
+很多人第一反应是"那我在 `onDestroy` 里把自己从 `created` 里移掉不就行了"。这个想法先记着,它能堵住这一个洞,但堵不住背后那一类洞——等下你会看到为什么。
+
+## GC Root 到底是什么
+
+一句话:**GC Root 是垃圾回收"从哪儿开始数"的那批起点对象。** GC 从这些起点出发,顺着引用一个个走下去,凡是能走到的对象都算"活着";走完之后没被碰到的,才回收。
+
+打个比方:想象一串挂在墙上的串灯。**钉在墙上的那几个挂钩就是 GC Root**,灯泡是对象,电线是引用。只要一个灯泡能顺着电线追溯到某个挂钩,它就亮着(存活);哪个灯泡和所有挂钩都断了联系,它就灭了(被回收)。
+
+这个比方在一个地方会骗你:串灯是你"主动去摘"灯泡,而 GC 是**反过来**的——它从不主动去找"该死的对象",它只标记"能追到的活对象",剩下没标记的一律当垃圾。所以一个对象会不会泄漏,从来不取决于"还有没有人用它",只取决于"**还能不能从某个 Root 追到它**"。这两件事经常不是一回事——上面那个 Activity 就是没人用了,但还能被追到。
+
+## GC 怎么用它判生死
+
+把内存里几类典型的引用关系画出来——谁是 Root、谁被谁拖着,一眼就清楚(中间那条就是刚才那个 bug):
+
+```
+GC Root(回收的起点,本轮 GC 不回收它们)
+│
+├─ 主线程(活动的线程本身就是 Root)
+│     └─→ MessageQueue ─→ Message ─→ Runnable ─→ MainActivity   ← 本该死,被消息拖住
+│
+├─ LeakActivity.class(被加载的类,整个进程都活着)
+│     └─→ 静态列表 created ─→ 一堆 LeakActivity 实例            ← 没人用了,但追得到 → 泄漏
+│
+└─ 某个正在执行的方法的栈帧
+      └─→ 局部变量 user ─→ User 实例                            ← 方法一返回,栈帧弹出,自然回收
+```
+
+看最后一行:局部变量 `user` 所在的栈帧,本身就是一个 Root。方法没返回时,`user` 指的 `User` 对象铁定活着;方法一返回,栈帧弹掉,这个 Root 没了,`User` 要是没别人引用,下次 GC 就收走。这是健康的样子——**Root 短命,挂在它下面的对象也跟着短命。**
+
+泄漏就是反过来:一个**长命的 Root**(被加载的类、活动的线程)不小心拖住了一个**本该短命的对象**(Activity)。`LeakActivity.class` 这个类一旦加载,基本陪着整个进程到死,它的静态列表 `created` 装着谁,谁就跟着不死。
+
+所以判断会不会泄漏,你其实只要顺着问自己:**有没有一条引用链,从某个活很久的 Root,一路连到了一个本该早早回收的对象?** 有,就是泄漏。
+
+## 哪些东西是 GC Root
+
+不用背全。在 ART(Android 现在的运行时)里,根的种类定义在源码 `art/runtime/gc_root.h` 的 `RootType` 枚举里,实际写业务最常撞上的就这几类:
+
+- **正在执行的方法里的局部变量和参数**(Java 栈帧)—— 短命,通常是安全的。
+- **静态字段 / 已加载的类** —— 长命,泄漏重灾区。静态变量指着 Activity、Context,基本等于判了无期。
+- **活动的线程** —— 线程自己是 Root,它能追到的所有东西都活着。所以一个还没结束的后台线程,只要持有 Activity 引用,就拖着它不放。
+- **被 `synchronized` 锁住的对象** —— 持锁期间是 Root。
+- **JNI 全局引用** —— native 层 `NewGlobalRef` 出来的,不手动释放就一直是 Root。写纯 Kotlin/Java 一般碰不到,但接 C++ 库时要当心。
+
+记住前三类,80% 的泄漏都能自己推出来。
+
+## ART 里 GC Root 的权威分类(AOSP 源码)
+
+上面那五条是"够用版"。如果你想要**权威、完整**的那份,它就明明白白写在 ART 的源码里——`art/runtime/gc_root.h` 的 `RootType` 枚举。下面这段是从 AOSP `main` 分支原样抄下来的(源码链接见本节末):
+
+```cpp
+// art/runtime/gc_root.h
+enum RootType {
+  kRootUnknown = 0,
+  kRootJNIGlobal,
+  kRootJNILocal,
+  kRootJavaFrame,
+  kRootNativeStack,
+  kRootStickyClass,
+  kRootThreadBlock,
+  kRootMonitorUsed,
+  kRootThreadObject,
+  kRootInternedString,
+  kRootFinalizing,         // used for HPROF's conversion to HprofHeapTag
+  kRootDebugger,
+  kRootReferenceCleanup,   // used for HPROF's conversion to HprofHeapTag
+  kRootVMInternal,
+  kRootJNIMonitor,
+};
+```
+
+一共 15 类。挨个解释,并标出写 app 到底碰不碰得到:
+
+| `RootType` 枚举值 | 含义 | 写 app 碰得到吗 |
+|---|---|---|
+| `kRootUnknown` | 未归类的根,转换/工具兜底用的占位 | 基本碰不到 |
+| `kRootJNIGlobal` | JNI 全局引用,native 层 `NewGlobalRef` 创建,不 `DeleteGlobalRef` 就长期是 Root | 接 C/C++ 库时 |
+| `kRootJNILocal` | JNI 局部引用,native 方法执行期间有效(随 native 栈帧) | 接 JNI 时 |
+| `kRootJavaFrame` | **Java 方法栈帧里的局部变量 / 参数**,方法一返回就失效 | ★ 天天碰,通常安全 |
+| `kRootNativeStack` | native 调用栈上正被引用的对象 | 接 native 时 |
+| `kRootStickyClass` | **被"钉住"、不会卸载的类**(系统/启动类加载器加载的核心类);静态字段就挂在类上 | ★ 天天碰,泄漏重灾区 |
+| `kRootThreadBlock` | 线程阻塞/挂起期间运行时内部持有的引用 | 运行时内部 |
+| `kRootMonitorUsed` | **被 monitor(`synchronized` 锁)使用中的对象**,持锁期间是 Root | ★ 天天碰 |
+| `kRootThreadObject` | **线程对象本身**(活动的 `Thread`) | ★ 天天碰 |
+| `kRootInternedString` | intern 过的字符串(字符串常量池),常驻 | 间接碰 |
+| `kRootFinalizing` | 正在终结队列里等待 `finalize` 的对象(HPROF 转换用) | 基本碰不到 |
+| `kRootDebugger` | 调试器 attach 时持有的引用 | 调试时 |
+| `kRootReferenceCleanup` | `Reference` 清理过程相关(HPROF 转换用) | 基本碰不到 |
+| `kRootVMInternal` | 虚拟机/运行时内部结构引用的对象 | 运行时内部 |
+| `kRootJNIMonitor` | 通过 JNI 的 `MonitorEnter` 锁住的对象 | 接 JNI 时 |
+
+**这份枚举不是只给 GC 看的,你平时用的查漏工具也直接读它。** 抓堆快照(`.hprof`)时,ART 在 `art/runtime/hprof/hprof.cc` 里把上面每个 `RootType` 映射成一个 HPROF 根标签(`HPROF_ROOT_JNI_GLOBAL`、`HPROF_ROOT_JAVA_FRAME`、`HPROF_ROOT_STICKY_CLASS`……)。所以 LeakCanary / Android Studio Profiler 在泄漏链顶上显示的那行 "GC Root" 类型(比如 "Global variable in native code"、"Java local variable"、"System class"),**字符串的源头就是这张表**。看懂这张表,就能反推工具到底在告诉你哪条链。
+
+落回这篇前面讲的内容,一一对得上:
+
+- 正文说的"局部变量"→ `kRootJavaFrame`(短命,安全的那类)。
+- 正文反复强调的"静态字段 / 已加载的类"→ `kRootStickyClass`(`LeakActivity` 那个 bug 的真正根类型)。
+- "活动的线程"→ `kRootThreadObject`(坑三里跑不完的后台线程)。
+- "`synchronized` 锁住的对象"→ `kRootMonitorUsed`。
+- "JNI 全局引用"→ `kRootJNIGlobal`。
+
+剩下那些(`kRootFinalizing`、`kRootReferenceCleanup`、`kRootVMInternal` 等)基本是运行时内部和 HPROF 导出用的,写业务时极少直接打交道,扫一眼有个印象即可。
+
+> 源码出处(AOSP `main` 分支):
+> - 枚举定义:`art/runtime/gc_root.h` 的 `RootType`
+>   <https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/gc_root.h>
+> - 到 HPROF 标签的映射:`art/runtime/hprof/hprof.cc`(搜 `HprofRootType` / `kRoot`)
+>   <https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/hprof/hprof.cc>
+>
+> 注:枚举成员会随 ART 版本小幅增删,顺序也可能调整,以你查阅时的对应分支为准。
+
+## 几个最容易踩的坑
+
+**坑一:静态字段拿着 Activity / Context**
+
+```kotlin
+// 错:静态字段(被类这个 Root 拖着)直接指向 Activity
+companion object {
+    var current: Activity? = null
+}
+```
+
+现象:这个静态字段会一直攥着最后存进去的那个 Activity,它 `onDestroy` 之后也回收不掉,LeakCanary 报 "Activity leaked"。
+怎么改:别把带生命周期的东西放静态字段。真要存全局 Context,存 `applicationContext`——它本来就活整个进程,谈不上泄漏:
+
+```kotlin
+// 对:application 级别的 Context 活得和进程一样长,不会拖累谁
+class App : Application() {
+    companion object {
+        lateinit var appContext: Context
+            private set
+    }
+    override fun onCreate() {
+        super.onCreate()
+        appContext = applicationContext
+    }
+}
+```
+
+**坑二:延时任务 / Handler 拖着 Activity**
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    private val handler = Handler(Looper.getMainLooper())
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // doSomething() 是成员方法,这个 lambda 因此隐式持有 MainActivity.this
+        handler.postDelayed({ doSomething() }, 60_000)
+    }
+
+    private fun doSomething() { /* …用到了 Activity 的成员… */ }
+}
+```
+
+现象:页面关了,但接下来 60 秒内它死不掉。因为消息还排在主线程的 `MessageQueue` 里,而**主线程是 Root**——顺着 Root → 消息 → lambda → Activity,链子是通的。
+怎么改:页面销毁时把没执行的消息清掉,链子就断了:
+
+```kotlin
+override fun onDestroy() {
+    super.onDestroy()
+    handler.removeCallbacksAndMessages(null)
+}
+```
+
+注意,这里光"在 `onDestroy` 里置空一个变量"是不够的——拖着 Activity 的不是某个你能置空的字段,而是已经塞进系统消息队列里的那条消息。**得想清楚是哪个 Root、哪条链,再对症断链**,而不是无脑置空。这就是前面那个"置空就行"的想法不够用的地方。
+
+**坑三:后台线程 / 协程没人取消**
+
+```kotlin
+// 错:线程是 Root,它跑多久,就持有 this 多久
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    Thread {
+        val data = loadFromNetwork()   // 慢,可能跑十几秒
+        runOnUiThread { render(data) } // 闭包持有 Activity
+    }.start()
+}
+```
+
+现象:网络慢的时候关掉页面,Activity 要等线程跑完才能回收。
+怎么改:用跟生命周期绑定的作用域,页面没了任务自动取消,链子自动断:
+
+```kotlin
+// 对:lifecycleScope 在 Activity 销毁时会取消,协程持有的引用随之释放
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    lifecycleScope.launch {
+        val data = withContext(Dispatchers.IO) { loadFromNetwork() }
+        render(data)
+    }
+}
+```
+
+要补一句:协程的取消是**协作式**的。如果 `loadFromNetwork()` 是个不可中断的阻塞调用,取消信号得等它返回、协程下一次碰到挂起点或取消检查点才生效,被持有的引用也在那一刻才真正释放。所以耗时操作本身最好就能响应取消(用支持取消的 IO,或拆成可中断的小段)。
+
+> 想亲眼看到这条引用链,可以抓个堆快照:
+> ```bash
+> # 需应用为 debuggable,或设备已 root,否则会失败
+> adb shell am dumpheap <pid> /data/local/tmp/heap.hprof
+> adb pull /data/local/tmp/heap.hprof
+> ```
+> 把 `heap.hprof` 拖进 Android Studio 的 Profiler,搜你那个 Activity,工具会直接画出"从哪个 GC Root 一路连过来的"。平时偷懒就直接上 LeakCanary,它干的也是这件事。
+
+## 为什么不干脆用引用计数
+
+你可能想:判断对象死活,数一下"有几个人引用它",归零就回收,不是更简单?有些语言确实这么干——比如 Objective-C 和 Swift 的 ARC。Android(ART)偏不,它走的是从 GC Root 追踪可达性这条路。差别就在一个维度上:
+
+| | 引用计数 | 从 GC Root 追踪可达性(ART) |
+|---|---|---|
+| 怎么判活 | 每个对象记"被几个人引用",归零即死 | 从 Root 出发能追到的才算活 |
+| 回收时机 | 计数归零,立刻回收 | 攒一批,GC 时统一标记回收(较新版本 ART 用并发拷贝收集器) |
+| 日常开销 | 每次赋值都要改计数,持续有开销 | 平时零开销,GC 时集中算 |
+| **能不能处理循环引用** | **不能** | **能** |
+
+最后一行是本质区别,也是 Android 选它的真正原因。看这种情况:
+
+```kotlin
+class Node { var buddy: Node? = null }
+
+val a = Node()
+val b = Node()
+a.buddy = b
+b.buddy = a   // a、b 互相指
+// a、b 不再被外界使用……
+```
+
+`a` 和 `b` 互相引用,引用计数永远不会归零,在**纯**引用计数体系里它俩会永远赖在内存里——这正是 Objective-C / Swift 的 ARC 必须靠 `weak` 打破循环、而 CPython 要在引用计数之外再补一个循环回收器(`gc` 模块)的原因。但在 ART 里,只要**没有任何 GC Root 能追到它们**,这一团互相引用的对象会被整体判死、一起回收。
+
+这也正好收回开头那句话:"没人引用就回收"是错的。准确的说法是——**追不到才回收**。`a`、`b` 明明互相引用(有人引用),照样该死;那个泄漏的 Activity 明明没人用(没人"该"引用它),却因为追得到而不死。判生死的尺子,自始至终只有一把:能不能从 GC Root 追到。
+
+## 走之前,三个问题
+
+别急着关页面,先自己答,答完再展开对:
+
+1. 一个对象,堆里有另一个对象正引用着它,但谁都没在用了。它会被回收吗?
+2. 把 Activity 引用存进一个静态字段,为什么几乎必然泄漏?换成 `applicationContext` 为什么就没事?
+3. 主线程 `MessageQueue` 里一条延时 60 秒的消息,凭什么能让一个已经 `onDestroy` 的 Activity 多活 60 秒?
+
+<details>
+<summary>点开看答案</summary>
+
+1. **不一定。** 关键不是"有没有人引用",而是"能不能从 GC Root 追到"。如果引用它的那个对象自己也追不到任何 Root(比如俩人互相引用、但跟外界断了),那它俩会一起被回收。
+2. 静态字段挂在"已加载的类"上,而类基本活整个进程,是个长命 Root,它指着谁谁就跟着不死。`applicationContext` 本身的生命周期就等于整个进程,你引用它不会让任何"本该早死"的东西延寿,所以谈不上泄漏。
+3. 主线程是 GC Root。这条链是通的:主线程 → MessageQueue → 那条 Message → 它持有的 lambda → Activity。链子在,Activity 就追得到,就回收不了,直到消息被消费或被 `removeCallbacksAndMessages` 清掉。
+
+</details>
+
+这三题别只看一遍。明天睡一觉起来,先别翻这篇,自己再答一遍——能脱稿答出来,这套"追踪可达性"的思路才算真长在你脑子里了。下次再遇到"对象死不掉",你不会再去数引用,而会顺手问一句:是哪个 Root,顺着哪条链,把它拖住了?
+
+## 附录:四个追问(Q&A)
+
+下面这几个问题是顺着开头那个 `LeakActivity` 例子一层层追下来的。如果你看完正文还有点发虚,这四问基本就是把"为什么泄漏"钉死的过程。
+
+### 问一:`静态列表 created ─→ 一堆 LeakActivity 实例` 到底是什么意思?
+
+图里的箭头 `A ─→ B` 读作 **"A 强引用着 B"**(A 内部存了一个指向 B 的指针,B 就不会消失)。
+
+所以 `created ─→ 一堆 LeakActivity 实例` = **`created` 这个 list 里,存着一个又一个 LeakActivity 对象的强引用**。每执行一次 `created += this`,就往 list 里塞了一个指向"当前 Activity"的指针,塞进去就再不松手。
+
+把整条链补全(从 Root 出发):
+
+```
+LeakActivity.class(类被加载了,是 GC Root,活整个进程)
+   └─→ 静态字段 created(这个 list 对象)
+          ├─→ LeakActivity 实例 #1(已 onDestroy)
+          ├─→ LeakActivity 实例 #2(已 onDestroy)
+          └─→ LeakActivity 实例 #3 …
+                 └─→ 整棵 View 树 / Bitmap / Context …(占内存的大头)
+```
+
+很多人以为"`created` 生命周期和 app 一致"就是泄漏原因——这只对了一半。`created` 活多久**本身不是病**(反例:`applicationContext` 也活整个进程,却不泄漏)。真正致命的是:**一个长命的 Root,拽住了一个本该早死的对象**。`created` 活多久不要紧,要命的是它往里塞了生命周期很短的 Activity,然后死不撒手。
+
+### 问二:如果 `created` 不用 static 修饰,GC Root 还能"一步走到"它吗?
+
+**不能。** 关键在于 static 和非 static 字段"住在哪":
+
+- **静态字段**(写在 `companion object` 里)——字段长在**类**身上。类被加载后常驻、本身是 GC Root,所以 Root **一步直达** `created`。
+- **实例字段**(去掉 static)——字段长在**每个对象**身上。每 new 一个 Activity,就有一个它**自己专属的** `created`。
+
+非 static 之后,要走到某个 `created`,必须**先走到拥有它的那个 Activity 实例**:
+
+```
+???(哪个 Root?)
+   └─→ 某个 LeakActivity 实例
+          └─→ 它的 created 字段
+```
+
+旋转后旧 Activity 没人从外面指了,于是 `实例 ─→ created ─→ 又指回自己` 变成一个**纯自循环**,跟外界 Root 断了联系。按"追不到才回收"的尺子,这一团会被**整体判死、一起回收 → 不泄漏**。
+
+| | static `created` | 非 static `created` |
+|---|---|---|
+| 字段住在哪 | `LeakActivity.class`(类)身上 | 每个 Activity 实例身上 |
+| 几份 | 全局**一份**,所有 Activity 共享 | 每个 Activity **各一份** |
+| GC Root 能否一步走到 | **能**,类本身就是 Root | **不能**,得先走到那个实例 |
+| 旧 Activity 能被追到吗 | 能 → **泄漏** | 追不到(自循环跟外界断了)→ **回收** |
+
+`static` 的全部杀伤力就在这:它把 `created` 从"挂在一个会死的对象上"提升成了"挂在一个永不死的类上"。
+
+### 问三:非 static 版本里,`LeakActivity.class` 这个 Root 什么时候才被回收?
+
+**几乎永远不会,直到整个进程被系统杀掉。** 而且——它不被回收,**在非 static 版本里根本不是问题**。
+
+类的命绑在加载它的 **ClassLoader** 身上:一个类能被卸载,当且仅当加载它的 ClassLoader 自己已经不可达。在 Android 里,你 app 的代码全由**同一个 app ClassLoader**(`PathClassLoader`)加载,这个 loader 活整个进程。所以 `LeakActivity.class` 在 app 运行期间不会被卸载,它真正"消失"是在**进程被杀**那一刻——那时内核直接收走整个进程的内存,压根没 GC 什么事。(例外:插件化、动态特性模块用独立 ClassLoader 加载的类,在那个 loader 不可达后才有机会卸载。)
+
+但关键是:**长命的 Root 本身一点都不可怕,可怕的是它手里攥着该死的对象。**
+
+```
+static 版本:
+LeakActivity.class(永生)─→ created(静态)─→ 一堆死 Activity   ← 攥着!泄漏
+
+非 static 版本:
+LeakActivity.class(永生)─→ (啥实例都不指)                    ← 手里是空的!不泄漏
+```
+
+类长命是**常态,不是病**——你 app 里每个类都长命。判泄漏从不看"Root 活多久",只看"它有没有拽着一个本该早死的对象"。
+
+### 问四:从 framework 源码看,"旋转后旧 Activity onDestroy、系统松手,没有 GC Root 再指向它"是怎么发生的?
+
+要理解"系统松手",先反过来问:**旋转前,谁在你进程内强引用着 Activity?** 主要是两条链(都锚在 GC Root 上):
+
+```
+链 A:主线程(GC Root)→ ActivityThread → mActivities(ArrayMap<token, ActivityClientRecord>)
+        → ActivityClientRecord.activity ──→ Activity 实例 → DecorView → 整棵 View 树
+链 B:WindowManagerGlobal(进程单例)→ mViews / mRoots → DecorView ──→ Activity
+```
+
+`ActivityClientRecord.activity` 这个字段,就是框架攥住 Activity 的"主手"。
+
+旋转 = 配置变更,system_server 通过 Binder 发来一个 `ClientTransaction`(打包了 destroy + launch),主线程的 `ActivityThread` 这样处理:
+
+```
+handleRelaunchActivity → handleRelaunchActivityInner(复用同一个 record,token 不变)
+   ├─(1) handleDestroyActivity(...)
+   │        → performDestroyActivity → mInstrumentation.callActivityOnDestroy(r.activity)  // 回调你的 onDestroy()
+   │        → wm.removeViewImmediate(r.activity.mDecor)   // ★ 把旧 DecorView 从 WindowManagerGlobal 摘掉 → 断链 B
+   └─(2) handleLaunchActivity → performLaunchActivity
+            → activity = mInstrumentation.newActivity(...)  // new 一个全新 Activity
+            → r.activity = activity                          // ★★ record.activity 从【旧】改指向【新】→ 断链 A
+```
+
+两个动作做完,你进程内框架层面**再没有任何指针指向旧 Activity**——这就是"系统松手"的精确含义:**`record.activity` 改指向新实例 + 旧 DecorView 被 `removeViewImmediate` 摘除**。注意 `onDestroy()` 在这里**只是个回调**,跑不跑跟"引用断没断"是两码事,真正断链的是框架那两个摘除/改写动作。
+
+> 补一点:框架是**故意**让旧 Activity 去死的。它在 destroy 前用 `getNonConfigInstance=true` 把 `NonConfigurationInstances`(ViewModelStore、retained fragment)单独捞出来,attach 时塞给新 Activity。所以**旋转后 ViewModel 还在、Activity 实例却换了新的**——它只搬走该留的包袱,旧 Activity 本体就是要让它被回收。
+
+框架松手之后,旧 Activity 还剩谁指着它,就看**你的代码**:
+
+- 非 static `created`:只剩 `旧 Activity ─→ created ─→ 又指回自己` 的自循环,没 Root 能追进来 → 回收。
+- static `created`:还多一根锚在 Root 上的绳子 `LeakActivity.class → created → 旧 Activity`,这根没断 → 泄漏。
+
+**框架的"松手"动作在两个版本里完全一样**;唯一差别是松手后,你的代码有没有留下一根挂在长命 Root 上的绳子。这就是那个 `static` 修饰符全部的杀伤力。
+
+(方法名按现行 AOSP `ActivityThread`、`WindowManagerGlobal` 写;老版本走 `scheduleRelaunchActivity` 旧路径,结构略不同,但"复用 record、改写 activity 字段、摘除 decor view"这三件事的本质一致。)
