@@ -102,6 +102,7 @@ description: Course description
 
 ### For Blog Posts
 
+- **tags / categories:** Always use **lowercase** values (e.g. `android`, not `Android`). `jekyll-archives-v2` groups archives by the raw case-sensitive value but slugifies the permalink to lowercase, so mixed casing (`Android` + `android`) makes two archives collide at the same `/blog/tag/<name>/` path and overwrite each other — the tag page then shows only some posts.
 - **categories:** Tag for post organization (single word, no spaces)
 - **related_posts:** Set to `false` to disable related posts display (useful for short posts)
 

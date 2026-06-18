@@ -2,7 +2,7 @@
 layout: post
 title: "Android 官方 Skills 分析报告"
 date: 2026-05-18 00:00:00 +0800
-tags: [AI]
+tags: [ai]
 ---
 
 ## 简介

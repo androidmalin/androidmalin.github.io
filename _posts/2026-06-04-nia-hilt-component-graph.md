@@ -2,7 +2,7 @@
 layout: post
 title: "Now in Android 的 Hilt 组件依赖图"
 date: 2026-06-04 00:00:00 +0800
-tags: [Android, Hilt, Dagger, Scabbard]
+tags: [android, hilt, dagger, scabbard]
 ---
 
 > 本文用 [Scabbard](https://github.com/arunkumar9t2/scabbard) 为 [Now in Android](https://github.com/android/nowinandroid) 生成的 Hilt 组件依赖图,直接以交互形式嵌入。图由 Hilt 在编译期生成的组件源码导出,如实反映 `NiaApplication` 的组件层级与作用域关系。
