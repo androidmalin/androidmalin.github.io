@@ -13,8 +13,8 @@ tags: [android, hilt, dagger, scabbard]
 
 <iframe id="nia-hilt-tree" src="{{ '/assets/html/nia-hilt-graph/tree_com.google.samples.apps.nowinandroid.NiaApplication_HiltComponents.SingletonC.html' | relative_url }}"
         title="NiA Hilt 组件层级总览"
-        frameborder="0" scrolling="auto" loading="lazy"
-        style="width: 100%; height: 600px; border: 1px solid #d0d7de; border-radius: 6px; display: block;"></iframe>
+        frameborder="0" scrolling="no" loading="lazy"
+        style="width: 100%; height: 600px; border: 1px solid #d0d7de; border-radius: 6px; display: block; overflow: hidden;"></iframe>
 
 <script>
   // iframe 与本站同源,因此父页面可直接读取/操作其内容。

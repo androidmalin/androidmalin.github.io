@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>单链表反转可视化</title>
+    <title>递归反转单链表可视化</title>
     <style>
         :root {
             color-scheme: light;
@@ -14,10 +14,10 @@
             --muted: #57606a;
             --link: #0969da;
             --shadow: rgba(31, 35, 40, 0.08);
-            --prev: #cf222e;
-            --curr: #0969da;
-            --next: #9a6700;
-            --accent-green: #1a7f37;
+            --head: #0969da;
+            --new-head: #1a7f37;
+            --stack: #7d4e00;
+            --accent-warn: #cf222e;
         }
 
         * {
@@ -32,7 +32,7 @@
             min-height: 100vh;
             color: var(--text);
             padding: 20px;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .container {
@@ -60,7 +60,7 @@
             margin-bottom: 25px;
             border: 1px solid var(--border);
             position: relative;
-            min-height: 260px;
+            min-height: 320px;
             overflow: hidden;
             box-shadow: 0 1px 2px var(--shadow);
         }
@@ -87,14 +87,15 @@
             border-radius: 50%;
         }
 
-        .legend-dot.prev { background: var(--prev); }
-        .legend-dot.curr { background: var(--curr); }
-        .legend-dot.next { background: var(--next); }
+        .legend-dot.head { background: var(--head); }
+        .legend-dot.new-head { background: var(--new-head); }
+        .legend-dot.stack { background: var(--stack); }
 
         .list-container {
             position: relative;
             height: 160px;
             margin-top: 40px;
+            margin-right: 240px;
         }
 
         .node {
@@ -103,7 +104,7 @@
             height: 70px;
             border-radius: 50%;
             background: #ffffff;
-            border: 3px solid var(--curr);
+            border: 3px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -118,13 +119,13 @@
         }
 
         .node.active {
-            border-color: var(--next);
-            box-shadow: 0 0 0 4px rgba(154, 103, 0, 0.12);
+            border-color: var(--head);
+            box-shadow: 0 0 0 4px rgba(9, 105, 218, 0.12);
             transform: translateY(-50%) scale(1.1);
         }
 
-        .node.new-head {
-            border-color: var(--accent-green);
+        .node.new-head-node {
+            border-color: var(--new-head);
             box-shadow: 0 0 0 4px rgba(26, 127, 55, 0.12);
         }
 
@@ -142,14 +143,13 @@
             opacity: 0.9;
         }
 
-        .pointer-label.prev { background: var(--prev); }
-        .pointer-label.curr { background: var(--curr); }
-        .pointer-label.next { background: var(--next); color: #fff; }
+        .pointer-label.head { background: var(--head); }
+        .pointer-label.new-head { background: var(--new-head); }
 
         .arrow {
             position: absolute;
             height: 3px;
-            background: var(--curr);
+            background: var(--head);
             top: 50%;
             transform-origin: left center;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -165,27 +165,71 @@
             height: 0;
             border-top: 6px solid transparent;
             border-bottom: 6px solid transparent;
-            border-left: 10px solid var(--curr);
+            border-left: 10px solid var(--head);
             transition: border-left-color 0.6s;
         }
 
         .arrow.reversed {
-            background: var(--prev);
+            background: var(--accent-warn);
         }
 
         .arrow.reversed.right::after {
-            border-left-color: var(--prev);
+            border-left-color: var(--accent-warn);
         }
 
         .arrow.reversed.left::after {
             right: auto;
             left: 0;
             border-left: none;
-            border-right: 10px solid var(--prev);
+            border-right: 10px solid var(--accent-warn);
         }
 
         .arrow.detached {
             opacity: 0;
+        }
+
+        .call-stack {
+            position: absolute;
+            right: 20px;
+            top: 70px;
+            width: 200px;
+            min-height: 60px;
+        }
+
+        .call-stack-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--muted);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .stack-frame {
+            background: #fff;
+            border: 2px solid var(--stack);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            box-shadow: 0 1px 3px var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.85;
+        }
+
+        .stack-frame.active {
+            background: rgba(125, 78, 0, 0.08);
+            border-color: var(--stack);
+            opacity: 1;
+            transform: translateX(-4px);
+            box-shadow: 0 0 0 3px rgba(125, 78, 0, 0.12);
+        }
+
+        .stack-frame.returning {
+            background: rgba(26, 127, 55, 0.08);
+            border-color: var(--new-head);
+            opacity: 1;
         }
 
         .code-panel {
@@ -225,7 +269,7 @@
 
         .code-line.highlight {
             background: #fff8c5;
-            border-left-color: var(--next);
+            border-left-color: var(--head);
             color: var(--text);
         }
 
@@ -308,9 +352,29 @@
         .floating-hint {
             position: absolute;
             top: 15px;
-            right: 20px;
+            left: 20px;
             font-size: 12px;
             color: var(--muted);
+        }
+
+        @media (max-width: 800px) {
+            .list-container {
+                margin-right: 0;
+                height: 140px;
+            }
+            .call-stack {
+                position: relative;
+                right: auto;
+                top: auto;
+                width: 100%;
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .visualization-panel {
+                min-height: auto;
+            }
         }
 
         @media (max-width: 600px) {
@@ -331,31 +395,35 @@
 </head>
 <body>
     <div class="container">
-        <h1>单链表反转可视化</h1>
+        <h1>递归反转单链表可视化</h1>
         <p class="subtitle">初始：A → B → C → D　|　目标：A ← B ← C ← D</p>
 
         <div class="visualization-panel">
-            <div class="floating-hint">观察 prev、curr 两个指针与 next 临时变量的移动</div>
+            <div class="floating-hint">观察递归调用栈如何「先下沉、再回升」，并在回升时逐层反转指针</div>
             <div class="legend">
                 <div class="legend-item">
-                    <div class="legend-dot prev"></div>
-                    <span>prev 前驱指针</span>
+                    <div class="legend-dot head"></div>
+                    <span>head 当前递归头节点</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-dot curr"></div>
-                    <span>curr 当前指针</span>
+                    <div class="legend-dot new-head"></div>
+                    <span>newHead 反转后的新头节点</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-dot next"></div>
-                    <span>next 临时变量</span>
+                    <div class="legend-dot stack"></div>
+                    <span>调用栈 递归调用层次</span>
                 </div>
             </div>
             <div class="list-container" id="listContainer"></div>
+            <div class="call-stack" id="callStack">
+                <div class="call-stack-title">递归调用栈</div>
+                <div id="stackFrames"></div>
+            </div>
         </div>
 
         <div class="code-panel">
-            <h3>算法代码（Kotlin）</h3>
-            <pre><code id="codeBlock"><span class="code-line" data-line="0"><span class="keyword">class</span> <span class="type">ListNode</span>(<span class="keyword">var</span> value: <span class="type">Int</span>) {</span><span class="code-line" data-line="1">    <span class="keyword">var</span> next: <span class="type">ListNode</span>? = <span class="keyword">null</span></span><span class="code-line" data-line="2">}</span><span class="code-line" data-line="3"></span><span class="code-line" data-line="4"><span class="keyword">fun</span> <span class="function">reverseList</span>(head: <span class="type">ListNode</span>?): <span class="type">ListNode</span>? {</span><span class="code-line" data-line="5">    <span class="keyword">var</span> prev: <span class="type">ListNode</span>? = <span class="keyword">null</span></span><span class="code-line" data-line="6">    <span class="keyword">var</span> curr = head</span><span class="code-line" data-line="7">    <span class="keyword">while</span> (curr != <span class="keyword">null</span>) {</span><span class="code-line" data-line="8">        <span class="keyword">val</span> next = curr.next       <span class="comment">// ① 先存下一个，防止断链（关键）</span></span><span class="code-line" data-line="9">        curr.next = prev           <span class="comment">// ② 当前指向前驱</span></span><span class="code-line" data-line="10">        prev = curr                <span class="comment">// ③ prev 前移</span></span><span class="code-line" data-line="11">        curr = next                <span class="comment">// ④ curr 前移</span></span><span class="code-line" data-line="12">    }</span><span class="code-line" data-line="13">    <span class="keyword">return</span> prev                    <span class="comment">// prev 即新头</span></span><span class="code-line" data-line="14">}</span></code></pre>
+            <h3>算法代码（Java）</h3>
+            <pre><code id="codeBlock"><span class="code-line" data-line="0"><span class="keyword">public</span> <span class="type">ListNode</span> <span class="function">reverseList</span>(<span class="type">ListNode</span> head) {</span><span class="code-line" data-line="1">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) <span class="keyword">return</span> head;</span><span class="code-line" data-line="2">    <span class="type">ListNode</span> newHead = reverseList(head.next);  <span class="comment">// ① 递归下沉</span></span><span class="code-line" data-line="3">    head.next.next = head;                      <span class="comment">// ② 让后继指回当前节点</span></span><span class="code-line" data-line="4">    head.next = <span class="keyword">null</span>;                          <span class="comment">// ③ 断开原来的正向指针</span></span><span class="code-line" data-line="5">    <span class="keyword">return</span> newHead;                             <span class="comment">// ④ 把新头逐层返回</span></span><span class="code-line" data-line="6">}</span></code></pre>
         </div>
 
         <div class="controls">
@@ -365,7 +433,7 @@
         </div>
 
         <div class="status-bar">
-            <span class="status-text" id="statusText">点击「下一步」开始演示链表反转</span>
+            <span class="status-text" id="statusText">点击「下一步」开始演示递归反转链表</span>
             <span class="step-counter" id="stepCounter"></span>
         </div>
     </div>
@@ -373,6 +441,7 @@
     <script>
         const values = ['A', 'B', 'C', 'D'];
         const container = document.getElementById('listContainer');
+        const stackFramesContainer = document.getElementById('stackFrames');
         const statusText = document.getElementById('statusText');
         const stepCounter = document.getElementById('stepCounter');
         const nextBtn = document.getElementById('nextBtn');
@@ -387,234 +456,189 @@
         let autoTimer = null;
 
         const nodeWidth = 70;
-        const gap = 120;
-        const startX = 80;
+        const gap = 130;
+        const startX = 60;
         const centerY = 80;
 
         const steps = [
             {
+                line: [0],
+                status: '调用 reverseList(A)，head 指向 A，将这一层压入调用栈',
+                headIndex: 0,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [],
+                activeIndex: 0
+            },
+            {
+                line: [1],
+                status: '判断：A.next != null，不是基准情况，继续递归',
+                headIndex: 0,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [],
+                activeIndex: 0
+            },
+            {
+                line: [2],
+                status: '递归调用 reverseList(head.next)，即 reverseList(B)',
+                headIndex: 1,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [],
+                activeIndex: 1
+            },
+            {
+                line: [1],
+                status: '判断：B.next != null，不是基准情况，继续递归',
+                headIndex: 1,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [],
+                activeIndex: 1
+            },
+            {
+                line: [2],
+                status: '递归调用 reverseList(head.next)，即 reverseList(C)',
+                headIndex: 2,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }],
+                reversedPairs: [],
+                activeIndex: 2
+            },
+            {
+                line: [1],
+                status: '判断：C.next != null，不是基准情况，继续递归',
+                headIndex: 2,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }],
+                reversedPairs: [],
+                activeIndex: 2
+            },
+            {
+                line: [2],
+                status: '递归调用 reverseList(head.next)，即 reverseList(D)',
+                headIndex: 3,
+                newHeadIndex: -1,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }, { headIndex: 3 }],
+                reversedPairs: [],
+                activeIndex: 3
+            },
+            {
+                line: [1],
+                status: '判断：D.next == null，到达基准情况，直接返回 D 作为 newHead',
+                headIndex: 3,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }, { headIndex: 3 }],
+                reversedPairs: [],
+                activeIndex: 3
+            },
+            {
+                line: [2],
+                status: '回到 reverseList(C) 层，newHead = D。head 仍为 C，准备反转 C 和 D 之间的指针',
+                headIndex: 2,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }],
+                reversedPairs: [],
+                activeIndex: 2
+            },
+            {
+                line: [3],
+                status: '执行 head.next.next = head，即 D.next = C。注意此时 C->D 和 D->C 同时存在，形成临时双向环',
+                headIndex: 2,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }],
+                reversedPairs: [[3, 2]],
+                activeIndex: 2
+            },
+            {
+                line: [4],
+                status: '执行 head.next = null，即 C.next = null，断开原来的正向指针，消除环',
+                headIndex: 2,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }, { headIndex: 2 }],
+                reversedPairs: [[3, 2], [2, -1]],
+                activeIndex: 2
+            },
+            {
                 line: [5],
-                status: '执行：var prev: ListNode? = null，初始化前驱指针为 null',
-                prevIndex: -1,
-                currIndex: -1,
-                nextIndex: -1,
-                reversedPairs: [],
-                activeIndex: -1
-            },
-            {
-                line: [6],
-                status: '执行：var curr = head，当前指针指向头节点 A',
-                prevIndex: -1,
-                currIndex: 0,
-                nextIndex: -1,
-                reversedPairs: [],
-                activeIndex: 0
-            },
-            {
-                line: [7],
-                status: '判断 while 条件：curr = A 不为空，进入循环体',
-                prevIndex: -1,
-                currIndex: 0,
-                nextIndex: -1,
-                reversedPairs: [],
-                activeIndex: 0
-            },
-            {
-                line: [8],
-                status: '执行：val next = curr.next，先保存 A 的下一个节点 B，防止断链',
-                prevIndex: -1,
-                currIndex: 0,
-                nextIndex: 1,
-                reversedPairs: [],
-                activeIndex: 0
-            },
-            {
-                line: [9],
-                status: '执行：curr.next = prev，将 A 的 next 指针反转，指向 null',
-                prevIndex: -1,
-                currIndex: 0,
-                nextIndex: 1,
-                reversedPairs: [[0, -1]],
-                activeIndex: 0
-            },
-            {
-                line: [10],
-                status: '执行：prev = curr，前驱指针移动到 A',
-                prevIndex: 0,
-                currIndex: 0,
-                nextIndex: 1,
-                reversedPairs: [[0, -1]],
-                activeIndex: 0
-            },
-            {
-                line: [11],
-                status: '执行：curr = next，当前指针移动到 B',
-                prevIndex: 0,
-                currIndex: 1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1]],
-                activeIndex: 1
-            },
-            {
-                line: [7],
-                status: '判断 while 条件：curr = B 不为空，进入循环体',
-                prevIndex: 0,
-                currIndex: 1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1]],
-                activeIndex: 1
-            },
-            {
-                line: [8],
-                status: '执行：val next = curr.next，保存 B 的下一个节点 C',
-                prevIndex: 0,
-                currIndex: 1,
-                nextIndex: 2,
-                reversedPairs: [[0, -1]],
-                activeIndex: 1
-            },
-            {
-                line: [9],
-                status: '执行：curr.next = prev，将 B 的 next 指针反转，指向 A',
-                prevIndex: 0,
-                currIndex: 1,
-                nextIndex: 2,
-                reversedPairs: [[0, -1], [1, 0]],
-                activeIndex: 1
-            },
-            {
-                line: [10],
-                status: '执行：prev = curr，前驱指针移动到 B',
-                prevIndex: 1,
-                currIndex: 1,
-                nextIndex: 2,
-                reversedPairs: [[0, -1], [1, 0]],
-                activeIndex: 1
-            },
-            {
-                line: [11],
-                status: '执行：curr = next，当前指针移动到 C',
-                prevIndex: 1,
-                currIndex: 2,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0]],
+                status: '返回 newHead = D，reverseList(C) 执行完毕，从调用栈弹出',
+                headIndex: 2,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [[3, 2], [2, -1]],
                 activeIndex: 2
             },
             {
-                line: [7],
-                status: '判断 while 条件：curr = C 不为空，进入循环体',
-                prevIndex: 1,
-                currIndex: 2,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0]],
-                activeIndex: 2
+                line: [2],
+                status: '回到 reverseList(B) 层，newHead = D。head 仍为 B，准备反转 B 和 C 之间的指针',
+                headIndex: 1,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [[3, 2], [2, -1]],
+                activeIndex: 1
             },
             {
-                line: [8],
-                status: '执行：val next = curr.next，保存 C 的下一个节点 D',
-                prevIndex: 1,
-                currIndex: 2,
-                nextIndex: 3,
-                reversedPairs: [[0, -1], [1, 0]],
-                activeIndex: 2
+                line: [3],
+                status: '执行 head.next.next = head，即 C.next = B。此时 B->C 和 C->B 同时存在',
+                headIndex: 1,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [[3, 2], [2, 1]],
+                activeIndex: 1
             },
             {
-                line: [9],
-                status: '执行：curr.next = prev，将 C 的 next 指针反转，指向 B',
-                prevIndex: 1,
-                currIndex: 2,
-                nextIndex: 3,
-                reversedPairs: [[0, -1], [1, 0], [2, 1]],
-                activeIndex: 2
+                line: [4],
+                status: '执行 head.next = null，即 B.next = null，断开原来的正向指针',
+                headIndex: 1,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }, { headIndex: 1 }],
+                reversedPairs: [[3, 2], [2, 1], [1, -1]],
+                activeIndex: 1
             },
             {
-                line: [10],
-                status: '执行：prev = curr，前驱指针移动到 C',
-                prevIndex: 2,
-                currIndex: 2,
-                nextIndex: 3,
-                reversedPairs: [[0, -1], [1, 0], [2, 1]],
-                activeIndex: 2
+                line: [5],
+                status: '返回 newHead = D，reverseList(B) 执行完毕，从调用栈弹出',
+                headIndex: 1,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [[3, 2], [2, 1], [1, -1]],
+                activeIndex: 1
             },
             {
-                line: [11],
-                status: '执行：curr = next，当前指针移动到 D',
-                prevIndex: 2,
-                currIndex: 3,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1]],
-                activeIndex: 3
+                line: [2],
+                status: '回到 reverseList(A) 层，newHead = D。head 仍为 A，准备反转 A 和 B 之间的指针',
+                headIndex: 0,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [[3, 2], [2, 1], [1, -1]],
+                activeIndex: 0
             },
             {
-                line: [7],
-                status: '判断 while 条件：curr = D 不为空，进入循环体',
-                prevIndex: 2,
-                currIndex: 3,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1]],
-                activeIndex: 3
+                line: [3],
+                status: '执行 head.next.next = head，即 B.next = A。此时 A->B 和 B->A 同时存在',
+                headIndex: 0,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [[3, 2], [2, 1], [1, 0]],
+                activeIndex: 0
             },
             {
-                line: [8],
-                status: '执行：val next = curr.next，D 的下一个节点为 null',
-                prevIndex: 2,
-                currIndex: 3,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1]],
-                activeIndex: 3
+                line: [4],
+                status: '执行 head.next = null，即 A.next = null，断开原来的正向指针',
+                headIndex: 0,
+                newHeadIndex: 3,
+                callStack: [{ headIndex: 0 }],
+                reversedPairs: [[3, 2], [2, 1], [1, 0], [0, -1]],
+                activeIndex: 0
             },
             {
-                line: [9],
-                status: '执行：curr.next = prev，将 D 的 next 指针反转，指向 C',
-                prevIndex: 2,
-                currIndex: 3,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
-                activeIndex: 3
-            },
-            {
-                line: [10],
-                status: '执行：prev = curr，前驱指针移动到 D',
-                prevIndex: 3,
-                currIndex: 3,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
-                activeIndex: 3
-            },
-            {
-                line: [11],
-                status: '执行：curr = next，当前指针移动到 null',
-                prevIndex: 3,
-                currIndex: -1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
-                activeIndex: 3
-            },
-            {
-                line: [7],
-                status: '判断 while 条件：curr = null，循环条件不满足',
-                prevIndex: 3,
-                currIndex: -1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
-                activeIndex: 3
-            },
-            {
-                line: [12],
-                status: '循环结束，退出 while',
-                prevIndex: 3,
-                currIndex: -1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
-                activeIndex: 3
-            },
-            {
-                line: [13],
-                status: '执行：return prev，D 成为新链表的头节点。最终顺序：A ← B ← C ← D',
-                prevIndex: 3,
-                currIndex: -1,
-                nextIndex: -1,
-                reversedPairs: [[0, -1], [1, 0], [2, 1], [3, 2]],
+                line: [5, 6],
+                status: '返回 newHead = D，reverseList(A) 执行完毕，链表反转完成。最终顺序：A ← B ← C ← D',
+                headIndex: -1,
+                newHeadIndex: 3,
+                callStack: [],
+                reversedPairs: [[3, 2], [2, 1], [1, 0], [0, -1]],
                 activeIndex: 3,
                 finished: true
             }
@@ -630,7 +654,6 @@
             clearTimeout(autoTimer);
             autoBtn.textContent = '自动播放';
 
-            // Create nodes
             values.forEach((val, i) => {
                 const node = document.createElement('div');
                 node.className = 'node';
@@ -641,7 +664,6 @@
                 nodes.push(node);
             });
 
-            // Create arrows (one per node, representing its next pointer)
             for (let i = 0; i < values.length; i++) {
                 const arrow = document.createElement('div');
                 arrow.className = 'arrow';
@@ -649,18 +671,15 @@
                 arrow.style.top = `${centerY - 1.5}px`;
                 arrow.style.width = `${gap - nodeWidth - 10}px`;
                 if (i === values.length - 1) {
-                    // Last node initially points to null
                     arrow.style.opacity = '0';
                 }
                 container.appendChild(arrow);
                 arrows.push({ el: arrow, from: i, to: i < values.length - 1 ? i + 1 : -1 });
             }
 
-            // Create pointer labels
             const pointerTypes = [
-                { name: 'prev', color: 'prev' },
-                { name: 'curr', color: 'curr' },
-                { name: 'next', color: 'next' }
+                { name: 'head', color: 'head' },
+                { name: 'newHead', color: 'new-head' }
             ];
             pointerTypes.forEach(p => {
                 const label = document.createElement('div');
@@ -675,20 +694,16 @@
         }
 
         function updatePointers(state) {
-            // Keep a stable vertical order when several pointers land on the same node.
-            const pointerOrder = ['prev', 'curr', 'next'];
             const pointerMap = {
-                'prev': state.prevIndex,
-                'curr': state.currIndex,
-                'next': state.nextIndex
+                'head': state.headIndex,
+                'newHead': state.newHeadIndex
             };
 
             const baseTop = centerY - nodeWidth / 2 - 40;
             const stackGap = 4;
-
-            // Group the currently visible pointers by the node index they point to.
             const groups = {};
-            pointerOrder.forEach(name => {
+
+            Object.keys(pointerMap).forEach(name => {
                 const idx = pointerMap[name];
                 const label = pointers[name];
                 if (idx >= 0 && idx < nodes.length) {
@@ -698,8 +713,6 @@
                 }
             });
 
-            // Within each group stack the bubbles: the last one sits next to the node,
-            // every additional one floats vertically above the previous to avoid overlap.
             Object.keys(groups).forEach(idx => {
                 const names = groups[idx];
                 const nodeX = startX + parseInt(idx, 10) * gap;
@@ -715,7 +728,6 @@
         }
 
         function updateArrows(reversedPairs) {
-            // Reset all arrows to the original forward state
             arrows.forEach((arrow, i) => {
                 arrow.el.className = 'arrow';
                 arrow.el.style.left = `${startX + i * gap + nodeWidth}px`;
@@ -729,7 +741,6 @@
                 if (!arrow) return;
 
                 if (to === -1) {
-                    // Points to null - hide the arrow
                     arrow.el.className = 'arrow detached';
                     arrow.el.style.opacity = '0';
                     return;
@@ -741,14 +752,12 @@
                 const toRight = toLeft + nodeWidth;
 
                 if (to > from) {
-                    // Pointing right
                     arrow.el.className = 'arrow reversed right';
                     arrow.el.style.left = `${fromRight}px`;
                     arrow.el.style.width = `${toLeft - fromRight - 10}px`;
                     arrow.el.style.transform = 'scaleX(1)';
                     arrow.el.style.opacity = '1';
                 } else {
-                    // Pointing left
                     arrow.el.className = 'arrow reversed left';
                     arrow.el.style.left = `${toRight + 10}px`;
                     arrow.el.style.width = `${fromLeft - toRight - 10}px`;
@@ -758,14 +767,24 @@
             });
         }
 
+        function updateCallStack(frames) {
+            stackFramesContainer.innerHTML = '';
+            if (!frames || frames.length === 0) return;
+
+            frames.forEach((frame, i) => {
+                const el = document.createElement('div');
+                const isActive = i === frames.length - 1;
+                el.className = `stack-frame ${isActive ? 'active' : ''}`;
+                el.textContent = `reverseList(${values[frame.headIndex]})`;
+                stackFramesContainer.appendChild(el);
+            });
+        }
+
         function updateNodes(activeIndex, finished) {
             nodes.forEach((node, i) => {
-                node.classList.remove('active', 'new-head');
+                node.classList.remove('active', 'new-head-node');
                 if (i === activeIndex) {
-                    node.classList.add('active');
-                }
-                if (finished && i === activeIndex) {
-                    node.classList.add('new-head');
+                    node.classList.add(finished ? 'new-head-node' : 'active');
                 }
             });
         }
@@ -781,9 +800,13 @@
 
         function updateStatus(currentStep) {
             if (currentStep < 0) {
-                statusText.textContent = '点击「下一步」开始演示链表反转';
+                statusText.textContent = '点击「下一步」开始演示递归反转链表';
                 stepCounter.textContent = '';
                 highlightCode([]);
+                updateCallStack([]);
+                updateArrows([]);
+                updateNodes(-1, false);
+                Object.values(pointers).forEach(p => p.style.opacity = '0');
                 return;
             }
 
@@ -793,6 +816,7 @@
             highlightCode(state.line);
             updatePointers(state);
             updateArrows(state.reversedPairs);
+            updateCallStack(state.callStack);
             updateNodes(state.activeIndex, state.finished);
 
             if (currentStep === steps.length - 1) {
@@ -839,17 +863,15 @@
                 return;
             }
             nextStep();
-            autoTimer = setTimeout(autoRun, 1000);
+            autoTimer = setTimeout(autoRun, 1200);
         }
 
-        // Handle window resize
         window.addEventListener('resize', () => {
             if (step >= 0) {
                 updateStatus(step);
             }
         });
 
-        // Initialize
         init();
     </script>
     <script>
@@ -865,7 +887,7 @@
                     doc.clientHeight
                 );
                 if (window.parent !== window) {
-                    window.parent.postMessage({ type: 'll-vis-height', height: height }, '*');
+                    window.parent.postMessage({ type: 'll-vis-recursive-height', height: height }, '*');
                 }
             }
             sendHeight();

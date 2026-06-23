@@ -79,7 +79,7 @@ GC Root(回收的起点,本轮 GC 不回收它们)
 
 ## ART 里 GC Root 的权威分类(AOSP 源码)
 
-上面那五条是"够用版"。如果你想要**权威、完整**的那份,它就明明白白写在 ART 的源码里——`art/runtime/gc_root.h` 的 `RootType` 枚举。下面这段是从 AOSP `main` 分支原样抄下来的(源码链接见本节末):
+上面那五条是"够用版"。如果你想要**权威、完整**的那份,它就明明白白写在 ART 的源码里——`art/runtime/gc_root.h` 的 `RootType` 枚举。下面这段是从 AOSP **Android 10 ~ Android 14** 的 release 分支原样抄下来的(源码链接见本节末):
 
 ```cpp
 // art/runtime/gc_root.h
@@ -102,41 +102,46 @@ enum RootType {
 };
 ```
 
+> 小版本差异:在 AOSP `main` 分支(未来版本)里,`kRootVMInternal` 已被简化为 `kRootVM`;HPROF 输出里的标签仍然叫 `HPROF_ROOT_VM_INTERNAL`,不影响工具识别。下文统一用 release 分支的写法,你查最新 `main` 时看到 `kRootVM` 知道是同一个东西即可。
+
 一共 15 类。挨个解释,并标出写 app 到底碰不碰得到:
 
-| `RootType` 枚举值 | 含义 | 写 app 碰得到吗 |
-|---|---|---|
-| `kRootUnknown` | 未归类的根,转换/工具兜底用的占位 | 基本碰不到 |
-| `kRootJNIGlobal` | JNI 全局引用,native 层 `NewGlobalRef` 创建,不 `DeleteGlobalRef` 就长期是 Root | 接 C/C++ 库时 |
-| `kRootJNILocal` | JNI 局部引用,native 方法执行期间有效(随 native 栈帧) | 接 JNI 时 |
-| `kRootJavaFrame` | **Java 方法栈帧里的局部变量 / 参数**,方法一返回就失效 | ★ 天天碰,通常安全 |
-| `kRootNativeStack` | native 调用栈上正被引用的对象 | 接 native 时 |
-| `kRootStickyClass` | **被"钉住"、不会卸载的类**(系统/启动类加载器加载的核心类);静态字段就挂在类上 | ★ 天天碰,泄漏重灾区 |
-| `kRootThreadBlock` | 线程阻塞/挂起期间运行时内部持有的引用 | 运行时内部 |
-| `kRootMonitorUsed` | **被 monitor(`synchronized` 锁)使用中的对象**,持锁期间是 Root | ★ 天天碰 |
-| `kRootThreadObject` | **线程对象本身**(活动的 `Thread`) | ★ 天天碰 |
-| `kRootInternedString` | intern 过的字符串(字符串常量池),常驻 | 间接碰 |
-| `kRootFinalizing` | 正在终结队列里等待 `finalize` 的对象(HPROF 转换用) | 基本碰不到 |
-| `kRootDebugger` | 调试器 attach 时持有的引用 | 调试时 |
-| `kRootReferenceCleanup` | `Reference` 清理过程相关(HPROF 转换用) | 基本碰不到 |
-| `kRootVMInternal` | 虚拟机/运行时内部结构引用的对象 | 运行时内部 |
-| `kRootJNIMonitor` | 通过 JNI 的 `MonitorEnter` 锁住的对象 | 接 JNI 时 |
+| `RootType` 枚举值       | 含义                                                                          | 写 app 碰得到吗     |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------- |
+| `kRootUnknown`          | 未归类的根,转换/工具兜底用的占位                                              | 基本碰不到          |
+| `kRootJNIGlobal`        | JNI 全局引用,native 层 `NewGlobalRef` 创建,不 `DeleteGlobalRef` 就长期是 Root | 接 C/C++ 库时       |
+| `kRootJNILocal`         | JNI 局部引用,native 方法执行期间有效(随 native 栈帧)                          | 接 JNI 时           |
+| `kRootJavaFrame`        | **Java 方法栈帧里的局部变量 / 参数**,方法一返回就失效                         | ★ 天天碰,通常安全   |
+| `kRootNativeStack`      | native 调用栈上正被引用的对象                                                 | 接 native 时        |
+| `kRootStickyClass`      | **被"钉住"、不会卸载的类**(系统/启动类加载器加载的核心类);静态字段就挂在类上  | ★ 天天碰,泄漏重灾区 |
+| `kRootThreadBlock`      | 线程阻塞/挂起期间运行时内部持有的引用                                         | 运行时内部          |
+| `kRootMonitorUsed`      | **被 monitor(`synchronized` 锁)使用中的对象**,持锁期间是 Root                 | ★ 天天碰            |
+| `kRootThreadObject`     | **线程对象本身**(活动的 `Thread`)                                             | ★ 天天碰            |
+| `kRootInternedString`   | intern 过的字符串(字符串常量池),常驻                                          | 间接碰              |
+| `kRootFinalizing`       | 正在终结队列里等待 `finalize` 的对象;对应 HPROF 标签已标为 obsolete           | 基本碰不到          |
+| `kRootDebugger`         | 调试器 attach 时持有的引用                                                    | 调试时              |
+| `kRootReferenceCleanup` | `Reference` 清理过程相关;对应 HPROF 标签已标为 obsolete                       | 基本碰不到          |
+| `kRootVMInternal`       | 虚拟机/运行时内部结构引用的对象;`main` 分支里叫 `kRootVM`                     | 运行时内部          |
+| `kRootJNIMonitor`       | 通过 JNI 的 `MonitorEnter` 锁住的对象                                         | 接 JNI 时           |
 
 **这份枚举不是只给 GC 看的,你平时用的查漏工具也直接读它。** 抓堆快照(`.hprof`)时,ART 在 `art/runtime/hprof/hprof.cc` 里把上面每个 `RootType` 映射成一个 HPROF 根标签(`HPROF_ROOT_JNI_GLOBAL`、`HPROF_ROOT_JAVA_FRAME`、`HPROF_ROOT_STICKY_CLASS`……)。所以 LeakCanary / Android Studio Profiler 在泄漏链顶上显示的那行 "GC Root" 类型(比如 "Global variable in native code"、"Java local variable"、"System class"),**字符串的源头就是这张表**。看懂这张表,就能反推工具到底在告诉你哪条链。
 
 落回这篇前面讲的内容,一一对得上:
 
 - 正文说的"局部变量"→ `kRootJavaFrame`(短命,安全的那类)。
-- 正文反复强调的"静态字段 / 已加载的类"→ `kRootStickyClass`(`LeakActivity` 那个 bug 的真正根类型)。
+- 正文反复强调的"静态字段 / 已加载的类"→ 对应 `Class` 对象是 root,在 HPROF 里通常表现为 `kRootStickyClass`;底层也由 `ClassLoader`(`kRootVMInternal` / `kRootVM`) 持有。对业务层来说,记住"静态字段挂在长命的 Class 上"就够了。
 - "活动的线程"→ `kRootThreadObject`(坑三里跑不完的后台线程)。
 - "`synchronized` 锁住的对象"→ `kRootMonitorUsed`。
 - "JNI 全局引用"→ `kRootJNIGlobal`。
 
-剩下那些(`kRootFinalizing`、`kRootReferenceCleanup`、`kRootVMInternal` 等)基本是运行时内部和 HPROF 导出用的,写业务时极少直接打交道,扫一眼有个印象即可。
+剩下那些(`kRootFinalizing`、`kRootReferenceCleanup`、`kRootVMInternal` / `kRootVM` 等)基本是运行时内部和 HPROF 导出用的,写业务时极少直接打交道,扫一眼有个印象即可。
 
-> 源码出处(AOSP `main` 分支):
+> 源码出处:
+>
 > - 枚举定义:`art/runtime/gc_root.h` 的 `RootType`
->   <https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/gc_root.h>
+>   - Android 10 ~ 14 release 分支:`android14-dev` 等仍用 `kRootVMInternal`
+>   - AOSP `main` 分支(未来版本):已改名为 `kRootVM`
+>     <https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/gc_root.h>
 > - 到 HPROF 标签的映射:`art/runtime/hprof/hprof.cc`(搜 `HprofRootType` / `kRoot`)
 >   <https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/hprof/hprof.cc>
 >
@@ -228,23 +233,25 @@ override fun onCreate(savedInstanceState: Bundle?) {
 要补一句:协程的取消是**协作式**的。如果 `loadFromNetwork()` 是个不可中断的阻塞调用,取消信号得等它返回、协程下一次碰到挂起点或取消检查点才生效,被持有的引用也在那一刻才真正释放。所以耗时操作本身最好就能响应取消(用支持取消的 IO,或拆成可中断的小段)。
 
 > 想亲眼看到这条引用链,可以抓个堆快照:
+>
 > ```bash
 > # 需应用为 debuggable,或设备已 root,否则会失败
 > adb shell am dumpheap <pid> /data/local/tmp/heap.hprof
 > adb pull /data/local/tmp/heap.hprof
 > ```
+>
 > 把 `heap.hprof` 拖进 Android Studio 的 Profiler,搜你那个 Activity,工具会直接画出"从哪个 GC Root 一路连过来的"。平时偷懒就直接上 LeakCanary,它干的也是这件事。
 
 ## 为什么不干脆用引用计数
 
 你可能想:判断对象死活,数一下"有几个人引用它",归零就回收,不是更简单?有些语言确实这么干——比如 Objective-C 和 Swift 的 ARC。Android(ART)偏不,它走的是从 GC Root 追踪可达性这条路。差别就在一个维度上:
 
-| | 引用计数 | 从 GC Root 追踪可达性(ART) |
-|---|---|---|
-| 怎么判活 | 每个对象记"被几个人引用",归零即死 | 从 Root 出发能追到的才算活 |
-| 回收时机 | 计数归零,立刻回收 | 攒一批,GC 时统一标记回收(较新版本 ART 用并发拷贝收集器) |
-| 日常开销 | 每次赋值都要改计数,持续有开销 | 平时零开销,GC 时集中算 |
-| **能不能处理循环引用** | **不能** | **能** |
+|                        | 引用计数                          | 从 GC Root 追踪可达性(ART)                              |
+| ---------------------- | --------------------------------- | ------------------------------------------------------- |
+| 怎么判活               | 每个对象记"被几个人引用",归零即死 | 从 Root 出发能追到的才算活                              |
+| 回收时机               | 计数归零,立刻回收                 | 攒一批,GC 时统一标记回收(较新版本 ART 用并发拷贝收集器) |
+| 日常开销               | 每次赋值都要改计数,持续有开销     | 平时零开销,GC 时集中算                                  |
+| **能不能处理循环引用** | **不能**                          | **能**                                                  |
 
 最后一行是本质区别,也是 Android 选它的真正原因。看这种情况:
 
@@ -321,12 +328,12 @@ LeakActivity.class(类被加载了,是 GC Root,活整个进程)
 
 旋转后旧 Activity 没人从外面指了,于是 `实例 ─→ created ─→ 又指回自己` 变成一个**纯自循环**,跟外界 Root 断了联系。按"追不到才回收"的尺子,这一团会被**整体判死、一起回收 → 不泄漏**。
 
-| | static `created` | 非 static `created` |
-|---|---|---|
-| 字段住在哪 | `LeakActivity.class`(类)身上 | 每个 Activity 实例身上 |
-| 几份 | 全局**一份**,所有 Activity 共享 | 每个 Activity **各一份** |
-| GC Root 能否一步走到 | **能**,类本身就是 Root | **不能**,得先走到那个实例 |
-| 旧 Activity 能被追到吗 | 能 → **泄漏** | 追不到(自循环跟外界断了)→ **回收** |
+|                        | static `created`                | 非 static `created`                |
+| ---------------------- | ------------------------------- | ---------------------------------- |
+| 字段住在哪             | `LeakActivity.class`(类)身上    | 每个 Activity 实例身上             |
+| 几份                   | 全局**一份**,所有 Activity 共享 | 每个 Activity **各一份**           |
+| GC Root 能否一步走到   | **能**,类本身就是 Root          | **不能**,得先走到那个实例          |
+| 旧 Activity 能被追到吗 | 能 → **泄漏**                   | 追不到(自循环跟外界断了)→ **回收** |
 
 `static` 的全部杀伤力就在这:它把 `created` 从"挂在一个会死的对象上"提升成了"挂在一个永不死的类上"。
 
