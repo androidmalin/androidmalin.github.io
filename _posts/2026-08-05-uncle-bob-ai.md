@@ -9,17 +9,19 @@ categories: [ai]
 
 面对 AI 编程对软件开发带来的巨大冲击，世界最具影响力的软件架构与工程思想家之一 Robert C. Martin（Uncle Bob）是如何思考的？当代码可以由 AI 高速生成，测试、架构、工程原则以及程序员自身的价值又将发生怎样的变化？本文通过他的原帖与实践，呈现他对这些问题的回答。
 
-> 检索截止日期：2026-08-02
+> 检索截止日期：2026-08-02；各节标注的发布日期均为 UTC 时间。
 >
 > 以下内容是对 Uncle Bob（Robert C. Martin）英文原帖的完整中文翻译，并非其本人发布的中文版本。文中的“AI 智能体”对应原文 `AI agents`；为体现语义差异，`programming` 主要译为“程序设计”，`coding` 主要译为“亲手写代码”。
-> 英文部分会完整收录用户提供的原文；其余较长帖子提供不超过 25 个英文词的关键摘录，完整原文或视频可通过每节中的 X 链接查看；较短帖子提供完整英文原文。
+>
+> 除第 3 节外，每节均收录对应帖子的完整英文原文，可通过节内的 X 链接逐字核对；第 3 节的帖子正文只有一句话，其英文内容为所附视频的转录，并非帖子文本。若原帖是对他人的回复，节内会附上被回复者的原话，以保留语境。
 
 ## 一、原帖完整翻译
 
 ### 1. 不审查 AI 写出的代码，而是设置严密的验证关卡
 
-- 发布日期：2026-07-23
+- 发布日期：2026-07-23（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2080257779395154409)
+- 对话背景：这是对 [@ori_pomerantz](https://x.com/ori_pomerantz/status/2080024439345828249) 的回复。对方写道：「我正尝试用 Claude 帮我写点东西，但就是不放心让它直接编辑我的文件。还有人有同感吗？如果我要为代码负责，我**必须**理解它——哪怕只是出于心理上的原因。我从 1983 年开始编程。算老吗？」
 
 #### 英文原文
 
@@ -48,7 +50,7 @@ flowchart LR
 
 ### 2. 将 AI 节省的时间用于扩大验证
 
-- 发布日期：2026-07-26
+- 发布日期：2026-07-26（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2081332683582427641)
 
 #### 英文原文
@@ -75,11 +77,11 @@ flowchart LR
 
 ### 3. “20 倍效率”视频发言
 
-- 发布日期：2026-07-26
+- 发布日期：2026-07-26（UTC）
 - [查看 X 视频原帖](https://x.com/unclebobmartin/status/2081334541667410312)
-- 说明：英文原文来自用户提供的视频转录文件；中文内容为完整翻译。
+- 说明：该帖正文只有一句话 ——「Morning bathrobe rant: 20X.」，主要内容在所附视频中。下方英文为该视频的转录而非帖子文本，转录可能存在误差，建议以视频为准。
 
-#### 英文原文
+#### 视频转录（英文）
 
 > AI agents can write code many times faster than you can. Maybe 20 times. What are you going to do with all that extra time they give you? You're going to have those agents with their 20 times power write unit tests and acceptance tests and QA tests, and then you're going to mutate those tests, and you're going to run quality metrics, and you are going to torture the code. You'll write property tests, you'll write performance tests. If there's multithreaded code, you will write jitter tests, and you will have the agents do that because they're 20 times faster than you are. And when you're done with all of that, you will have code that is better than you could ever have produced, and you will have gotten it in far less time than a human could possibly do.
 
@@ -107,10 +109,10 @@ flowchart LR
 
 ### 4. 能够堆叠测试，不代表总应该这样做
 
-- 发布日期：2026-07-02
+- 发布日期：2026-07-02（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2072736888478175413)
 
-#### 英文原文摘录
+#### 英文原文
 
 > I’ve been pushing very hard on overloading with tests. Gherkin test unit test QA test mutation test gherkin mutation test. It’s easy to make the AI’s do these things. But just because we can do them doesn’t mean we actually should.
 >
@@ -138,10 +140,10 @@ flowchart LR
 
 ### 5. TDD 原则仍然有效，但技术需要适应 AI
 
-- 发布日期：2026-02-15
+- 发布日期：2026-02-15（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2023158252700066287)
 
-#### 英文原文摘录
+#### 英文原文
 
 > TDD is very inefficient for AIs. Testing is essential for them but not in the micro steps that the three laws of TDD recommend.
 >
@@ -173,10 +175,10 @@ flowchart LR
 
 ### 6. AI 时代需要更强的工程原则
 
-- 发布日期：2026-03-12
+- 发布日期：2026-03-12（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2032143554953241008)
 
-#### 英文原文摘录
+#### 英文原文
 
 > In the first decades of computer programming, there were no engineering principles. We just threw code at the machines and kept what worked.
 >
@@ -206,10 +208,10 @@ flowchart LR
 
 ### 7. Claude 擅长局部细节，但缺少全局和架构能力
 
-- 发布日期：2026-01-22
+- 发布日期：2026-01-22（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2014311028972994582)
 
-#### 英文原文摘录
+#### 英文原文
 
 > Claude codes faster than I do, by a significant factor. Claude can hold more details in its "mind" than I can -- again by a significant factor.
 >
@@ -241,10 +243,11 @@ flowchart LR
 
 ### 8. 程序员的核心能力不只是写代码
 
-- 发布日期：2026-02-11
+- 发布日期：2026-02-11（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2021605465352806511)
+- 对话背景：这是对 [@OdiiAriwodo\_](https://x.com/OdiiAriwodo_/status/2021598285559959677) 的回复。对方提问：「可以确认，AI 就是写代码的新方式。那么问题来了：软件工程师新的技能集究竟是什么？AI 仍然在产出代码，但你还需要懂编程语言，才能让它写出正确的代码吗？」
 
-#### 英文原文摘录
+#### 英文原文
 
 > For the time being AI coders will need a good working knowledge of code in order to be most effective; but that need is going to recede as the models improve. But code is the least of the skills that a good programmer needs. Problem solving, system thinking, product awareness, and structural competence have always been more important than coding; and those skills are more important than ever.
 
@@ -270,7 +273,7 @@ flowchart LR
 
 ### 9. 仍然在做程序设计，只是不再亲手写代码
 
-- 发布日期：2026-02-26
+- 发布日期：2026-02-26（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2027079037957349380)
 
 #### 英文原文
@@ -295,16 +298,16 @@ flowchart LR
 
 ### 10. Claude 帮助定位性能瓶颈的实践案例
 
-- 发布日期：2026-01-13
+- 发布日期：2026-01-13（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2011113547757990257)
 
-#### 英文原文摘录
+#### 英文原文
 
 > Claude just helped me drastically reduce rendering overhead by instrumenting the code with some metrics and then asking me to report those metrics back to it. It used that to determine the bottleneck and decreased my rendering overhead by 90%. Yikes!
 
 #### 完整中文翻译
 
-> Claude 刚刚帮我大幅降低了渲染开销。它先在代码中加入了一些度量指标，然后让我把这些指标的结果反馈给它。它利用这些数据确定了瓶颈，并把我的渲染开销降低了 90%。好家伙！
+> Claude 刚刚帮我大幅降低了渲染开销。它先在代码中加入了一些度量指标，然后让我把这些指标的结果反馈给它。它利用这些数据确定了瓶颈，并把我的渲染开销降低了 90%。我的天！
 
 #### 思维导图
 
@@ -320,16 +323,17 @@ flowchart LR
 
 ### 11. 这是工程，不是凭感觉编程
 
-- 发布日期：2026-07-28
+- 发布日期：2026-07-28（UTC）
 - [查看 X 原帖](https://x.com/unclebobmartin/status/2082060037183209786)
+- 对话背景：这是对 Minecraft 作者 Markus「notch」Persson（[@notch](https://x.com/notch/status/2081917722854674642)）的回复。对方写道：「天哪，一切就是这样开始的吗？我已经在给自己找使用场景了，比如把我所有的 TypeScript 转成 JavaScript。来吧 Claude，看看你有什么本事！如果我自己也变成了 vibe coder，我还能继续嘲笑 vibe coder 吗？」
 
 #### 英文原文
 
-> It’s engineering, not vibing.
+> @notch It’s engineering, not vibing.
 
 #### 完整中文翻译
 
-> 这是工程，不是凭感觉编程（vibing）。
+> @notch 这是工程，不是凭感觉编程（vibing）。
 
 #### 思维导图
 
@@ -348,7 +352,7 @@ flowchart LR
 
 ### 1. 他拥抱 AI 编程，但反对无约束的 Vibe Coding
 
-Uncle Bob 并不排斥 AI 编程。他已经把 AI 智能体用于代码实现、重构、性能诊断和测试生成。但他认为，AI 的高产出必须被工程约束包围，不能仅凭结果“看起来能运行”就交付。
+Uncle Bob 并不排斥 AI 编程。他已经把 AI 智能体用于代码实现、性能诊断和测试生成。但他认为，AI 的高产出必须被工程约束包围，不能仅凭结果“看起来能运行”就交付。
 
 ### 2. “不阅读 AI 代码”有严格前提
 
