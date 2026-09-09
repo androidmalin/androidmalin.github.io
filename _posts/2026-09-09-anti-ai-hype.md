@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '不要陷入"反 AI"的炒作'
+title: 'Redis之父:不要陷入"反 AI"的炒作'
 date: 2026-09-09 14:00:00 +0800
 description: "翻译 Redis 作者 antirez 的文章《Don't fall into the anti-AI hype》：AI 将永远改变编程；文末结合大语言模型底层原理逐条点评文中论断。"
 tags: [ai, software-engineering, translation, redis]
