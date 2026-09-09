@@ -1071,7 +1071,7 @@ third_party_libraries:
       js: "sha256-..."
 ```
 
-- `download`: When `false` (default), libraries are loaded from CDNs. When `true`, the specified library versions are downloaded during build and served from your site. This can improve performance but increases your repository size.
+- `download`: Must remain `false`. Libraries are loaded from their configured CDN URLs; local downloads are not supported, and setting this to `true` stops the build with an explanatory error.
 - `version`: Specifies which version of each library to use. Update this to use a newer version.
 - `url`: Template URLs for loading the library. The `{{version}}` placeholder is replaced with the version number automatically.
 - `integrity`: [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) hashes ensure that the library hasn't been tampered with. When updating a library version, you should also update its integrity hash.
