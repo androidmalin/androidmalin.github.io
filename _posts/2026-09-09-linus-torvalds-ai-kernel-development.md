@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linus Torvalds 谈 AI 与 Linux 内核开发"
+title: "Linux之父:Linus Torvalds 谈 AI 与 Linux 内核开发"
 date: 2026-09-09 21:12:00 +0800
 description: "Linus Torvalds 与 Dirk Hohndel 探讨 AI 编程、内核开发和 AI 安全报告，并结合研究分析其观点中正确、不准确及需要限定的部分。"
 tags: [ai, linux, programming, translation]
