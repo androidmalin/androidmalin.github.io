@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "C++ 创造者：贝尔实验室、负开销抽象与错误"
+title: "C++之父：贝尔实验室、负开销抽象与错误"
 date: 2026-09-09 16:00:00 +0800
 description: "与 C++ 创造者 Bjarne Stroustrup 对谈，聊贝尔实验室、C++ 的设计理念、内存安全、性能、人工智能与编程语言演进。"
 tags: [cpp, programming, interview, podcast]
@@ -9,7 +9,7 @@ toc:
   beginning: true
 ---
 
-# C++ 创造者：贝尔实验室、负开销抽象与错误
+# C++之父：贝尔实验室、负开销抽象与错误
 
 Bjarne Stroustrup 是 C++ 编程语言的创建者，也是贝尔实验室的前研究员。我们谈论了贝尔实验室的情况、编程语言设计以及他的经历中的有趣轶事。
 
