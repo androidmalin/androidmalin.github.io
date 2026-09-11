@@ -1,3 +1,12 @@
+---
+layout: post
+title: "确定性陷阱：保持生活的弹性"
+date: 2026-09-11 04:45:00 -0400
+description: "从不确定性、心理灵活性与生活节奏出发，讨论如何在承认现实限制的同时保留行动、恢复和调整的空间。"
+tags: [psychology, uncertainty, resilience, philosophy, life]
+categories: [life]
+---
+
 # 确定性陷阱：保持生活的弹性
 
 ## 情理之中的“意料之外”
