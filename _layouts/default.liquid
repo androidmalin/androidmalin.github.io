@@ -16,7 +16,7 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %} {% if page.scroll_ball %}scroll-ball-page{% endif %}">
     <!-- Header -->
     {% include header.liquid %}
 
@@ -46,6 +46,11 @@
         {{ content }}
       {% endif %}
     </div>
+
+    {% if page.scroll_ball %}
+      <div class="runout" aria-hidden="true"></div>
+      {% include scroll_ball.liquid %}
+    {% endif %}
 
     <!-- Footer -->
     {% include footer.liquid %}

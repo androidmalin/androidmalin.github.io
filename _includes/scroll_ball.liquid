@@ -1,0 +1,61 @@
+<button
+  class="ball__settings-trigger"
+  type="button"
+  aria-label="小球设置"
+  aria-controls="ball-settings"
+  aria-expanded="false"
+  hidden
+></button>
+<form class="ball__settings" id="ball-settings" aria-label="小球设置" autocomplete="off" inert hidden>
+  <label class="ball__settings-row ball__settings-toggle">
+    <span>光斑</span>
+    <input type="checkbox" name="spotlight" checked>
+  </label>
+  <label class="ball__settings-row ball__settings-toggle">
+    <span>光照</span>
+    <input type="checkbox" name="shading" checked>
+  </label>
+  <label class="ball__settings-row ball__settings-toggle">
+    <span>阴影</span>
+    <input type="checkbox" name="shadow" checked>
+  </label>
+  <label class="ball__settings-row ball__settings-toggle">
+    <span>字母</span>
+    <input type="checkbox" name="initials" checked>
+  </label>
+  <div class="ball__settings-row">
+    <span id="ball-stamp-label">印章</span>
+    <input type="hidden" name="stamp" value="android">
+    <button class="ball__settings-stamp" type="button" aria-describedby="ball-stamp-label"></button>
+  </div>
+  <label class="ball__settings-row">
+    <span class="sr-only">印章大小</span>
+    <input class="ball__settings-range" type="range" name="size" min="0" max="50" value="25">
+  </label>
+  <div class="ball__settings-row" role="group" aria-label="小球颜色">
+    <div class="ball__settings-swatches">
+      <label class="ball__settings-swatch ball__settings-swatch--theme" title="主题色">
+        <input type="radio" name="color" value="theme" aria-label="主题色" checked>
+      </label>
+      <label class="ball__settings-swatch" style="--swatch: #ff4100" title="橙色">
+        <input type="radio" name="color" value="#ff4100" aria-label="橙色">
+      </label>
+      <label class="ball__settings-swatch ball__settings-swatch--cycle" title="随滚动变色">
+        <input type="radio" name="color" value="cycle" aria-label="随滚动变色">
+      </label>
+      <label class="ball__settings-swatch ball__settings-swatch--poline" title="随机色带，再次点击换色">
+        <input type="radio" name="color" value="poline" aria-label="随机色带，再次点击换色">
+      </label>
+      <label class="ball__settings-swatch ball__settings-swatch--gradient" title="随机渐变，再次点击换色">
+        <input type="radio" name="color" value="gradient" aria-label="随机渐变，再次点击换色">
+      </label>
+      <label class="ball__settings-swatch ball__settings-swatch--custom" title="自定义颜色">
+        <input type="radio" name="color" value="custom" aria-label="使用自定义颜色">
+      </label>
+    </div>
+  </div>
+  <label class="ball__settings-row">
+    <span>自定义颜色</span>
+    <input class="ball__settings-picker" type="color" name="custom" value="#3ddc84">
+  </label>
+</form>
