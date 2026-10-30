@@ -1,10 +1,14 @@
 body.scroll-ball-page {
+  --global-theme-color: #0a8645;
+  --global-hover-color: #0a8645;
   --ball-accent: #3ddc84;
   --ball-gutter: 2.75rem;
   --ball-shade: 0.3;
 }
 
 html[data-theme="dark"] body.scroll-ball-page {
+  --global-theme-color: #3ddc84;
+  --global-hover-color: #3ddc84;
   --ball-shade: 0.6;
 }
 
@@ -382,6 +386,36 @@ body.scroll-ball-active .runout {
 
 body.scroll-ball-active #back-to-top {
   right: calc(var(--ball-gutter) + 3rem);
+}
+
+/* Half of .post's left padding (see _blog.scss), so the cards sit 1.5x as far from the panel edge.
+   The ball's lane needs that gap: groove() gives up when the list starts less than two ball radii in. */
+body.scroll-ball-page .post-list {
+  margin-inline-start: 2.5rem;
+}
+
+@media (max-width: 1200px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 1.75rem;
+  }
+}
+
+@media (max-width: 992px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 0.625rem;
+  }
+}
+
+@media (max-width: 576px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 0.5rem;
+  }
 }
 
 @media (max-width: 68.75em) {

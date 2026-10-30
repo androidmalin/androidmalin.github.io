@@ -244,7 +244,8 @@ sass:
 
 jekyll-minifier:
   compress_javascript: false # set to false since we are using terser as the js minifier
-  exclude: ["robots.txt", "assets/js/search/*.js"]
+  # cssminify2 mangles calc(var(--x)) into calc(var( -  - x)), so keep custom-property-heavy stylesheets out of it.
+  exclude: ["robots.txt", "assets/js/search/*.js", "assets/css/scroll-ball.css", "assets/css/liquid-glass.css"]
 
 # -----------------------------------------------------------------------------
 # Terser

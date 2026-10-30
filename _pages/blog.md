@@ -3,6 +3,7 @@ layout: default
 permalink: /
 title: 首页
 scroll_ball: true
+liquid_glass: true
 nav: true
 nav_order: 1
 pagination:
