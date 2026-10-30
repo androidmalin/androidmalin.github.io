@@ -57,9 +57,11 @@ body.liquid-glass-page {
   --glass-edge: rgb(12 48 28 / 0.1);
   --glass-float: 0 14px 34px -14px rgb(6 40 22 / 0.32), 0 2px 6px -2px rgb(6 40 22 / 0.14);
   --glass-rest: 0 12px 32px -22px rgb(6 40 22 / 0.35);
+  --glass-lift: 0 26px 48px -20px rgb(6 40 22 / 0.42), 0 8px 18px -8px rgb(6 40 22 / 0.2);
+  --glass-ring: rgb(10 134 69 / 0.38);
   --glass-sheen: 0.3;
   --glass-glow-rgb: 61 220 132; /* White light disappears on white cards, so they glow in the accent. */
-  --glass-glow: 0.16;
+  --glass-glow: 0.26;
   --glass-blur: 14px;
   --glass-blur-card: 18px;
   --glass-blur-panel: 20px;
@@ -91,9 +93,11 @@ html[data-theme="dark"] body.liquid-glass-page {
   --glass-edge: rgb(0 0 0 / 0.45);
   --glass-float: 0 14px 34px -14px rgb(0 0 0 / 0.7), 0 2px 6px -2px rgb(0 0 0 / 0.5);
   --glass-rest: 0 12px 32px -22px rgb(0 0 0 / 0.8);
+  --glass-lift: 0 26px 48px -20px rgb(0 0 0 / 0.85), 0 8px 18px -8px rgb(0 0 0 / 0.6);
+  --glass-ring: rgb(61 220 132 / 0.42);
   --glass-sheen: 0.12;
   --glass-glow-rgb: 255 255 255;
-  --glass-glow: 0.09;
+  --glass-glow: 0.14;
   --glass-title: #3ddc84;
   --glass-on-accent: #0b1d13;
   --global-text-color-light: #a2aca7;
@@ -210,7 +214,7 @@ body.liquid-glass-page .featured-posts .card {
   border: 0;
   border-radius: 22px;
   background:
-    radial-gradient(14rem circle at var(--px, 50%) var(--py, 0%), rgb(var(--glass-glow-rgb) / calc(var(--glow, 0) * var(--glass-glow))), transparent),
+    radial-gradient(18rem circle at var(--px, 50%) var(--py, 0%), rgb(var(--glass-glow-rgb) / calc(var(--glow, 0) * var(--glass-glow))), transparent),
     linear-gradient(atan2(var(--lx, 0.64), calc(-1 * var(--ly, 0.79))), var(--glass-card-lit), var(--glass-card));
   box-shadow: var(--glass-rims), var(--glass-rest);
 }
@@ -384,15 +388,29 @@ body.liquid-glass-page .ball__settings--open {
   box-shadow: var(--glass-rims), var(--glass-float);
 }
 
+/* A card under the pointer or holding focus lights up: an accent rim and halo, and a deeper shadow as it lifts. */
 body.liquid-glass-page .post-list > li:focus-within,
 body.liquid-glass-page .featured-posts .card:focus-within {
   --glow: 0.6;
+  box-shadow:
+    var(--glass-rims),
+    0 0 0 1px var(--glass-ring),
+    0 0 26px -8px var(--glass-ring),
+    var(--glass-lift);
 }
 
 @media (hover: hover) {
   body.liquid-glass-page .post-list > li:hover,
   body.liquid-glass-page .featured-posts .card:hover {
-    box-shadow: var(--glass-rims), var(--glass-float);
+    box-shadow:
+      var(--glass-rims),
+      0 0 0 1px var(--glass-ring),
+      0 0 26px -8px var(--glass-ring),
+      var(--glass-lift);
+  }
+
+  body.liquid-glass-page .post-list > li:hover .post-title {
+    color: var(--global-theme-color);
   }
 
   body.liquid-glass-page .post-list > li:hover,
@@ -466,9 +484,18 @@ body.liquid-glass-page .pagination .page-item:not(.disabled) .page-link:active {
       scale 0.3s var(--glass-spring);
   }
 
+  body.liquid-glass-page .post-list > li .post-title {
+    transition: color 0.2s;
+  }
+
   body.liquid-glass-page .post-list > li:hover,
   body.liquid-glass-page .post-list > li:focus-within,
   body.liquid-glass-page .featured-posts .card:hover {
+    translate: 0 -5px;
+  }
+
+  body.liquid-glass-page .post-list > li:active,
+  body.liquid-glass-page .featured-posts .card:active {
     translate: 0 -2px;
   }
 

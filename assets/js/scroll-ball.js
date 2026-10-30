@@ -334,6 +334,10 @@
   let swipe = null;
   let fling = 0;
   let glide = 0;
+  let gliding = false;
+  let flick = null;
+  let touching = false;
+  let wheeling = false;
   let frame = 0;
   let active = false;
   let listeners = null;
@@ -1017,7 +1021,9 @@
     last = now;
     coast(dt);
     const climbing = plunge < depth;
-    depth = Math.abs(plunge - depth) < 0.5 ? plunge : depth + (plunge - depth) * (1 - Math.exp(-dt / 0.12));
+    // A handed-off fling already moves smoothly, so the camera rides it directly instead of easing after it.
+    gliding &&= glide > 0;
+    depth = gliding || Math.abs(plunge - depth) < 0.5 ? plunge : depth + (plunge - depth) * (1 - Math.exp(-dt / 0.12));
     swell();
     const shift = camera() - lastScroll;
     lastScroll = camera();
@@ -1212,7 +1218,7 @@
 
   function corner(highlight = null) {
     const inset = unit * 2.5;
-    const floor = document.documentElement.clientHeight - inset;
+    const floor = document.documentElement.clientHeight - radius * 2.5;
     const lane = narrow.matches ? null : groove();
     const x = narrow.matches ? unit * 1.25 : (lane ?? document.documentElement.clientWidth - inset);
     if (highlight) {
@@ -1224,9 +1230,8 @@
     const scrolled = Math.min(Math.max(scrollY / end, 0), 1);
     const start = title ? (title.top + title.bottom) / 2 + scrollY : floor;
     const y = start + (floor - start) * scrolled;
-    if (!runout) return [x, y];
-    const past = Math.min(Math.max((scrollY - end) / runout, 0), 1);
-    return [ski(x), y + (innerHeight - runout / 2 - y) * past];
+    // Drift toward mid-screen over eight screens of runout, so running out of page never yanks the ball back up.
+    return [ski(x), y + (innerHeight / 2 - y) * smooth(innerHeight * 8)];
   }
 
   function overrun() {
@@ -1234,11 +1239,17 @@
     return Math.max(0, scrollY - (pageHeight - runout - innerHeight)) + depth;
   }
 
+  // How far into the runout the page has been pushed, over `span` pixels, eased in and out.
+  function smooth(span = runout + innerHeight) {
+    const t = Math.min(overrun() / span, 1);
+    return t * t * (3 - 2 * t);
+  }
+
   function ski(x) {
     const run = overrun();
     if (!run) return x;
     const width = document.documentElement.clientWidth;
-    const ease = Math.min(run / (runout + innerHeight), 1);
+    const ease = smooth();
     const noise = Math.sin(run / 310) * 0.5 + Math.sin(run / 170 + 1.7) * 0.3 + Math.sin(run / 530 + 4.1) * 0.2;
     const drift = x + (width / 2 - x) * ease + noise * width * 0.3 * ease;
     return Math.min(Math.max(drift, radius * 1.5), width - radius * 1.5);
@@ -1325,15 +1336,36 @@
   function coast(dt) {
     if (!glide) return;
     shove(glide * dt);
-    glide *= Math.exp(-dt / 0.35);
+    glide *= Math.exp(-dt / 0.5);
     if (Math.abs(glide) < 20 || (glide < 0 && !plunge)) glide = 0;
   }
 
+  // A native fling that hits the bottom hands its speed to the runout, so the ball rolls on instead of stopping dead.
+  // Wheels and fingers drive the runout themselves; this only catches momentum the browser was coasting on.
+  function handoff() {
+    const now = performance.now();
+    const dt = flick ? (now - flick.time) / 1000 : 0;
+    const speed = dt > 0 && dt < 0.1 ? flick.speed * 0.2 + ((scrollY - flick.y) / dt) * 0.8 : 0;
+    const arrived = bottomed() && flick && !flick.bottomed;
+    const carry = arrived ? Math.max(flick.speed, speed) : 0;
+    flick = { y: scrollY, time: now, speed, bottomed: bottomed() };
+    const overscroll = overrun() > 0 ? "none" : "";
+    if (document.documentElement.style.overscrollBehaviorY !== overscroll) document.documentElement.style.overscrollBehaviorY = overscroll;
+    if (arrived && !touching && !wheeling && carry > 0 && !depth) {
+      glide = carry;
+      gliding = true;
+      wake();
+    }
+  }
+
   function dive(event) {
+    wheeling = true;
     travel(event.deltaY * (event.deltaMode === 1 ? 16 : 1), event);
   }
 
   function drag(event) {
+    touching = event.type === "touchstart" || event.type === "touchmove";
+    wheeling = false;
     if (event.type === "touchcancel" || event.touches.length > 1 || inSettings(event)) {
       swipe = null;
       fling = glide = 0;
@@ -1525,7 +1557,15 @@
     on(window, "touchmove", drag, { passive: false });
     on(window, "touchend", drag, { passive: true });
     on(window, "touchcancel", drag, { passive: true });
-    on(window, "scroll", wake, { passive: true });
+    on(
+      window,
+      "scroll",
+      () => {
+        handoff();
+        wake();
+      },
+      { passive: true }
+    );
     on(window, "load", wake);
     document.fonts.ready.then(() => {
       if (!active) return;
@@ -1599,6 +1639,9 @@
     rotation = [0, 0, 0, 1];
     blur = [0, 0, 1, 0];
     height = lift = depth = plunge = unwind = glide = fling = deepest = tone = 0;
+    gliding = touching = wheeling = false;
+    flick = null;
+    document.documentElement.style.overscrollBehaviorY = "";
     grow = 1;
     lamp = LIGHT;
     parked = true;

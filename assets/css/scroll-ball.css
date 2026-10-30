@@ -2,6 +2,7 @@ body.scroll-ball-page {
   --global-theme-color: #0a8645;
   --global-hover-color: #0a8645;
   --ball-accent: #3ddc84;
+  --ball-size: 3.9rem;
   --ball-gutter: 2.75rem;
   --ball-shade: 0.3;
 }
@@ -10,10 +11,6 @@ html[data-theme="dark"] body.scroll-ball-page {
   --global-theme-color: #3ddc84;
   --global-hover-color: #3ddc84;
   --ball-shade: 0.6;
-}
-
-html:has(body.scroll-ball-active) {
-  overscroll-behavior-y: none;
 }
 
 body.scroll-ball-active {
@@ -53,8 +50,8 @@ body.scroll-ball-active .runout {
 .ball__handle {
   position: fixed;
   inset: 0 auto auto 0;
-  width: 3rem;
-  height: 3rem;
+  width: var(--ball-size);
+  height: var(--ball-size);
 }
 
 .ball__sphere {
@@ -86,8 +83,8 @@ body.scroll-ball-active .runout {
   position: fixed;
   z-index: 79;
   inset: 0 auto auto 0;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: calc(var(--ball-size) * 1.5);
+  height: calc(var(--ball-size) * 1.5);
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
@@ -103,8 +100,8 @@ body.scroll-ball-active .runout {
   position: fixed;
   z-index: 78;
   inset: 0 auto auto 0;
-  width: calc(2.4rem - 2px);
-  height: calc(2.4rem - 2px);
+  width: calc(var(--ball-size) * 0.8 - 2px);
+  height: calc(var(--ball-size) * 0.8 - 2px);
   border: 1px solid var(--global-text-color);
   border-radius: 50%;
   opacity: 0;
@@ -388,21 +385,17 @@ body.scroll-ball-active #back-to-top {
   right: calc(var(--ball-gutter) + 3rem);
 }
 
-/* Half of .post's left padding (see _blog.scss), so the cards sit 1.5x as far from the panel edge.
-   The ball's lane needs that gap: groove() gives up when the list starts less than two ball radii in. */
+/* Room for the ball's lane between the panel edge and the cards, on top of .post's left padding (see _blog.scss).
+   groove() gives up when the list starts less than one --ball-size in, so as the padding thins the margin grows.
+   Below 48.75em the ball leaves the lane anyway. */
 body.scroll-ball-page .post-list {
   margin-inline-start: 2.5rem;
 }
 
-@media (max-width: 1200px) {
-  body.scroll-ball-page .post-list {
-    margin-inline-start: 1.75rem;
-  }
-}
-
+/* .post's padding is down to 2rem here, so the margin tracks the ball to keep the cards 1rem clear of it. */
 @media (max-width: 992px) {
   body.scroll-ball-page .post-list {
-    margin-inline-start: 1rem;
+    margin-inline-start: calc(var(--ball-size) - 1rem);
   }
 }
 
