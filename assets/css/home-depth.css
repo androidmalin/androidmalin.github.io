@@ -1,0 +1,226 @@
+/* Homepage depth: cards, title and pagination share the scroll ball's lamp (see home-depth.js). */
+
+@property --lx {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.64;
+}
+
+@property --ly {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.79;
+}
+
+@property --lift {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 3;
+}
+
+body.scroll-ball-page {
+  --global-theme-color: #0a8645;
+  --global-hover-color: #0a8645;
+  --depth-shade: 0.14;
+  --depth-lit: rgb(255 255 255 / 0.9);
+  --depth-dim: rgb(246 248 250 / 0.9);
+  --depth-rim: rgb(255 255 255 / 0.8);
+  --depth-edge: rgb(0 0 0 / 0.04);
+  --depth-on-accent: #fff;
+  --depth-title: #19a85a;
+  --depth-spring: cubic-bezier(0.3, 0.7, 0.2, 1.25);
+}
+
+html[data-theme="dark"] body.scroll-ball-page {
+  --global-theme-color: #3ddc84;
+  --global-hover-color: #3ddc84;
+  --depth-shade: 0.55;
+  --depth-lit: rgb(44 48 53 / 0.9);
+  --depth-dim: rgb(33 37 41 / 0.9);
+  --depth-rim: rgb(255 255 255 / 0.07);
+  --depth-edge: rgb(255 255 255 / 0.04);
+  --depth-on-accent: #1c1c1d;
+  --depth-title: #3ddc84;
+}
+
+/* Raised surfaces: lit toward the lamp, contact shadow fades and cast shadow spreads as they lift. */
+body.scroll-ball-page .post-list > li,
+body.scroll-ball-page .featured-posts .card,
+body.scroll-ball-page .pagination .page-item .page-link {
+  background: linear-gradient(atan2(var(--lx), calc(-1 * var(--ly))), var(--depth-lit), var(--depth-dim));
+  box-shadow:
+    inset 1px 1px 0 var(--depth-rim),
+    0 0 0 1px var(--depth-edge),
+    calc(var(--lx) * var(--lift) * 0.5px) calc(var(--ly) * var(--lift) * 0.5px) calc(var(--lift) * 0.6px)
+      rgb(0 0 0 / calc(var(--depth-shade) * 3 / var(--lift))),
+    calc(var(--lx) * var(--lift) * 2px) calc(var(--ly) * var(--lift) * 2px) calc(var(--lift) * 5px) rgb(0 0 0 / var(--depth-shade));
+}
+
+body.scroll-ball-page .post-list > li,
+body.scroll-ball-page .featured-posts .card {
+  --lift: 3;
+  margin-bottom: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  border: 0;
+  border-radius: 14px;
+}
+
+body.scroll-ball-page .post-list > li:hover,
+body.scroll-ball-page .post-list > li:focus-within,
+body.scroll-ball-page .featured-posts .card:hover {
+  --lift: 8;
+}
+
+/* Half of .post's left padding (see _blog.scss), so the cards sit 1.5x as far from the panel edge. */
+body.scroll-ball-page .post-list {
+  margin-inline-start: 2.5rem;
+}
+
+@media (max-width: 1200px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 1.75rem;
+  }
+}
+
+@media (max-width: 992px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 0.625rem;
+  }
+}
+
+/* The raised cards already separate the header from the list. */
+body.scroll-ball-page .header-bar {
+  border-bottom: 0;
+}
+
+/* Title: lit from above like the ball, with a thin edge and a soft shadow cast away from the lamp. */
+body.scroll-ball-page .header-bar h1 {
+  --edge: color-mix(in oklab, var(--depth-title) 70%, black);
+  width: fit-content;
+  margin-inline: auto;
+  color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--depth-title) 65%, white) 5%,
+    var(--depth-title) 50%,
+    color-mix(in oklab, var(--depth-title) 88%, black) 95%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(calc(var(--lx) * 1px) calc(var(--ly) * 1px) 0 var(--edge))
+    drop-shadow(calc(var(--lx) * 1px) calc(var(--ly) * 1px) 0 var(--edge))
+    drop-shadow(calc(var(--lx) * 4px) calc(var(--ly) * 5px) 6px rgb(0 0 0 / var(--depth-shade)));
+}
+
+/* Pagination: raised keys, and the current page is a small lit ball. */
+body.scroll-ball-page .pagination {
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+body.scroll-ball-page .pagination .page-item .page-link {
+  --lift: 2;
+  display: grid;
+  place-items: center;
+  min-width: 3rem;
+  height: 3rem;
+  margin: 0;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 10px;
+  color: var(--global-text-color);
+}
+
+body.scroll-ball-page .pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+  --lift: 5;
+  color: var(--global-theme-color);
+}
+
+body.scroll-ball-page .pagination .page-item .page-link:focus {
+  outline: none;
+}
+
+body.scroll-ball-page .pagination .page-item .page-link:focus-visible {
+  outline: 2px solid var(--global-theme-color);
+  outline-offset: 3px;
+}
+
+body.scroll-ball-page .pagination .page-item.active .page-link {
+  width: 3rem;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--depth-on-accent);
+  background: radial-gradient(
+    circle at calc(50% - var(--lx) * 15%) calc(50% - var(--ly) * 20%),
+    color-mix(in oklab, var(--global-theme-color) 50%, white),
+    var(--global-theme-color) 45%,
+    color-mix(in oklab, var(--global-theme-color) 55%, black)
+  );
+  box-shadow:
+    calc(var(--lx) * 1px) calc(var(--ly) * 1px) 2px rgb(0 0 0 / var(--depth-shade)),
+    calc(var(--lx) * 5px) calc(var(--ly) * 5px) 10px rgb(0 0 0 / var(--depth-shade));
+}
+
+body.scroll-ball-page .pagination .page-item.disabled .page-link {
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+@media (max-width: 576px) {
+  body.scroll-ball-page .post-list > li,
+  body.scroll-ball-page .featured-posts .card {
+    --lift: 2;
+    padding: 1.25rem 1rem;
+  }
+
+  body.scroll-ball-page .post-list {
+    margin-inline-start: 0.5rem;
+  }
+
+  body.scroll-ball-page .pagination {
+    gap: 0.4rem;
+  }
+
+  body.scroll-ball-page .pagination .page-item .page-link {
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.6rem;
+    font-size: 1rem;
+  }
+
+  body.scroll-ball-page .pagination .page-item.active .page-link {
+    width: 2.5rem;
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body.scroll-ball-page .post-list > li,
+  body.scroll-ball-page .featured-posts .card,
+  body.scroll-ball-page .pagination .page-item .page-link,
+  body.scroll-ball-page .header-bar h1 {
+    transition:
+      --lx 0.3s,
+      --ly 0.3s,
+      --lift 0.45s var(--depth-spring),
+      translate 0.45s var(--depth-spring),
+      color 0.2s;
+  }
+
+  body.scroll-ball-page .post-list > li:hover,
+  body.scroll-ball-page .post-list > li:focus-within,
+  body.scroll-ball-page .featured-posts .card:hover {
+    translate: 0 -4px;
+  }
+
+  body.scroll-ball-page .pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+    translate: 0 -2px;
+  }
+}
