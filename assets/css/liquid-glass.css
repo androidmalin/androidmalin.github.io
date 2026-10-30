@@ -39,12 +39,28 @@
 
 body.liquid-glass-page {
   --glass-content: min(1364px, 92vw); /* max_width in _config.yml */
-  --glass-paper: #eef6f1; /* Must stay opaque: scroll-ball.js reads the body background as its paper. */
+  /* Palette inputs stay in CSS; scroll-ball.js only overrides the six displayed colors while active.
+     The same sRGB mixes provide the initial wallpaper without JavaScript or an animated ball. */
+  --glass-palette-base: #86b3a2;
+  --glass-neutral-start: #f7f8fa;
+  --glass-neutral-end: #f7f8fa;
+  --glass-mix-start: 12%;
+  --glass-mix-end: 22%;
+  --glass-halo-opacity-1: 20%;
+  --glass-halo-opacity-2: 12%;
+  --glass-halo-opacity-3: 16%;
+  --glass-halo-opacity-4: 10%;
+  --glass-bg-start: color-mix(in srgb, var(--glass-palette-base) var(--glass-mix-start), var(--glass-neutral-start));
+  --glass-bg-end: color-mix(in srgb, var(--glass-palette-base) var(--glass-mix-end), var(--glass-neutral-end));
+  --glass-halo-1: color-mix(in srgb, var(--glass-palette-base) var(--glass-halo-opacity-1), transparent);
+  --glass-halo-2: color-mix(in srgb, var(--glass-palette-base) var(--glass-halo-opacity-2), transparent);
+  --glass-halo-3: color-mix(in srgb, var(--glass-palette-base) var(--glass-halo-opacity-3), transparent);
+  --glass-halo-4: color-mix(in srgb, var(--glass-palette-base) var(--glass-halo-opacity-4), transparent);
+  --glass-paper: var(--glass-bg-start); /* Opaque paper also used by the ball's unpainted cap. */
   --glass-wallpaper:
-    radial-gradient(55% 45% at 8% 4%, rgb(61 220 132 / 0.36), transparent 70%),
-    radial-gradient(50% 42% at 94% 8%, rgb(56 189 248 / 0.28), transparent 70%),
-    radial-gradient(48% 52% at 86% 92%, rgb(20 184 166 / 0.26), transparent 70%),
-    radial-gradient(44% 48% at 6% 94%, rgb(163 230 53 / 0.26), transparent 70%), linear-gradient(165deg, #f3faf5, #e9f3f6);
+    radial-gradient(55% 45% at 8% 4%, var(--glass-halo-1), transparent 70%), radial-gradient(50% 42% at 94% 8%, var(--glass-halo-2), transparent 70%),
+    radial-gradient(48% 52% at 86% 92%, var(--glass-halo-3), transparent 70%),
+    radial-gradient(44% 48% at 6% 94%, var(--glass-halo-4), transparent 70%), linear-gradient(165deg, var(--glass-bg-start), var(--glass-bg-end));
   --glass-sheet: rgb(255 255 255 / 0.55);
   --glass-card: rgb(255 255 255 / 0.48);
   --glass-card-lit: rgb(255 255 255 / 0.72);
@@ -74,13 +90,43 @@ body.liquid-glass-page {
   background-color: var(--glass-paper);
 }
 
+body.liquid-glass-page[data-glass-palette="red"] {
+  --glass-palette-base: #d49ba5;
+}
+
+body.liquid-glass-page[data-glass-palette="orange"] {
+  --glass-palette-base: #d2af88;
+}
+
+body.liquid-glass-page[data-glass-palette="yellow"] {
+  --glass-palette-base: #c4bd87;
+}
+
+body.liquid-glass-page[data-glass-palette="green"] {
+  --glass-palette-base: #90b299;
+}
+
+body.liquid-glass-page[data-glass-palette="cyan"] {
+  --glass-palette-base: #87afb8;
+}
+
+body.liquid-glass-page[data-glass-palette="blue"] {
+  --glass-palette-base: #97a9ce;
+}
+
+body.liquid-glass-page[data-glass-palette="purple"] {
+  --glass-palette-base: #b39bc5;
+}
+
 html[data-theme="dark"] body.liquid-glass-page {
-  --glass-paper: #0f1613;
-  --glass-wallpaper:
-    radial-gradient(55% 45% at 8% 4%, rgb(10 134 69 / 0.42), transparent 70%),
-    radial-gradient(50% 42% at 94% 8%, rgb(14 116 144 / 0.34), transparent 70%),
-    radial-gradient(48% 52% at 86% 92%, rgb(15 118 110 / 0.32), transparent 70%),
-    radial-gradient(44% 48% at 6% 94%, rgb(77 124 15 / 0.26), transparent 70%), linear-gradient(165deg, #08110d, #0a1116);
+  --glass-neutral-start: #101318;
+  --glass-neutral-end: #0b1016;
+  --glass-mix-start: 10%;
+  --glass-mix-end: 18%;
+  --glass-halo-opacity-1: 12%;
+  --glass-halo-opacity-2: 8%;
+  --glass-halo-opacity-3: 10%;
+  --glass-halo-opacity-4: 6%;
   --glass-sheet: rgb(22 26 24 / 0.55);
   --glass-card: rgb(255 255 255 / 0.05);
   --glass-card-lit: rgb(255 255 255 / 0.09);
@@ -101,6 +147,13 @@ html[data-theme="dark"] body.liquid-glass-page {
   --glass-title: #3ddc84;
   --glass-on-accent: #0b1d13;
   --global-text-color-light: #a2aca7;
+}
+
+/* The shared theme rule must not add a second background transition after each animation frame. */
+html.transition body.liquid-glass-page,
+html.transition body.liquid-glass-page::before,
+html.transition body.liquid-glass-page::after {
+  transition-property: color, border-color, fill, stroke !important;
 }
 
 /* Clearer glass where the edges refract, so the lensing reads. */
@@ -158,13 +211,26 @@ body.liquid-glass-page::before {
    must stay thin enough for the content under the capsule to show through. */
 body.liquid-glass-page::after {
   z-index: 1029;
-  height: 72px;
-  -webkit-mask-image: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.35) 40px, transparent);
-  mask-image: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.35) 40px, transparent);
+  height: 98px;
+  -webkit-mask-image: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.35) 66px, transparent);
+  mask-image: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.35) 66px, transparent);
+}
+
+body.liquid-glass-page.fixed-top-nav {
+  padding-top: 86px; /* 8px above the 78px capsule. */
+}
+
+body.liquid-glass-page > .container[role="main"] {
+  margin-top: 28px !important; /* Overrides the shared .mt-5 spacing. */
+}
+
+body.liquid-glass-page :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 98px;
 }
 
 /* Content layer: standard materials. The sheet only gets a background, a radius and a shadow (see the top note). */
 body.liquid-glass-page .container[role="main"] > .post {
+  padding-top: 0;
   border-radius: 28px;
   background-color: var(--glass-sheet);
   box-shadow:
@@ -175,6 +241,11 @@ body.liquid-glass-page .container[role="main"] > .post {
 
 body.liquid-glass-page .header-bar {
   border-bottom: 0;
+  padding-block: 3.5rem;
+}
+
+body.liquid-glass-page .header-bar h2 {
+  margin-bottom: 0;
 }
 
 body.liquid-glass-page .header-bar h1 {
@@ -225,8 +296,8 @@ body.liquid-glass-page.scroll-ball-active .featured-posts .card {
   backdrop-filter: blur(var(--glass-blur-card));
 }
 
-/* Navbar: the bar disappears and its container becomes a floating capsule. 8px + 52px stays inside the 64px
-   that body.fixed-top-nav reserves; on phones the collapse wraps inside it, so it grows into a rounded panel. */
+/* Navbar: the bar disappears and its container becomes a floating capsule. 8px + 78px fills the 86px
+   reserved above; on phones the collapse wraps inside it, so it grows into a rounded panel. */
 body.liquid-glass-page #navbar {
   height: auto;
   padding: 8px 1rem 0;
@@ -241,10 +312,10 @@ body.liquid-glass-page #navbar > .container {
   isolation: isolate;
   pointer-events: auto;
   max-width: calc(var(--glass-content) - 30px) !important; /* Lines up with the .post sheet. */
-  min-height: 52px;
+  min-height: 78px;
   padding-block: 6px;
   padding-inline: 1.25rem 0.75rem;
-  border-radius: 26px;
+  border-radius: 39px;
 }
 
 /* Liquid Glass: frost (and lens, on Chromium) whatever passes underneath, rims lit by the lamp, a pointer sheen. */

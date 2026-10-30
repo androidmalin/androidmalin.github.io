@@ -98,19 +98,18 @@
             <li class="nav-item">
               <button id="search-toggle" title="Search" onclick="openSearchModal()">
                 <span class="nav-link">
-                  <span class="shortcut-key shortcut-key-default">ctrl</span><span class="shortcut-key shortcut-key-mac">&#x2318;</span>
-                  k <i class="fa-solid fa-magnifying-glass"></i>
+                  <span class="shortcut-key shortcut-key-default">ctrl</span><span class="shortcut-key shortcut-key-mac">&#x2318;</span> k
+                  <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
               </button>
             </li>
           {% endif %}
           {% if site.enable_darkmode %}
-            <!-- Toogle theme mode -->
+            <!-- Toggle theme mode -->
             <li class="toggle-container">
-              <button id="light-toggle" title="Change theme">
-                <i class="fa-half-sun-moon" id="light-toggle-system"></i>
-                <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
-                <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+              <button id="light-toggle" type="button" title="切换为深色模式" aria-label="切换为深色模式">
+                <i class="fa-solid fa-moon" id="light-toggle-dark" aria-hidden="true"></i>
+                <i class="fa-solid fa-sun" id="light-toggle-light" aria-hidden="true"></i>
               </button>
             </li>
           {% endif %}

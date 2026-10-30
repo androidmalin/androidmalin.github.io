@@ -4,11 +4,21 @@
   const initialsText = ballScript.dataset.initials || "AM";
 
   const moving = matchMedia("(prefers-reduced-motion: no-preference)");
-  const hovering = matchMedia("(hover: hover) and (pointer: fine)");
   const narrow = matchMedia("(max-width: 48.75em)");
   const dark = matchMedia("(prefers-color-scheme: dark)");
+  const forcedColors = matchMedia("(forced-colors: active)");
+  const glassPage = document.body.classList.contains("liquid-glass-page");
   const settingsPanel = document.querySelector(".ball__settings");
   const settingsTrigger = document.querySelector(".ball__settings-trigger");
+  const mainCard = document.querySelector(".container[role='main'] > .post");
+  const heading = mainCard?.querySelector(".header-bar h1");
+  const CARD_SELECTOR = ".post-list > li, .featured-posts .card";
+  const RAINBOW = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#8B00FF"].map((color) =>
+    [1, 3, 5].map((start) => toLinear(parseInt(color.slice(start, start + 2), 16) / 255))
+  );
+  const GLASS_PALETTES = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"];
+  const GLASS_PROPERTIES = ["--glass-bg-start", "--glass-bg-end", "--glass-halo-1", "--glass-halo-2", "--glass-halo-3", "--glass-halo-4"];
+  const GLASS_DURATION = 900;
 
   const STIFFNESS = 70;
   const DAMPING = 11;
@@ -276,16 +286,20 @@
   let initials = null;
   let themeAccent = [0, 0, 1];
   let accent = [0, 0, 1];
-  let hueTurn = 0;
+  let colorStage = -1;
+  let glassStage = null;
+  let glassTheme = null;
+  let glassColors = null;
+  let glassTransition = null;
   const palettes = { poline: [], gradient: [] };
   let appearance = {
     spotlight: true,
     shading: true,
     shadow: true,
-    initials: true,
+    initials: false,
     stamp: "android",
     size: 25,
-    color: "theme",
+    color: "cycle",
     custom: "#3ddc84",
   };
   let base = [0, 0, 0];
@@ -300,6 +314,9 @@
   let bandHeight = 0;
   let pageHeight = 0;
   let runout = 0;
+  let track = { x: 0, start: 0, end: 0, bottom: 0, exit: 0, cardHeight: 1 };
+  let trailGap = false;
+  let returning = null;
   let deepest = 0;
   let ball = null;
   let floor = null;
@@ -315,7 +332,6 @@
   let target = null;
   let parked = true;
   let armed = false;
-  let pointer = null;
   let glare = null;
   let lamp = LIGHT;
   let rotation = [0, 0, 0, 1];
@@ -335,6 +351,7 @@
   let fling = 0;
   let glide = 0;
   let gliding = false;
+  let nativeFling = false;
   let flick = null;
   let touching = false;
   let wheeling = false;
@@ -367,12 +384,14 @@
     const probe = document.createElement("i");
     probe.style.color = color;
     document.body.append(probe);
-    const channels = getComputedStyle(probe)
-      .color.match(/[\d.]+/g)
+    const computed = getComputedStyle(probe).color;
+    const channels = computed
+      .match(/[\d.]+/g)
       .slice(0, 3)
       .map(Number);
     probe.remove();
-    return channels.map((v) => toLinear(v / 255));
+    // CSS color-mix(in srgb, ...) resolves to color(srgb ...) with channels in 0..1.
+    return channels.map((v) => toLinear(computed.startsWith("color(srgb ") ? v : v / 255));
   }
 
   function labelTextures(gl) {
@@ -421,7 +440,8 @@
   }
 
   function buildColors() {
-    paper = readColor(getComputedStyle(document.body).backgroundColor);
+    syncColorStage();
+    if (!glassColors) paper = readColor(getComputedStyle(document.body).backgroundColor);
     const root = getComputedStyle(document.documentElement);
     themeAccent = readColor(getComputedStyle(document.body).getPropertyValue("--ball-accent"));
     accent = selectedColor();
@@ -441,7 +461,8 @@
   }
 
   function selectedColor() {
-    if (appearance.color === "theme" || appearance.color === "cycle") return themeAccent;
+    if (appearance.color === "theme") return themeAccent;
+    if (appearance.color === "cycle") return colorStage < 0 ? themeAccent : RAINBOW[colorStage];
     if (palette().length) return palette()[0];
     return readColor(appearance.color === "custom" ? appearance.custom : appearance.color);
   }
@@ -493,42 +514,85 @@
     return colors[Math.min(Math.floor(t * colors.length), colors.length - 1)];
   }
 
-  function toOklab([r, g, b]) {
-    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
-    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
-    const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
-    return [
-      0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
-      1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
-      0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
-    ];
+  function syncColorStage(now = performance.now()) {
+    const interval = Math.floor(overrun() / (2 * track.cardHeight));
+    colorStage = appearance.color !== "cycle" || interval === 0 ? -1 : (interval - 1) % RAINBOW.length;
+    syncGlassPalette(now);
   }
 
-  function fromOklab([lightness, a, b]) {
-    const l = (lightness + 0.3963377774 * a + 0.2158037573 * b) ** 3;
-    const m = (lightness - 0.1055613458 * a - 0.0638541728 * b) ** 3;
-    const s = (lightness - 0.0894841775 * a - 1.291485548 * b) ** 3;
-    return [
-      4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-      -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-      -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
-    ];
-  }
-
-  function cycleColor(distance) {
-    if (distance <= 0 || appearance.color !== "cycle") return;
-    hueTurn += distance * 0.0015;
-    const [l, a, b] = toOklab(themeAccent);
-    const lightness = Math.min(l + 0.15, 0.9);
-    const hue = Math.atan2(b, a) + hueTurn;
-    let chroma = Math.hypot(a, b);
-    let color = fromOklab([lightness, chroma * Math.cos(hue), chroma * Math.sin(hue)]);
-    while (color.some((v) => v < 0 || v > 1) && chroma > 0.001) {
-      chroma *= 0.95;
-      color = fromOklab([lightness, chroma * Math.cos(hue), chroma * Math.sin(hue)]);
-    }
-    accent = color.map((v) => Math.min(Math.max(v, 0), 1));
+  function cycleColor(now) {
+    syncColorStage(now);
+    if (appearance.color !== "cycle") return;
+    const color = selectedColor();
+    if (color === accent) return;
+    accent = color;
     mixPaint();
+  }
+
+  function readGlassColors() {
+    const style = getComputedStyle(document.body);
+    const percentage = (name) => parseFloat(style.getPropertyValue(name)) / 100;
+    const tint = readColor(style.getPropertyValue("--glass-palette-base")).map(toGamma);
+    const stops = ["start", "end"].map((end) => {
+      const neutral = readColor(style.getPropertyValue(`--glass-neutral-${end}`)).map(toGamma);
+      const amount = percentage(`--glass-mix-${end}`);
+      // Match CSS's sRGB component mixing, then animate the resulting colors in linear RGB.
+      return [...neutral.map((v, i) => toLinear(v + (tint[i] - v) * amount)), 1];
+    });
+    return [...stops, ...[1, 2, 3, 4].map((i) => [...tint.map(toLinear), percentage(`--glass-halo-opacity-${i}`)])];
+  }
+
+  function showGlassColors() {
+    glassColors.forEach((color, i) => {
+      const rgb = color
+        .slice(0, 3)
+        .map((v) => (toGamma(v) * 255).toFixed(3))
+        .join(" ");
+      document.body.style.setProperty(GLASS_PROPERTIES[i], `rgb(${rgb} / ${color[3].toFixed(4)})`);
+    });
+    paper = glassColors[0].slice(0, 3);
+    drawn = null; // The cap must repaint even when the ball has stopped moving.
+  }
+
+  function syncGlassPalette(now) {
+    if (!glassPage) return;
+    if (!active || forcedColors.matches || sphereGl.isContextLost() || trailGl.isContextLost()) {
+      resetGlassPalette();
+      return;
+    }
+    const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    if (glassStage === colorStage && glassTheme === theme) return;
+    if (!glassColors) {
+      glassColors = readGlassColors();
+      showGlassColors();
+    }
+    glassStage = colorStage;
+    glassTheme = theme;
+    document.body.setAttribute("data-glass-palette", GLASS_PALETTES[colorStage] ?? "initial");
+    const to = readGlassColors();
+    // Retarget from the last displayed frame, never queue an intermediate scroll stage or theme.
+    const changed = to.some((color, i) => color.some((v, channel) => Math.abs(v - glassColors[i][channel]) > 1e-8));
+    glassTransition = changed ? { from: glassColors, to, start: now } : null;
+  }
+
+  function fadeGlass(now) {
+    if (!glassTransition) return true;
+    const { from, to, start } = glassTransition;
+    const progress = Math.min(Math.max((now - start) / GLASS_DURATION, 0), 1);
+    const eased = easeInOut(progress);
+    glassColors = to.map((color, i) => color.map((v, channel) => from[i][channel] + (v - from[i][channel]) * eased));
+    showGlassColors();
+    if (progress === 1) glassTransition = null;
+    return !glassTransition;
+  }
+
+  function resetGlassPalette() {
+    if (!glassColors) return;
+    glassColors = glassTransition = glassStage = glassTheme = null;
+    document.body.removeAttribute("data-glass-palette");
+    for (const property of GLASS_PROPERTIES) document.body.style.removeProperty(property);
+    paper = readColor(getComputedStyle(document.body).backgroundColor);
+    drawn = null;
   }
 
   function blend(dt) {
@@ -767,7 +831,7 @@
 
   function resize() {
     pixelRatio = devicePixelRatio || 1;
-    unit = sphere.offsetWidth / 2;
+    unit = parseFloat(getComputedStyle(sphere).width) / 2;
     radius = unit * grow;
     pageHeight = Math.max(document.body.offsetHeight, innerHeight);
     runout = document.querySelector(".runout")?.offsetHeight ?? 0;
@@ -787,6 +851,7 @@
       sphere.width = sphere.height = size;
       drawn = null;
     }
+    measureTrack();
   }
 
   function lasting({ y, expired }) {
@@ -815,7 +880,7 @@
   }
 
   function camera() {
-    return scrollY + depth;
+    return Math.max(0, scrollY) + depth;
   }
 
   function slide() {
@@ -883,6 +948,7 @@
     }
     handle.style.translate = `${x - unit}px ${y - unit}px`;
     handle.style.scale = grow;
+    handle.disabled = overrun() === 0;
     const [dockX, dockY] = corner();
     const dockRadius = dock.offsetWidth / 2;
     dock.style.translate = `${dockX - dockRadius}px ${dockY - dockRadius}px`;
@@ -1019,6 +1085,8 @@
     }
     const dt = Math.min((now - last) / 1000, 1 / 30);
     last = now;
+    // Native jumps (Home, the scrollbar, back-to-top) must not retain a virtual camera offset.
+    if (scrollY <= 0 || !bottomed()) resetRunout();
     coast(dt);
     const climbing = plunge < depth;
     // A handed-off fling already moves smoothly, so the camera rides it directly instead of easing after it.
@@ -1026,37 +1094,68 @@
     depth = gliding || Math.abs(plunge - depth) < 0.5 ? plunge : depth + (plunge - depth) * (1 - Math.exp(-dt / 0.12));
     swell();
     const shift = camera() - lastScroll;
+    const crossed = camera() > track.exit !== lastScroll > track.exit;
     lastScroll = camera();
-    const jumped = parked && Math.abs(shift) > innerHeight / 2;
-    const carried = parked && !jumped && dt > 0 ? shift / dt : 0;
-    if (parked) position = [position[0], position[1] + shift];
-
-    if (parked) target = corner(focused());
-    else homing();
-    const [tx, ty] = target ? [target[0], target[1] + camera()] : position;
+    const before = position;
+    let jumped = trailGap || crossed || Math.abs(shift) > innerHeight / 2;
+    trailGap = false;
     const grounded = height === 0;
-    if (grounded) {
-      const ax = tilt ? TILT * tilt[0] - FRICTION * velocity[0] : STIFFNESS * (tx - position[0]) - DAMPING * velocity[0];
-      const ay = tilt ? TILT * tilt[1] - FRICTION * velocity[1] : STIFFNESS * (ty - position[1]) - DAMPING * velocity[1];
-      velocity = [velocity[0] + ax * dt, velocity[1] + ay * dt];
-      turn(ax, ay, now);
-      spinning = [(velocity[1] + carried) / radius, -velocity[0] / radius, 0];
+    const run = overrun();
+    const [x, y] = corner();
+    const destination = [x, y + camera()];
+    cycleColor(now);
+    const backgroundSettled = fadeGlass(now);
+
+    if (run === 0) {
+      // An interrupted free interaction must never pull the ball diagonally through the card.
+      jumped ||= (!parked && !returning) || Math.abs(before[0] - track.x) > 1;
+      if (!parked || height > 0) park();
+    } else if (!parked) {
+      if (shift > 0) returning = null;
+      if (shift < 0 && run <= Math.max(innerHeight / 2, radius * 6) && !returning) {
+        returning = { distance: run, end: Math.min(unit, run / 2), offset: position.map((v, i) => v - destination[i]) };
+        height = lift = 0;
+        velocity = [0, 0];
+        spinning = [0, 0, 0];
+        tilt = target = null;
+      }
+      if (returning && run <= returning.end) park();
+      if (!returning) homing();
+    }
+
+    const following = parked || returning;
+    const [tx, ty] = following ? destination : target ? [target[0], target[1] + camera()] : position;
+    if (following) {
+      // Automatic motion is a function of scroll position, with no spring or accumulated velocity.
+      const ease = returning ? easeInOut(Math.min((run - returning.end) / (returning.distance - returning.end), 1)) : 0;
+      position = destination.map((v, i) => v + (returning ? returning.offset[i] * ease : 0));
+      velocity = [0, 0];
     } else {
+      if (grounded) {
+        const ax = tilt ? TILT * tilt[0] - FRICTION * velocity[0] : STIFFNESS * (tx - position[0]) - DAMPING * velocity[0];
+        const ay = tilt ? TILT * tilt[1] - FRICTION * velocity[1] : STIFFNESS * (ty - position[1]) - DAMPING * velocity[1];
+        velocity = [velocity[0] + ax * dt, velocity[1] + ay * dt];
+        turn(ax, ay, now);
+      }
+      const rush = Math.hypot(...velocity) / TOP_SPEED;
+      if (rush > 1) velocity = velocity.map((v) => v / rush);
+      position = [position[0] + velocity[0] * dt, position[1] + velocity[1] * dt];
+      if (tilt) bounce(now);
+    }
+    if (height > 0) {
       lift -= GRAVITY * dt;
       height += lift * dt;
       if (height <= 0) land(now);
     }
-    const rush = Math.hypot(...velocity) / TOP_SPEED;
-    if (rush > 1) velocity = velocity.map((v) => v / rush);
-    position = [position[0] + velocity[0] * dt, position[1] + velocity[1] * dt];
-    if (tilt) bounce(now);
+    if (run > 0) position[1] = Math.max(position[1], track.bottom + radius * (1 + height / 500));
+
+    const ground = position.map((v, i) => (dt > 0 ? (v - before[i]) / dt : 0));
+    const speed = Math.hypot(...ground);
+    if (height === 0) spinning = [ground[1] / radius, -ground[0] / radius, 0];
     rotation = spin(rotation, spinning, dt);
     const turning = Math.hypot(...spinning);
     blur = turning * dt > 1e-6 ? [...spinning.map((v) => v / turning), Math.min(turning * dt, Math.PI)] : [0, 0, 1, 0];
 
-    const ground = [velocity[0], velocity[1] + carried];
-    const speed = Math.hypot(...ground);
-    if (height === 0) cycleColor(speed * dt);
     if (palette().length) ink = contactColor().map(toGamma);
     const previous = points.at(-1);
     if (height === 0) {
@@ -1100,7 +1199,15 @@
     place();
     updateSettingsVisibility();
 
-    const resting = !glide && depth === plunge && lit && toned && height === 0 && speed < 0.5 && Math.hypot(tx - position[0], ty - position[1]) < 0.5;
+    const resting =
+      !glide &&
+      depth === plunge &&
+      lit &&
+      toned &&
+      backgroundSettled &&
+      height === 0 &&
+      speed < 0.5 &&
+      (following || Math.hypot(tx - position[0], ty - position[1]) < 0.5);
     frame = resting && [points, splashes, prints].every((items) => items.every(lasting)) ? 0 : requestAnimationFrame(step);
   }
 
@@ -1167,7 +1274,8 @@
   }
 
   function jump(event) {
-    if (parked || event.pointerType !== "mouse" || event.button !== 0 || inSettings(event)) return;
+    if (event.pointerType === "mouse") nativeFling = false;
+    if (parked || returning || !overrun() || event.pointerType !== "mouse" || event.button !== 0 || inSettings(event)) return;
     hop();
   }
 
@@ -1179,7 +1287,7 @@
   }
 
   function hop(power = 1) {
-    if (!position || height > 0) return;
+    if (!position || height > 0 || returning || !overrun()) return;
     lift = JUMP * power;
     height = 0.01;
     twirl();
@@ -1192,57 +1300,64 @@
     frame = requestAnimationFrame(step);
   }
 
-  function focused() {
-    if (narrow.matches) return null;
-    const selector = ".post-list > li, .featured-posts .card";
-    if (hovering.matches) {
-      if (!pointer) return null;
-      return document
-        .elementsFromPoint(...pointer)
-        .map((element) => element.closest(selector))
-        .find(Boolean);
-    }
-    const line = document.documentElement.clientHeight / 2;
-    return [...document.querySelectorAll(selector)].find((highlight) => {
-      const { top, bottom } = highlight.getBoundingClientRect();
-      return top <= line && bottom > line;
-    });
-  }
-
   function groove() {
-    const card = document.querySelector(".container[role='main'] > .post")?.getBoundingClientRect();
+    const card = mainCard?.getBoundingClientRect();
     const content = document.querySelector(".post-list, .featured-posts")?.getBoundingClientRect();
     if (!card || !content || content.left - card.left < unit * 2) return null;
     return card.left + unit;
   }
 
-  function corner(highlight = null) {
-    const inset = unit * 2.5;
-    const floor = document.documentElement.clientHeight - radius * 2.5;
+  function measureTrack() {
+    const card = mainCard?.getBoundingClientRect();
+    const title = heading?.getBoundingClientRect();
     const lane = narrow.matches ? null : groove();
-    const x = narrow.matches ? unit * 1.25 : (lane ?? document.documentElement.clientWidth - inset);
-    if (highlight) {
-      const { top, bottom } = highlight.getBoundingClientRect();
-      return [x, Math.min(Math.max((top + bottom) / 2, inset), floor)];
-    }
-    const title = (lane !== null || narrow.matches) && document.querySelector(".header-bar h1")?.getBoundingClientRect();
-    const end = Math.max(1, pageHeight - runout - innerHeight);
-    const scrolled = Math.min(Math.max(scrollY / end, 0), 1);
+    const bottom = card ? card.bottom + scrollY : 0;
+    const floor = document.documentElement.clientHeight - unit * 2.5;
     const start = title ? (title.top + title.bottom) / 2 + scrollY : floor;
-    const y = start + (floor - start) * scrolled;
+    // Keep the route downward even in a short viewport, or when the whole card fits on screen.
+    const end = card ? Math.max(start, Math.min(floor, (bottom + unit + start) / 2)) : floor;
+    const heights = [...(mainCard?.querySelectorAll(CARD_SELECTOR) ?? [])]
+      .map((card) => card.getBoundingClientRect().height)
+      .filter((height) => height > 0)
+      .sort((a, b) => a - b);
+    const middle = Math.floor(heights.length / 2);
+    const cardHeight = heights.length ? (heights[middle] + heights[Math.floor((heights.length - 1) / 2)]) / 2 : innerHeight / 2;
+    const next = {
+      x: narrow.matches ? unit * 1.25 : (lane ?? document.documentElement.clientWidth - unit * 2.5),
+      start,
+      end,
+      bottom,
+      // At this scroll position the ball's top, not its center, reaches the panel's actual bottom.
+      exit: Math.max(0, bottom + unit - end),
+      cardHeight: Math.max(1, cardHeight),
+    };
+    if (Object.keys(next).some((key) => Math.abs(next[key] - track[key]) > 0.01)) {
+      trailGap = true;
+      returning = null;
+    }
+    track = next;
+  }
+
+  function corner() {
+    const scrolled = track.exit > 0 ? Math.min(camera() / track.exit, 1) : 1;
+    const y = track.start + (track.end - track.start) * easeInOut(scrolled);
     // Drift toward mid-screen over eight screens of runout, so running out of page never yanks the ball back up.
-    return [ski(x), y + (innerHeight / 2 - y) * smooth(innerHeight * 8)];
+    return [ski(track.x), y + (innerHeight / 2 - y) * smooth(innerHeight * 8)];
   }
 
   function overrun() {
     if (!runout) return 0;
-    return Math.max(0, scrollY - (pageHeight - runout - innerHeight)) + depth;
+    return Math.max(0, camera() - track.exit);
+  }
+
+  function easeInOut(t) {
+    return t * t * (3 - 2 * t);
   }
 
   // How far into the runout the page has been pushed, over `span` pixels, eased in and out.
   function smooth(span = runout + innerHeight) {
     const t = Math.min(overrun() / span, 1);
-    return t * t * (3 - 2 * t);
+    return easeInOut(t);
   }
 
   function ski(x) {
@@ -1251,8 +1366,9 @@
     const width = document.documentElement.clientWidth;
     const ease = smooth();
     const noise = Math.sin(run / 310) * 0.5 + Math.sin(run / 170 + 1.7) * 0.3 + Math.sin(run / 530 + 4.1) * 0.2;
-    const drift = x + (width / 2 - x) * ease + noise * width * 0.3 * ease;
-    return Math.min(Math.max(drift, radius * 1.5), width - radius * 1.5);
+    const drift = Math.min(Math.max(width / 2 + noise * width * 0.3, radius * 1.5), width - radius * 1.5);
+    // Ease the bounds too: the narrow-screen lane can start left of the grown ball's inset.
+    return x + (drift - x) * ease;
   }
 
   function homing() {
@@ -1265,12 +1381,16 @@
   function park() {
     parked = true;
     armed = false;
-    tilt = null;
+    returning = tilt = target = null;
+    velocity = [0, 0];
+    spinning = [0, 0, 0];
+    height = lift = 0;
     dock.classList.remove("ball__dock--visible");
     document.body.append(handle);
   }
 
   function release() {
+    if (!overrun() || returning) return;
     parked = false;
     handle.remove();
     dock.classList.add("ball__dock--visible");
@@ -1288,17 +1408,18 @@
   function follow(event) {
     if (event.pointerType !== "mouse" || inSettings(event)) return;
     glare = [event.clientX, event.clientY];
-    if (parked) {
-      pointer = [event.clientX, event.clientY];
-      wake();
-      return;
-    }
-    target = [event.clientX, event.clientY];
+    if (!parked && !returning && overrun()) target = [event.clientX, event.clientY];
     wake();
   }
 
   function bottomed() {
     return scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+  }
+
+  function resetRunout() {
+    depth = plunge = unwind = glide = fling = 0;
+    gliding = false;
+    document.documentElement.style.overscrollBehaviorY = "";
   }
 
   function shove(distance) {
@@ -1345,13 +1466,17 @@
   function handoff() {
     const now = performance.now();
     const dt = flick ? (now - flick.time) / 1000 : 0;
-    const speed = dt > 0 && dt < 0.1 ? flick.speed * 0.2 + ((scrollY - flick.y) / dt) * 0.8 : 0;
+    const moved = flick ? scrollY - flick.y : 0;
+    const continuous = dt > 0 && dt < 0.1 && Math.abs(moved) < innerHeight / 2;
+    if (!continuous) nativeFling = false;
+    const speed = continuous ? flick.speed * 0.2 + (moved / dt) * 0.8 : 0;
     const arrived = bottomed() && flick && !flick.bottomed;
-    const carry = arrived ? Math.max(flick.speed, speed) : 0;
+    const carry = arrived && continuous ? Math.max(flick.speed, speed) : 0;
     flick = { y: scrollY, time: now, speed, bottomed: bottomed() };
     const overscroll = overrun() > 0 ? "none" : "";
     if (document.documentElement.style.overscrollBehaviorY !== overscroll) document.documentElement.style.overscrollBehaviorY = overscroll;
-    if (arrived && !touching && !wheeling && carry > 0 && !depth) {
+    if (arrived && nativeFling && !touching && !wheeling && carry > 0 && !depth) {
+      nativeFling = false;
       glide = carry;
       gliding = true;
       wake();
@@ -1360,6 +1485,8 @@
 
   function dive(event) {
     wheeling = true;
+    nativeFling = gliding = false;
+    glide = 0;
     travel(event.deltaY * (event.deltaMode === 1 ? 16 : 1), event);
   }
 
@@ -1369,16 +1496,19 @@
     if (event.type === "touchcancel" || event.touches.length > 1 || inSettings(event)) {
       swipe = null;
       fling = glide = 0;
+      nativeFling = false;
       return;
     }
     if (event.type === "touchend") {
-      glide = swipe && performance.now() - swipe.time < 100 ? fling : 0;
+      nativeFling = !!swipe && performance.now() - swipe.time < 100;
+      glide = nativeFling ? fling : 0;
       if (glide) wake();
       return;
     }
     const y = event.touches[0].clientY;
     const time = performance.now();
     if (event.type === "touchstart") {
+      nativeFling = false;
       glide = 0;
       fling = 0;
     } else if (swipe) {
@@ -1390,7 +1520,7 @@
   }
 
   function touch(event) {
-    if (parked || event.touches.length !== 1 || inSettings(event)) return;
+    if (parked || returning || !overrun() || event.touches.length !== 1 || inSettings(event)) return;
     if (tilt) {
       if (event.type === "touchstart") hop();
       return;
@@ -1401,7 +1531,7 @@
   }
 
   function orient({ beta, gamma }) {
-    if (parked || beta == null || gamma == null) return;
+    if (parked || returning || !overrun() || beta == null || gamma == null) return;
     level ??= beta;
     const x = Math.sin((gamma * Math.PI) / 180);
     const y = Math.sin(((beta - level) * Math.PI) / 180);
@@ -1428,7 +1558,7 @@
   function applyAppearance() {
     shadow.hidden = !appearance.shadow;
     sphere.classList.toggle("ball__sphere--grounded", appearance.shadow);
-    hueTurn = 0;
+    syncColorStage();
     accent = selectedColor();
     mixPaint();
     drawn = null;
@@ -1533,7 +1663,7 @@
     setupSettings();
     shadow.hidden = !appearance.shadow;
     sphere.classList.toggle("ball__sphere--grounded", appearance.shadow);
-    const [x, y] = corner(focused());
+    const [x, y] = corner();
     position = [x, y + camera()];
     lastScroll = camera();
     paintSphere();
@@ -1545,7 +1675,6 @@
     });
     on(window, "pointermove", follow, { passive: true });
     on(document.documentElement, "pointerleave", () => {
-      pointer = null;
       glare = null;
       wake();
     });
@@ -1561,34 +1690,29 @@
       window,
       "scroll",
       () => {
+        if (scrollY <= 0 || !bottomed()) resetRunout();
         handoff();
         wake();
       },
       { passive: true }
     );
-    on(window, "load", wake);
+    const remeasure = () => {
+      if (!active) return;
+      resize();
+      wake();
+    };
+    on(window, "load", remeasure);
+    on(document.fonts, "loadingdone", remeasure);
     document.fonts.ready.then(() => {
-      if (!active) return;
-      resize();
-      wake();
+      remeasure();
     });
-    resizeObserver = new ResizeObserver(() => {
-      if (!active) return;
-      resize();
-      wake();
-    });
-    resizeObserver.observe(document.body);
-    on(window, "resize", () => {
-      resize();
-      if (parked && height === 0) {
-        const [x, y] = corner(focused());
-        position = [x, y + camera()];
-        velocity = [0, 0];
-      }
-      wake();
-    });
-    for (const target of [dark, window])
-      on(target, target === dark ? "change" : "themechange", () => {
+    resizeObserver = new ResizeObserver(remeasure);
+    for (const element of [document.body, sphere, mainCard, heading, ...(mainCard?.querySelectorAll(CARD_SELECTOR) ?? [])]) {
+      if (element) resizeObserver.observe(element);
+    }
+    on(window, "resize", remeasure);
+    for (const target of [dark, forcedColors, window])
+      on(target, target === window ? "themechange" : "change", () => {
         buildColors();
         wake();
       });
@@ -1605,9 +1729,14 @@
       [sphere, setupBall],
       [trail, setupFloor],
     ]) {
-      on(canvas, "webglcontextlost", (event) => event.preventDefault());
+      on(canvas, "webglcontextlost", (event) => {
+        event.preventDefault();
+        resetGlassPalette();
+        wake();
+      });
       on(canvas, "webglcontextrestored", () => {
         setup();
+        buildColors();
         wake();
       });
     }
@@ -1616,6 +1745,7 @@
   function stop() {
     if (!active) return;
     active = false;
+    resetGlassPalette();
     cancelAnimationFrame(frame);
     frame = 0;
     listeners.abort();
@@ -1633,13 +1763,14 @@
     points = [];
     splashes = [];
     prints = [];
-    position = target = pointer = glare = tilt = level = swipe = null;
+    position = target = glare = tilt = level = swipe = returning = null;
     velocity = [0, 0];
     spinning = [0, 0, 0];
     rotation = [0, 0, 0, 1];
     blur = [0, 0, 1, 0];
     height = lift = depth = plunge = unwind = glide = fling = deepest = tone = 0;
-    gliding = touching = wheeling = false;
+    gliding = nativeFling = touching = wheeling = false;
+    trailGap = true;
     flick = null;
     document.documentElement.style.overscrollBehaviorY = "";
     grow = 1;

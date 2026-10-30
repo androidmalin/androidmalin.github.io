@@ -72,6 +72,10 @@ body.scroll-ball-active .runout {
   cursor: pointer;
 }
 
+.ball__handle:disabled {
+  cursor: default;
+}
+
 .ball__handle:focus-visible,
 .ball__settings-trigger:focus-visible,
 .ball__settings :focus-visible {
